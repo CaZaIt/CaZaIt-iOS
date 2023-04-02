@@ -15,6 +15,10 @@
 		01F7A20729D936280058736E /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A20429D936280058736E /* UIColor+Extension.swift */; };
 		01F7A20829D936280058736E /* InsetTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A20529D936280058736E /* InsetTextField.swift */; };
 		01F7A20929D936280058736E /* UITextField+Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A20629D936280058736E /* UITextField+Extenstion.swift */; };
+		01F7A21529D95A2B0058736E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21429D95A2B0058736E /* MainView.swift */; };
+		01F7A21729D95BF70058736E /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21629D95BF70058736E /* MapView.swift */; };
+		01F7A21929D95C150058736E /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21829D95C150058736E /* MyPageView.swift */; };
+		01F7A21B29D95C480058736E /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21A29D95C480058736E /* MoreView.swift */; };
 		D613D2D717AAABB6F7AC4E0C /* Pods_CaZait_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CF93EE214B1DD722C3D910C /* Pods_CaZait_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +33,10 @@
 		01F7A20429D936280058736E /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		01F7A20529D936280058736E /* InsetTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetTextField.swift; sourceTree = "<group>"; };
 		01F7A20629D936280058736E /* UITextField+Extenstion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Extenstion.swift"; sourceTree = "<group>"; };
+		01F7A21429D95A2B0058736E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		01F7A21629D95BF70058736E /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		01F7A21829D95C150058736E /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		01F7A21A29D95C480058736E /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		49C24CE7215EA56BBAD96770 /* Pods-CaZait-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaZait-iOS.debug.xcconfig"; path = "Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		6CF93EE214B1DD722C3D910C /* Pods_CaZait_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CaZait_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0C87B5ABDC26C3AB0DCE444 /* Pods-CaZait-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaZait-iOS.release.xcconfig"; path = "Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -124,6 +132,10 @@
 		01F7A20F29D9431E0058736E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				01F7A21429D95A2B0058736E /* MainView.swift */,
+				01F7A21629D95BF70058736E /* MapView.swift */,
+				01F7A21829D95C150058736E /* MyPageView.swift */,
+				01F7A21A29D95C480058736E /* MoreView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -260,11 +272,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				01F7A1F529D935540058736E /* ViewController.swift in Sources */,
+				01F7A21729D95BF70058736E /* MapView.swift in Sources */,
+				01F7A21929D95C150058736E /* MyPageView.swift in Sources */,
 				01F7A20829D936280058736E /* InsetTextField.swift in Sources */,
 				01F7A1F129D935540058736E /* AppDelegate.swift in Sources */,
 				01F7A1F329D935540058736E /* SceneDelegate.swift in Sources */,
+				01F7A21529D95A2B0058736E /* MainView.swift in Sources */,
 				01F7A20929D936280058736E /* UITextField+Extenstion.swift in Sources */,
 				01F7A20729D936280058736E /* UIColor+Extension.swift in Sources */,
+				01F7A21B29D95C480058736E /* MoreView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

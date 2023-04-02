@@ -31,19 +31,29 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $viewModel.selectedTab) {
-            ForEach(0..<viewModel.items.count) { index in
+            ForEach(0..<4) { index in
                 let item = viewModel.items[index]
-                
-                VStack {
-                    Image(systemName: item.imageName)
-                        .font(.system(size: 40))
-                    Text(item.name)
-                }
-                .tabItem {
-                    Image(systemName: item.imageName)
-                    Text(item.name)
-                }
-                .tag(index)
+                let view: AnyView = {
+                    switch index {
+                    case 0:
+                        return AnyView(MainView())
+                    case 1:
+                        return AnyView(MapView())
+                    case 2:
+                        return AnyView(MyPageView())
+                    case 3:
+                        return AnyView(MoreView())
+                    
+                    default:
+                        return AnyView(Text("아직 구현되지 않은 화면"))
+                    }
+                }()
+                view
+                    .tabItem {
+                        Image(systemName: item.imageName)
+                        Text(item.name)
+                    }
+                    .tag(index)
             }
         }
     }
