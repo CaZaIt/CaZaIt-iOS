@@ -6,56 +6,51 @@
 //
 
 import Foundation
-import SwiftUI
+import UIKit
 
-// Model
-struct Item {
-    var name: String
-    var imageName: String
-}
 
-// ViewModel
-class TabViewModel: ObservableObject {
-    @Published var selectedTab = 0
-    @Published var items = [
-        Item(name: "메인화면", imageName: "1.circle"),
-        Item(name: "지도", imageName: "2.circle"),
-        Item(name: "마이페이지", imageName: "3.circle"),
-        Item(name: "더보기", imageName: "4.circle")
-    ]
-}
+class TapBarVC: UITabBarController {
 
-// View
-struct TabBarView: View {
-    @StateObject private var viewModel = TabViewModel()
-    
-    var body: some View {
-        TabView(selection: $viewModel.selectedTab) {
-            ForEach(0..<4) { index in
-                let item = viewModel.items[index]
-                let view: AnyView = {
-                    switch index {
-                    case 0:
-                        return AnyView(MainView())
-                    case 1:
-                        return AnyView(MapView())
-                    case 2:
-                        return AnyView(MyPageView())
-                    case 3:
-                        return AnyView(MoreView())
-                    
-                    default:
-                        return AnyView(Text("아직 구현되지 않은 화면"))
-                    }
-                }()
-                view
-                    .tabItem {
-                        Image(systemName: item.imageName)
-                        Text(item.name)
-                    }
-                    .tag(index)
-            }
-        }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tabBar.backgroundColor = .black
+        tabBar.tintColor = .gray
+        tabBar.unselectedItemTintColor = .white
+       // 인스턴스화
+        let vc1 = MainVC()
+        let vc2 = MapVC()
+        let vc3 = MyPageVC()
+        let vc4 = MoreVC()
+        
+        // 각 tab bar의 viewcontroller 타z이틀 설정
+        vc1.title = ""
+        vc1.tabBarItem.image = UIImage(named: "home")
+        vc2.title = ""
+        vc2.tabBarItem.image = UIImage(named: "map")
+        vc3.title = ""
+        vc3.tabBarItem.image = UIImage(named: "person")
+        vc4.title = ""
+        vc4.tabBarItem.image = UIImage(named: "add")
+        
+        
+        // 위에 타이틀 text를 항상 크게 보이게 설정
+        vc1.navigationItem.largeTitleDisplayMode = .always
+        vc2.navigationItem.largeTitleDisplayMode = .always
+        vc3.navigationItem.largeTitleDisplayMode = .always
+        vc4.navigationItem.largeTitleDisplayMode = .always
+        
+       // navigationController의 root view 설정
+        let nav1 = UINavigationController(rootViewController: vc1)
+        let nav2 = UINavigationController(rootViewController: vc2)
+        let nav3 = UINavigationController(rootViewController: vc3)
+        let nav4 = UINavigationController(rootViewController: vc4)
+        
+        nav1.navigationBar.prefersLargeTitles = false
+        nav2.navigationBar.prefersLargeTitles = true
+        nav3.navigationBar.prefersLargeTitles = true
+        nav4.navigationBar.prefersLargeTitles = true
+        
+        setViewControllers([nav1, nav2, nav3, nav4], animated: false)
+        
     }
 }
-

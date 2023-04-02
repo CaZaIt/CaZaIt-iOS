@@ -5,13 +5,11 @@
 //  Created by 강석호 on 2023/04/02.
 //
 
-import SwiftUI
+import UIKit
 
-struct MapView: View {
-    var body: some View {
-        VStack {
-            Text("지도화면")
-        }
+class MapVC: UIViewController{
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .blue
     }
 }
-

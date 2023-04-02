@@ -5,13 +5,12 @@
 //  Created by 강석호 on 2023/04/02.
 //
 
-import SwiftUI
+import UIKit
 
-
-struct MyPageView: View {
-    var body: some View {
-        VStack {
-            Text("마이페이지화면")
-        }
+class MyPageVC: UIViewController{
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .black
     }
 }
+

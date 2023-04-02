@@ -5,12 +5,12 @@
 //  Created by 강석호 on 2023/04/02.
 //
 
-import SwiftUI
+import UIKit
 
-struct MoreView: View {
-    var body: some View {
-        VStack {
-            Text("더보기화면")
-        }
+class MoreVC: UIViewController{
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .gray
     }
 }
+
