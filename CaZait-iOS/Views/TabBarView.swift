@@ -26,7 +26,7 @@ class TabViewModel: ObservableObject {
 }
 
 // View
-struct ContentView: View {
+struct TabBarView: View {
     @StateObject private var viewModel = TabViewModel()
     
     var body: some View {
