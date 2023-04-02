@@ -18,10 +18,10 @@ struct Item {
 class TabViewModel: ObservableObject {
     @Published var selectedTab = 0
     @Published var items = [
-        Item(name: "첫 번째", imageName: "1.circle"),
-        Item(name: "두 번째", imageName: "2.circle"),
-        Item(name: "세 번째", imageName: "3.circle"),
-        Item(name: "네 번째", imageName: "4.circle")
+        Item(name: "메인화면", imageName: "1.circle"),
+        Item(name: "지도", imageName: "2.circle"),
+        Item(name: "마이페이지", imageName: "3.circle"),
+        Item(name: "더보기", imageName: "4.circle")
     ]
 }
 
