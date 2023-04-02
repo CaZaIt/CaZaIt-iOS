@@ -67,17 +67,65 @@
 		01F7A1EF29D935540058736E /* CaZait-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				01F7A20C29D942D00058736E /* ViewModels */,
+				01F7A20B29D942C20058736E /* Models */,
+				01F7A20D29D942FD0058736E /* Cells */,
+				01F7A20F29D9431E0058736E /* Views */,
+				01F7A20E29D9430D0058736E /* Services */,
+				01F7A20A29D9424F0058736E /* Extension */,
 				01F7A1F029D935540058736E /* AppDelegate.swift */,
 				01F7A1F229D935540058736E /* SceneDelegate.swift */,
 				01F7A1F429D935540058736E /* ViewController.swift */,
-				01F7A20529D936280058736E /* InsetTextField.swift */,
-				01F7A20429D936280058736E /* UIColor+Extension.swift */,
-				01F7A20629D936280058736E /* UITextField+Extenstion.swift */,
 				01F7A1F929D935550058736E /* Assets.xcassets */,
 				01F7A1FB29D935550058736E /* LaunchScreen.storyboard */,
 				01F7A1FE29D935550058736E /* Info.plist */,
 			);
 			path = "CaZait-iOS";
+			sourceTree = "<group>";
+		};
+		01F7A20A29D9424F0058736E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				01F7A20529D936280058736E /* InsetTextField.swift */,
+				01F7A20429D936280058736E /* UIColor+Extension.swift */,
+				01F7A20629D936280058736E /* UITextField+Extenstion.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		01F7A20B29D942C20058736E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		01F7A20C29D942D00058736E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		01F7A20D29D942FD0058736E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		01F7A20E29D9430D0058736E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		01F7A20F29D9431E0058736E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		370B2A6734BEE7598FDED347 /* Frameworks */ = {
@@ -94,7 +142,6 @@
 				49C24CE7215EA56BBAD96770 /* Pods-CaZait-iOS.debug.xcconfig */,
 				E0C87B5ABDC26C3AB0DCE444 /* Pods-CaZait-iOS.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
