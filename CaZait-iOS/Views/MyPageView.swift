@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MyPageVC: UIViewController{
+class MyPageView: UIViewController{
     
     private let topview: UIView = {
         let top = UIView()

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MoreVC: UIViewController{
+class MoreView: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .gray

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainVC: UIViewController{
+class MainView: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white

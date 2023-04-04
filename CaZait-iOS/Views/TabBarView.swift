@@ -17,10 +17,10 @@ class TapBarVC: UITabBarController {
         tabBar.tintColor = .gray
         tabBar.unselectedItemTintColor = .white
        // 인스턴스화
-        let vc1 = MainVC()
-        let vc2 = MapVC()
-        let vc3 = MyPageVC()
-        let vc4 = MoreVC()
+        let vc1 = MainView()
+        let vc2 = MapView()
+        let vc3 = MyPageView()
+        let vc4 = MoreView()
         
         // 각 tab bar의 viewcontroller 타z이틀 설정
         vc1.title = ""
