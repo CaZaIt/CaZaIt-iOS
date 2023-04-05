@@ -20,6 +20,8 @@
 		01F7A21929D95C150058736E /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21829D95C150058736E /* MyPageView.swift */; };
 		01F7A21B29D95C480058736E /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21A29D95C480058736E /* MoreView.swift */; };
 		37496607093ADF2DD306E85B /* Pods_CaZait_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 212848CC094DA1C393D1C108 /* Pods_CaZait_iOS.framework */; };
+		F13FDA7529DD5DD00044C6C3 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA7429DD5DD00044C6C3 /* MainTableViewCell.swift */; };
+		F13FDA7729DD616E0044C6C3 /* LovedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		212848CC094DA1C393D1C108 /* Pods_CaZait_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CaZait_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		395F793F7B4A4B8889040C20 /* Pods-CaZait-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaZait-iOS.release.xcconfig"; path = "Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		4A556FB32FA1ED34828C5D22 /* Pods-CaZait-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaZait-iOS.debug.xcconfig"; path = "Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		F13FDA7429DD5DD00044C6C3 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LovedCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,8 @@
 		01F7A20D29D942FD0058736E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				F13FDA7429DD5DD00044C6C3 /* MainTableViewCell.swift */,
+				F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -271,7 +277,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F13FDA7529DD5DD00044C6C3 /* MainTableViewCell.swift in Sources */,
 				01F7A1F529D935540058736E /* TabBarView.swift in Sources */,
+				F13FDA7729DD616E0044C6C3 /* LovedCollectionViewCell.swift in Sources */,
 				01F7A21729D95BF70058736E /* MapView.swift in Sources */,
 				01F7A21929D95C150058736E /* MyPageView.swift in Sources */,
 				01F7A20829D936280058736E /* InsetTextField.swift in Sources */,
