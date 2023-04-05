@@ -33,22 +33,19 @@ class TapBarVC: UITabBarController {
         vc4.tabBarItem.image = UIImage(named: "add")
         
         
-        // 위에 타이틀 text를 항상 크게 보이게 설정
-        vc1.navigationItem.largeTitleDisplayMode = .always
-        vc2.navigationItem.largeTitleDisplayMode = .always
-        vc3.navigationItem.largeTitleDisplayMode = .always
-        vc4.navigationItem.largeTitleDisplayMode = .always
-        
        // navigationController의 root view 설정
         let nav1 = UINavigationController(rootViewController: vc1)
         let nav2 = UINavigationController(rootViewController: vc2)
         let nav3 = UINavigationController(rootViewController: vc3)
         let nav4 = UINavigationController(rootViewController: vc4)
         
-        nav1.navigationBar.prefersLargeTitles = false
-        nav2.navigationBar.prefersLargeTitles = true
-        nav3.navigationBar.prefersLargeTitles = true
-        nav4.navigationBar.prefersLargeTitles = true
+        nav1.isNavigationBarHidden = true
+        nav2.isNavigationBarHidden = true
+        nav3.isNavigationBarHidden = true
+        nav4.isNavigationBarHidden = true
+        
+        navigationController?.isNavigationBarHidden = true
+        
         
         setViewControllers([nav1, nav2, nav3, nav4], animated: false)
         
