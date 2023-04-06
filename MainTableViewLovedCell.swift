@@ -8,17 +8,22 @@
 import UIKit
 import SnapKit
 
-class MainTableViewCell: UITableViewCell {
+class MainTableViewLovedCell: UITableViewCell {
 
+    //이동하려는 viewController가 navigationController 내에서 push될 수 있도록 navigationController를 추가
+    weak var navigationController: UINavigationController?
+    
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .horizontal //스크롤 방향 수평으로 설정
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 21, bottom: 10, right: 21) //collectionView와 collectionViewCell사이의 여백
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsHorizontalScrollIndicator = false //수평 스크롤 인디게이터를 보이지 않게 함
         collectionView.backgroundColor = .green
         return collectionView
     }()
+    
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,10 +40,6 @@ class MainTableViewCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        // collectionView 레이아웃 설정
-        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.scrollDirection = .horizontal
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -47,7 +48,7 @@ class MainTableViewCell: UITableViewCell {
 
 }
 
-extension MainTableViewCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MainTableViewLovedCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     // collectionView 셀 개수 반환
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -57,26 +58,31 @@ extension MainTableViewCell: UICollectionViewDataSource, UICollectionViewDelegat
     // collectionView 셀 생성 및 반환
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LovedCollectionViewCell", for: indexPath) as! LovedCollectionViewCell
+        
+        
         return cell
     }
     
     // collectionView 셀 크기 반환
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 200)
+        return CGSize(width: 131, height: 174)
     }
     
     // collectionView 셀과 셀 사이 간격 반환
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
-    
-    // collectionView 줄과 줄 사이 간격 반환
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
+
     
     // collectionView 셀이 선택됐을 때 처리할 작업 구현
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Cell \(indexPath.item) selected")
+        
+        // CafeDetailView 호출
+        let cafeDetailView = CafeDetailView() // CafeDetailView 초기화
+        navigationController?.pushViewController(cafeDetailView, animated: true)
+        
     }
+    
 }
+

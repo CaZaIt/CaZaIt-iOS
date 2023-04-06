@@ -1,15 +1,14 @@
 //
-//  CollectionViewCell.swift
+//  CafeListCollectionViewCell.swift
 //  CaZait-iOS
 //
-//  Created by 강민수 on 2023/04/05.
+//  Created by 강민수 on 2023/04/06.
 //
 
 import UIKit
 import SnapKit
 
-class LovedCollectionViewCell: UICollectionViewCell {
-    
+class CafeListCollectionViewCell: UICollectionViewCell {
     private let cafeNameLabel: UILabel = {
         let label = UILabel()
         
@@ -17,7 +16,7 @@ class LovedCollectionViewCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
         label.textAlignment = .left
-        label.text = "롬곡"
+        label.text = "팬도로시"
         label.numberOfLines = 1
         
         return label
@@ -60,7 +59,7 @@ class LovedCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .red
-        
+        // Configure the cell…
         setupContentViewView()
     }
     
@@ -79,4 +78,3 @@ class LovedCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
