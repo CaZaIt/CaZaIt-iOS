@@ -90,6 +90,23 @@ class MyPageView: UIViewController{
         return view
     }()
     
+    private let horizontalLine: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .black
+        return view
+    }()
+    
+    private let myConsumptionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.text = "나의 소비 그래프"
+        label.numberOfLines = 1
+        return label
+    }()
     
     
     override func viewDidLoad() {
@@ -104,6 +121,8 @@ class MyPageView: UIViewController{
         payView.addSubview(paymoneyLabel)
         payView.addSubview(paywonLabel)
         whiteView.addSubview(mypagemenuView)
+        whiteView.addSubview(horizontalLine)
+        whiteView.addSubview(myConsumptionLabel)
 
         
         self.whiteView.snp.makeConstraints { make in
@@ -154,6 +173,19 @@ class MyPageView: UIViewController{
             make.trailing.equalTo(self.whiteView.snp.trailing).inset(28)
             make.top.equalTo(self.payView.snp.bottom).offset(15)
             make.bottom.equalTo(self.whiteView.snp.bottom).inset(358)
+        }
+        
+        self.horizontalLine.snp.makeConstraints { make in
+            make.leading.equalTo(self.whiteView.snp.leading).inset(28)
+            make.trailing.equalTo(self.whiteView.snp.trailing).inset(28)
+            make.top.equalTo(self.mypagemenuView.snp.bottom).offset(30)
+            make.height.equalTo(1)
+        }
+        
+        self.myConsumptionLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.whiteView.snp.leading).inset(39)
+            make.top.equalTo(self.horizontalLine.snp.bottom).offset(15)
+            make.bottom.equalTo(self.whiteView.snp.bottom).inset(281)
         }
     }
     
