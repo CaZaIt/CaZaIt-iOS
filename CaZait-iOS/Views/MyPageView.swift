@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SnapKit
+import SnapKit 
 
 class MyPageView: UIViewController{
     
@@ -256,7 +256,8 @@ class MyPageView: UIViewController{
             make.leading.equalTo(self.whiteView.snp.leading).inset(28)
             make.trailing.equalTo(self.whiteView.snp.trailing).inset(28)
             make.top.equalTo(self.logoutLabel.snp.bottom).offset(14)
-            make.height.equalTo(102)
+            make.bottom.equalTo(self.whiteView.snp.bottom).inset(527)
+//            make.height.equalTo(102)
         }
         
         self.payLabel.snp.makeConstraints { make in
@@ -296,8 +297,8 @@ class MyPageView: UIViewController{
         self.couponImage.snp.makeConstraints { make in
             make.leading.equalTo(self.couponButton.snp.leading).inset(27)
             make.trailing.equalTo(self.couponButton.snp.trailing).inset(27)
-            make.top.equalTo(self.couponButton.snp.top).inset(25)
-            make.bottom.equalTo(self.couponButton.snp.bottom).inset(45)
+            make.top.equalTo(self.couponButton.snp.top).inset(38)
+            make.bottom.equalTo(self.couponButton.snp.bottom).inset(72)
         }
         self.couponLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.couponButton.snp.leading).inset(35)
@@ -316,8 +317,8 @@ class MyPageView: UIViewController{
         self.paymentImage.snp.makeConstraints { make in
             make.leading.equalTo(self.paymentButton.snp.leading).inset(27)
             make.trailing.equalTo(self.paymentButton.snp.trailing).inset(27)
-            make.top.equalTo(self.paymentButton.snp.top).inset(25)
-            make.bottom.equalTo(self.paymentButton.snp.bottom).inset(45)
+            make.top.equalTo(self.paymentButton.snp.top).inset(38)
+            make.bottom.equalTo(self.paymentButton.snp.bottom).inset(72)
         }
         self.paymentLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.paymentButton.snp.leading).inset(15)
@@ -337,8 +338,8 @@ class MyPageView: UIViewController{
         self.recentplaceImage.snp.makeConstraints { make in
             make.leading.equalTo(self.recentplaceButton.snp.leading).inset(33)
             make.trailing.equalTo(self.recentplaceButton.snp.trailing).inset(33)
-            make.top.equalTo(self.recentplaceButton.snp.top).inset(25)
-            make.bottom.equalTo(self.recentplaceButton.snp.bottom).inset(45)
+            make.top.equalTo(self.recentplaceButton.snp.top).inset(38)
+            make.bottom.equalTo(self.recentplaceButton.snp.bottom).inset(72)
         }
         self.recentplaceLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.recentplaceButton.snp.leading).inset(15)
@@ -385,7 +386,7 @@ class MyPageView: UIViewController{
         
         couponButton.addTarget(self, action:#selector(buttonClicked_1), for: .touchUpInside)
         paymentButton.addTarget(self, action:#selector(buttonClicked_2), for: .touchUpInside)
-        recentplaceButton.addTarget(self, action: #selector(goRecentPlaceButtonTapped), for: .touchUpInside)
+        recentplaceButton.addTarget(self, action: #selector(buttonClicked_3), for: .touchUpInside)
     }
     
     //상태표시줄 화이트색의 글씨로 변경
@@ -419,16 +420,7 @@ class MyPageView: UIViewController{
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
     }
-    
-    @objc func goRecentPlaceButtonTapped() {
-        let newViewController = RecentPlaceView() // 새로운 뷰 컨트롤러 생성
-        newViewController.title = "최근 본 매장"
-        self.navigationController?.pushViewController(newViewController, animated: true) // 새로운 뷰 컨트롤러 푸시
-        
-        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.titleTextAttributes = attributes
-        navigationController?.navigationBar.tintColor = UIColor.white
-    }
+
     
     
 }
