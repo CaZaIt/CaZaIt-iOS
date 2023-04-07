@@ -200,6 +200,13 @@ class MyPageView: UIViewController{
         return label
     }()
     
+    private let graphImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "graph")
+        return imageView
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -226,7 +233,7 @@ class MyPageView: UIViewController{
         paymentButton.addSubview(paymentLabel)
         recentplaceButton.addSubview(recentplaceImage)
         recentplaceButton.addSubview(recentplaceLabel)
-
+        whiteView.addSubview(graphImage)
         
         self.whiteView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
@@ -352,7 +359,7 @@ class MyPageView: UIViewController{
             make.bottom.equalTo(self.mypagemenuView.snp.bottom).inset(14)
             make.width.equalTo(1)
         }
-
+        
         
         
         self.horizontalLine.snp.makeConstraints { make in
@@ -368,6 +375,14 @@ class MyPageView: UIViewController{
             make.bottom.equalTo(self.whiteView.snp.bottom).inset(281)
         }
         
+        self.graphImage.snp.makeConstraints { make in
+            make.leading.equalTo(self.whiteView.snp.leading).inset(28)
+            make.trailing.equalTo(self.whiteView.snp.trailing).inset(28)
+            make.top.equalTo(self.myConsumptionLabel.snp.bottom).offset(15)
+            make.bottom.equalTo(self.whiteView.snp.bottom).inset(18)
+        }
+        
+        
         couponButton.addTarget(self, action:#selector(buttonClicked_1), for: .touchUpInside)
         paymentButton.addTarget(self, action:#selector(buttonClicked_2), for: .touchUpInside)
         recentplaceButton.addTarget(self, action: #selector(goRecentPlaceButtonTapped), for: .touchUpInside)
@@ -375,8 +390,8 @@ class MyPageView: UIViewController{
     
     //상태표시줄 화이트색의 글씨로 변경
     override var preferredStatusBarStyle: UIStatusBarStyle {
-            return .lightContent // 밝은 배경색일 경우에는 .darkContent
-        }
+        return .lightContent // 밝은 배경색일 경우에는 .darkContent
+    }
     
     @objc func buttonClicked_1(_ sender: UIButton) {
         let alertController = UIAlertController(title: "쿠폰 버튼 클릭", message: "The button was clicked.", preferredStyle: .alert)
@@ -406,11 +421,15 @@ class MyPageView: UIViewController{
     }
     
     @objc func goRecentPlaceButtonTapped() {
-            let newViewController = RecentPlaceView() // 새로운 뷰 컨트롤러 생성
-            self.navigationController?.pushViewController(newViewController, animated: true) // 새로운 뷰 컨트롤러 푸시
-            navigationController?.navigationBar.tintColor = UIColor.white
-        }
+        let newViewController = RecentPlaceView() // 새로운 뷰 컨트롤러 생성
+        newViewController.title = "최근 본 매장"
+        self.navigationController?.pushViewController(newViewController, animated: true) // 새로운 뷰 컨트롤러 푸시
+        
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = attributes
+        navigationController?.navigationBar.tintColor = UIColor.white
+    }
     
-
+    
 }
 
