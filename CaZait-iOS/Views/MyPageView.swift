@@ -90,6 +90,32 @@ class MyPageView: UIViewController{
         return view
     }()
     
+    private let couponButton: UIButton = {
+        let button = UIButton()
+        let image = UIImage(named: "money")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .blue
+        return button
+    }()
+    
+    
+    private let paymentButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .green
+        return button
+    }()
+    
+    private let recentplaceButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .gray
+        return button
+    }()
+    
+    
+    
+    
     private let horizontalLine: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -123,6 +149,9 @@ class MyPageView: UIViewController{
         whiteView.addSubview(mypagemenuView)
         whiteView.addSubview(horizontalLine)
         whiteView.addSubview(myConsumptionLabel)
+        mypagemenuView.addSubview(couponButton)
+        mypagemenuView.addSubview(paymentButton)
+        mypagemenuView.addSubview(recentplaceButton)
 
         
         self.whiteView.snp.makeConstraints { make in
@@ -174,6 +203,30 @@ class MyPageView: UIViewController{
             make.top.equalTo(self.payView.snp.bottom).offset(15)
             make.bottom.equalTo(self.whiteView.snp.bottom).inset(358)
         }
+        
+        self.couponButton.snp.makeConstraints { make in
+            make.leading.equalTo(self.mypagemenuView.snp.leading).inset(5)
+            make.trailing.equalTo(self.mypagemenuView.snp.trailing).inset(230)
+            make.top.equalTo(self.mypagemenuView.snp.top).inset(5)
+            make.bottom.equalTo(self.mypagemenuView.snp.bottom).inset(5)
+            make.height.equalTo(100)
+        }
+        self.paymentButton.snp.makeConstraints { make in
+            make.leading.equalTo(self.couponButton.snp.trailing).inset(-10)
+            make.trailing.equalTo(self.mypagemenuView.snp.trailing).inset(120)
+            make.top.equalTo(self.mypagemenuView.snp.top).inset(5)
+            make.bottom.equalTo(self.mypagemenuView.snp.bottom).inset(5)
+            make.height.equalTo(100)
+        }
+        self.recentplaceButton.snp.makeConstraints { make in
+            make.leading.equalTo(self.paymentButton.snp.trailing).inset(-10)
+            make.trailing.equalTo(self.mypagemenuView.snp.trailing).inset(5)
+            make.top.equalTo(self.mypagemenuView.snp.top).inset(5)
+            make.bottom.equalTo(self.mypagemenuView.snp.bottom).inset(5)
+            make.height.equalTo(100)
+        }
+
+        
         
         self.horizontalLine.snp.makeConstraints { make in
             make.leading.equalTo(self.whiteView.snp.leading).inset(28)
