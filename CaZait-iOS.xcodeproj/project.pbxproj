@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01B9325D29E015C3006342F9 /* RecentPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B9325C29E015C3006342F9 /* RecentPlaceView.swift */; };
+		01B9325F29E01611006342F9 /* RecentPlaceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B9325E29E01611006342F9 /* RecentPlaceViewCell.swift */; };
 		01F7A1F129D935540058736E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A1F029D935540058736E /* AppDelegate.swift */; };
 		01F7A1F329D935540058736E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A1F229D935540058736E /* SceneDelegate.swift */; };
 		01F7A1F529D935540058736E /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A1F429D935540058736E /* TabBarView.swift */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		01B9325C29E015C3006342F9 /* RecentPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentPlaceView.swift; sourceTree = "<group>"; };
+		01B9325E29E01611006342F9 /* RecentPlaceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecentPlaceViewCell.swift; path = "CaZait-iOS/Views/RecentPlaceViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		01F7A1ED29D935540058736E /* CaZait-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CaZait-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		01F7A1F029D935540058736E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01F7A1F229D935540058736E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 		01F7A20D29D942FD0058736E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				01B9325E29E01611006342F9 /* RecentPlaceViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -136,6 +141,7 @@
 				01F7A21629D95BF70058736E /* MapView.swift */,
 				01F7A21829D95C150058736E /* MyPageView.swift */,
 				01F7A21A29D95C480058736E /* MoreView.swift */,
+				01B9325C29E015C3006342F9 /* RecentPlaceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -275,10 +281,12 @@
 				01F7A21729D95BF70058736E /* MapView.swift in Sources */,
 				01F7A21929D95C150058736E /* MyPageView.swift in Sources */,
 				01F7A20829D936280058736E /* InsetTextField.swift in Sources */,
+				01B9325D29E015C3006342F9 /* RecentPlaceView.swift in Sources */,
 				01F7A1F129D935540058736E /* AppDelegate.swift in Sources */,
 				01F7A1F329D935540058736E /* SceneDelegate.swift in Sources */,
 				01F7A21529D95A2B0058736E /* MainView.swift in Sources */,
 				01F7A20929D936280058736E /* UITextField+Extenstion.swift in Sources */,
+				01B9325F29E01611006342F9 /* RecentPlaceViewCell.swift in Sources */,
 				01F7A20729D936280058736E /* UIColor+Extension.swift in Sources */,
 				01F7A21B29D95C480058736E /* MoreView.swift in Sources */,
 			);

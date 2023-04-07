@@ -370,7 +370,7 @@ class MyPageView: UIViewController{
         
         couponButton.addTarget(self, action:#selector(buttonClicked_1), for: .touchUpInside)
         paymentButton.addTarget(self, action:#selector(buttonClicked_2), for: .touchUpInside)
-        recentplaceButton.addTarget(self, action:#selector(buttonClicked_3), for: .touchUpInside)
+        recentplaceButton.addTarget(self, action: #selector(goRecentPlaceButtonTapped), for: .touchUpInside)
     }
     
     //상태표시줄 화이트색의 글씨로 변경
@@ -404,6 +404,12 @@ class MyPageView: UIViewController{
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
     }
+    
+    @objc func goRecentPlaceButtonTapped() {
+            let newViewController = RecentPlaceView() // 새로운 뷰 컨트롤러 생성
+            self.navigationController?.pushViewController(newViewController, animated: true) // 새로운 뷰 컨트롤러 푸시
+            navigationController?.navigationBar.tintColor = UIColor.white
+        }
     
 
 }
