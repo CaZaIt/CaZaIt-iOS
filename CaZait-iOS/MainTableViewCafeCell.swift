@@ -48,7 +48,7 @@ class MainTableViewCafeCell: UITableViewCell {
     func calculateCellHeight() -> CGFloat {
         let cellCount : CGFloat = 10 //collectionCell의 갯수
         let rowCount : CGFloat = (cellCount/2) + (cellCount.truncatingRemainder(dividingBy: 2))//collectionView의 Row의 갯수
-        let cellHeight : CGFloat = rowCount * (15 + 15 + 276) //collectionView의 높이
+        let cellHeight : CGFloat = rowCount * (15 + 15 + 276) //collectionView의 높이 collectionViewCell의 row * (cell의 상단여백 + Celld의 하단여백 + cell의 높이)
         
         return cellHeight
     }

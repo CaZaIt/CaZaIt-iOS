@@ -10,6 +10,8 @@ import SnapKit
 
 class MainView: UIViewController {
 
+    let mainTopSearchView = MainTopSearchView()
+    
     private let mainTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         
@@ -33,13 +35,25 @@ class MainView: UIViewController {
     }
     
     func setupMainTableView() {
+        view.addSubview(mainTopSearchView)
+        
+        mainTopSearchView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(99)
+        }
+        
         view.addSubview(mainTableView)
         
         mainTableView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(mainTopSearchView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
+    }
+    //상단의 시계가 흰색으로 표시되게 하기 위해서 추가하는 코드입니다.
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent // 밝은 배경색일 경우에는 .darkContent
     }
 }
 

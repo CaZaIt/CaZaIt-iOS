@@ -14,7 +14,7 @@ class LovedCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont(name: "AppleSDGothicNeoEB00", size: 20)
         label.textColor = .black
         label.textAlignment = .left
         label.text = "롬곡"
@@ -68,8 +68,8 @@ class LovedCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(cafeNameLabel)
         
         cafeNameLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(contentView.snp.centerX)
-            make.centerY.equalTo(contentView.snp.centerY)
+            make.top.equalTo(contentView.snp.top).offset(14)
+            make.leading.equalTo(contentView.snp.leading).offset(17)
         }
         
         
