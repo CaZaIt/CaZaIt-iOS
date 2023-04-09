@@ -2,113 +2,100 @@
 //  ItemView.swift
 //  CaZait-iOS
 //
-//  Created by 강석호 on 2023/04/02.
+//  Created by 강민수 on 2023/04/02.
 //
 
 import UIKit
+import SnapKit
 
-class MainView: UITableViewController {
+class MainView: UIViewController {
 
+    let mainTopSearchView = MainTopSearchView()
+    
+    private let mainTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        
+        tableView.allowsSelection = false
+        tableView.showsVerticalScrollIndicator = false //수직 스크롤 인디게이터를 보이지 않게 함
+        tableView.backgroundColor = UIColor(r: 37, g: 68, b: 181)
+        tableView.sectionHeaderTopPadding = 0 //상단 패딩을 0으로 지정한다.
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.register(MyTableViewCell.self, forCellReuseIdentifier: "MyTableViewCell")
-    }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as! MyTableViewCell
-
-        // Configure the cell...
-
-        return cell
-    }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 180 // 셀 높이 조정
-    }
-}
-
-class MyTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    private let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .green
-        return collectionView
-    }()
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        contentView.addSubview(collectionView)
-
-        collectionView.dataSource = self
-        collectionView.delegate = self
-
-        collectionView.register(MyCollectionViewCell.self, forCellWithReuseIdentifier: "MyCollectionViewCell")
-
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 180) // CollectionView 높이 조정
-        ])
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: - Collection view data source
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        self.view.backgroundColor = .black
+        mainTableView.delegate = self
+        mainTableView.dataSource = self
+        mainTableView.register(MainTableViewLovedCell.self, forCellReuseIdentifier: "MainTableViewLovedCell")
+        mainTableView.register(MainTableViewCafeCell.self, forCellReuseIdentifier: "MainTableViewCafeCell")
+        
+        setupMainTableView()
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10 // 간격의 크기
+    func setupMainTableView() {
+        view.addSubview(mainTopSearchView)
+        
+        mainTopSearchView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(99)
+        }
+        
+        view.addSubview(mainTableView)
+        
+        mainTableView.snp.makeConstraints { make in
+            make.top.equalTo(mainTopSearchView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
     }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCollectionViewCell", for: indexPath) as! MyCollectionViewCell
-        // Configure the cell...
-        return cell
-    }
-
-    // MARK: - Collection view delegate flow layout
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100)
+    //상단의 시계가 흰색으로 표시되게 하기 위해서 추가하는 코드입니다.
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent // 밝은 배경색일 경우에는 .darkContent
     }
 }
 
-class MyCollectionViewCell: UICollectionViewCell {
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = .red
-        // Configure the cell…
+extension MainView: UITableViewDelegate, UITableViewDataSource{
+    
+    //mainTableView의 섹션의 갯수
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    //mainTableView의 각 섹션 마다 cell row 숫자의 갯수
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
     }
+
+    //mainTableView의 각 센션 마다 사용할 cell의 종류
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewLovedCell", for: indexPath) as! MainTableViewLovedCell
+            cell.navigationController = navigationController
+            // 첫 번째 섹션에서 사용할 셀 구성
+            return cell
+        }
+        else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCafeCell", for: indexPath) as! MainTableViewCafeCell
+            cell.navigationController = navigationController
+            // 두 번째 섹션에서 사용할 셀 구성
+            return cell
+        }
+    }
+
+    //mainTableViewCell의 높이를 지정한다.
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 200
+        } else { //section1의 경우 수직방향 collectionView이므로 cell의 갯수에 따라 높이가 다르게 지정된다.
+            let cell = MainTableViewCafeCell()
+            let cellHeight = cell.calculateCellHeight()
+            return cellHeight
+        }
+    }
+    
+    
 }
