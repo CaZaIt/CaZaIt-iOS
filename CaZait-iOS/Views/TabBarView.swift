@@ -16,6 +16,7 @@ class TapBarVC: UITabBarController {
         tabBar.backgroundColor = .black
         tabBar.tintColor = .gray
         tabBar.unselectedItemTintColor = .white
+        tabBar.barTintColor = .black
        // 인스턴스화
         let vc1 = MainView()
         let vc2 = MapView()
