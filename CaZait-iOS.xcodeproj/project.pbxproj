@@ -10,6 +10,7 @@
 		01B9328129E2E1C3006342F9 /* sampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B9328029E2E1C3006342F9 /* sampleModel.swift */; };
 		01B9328429E2E1DB006342F9 /* sampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B9328329E2E1DB006342F9 /* sampleViewModel.swift */; };
 		01B9328729E2E1F0006342F9 /* sampleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B9328629E2E1F0006342F9 /* sampleService.swift */; };
+		01B9328929E2E320006342F9 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B9328829E2E320006342F9 /* MapView.swift */; };
 		01F7A1F129D935540058736E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A1F029D935540058736E /* AppDelegate.swift */; };
 		01F7A1F329D935540058736E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A1F229D935540058736E /* SceneDelegate.swift */; };
 		01F7A1F529D935540058736E /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A1F429D935540058736E /* TabBarView.swift */; };
@@ -19,7 +20,7 @@
 		01F7A20829D936280058736E /* InsetTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A20529D936280058736E /* InsetTextField.swift */; };
 		01F7A20929D936280058736E /* UITextField+Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A20629D936280058736E /* UITextField+Extenstion.swift */; };
 		01F7A21529D95A2B0058736E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21429D95A2B0058736E /* MainView.swift */; };
-		01F7A21729D95BF70058736E /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21629D95BF70058736E /* MapView.swift */; };
+		01F7A21729D95BF70058736E /* CafeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21629D95BF70058736E /* CafeDetailView.swift */; };
 		01F7A21929D95C150058736E /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21829D95C150058736E /* MyPageView.swift */; };
 		01F7A21B29D95C480058736E /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21A29D95C480058736E /* MoreView.swift */; };
 		37496607093ADF2DD306E85B /* Pods_CaZait_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 212848CC094DA1C393D1C108 /* Pods_CaZait_iOS.framework */; };
@@ -28,13 +29,13 @@
 		F13FDA7529DD5DD00044C6C3 /* MainTableViewLovedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */; };
 		F13FDA7729DD616E0044C6C3 /* LovedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */; };
 		F13FDA9E29DD91A50044C6C3 /* MainTableViewCafeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */; };
-		F13FDAA029DD94800044C6C3 /* CafeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA9F29DD94800044C6C3 /* CafeDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		01B9328029E2E1C3006342F9 /* sampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampleModel.swift; sourceTree = "<group>"; };
 		01B9328329E2E1DB006342F9 /* sampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampleViewModel.swift; sourceTree = "<group>"; };
 		01B9328629E2E1F0006342F9 /* sampleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampleService.swift; sourceTree = "<group>"; };
+		01B9328829E2E320006342F9 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		01F7A1ED29D935540058736E /* CaZait-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CaZait-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		01F7A1F029D935540058736E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01F7A1F229D935540058736E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -46,7 +47,7 @@
 		01F7A20529D936280058736E /* InsetTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetTextField.swift; sourceTree = "<group>"; };
 		01F7A20629D936280058736E /* UITextField+Extenstion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Extenstion.swift"; sourceTree = "<group>"; };
 		01F7A21429D95A2B0058736E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		01F7A21629D95BF70058736E /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		01F7A21629D95BF70058736E /* CafeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeDetailView.swift; sourceTree = "<group>"; };
 		01F7A21829D95C150058736E /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		01F7A21A29D95C480058736E /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		212848CC094DA1C393D1C108 /* Pods_CaZait_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CaZait_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,7 +58,6 @@
 		F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainTableViewLovedCell.swift; path = "CaZait-iOS/Cells/MainTableViewLovedCell.swift"; sourceTree = SOURCE_ROOT; };
 		F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LovedCollectionViewCell.swift; path = "CaZait-iOS/Cells/LovedCollectionViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainTableViewCafeCell.swift; path = "CaZait-iOS/Cells/MainTableViewCafeCell.swift"; sourceTree = SOURCE_ROOT; };
-		F13FDA9F29DD94800044C6C3 /* CafeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,11 +158,11 @@
 			children = (
 				01F7A1F429D935540058736E /* TabBarView.swift */,
 				01F7A21429D95A2B0058736E /* MainView.swift */,
-				01F7A21629D95BF70058736E /* MapView.swift */,
+				01F7A21629D95BF70058736E /* CafeDetailView.swift */,
 				01F7A21829D95C150058736E /* MyPageView.swift */,
 				01F7A21A29D95C480058736E /* MoreView.swift */,
-				F13FDA9F29DD94800044C6C3 /* CafeDetailView.swift */,
 				F122CEF529DF05C300818D7B /* MainTopSearchView.swift */,
+				01B9328829E2E320006342F9 /* MapView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -303,8 +303,7 @@
 				F13FDA9E29DD91A50044C6C3 /* MainTableViewCafeCell.swift in Sources */,
 				01F7A1F529D935540058736E /* TabBarView.swift in Sources */,
 				F13FDA7729DD616E0044C6C3 /* LovedCollectionViewCell.swift in Sources */,
-				F13FDAA029DD94800044C6C3 /* CafeDetailView.swift in Sources */,
-				01F7A21729D95BF70058736E /* MapView.swift in Sources */,
+				01F7A21729D95BF70058736E /* CafeDetailView.swift in Sources */,
 				01F7A21929D95C150058736E /* MyPageView.swift in Sources */,
 				01F7A20829D936280058736E /* InsetTextField.swift in Sources */,
 				01F7A1F129D935540058736E /* AppDelegate.swift in Sources */,
@@ -314,6 +313,7 @@
 				01B9328429E2E1DB006342F9 /* sampleViewModel.swift in Sources */,
 				F122CEF629DF05C300818D7B /* MainTopSearchView.swift in Sources */,
 				01F7A20929D936280058736E /* UITextField+Extenstion.swift in Sources */,
+				01B9328929E2E320006342F9 /* MapView.swift in Sources */,
 				F122CEF229DE8FAD00818D7B /* CafeListCollectionViewCell.swift in Sources */,
 				01F7A20729D936280058736E /* UIColor+Extension.swift in Sources */,
 				01F7A21B29D95C480058736E /* MoreView.swift in Sources */,
