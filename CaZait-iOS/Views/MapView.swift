@@ -133,6 +133,10 @@ extension MapView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return headerViewHeight
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent // 밝은 배경색일 경우에는 .darkContent
+    }
 
 }
 
