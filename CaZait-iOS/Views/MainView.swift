@@ -12,12 +12,20 @@ class MainView: UIViewController {
 
     let mainTopSearchView = MainTopSearchView()
     
+    private let whiteView: UIView = {
+        let view = UIView()
+        
+        view.backgroundColor = .white
+        
+        return view
+    }()
+    
     private let mainTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         
         tableView.allowsSelection = false
         tableView.showsVerticalScrollIndicator = false //수직 스크롤 인디게이터를 보이지 않게 함
-        tableView.backgroundColor = UIColor(r: 37, g: 68, b: 181)
+        tableView.backgroundColor = .white
         tableView.sectionHeaderTopPadding = 0 //상단 패딩을 0으로 지정한다.
         return tableView
     }()
@@ -35,20 +43,28 @@ class MainView: UIViewController {
     }
     
     func setupMainTableView() {
-        view.addSubview(mainTopSearchView)
+        view.addSubview(whiteView)
+        
+        whiteView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        whiteView.addSubview(mainTopSearchView)
         
         mainTopSearchView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(whiteView.snp.top)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(99)
         }
         
-        view.addSubview(mainTableView)
+        whiteView.addSubview(mainTableView)
         
         mainTableView.snp.makeConstraints { make in
             make.top.equalTo(mainTopSearchView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.bottom.equalTo(whiteView.snp.bottom)
         }
     }
     //상단의 시계가 흰색으로 표시되게 하기 위해서 추가하는 코드입니다.
