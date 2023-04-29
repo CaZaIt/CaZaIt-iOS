@@ -105,7 +105,7 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
     //mainTableViewCell의 높이를 지정한다.
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 200
+            return 245
         } else { //section1의 경우 수직방향 collectionView이므로 cell의 갯수에 따라 높이가 다르게 지정된다.
             let cell = MainTableViewCafeCell()
             let cellHeight = cell.calculateCellHeight()
