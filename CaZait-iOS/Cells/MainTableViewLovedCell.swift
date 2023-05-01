@@ -45,7 +45,7 @@ class MainTableViewLovedCell: UITableViewCell {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false //수평 스크롤 인디게이터를 보이지 않게 함
-        collectionView.backgroundColor = .green
+        collectionView.backgroundColor = .white
         return collectionView
     }()
     
@@ -87,6 +87,7 @@ class MainTableViewLovedCell: UITableViewCell {
             make.centerY.equalTo(lovedCafeLabel.snp.centerY)
             make.leading.equalTo(lovedCafeLabel.snp.trailing).offset(10)
         }
+        
     }
 }
 
