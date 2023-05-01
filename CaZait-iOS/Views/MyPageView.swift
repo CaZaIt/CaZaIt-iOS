@@ -413,12 +413,8 @@ class MyPageView: UIViewController{
     }
     
     @objc func buttonClicked_3(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "최근 본 매장 버튼 클릭", message: "The button was clicked.", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            // OK 버튼을 클릭하면 실행될 코드
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
+        let newViewController = RecentCafeView()
+        self.navigationController?.pushViewController(newViewController, animated: true)
     }
 
     
