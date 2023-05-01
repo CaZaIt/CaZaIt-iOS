@@ -413,6 +413,7 @@ class MyPageView: UIViewController{
     }
     
     @objc func buttonClicked_3(_ sender: UIButton) {
+        // 버튼 클릭시 RecentCafeView로 이동
         let newViewController = RecentCafeView()
         self.navigationController?.pushViewController(newViewController, animated: true)
     }
