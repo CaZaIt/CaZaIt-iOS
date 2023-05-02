@@ -413,9 +413,10 @@ class MyPageView: UIViewController{
     }
     
     @objc func buttonClicked_3(_ sender: UIButton) {
-        // 버튼 클릭시 RecentCafeView로 이동
-        let newViewController = RecentCafeView()
-        self.navigationController?.pushViewController(newViewController, animated: true)
+        // RecentCafeView 인스턴스 생성
+        let recentCafeView = RecentCafeView()
+        // 내비게이션 스택으로 RecentCafeView를 푸시
+        self.navigationController?.pushViewController(recentCafeView, animated: true)
     }
 
     
