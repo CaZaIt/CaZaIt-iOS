@@ -61,6 +61,7 @@ class LovedCollectionViewCell: UICollectionViewCell {
         self.layer.shadowOpacity = 1 // 그림자 투명도
         self.layer.shadowRadius = 14 // 그림자 크기
         self.layer.shadowOffset = CGSize(width: 0, height: 5)
+        self.layer.cornerRadius = 10
         
         setupContentViewView()
     }
