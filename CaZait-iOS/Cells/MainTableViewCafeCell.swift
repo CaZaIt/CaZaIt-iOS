@@ -59,7 +59,7 @@ class MainTableViewCafeCell: UITableViewCell {
         collectionView.showsHorizontalScrollIndicator = false //수평 스크롤 인디게이터를 보이지 않게 함
         collectionView.showsVerticalScrollIndicator = false //수직 스크롤 인디게이터를 보이지 않게 함
         collectionView.isScrollEnabled = false //collectionView의 스크롤을 없앤다. tableView의 스크롤만으로 이동하기 위해
-        collectionView.backgroundColor = .yellow 
+        collectionView.backgroundColor = .white
         return collectionView
     }()
     
