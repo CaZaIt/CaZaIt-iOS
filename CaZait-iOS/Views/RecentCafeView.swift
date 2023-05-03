@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class RecentCafeView: UIViewController {
+class RecentCafeView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     
     private let pinkView: UIView = {
@@ -16,6 +16,14 @@ class RecentCafeView: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor(r: 255, g: 223, b: 217)
         return view
+    }()
+    
+    private let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.backgroundColor = .clear
+        return cv
     }()
     
     
@@ -52,7 +60,44 @@ class RecentCafeView: UIViewController {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         
+        self.pinkView.addSubview(collectionView)
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        self.collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        
+        self.collectionView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(self.pinkView.snp.top).inset(30)
+            make.bottom.equalTo(self.pinkView.snp.bottom).inset(20)
+        }
+        
     }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10 // example number of items
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        cell.backgroundColor = .white
+        cell.layer.cornerRadius = 10
+        cell.layer.masksToBounds = true // cornerRadius가 제대로 표시되도록 설정
+        return cell
+    }
+    
+    // MARK: - UICollectionViewDelegateFlowLayout
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.bounds.width
+        return CGSize(width: width-40, height: 172) // example item size
+    }
+    
+    
+    //셀 간격
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 17 // example line spacing
+    }
+    
     
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
@@ -62,6 +107,7 @@ class RecentCafeView: UIViewController {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = true
     }
+    
     
     
 }
