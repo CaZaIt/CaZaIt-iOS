@@ -12,12 +12,20 @@ class MainView: UIViewController {
 
     let mainTopSearchView = MainTopSearchView()
     
+    private let whiteView: UIView = {
+        let view = UIView()
+        
+        view.backgroundColor = .white
+        
+        return view
+    }()
+    
     private let mainTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         
         tableView.allowsSelection = false
         tableView.showsVerticalScrollIndicator = false //수직 스크롤 인디게이터를 보이지 않게 함
-        tableView.backgroundColor = UIColor(r: 37, g: 68, b: 181)
+        tableView.backgroundColor = .white
         tableView.sectionHeaderTopPadding = 0 //상단 패딩을 0으로 지정한다.
         return tableView
     }()
@@ -35,25 +43,39 @@ class MainView: UIViewController {
     }
     
     func setupMainTableView() {
-        view.addSubview(mainTopSearchView)
+        view.addSubview(whiteView)
+        
+        whiteView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        whiteView.addSubview(mainTopSearchView)
         
         mainTopSearchView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(whiteView.snp.top)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(99)
         }
         
-        view.addSubview(mainTableView)
+        whiteView.addSubview(mainTableView)
         
         mainTableView.snp.makeConstraints { make in
             make.top.equalTo(mainTopSearchView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.bottom.equalTo(whiteView.snp.bottom)
         }
     }
     //상단의 시계가 흰색으로 표시되게 하기 위해서 추가하는 코드입니다.
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent // 밝은 배경색일 경우에는 .darkContent
+    }
+    
+    //다른 곳 클릭시 키보드 내려가게 만들기
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+        self.mainTableView.endEditing(true)
     }
 }
 
@@ -89,7 +111,7 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
     //mainTableViewCell의 높이를 지정한다.
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 200
+            return 277
         } else { //section1의 경우 수직방향 collectionView이므로 cell의 갯수에 따라 높이가 다르게 지정된다.
             let cell = MainTableViewCafeCell()
             let cellHeight = cell.calculateCellHeight()

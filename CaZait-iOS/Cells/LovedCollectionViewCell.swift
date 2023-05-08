@@ -13,8 +13,7 @@ class LovedCollectionViewCell: UICollectionViewCell {
     private let cafeNameLabel: UILabel = {
         let label = UILabel()
         
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "AppleSDGothicNeoEB00", size: 20)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold) //위에 글씨체가 어색해서 임시로 추가
         label.textColor = .black
         label.textAlignment = .left
         label.text = "롬곡"
@@ -26,9 +25,8 @@ class LovedCollectionViewCell: UICollectionViewCell {
     private let cafeLocationLabel: UILabel = {
         let label = UILabel()
         
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
-        label.textColor = .black
+        label.font = UIFont(name: "AppleSDGothicNeoL00-Regular", size: 13)
+        label.textColor = .gray
         label.textAlignment = .left
         label.text = "서울특별시 광진구 광나루로 375-1 2층(군자동)"
         label.numberOfLines = 3
@@ -40,26 +38,30 @@ class LovedCollectionViewCell: UICollectionViewCell {
         let view = UIView()
         
         view.backgroundColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1)
+        view.layer.cornerRadius = 10
         return view
     }()
     
-    private let cafeCongestionLabel: UILabel = {
+    private let congestionLabel: UILabel = {
         let label = UILabel()
         
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .white
-        label.textAlignment = .left
+        label.textAlignment = .center
         label.text = "보통"
         label.numberOfLines = 1
         
-        return label
+       return label
     }()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .red
+        self.backgroundColor = .white
+        self.layer.shadowColor = UIColor(red: 1, green: 0.531, blue: 0.531, alpha: 0.25).cgColor // 그림자 색깔
+        self.layer.shadowOpacity = 1 // 그림자 투명도
+        self.layer.shadowRadius = 14 // 그림자 크기
+        self.layer.shadowOffset = CGSize(width: 0, height: 5)
+        self.layer.cornerRadius = 10
         
         setupContentViewView()
     }
@@ -72,7 +74,29 @@ class LovedCollectionViewCell: UICollectionViewCell {
             make.leading.equalTo(contentView.snp.leading).offset(17)
         }
         
+        contentView.addSubview(cafeLocationLabel)
         
+        cafeLocationLabel.snp.makeConstraints { make in
+            make.top.equalTo(cafeNameLabel.snp.bottom).offset(2)
+            make.leading.equalTo(cafeNameLabel.snp.leading)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-16)
+        }
+        
+        contentView.addSubview(congestionView)
+        
+        congestionView.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top).offset(127)
+            make.leading.equalTo(contentView.snp.leading).offset(17)
+            make.width.equalTo(98)
+            make.height.equalTo(33)
+        }
+        
+        congestionView.addSubview(congestionLabel)
+        
+        congestionLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(congestionView.snp.centerX)
+            make.centerY.equalTo(congestionView.snp.centerY)
+        }
     }
 
     required init?(coder: NSCoder) {

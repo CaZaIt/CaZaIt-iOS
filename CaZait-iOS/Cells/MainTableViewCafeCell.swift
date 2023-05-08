@@ -12,6 +12,44 @@ class MainTableViewCafeCell: UITableViewCell {
    
     weak var navigationController: UINavigationController?
     
+    private let checkCafeLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = UIFont(name: "AppleSDGothicNeoM00-Bold", size: 20)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold) //위에 글씨체가 어색해서 임시로 추가
+        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        label.textAlignment = .center
+        label.text = "카페 확인하기"
+        label.numberOfLines = 1
+        
+        return label
+    }()
+    
+    private let cafeListSettingButton: UIButton = {
+        let button = UIButton()
+        
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 15.5
+        button.clipsToBounds = true //해당 뷰의 bounds 밖으로 넘치는 콘텐츠를 잘라내서 보여줄지 여부를 결정
+        button.setImage(UIImage(named:"tune"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        
+        return button
+    }()
+    
+    private let cafeListSettingLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = UIFont(name: "AppleSDGothicNeoM00-Bold", size: 14)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold) //위에 글씨체가 어색해서 임시로 추가
+        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        label.textAlignment = .center
+        label.text = "거리순"
+        label.numberOfLines = 1
+        
+        return label
+    }()
+    
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical //스크롤 방향은 수직
@@ -21,24 +59,52 @@ class MainTableViewCafeCell: UITableViewCell {
         collectionView.showsHorizontalScrollIndicator = false //수평 스크롤 인디게이터를 보이지 않게 함
         collectionView.showsVerticalScrollIndicator = false //수직 스크롤 인디게이터를 보이지 않게 함
         collectionView.isScrollEnabled = false //collectionView의 스크롤을 없앤다. tableView의 스크롤만으로 이동하기 위해
-        collectionView.backgroundColor = .yellow 
+        collectionView.backgroundColor = .white
         return collectionView
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalTo(contentView.snp.leading).offset(12.5)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-12.5)
-            make.bottom.equalToSuperview()
-        }
+        setupMainTableViewCafeCell()
         
         collectionView.register(CafeListCollectionViewCell.self, forCellWithReuseIdentifier: "CafeListCollectionViewCell")
         collectionView.delegate = self
         collectionView.dataSource = self
+    }
+    
+    func setupMainTableViewCafeCell() {
+        contentView.addSubview(checkCafeLabel)
+        
+        checkCafeLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top).offset(11.5)
+            make.leading.equalTo(contentView.snp.leading).offset(23.5)
+        }
+        
+        contentView.addSubview(cafeListSettingButton)
+        
+        cafeListSettingButton.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top).offset(10)
+            make.leading.equalTo(contentView.snp.leading).offset(292.5)
+            make.width.equalTo(31)
+            make.height.equalTo(31)
+        }
+        
+        contentView.addSubview(cafeListSettingLabel)
+        
+        cafeListSettingLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(cafeListSettingButton.snp.centerY)
+            make.leading.equalTo(cafeListSettingButton.snp.trailing).offset(7)
+        }
+        
+        contentView.addSubview(collectionView)
+        
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top).offset(50)
+            make.leading.equalTo(contentView.snp.leading).offset(12.5)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-12.5)
+            make.bottom.equalToSuperview()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -48,7 +114,7 @@ class MainTableViewCafeCell: UITableViewCell {
     func calculateCellHeight() -> CGFloat {
         let cellCount : CGFloat = 10 //collectionCell의 갯수
         let rowCount : CGFloat = (cellCount/2) + (cellCount.truncatingRemainder(dividingBy: 2))//collectionView의 Row의 갯수
-        let cellHeight : CGFloat = rowCount * (15 + 15 + 276) //collectionView의 높이 collectionViewCell의 row * (cell의 상단여백 + Celld의 하단여백 + cell의 높이)
+        let cellHeight : CGFloat = 50 + rowCount * (15 + 15 + 276) //MainTableViewCafeCell의 높이 TitleLabel의 높이 50 + collectionViewCell의 row * (cell의 상단여백 + Celld의 하단여백 + cell의 높이)
         
         return cellHeight
     }
