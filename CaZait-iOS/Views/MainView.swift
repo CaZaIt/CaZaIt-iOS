@@ -71,6 +71,12 @@ class MainView: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent // 밝은 배경색일 경우에는 .darkContent
     }
+    
+    //다른 곳 클릭시 키보드 내려가게 만들기
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+        self.mainTableView.endEditing(true)
+    }
 }
 
 extension MainView: UITableViewDelegate, UITableViewDataSource{
