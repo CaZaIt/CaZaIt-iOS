@@ -78,8 +78,6 @@ class CafeDetailView: UIViewController {
 
         headerView.addSubview(headerLabel)
     }
-
-
 }
 
 extension CafeDetailView: UITableViewDelegate, UITableViewDataSource {
@@ -141,5 +139,3 @@ extension CafeDetailView: UITableViewDelegate, UITableViewDataSource {
     }
 
 }
-
-
