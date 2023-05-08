@@ -11,6 +11,7 @@
 		01B9328429E2E1DB006342F9 /* sampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B9328329E2E1DB006342F9 /* sampleViewModel.swift */; };
 		01B9328729E2E1F0006342F9 /* sampleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B9328629E2E1F0006342F9 /* sampleService.swift */; };
 		01B9328929E2E320006342F9 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B9328829E2E320006342F9 /* MapView.swift */; };
+		01B9328B29FF7F22006342F9 /* RecentCafeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B9328A29FF7F22006342F9 /* RecentCafeView.swift */; };
 		01F7A1F129D935540058736E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A1F029D935540058736E /* AppDelegate.swift */; };
 		01F7A1F329D935540058736E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A1F229D935540058736E /* SceneDelegate.swift */; };
 		01F7A1F529D935540058736E /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A1F429D935540058736E /* TabBarView.swift */; };
@@ -36,6 +37,7 @@
 		01B9328329E2E1DB006342F9 /* sampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampleViewModel.swift; sourceTree = "<group>"; };
 		01B9328629E2E1F0006342F9 /* sampleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampleService.swift; sourceTree = "<group>"; };
 		01B9328829E2E320006342F9 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		01B9328A29FF7F22006342F9 /* RecentCafeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCafeView.swift; sourceTree = "<group>"; };
 		01F7A1ED29D935540058736E /* CaZait-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CaZait-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		01F7A1F029D935540058736E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01F7A1F229D935540058736E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				01F7A21A29D95C480058736E /* MoreView.swift */,
 				F122CEF529DF05C300818D7B /* MainTopSearchView.swift */,
 				01B9328829E2E320006342F9 /* MapView.swift */,
+				01B9328A29FF7F22006342F9 /* RecentCafeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				01F7A1F529D935540058736E /* TabBarView.swift in Sources */,
 				F13FDA7729DD616E0044C6C3 /* LovedCollectionViewCell.swift in Sources */,
 				01F7A21729D95BF70058736E /* CafeDetailView.swift in Sources */,
+				01B9328B29FF7F22006342F9 /* RecentCafeView.swift in Sources */,
 				01F7A21929D95C150058736E /* MyPageView.swift in Sources */,
 				01F7A20829D936280058736E /* InsetTextField.swift in Sources */,
 				01F7A1F129D935540058736E /* AppDelegate.swift in Sources */,
