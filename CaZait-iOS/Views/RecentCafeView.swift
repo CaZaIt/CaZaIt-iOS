@@ -82,6 +82,21 @@ class RecentCafeView: UIViewController, UICollectionViewDelegate, UICollectionVi
         cell.backgroundColor = .white
         cell.layer.cornerRadius = 10
         cell.layer.masksToBounds = true // cornerRadius가 제대로 표시되도록 설정
+        
+        let imageView = UIImageView(frame: cell.contentView.bounds)
+        imageView.image = UIImage(named: "small_cafe2")
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        
+        cell.contentView.addSubview(imageView)
+        
+        imageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().inset(213)
+            make.bottom.equalToSuperview().inset(20)
+        }
+        
         return cell
     }
     
