@@ -82,6 +82,7 @@ class MainView: UIViewController {
     
     var previousScrollViewYOffset: CGFloat = 0.0
     
+    //스크롤 시 뷰의 이동을 나타내는 코드입니다.
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollViewYOffset = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
