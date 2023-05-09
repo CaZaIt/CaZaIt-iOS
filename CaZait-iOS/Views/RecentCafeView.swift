@@ -83,19 +83,60 @@ class RecentCafeView: UIViewController, UICollectionViewDelegate, UICollectionVi
         cell.layer.cornerRadius = 10
         cell.layer.masksToBounds = true // cornerRadius가 제대로 표시되도록 설정
         
-        let imageView = UIImageView(frame: cell.contentView.bounds)
-        imageView.image = UIImage(named: "small_cafe2")
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
+        let CafeImageView = UIImageView(frame: cell.contentView.bounds)
+        CafeImageView.image = UIImage(named: "small_cafe2")
+        CafeImageView.contentMode = .scaleAspectFill
+        CafeImageView.clipsToBounds = true
         
-        cell.contentView.addSubview(imageView)
+        let CafeNameLabel = UILabel()
+        CafeNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        CafeNameLabel.text = "롬곡"
+        CafeNameLabel.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        CafeNameLabel.textColor = .black
         
-        imageView.snp.makeConstraints { make in
+        let DistanceLabel = UILabel()
+        DistanceLabel.translatesAutoresizingMaskIntoConstraints = false
+        DistanceLabel.text = "220m"
+        DistanceLabel.font = UIFont.systemFont(ofSize: 12)
+        DistanceLabel.textColor = .black
+        
+        
+        let AddressLabel = UILabel()
+        AddressLabel.translatesAutoresizingMaskIntoConstraints = false
+        AddressLabel.text = "서울특별시 광진구 광나루로\n375-1 2층(군자동)"
+        AddressLabel.font = UIFont.systemFont(ofSize: 12)
+        AddressLabel.textColor = .black
+        AddressLabel.numberOfLines = 0 // 여러 줄로 표시 가능하도록 설정
+        AddressLabel.lineBreakMode = .byWordWrapping // 단어 단위로 줄바꿈 설정
+        
+        cell.contentView.addSubview(CafeImageView)
+        cell.contentView.addSubview(CafeNameLabel)
+        cell.contentView.addSubview(DistanceLabel)
+        cell.contentView.addSubview(AddressLabel)
+
+        
+        CafeImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(15)
             make.leading.equalToSuperview().offset(15)
             make.trailing.equalToSuperview().inset(213)
             make.bottom.equalToSuperview().inset(20)
         }
+        
+        CafeNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(CafeImageView.snp.top).inset(10)
+            make.leading.equalTo(CafeImageView.snp.trailing).offset(18)
+        }
+        
+        DistanceLabel.snp.makeConstraints { make in
+            make.top.equalTo(CafeImageView.snp.top).inset(20)
+            make.leading.equalTo(CafeNameLabel.snp.trailing).offset(10)
+        }
+        
+        AddressLabel.snp.makeConstraints { make in
+            make.top.equalTo(CafeNameLabel.snp.bottom).offset(20)
+            make.leading.equalTo(CafeImageView.snp.trailing).offset(18)
+        }
+        
         
         return cell
     }
