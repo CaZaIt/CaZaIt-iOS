@@ -27,6 +27,8 @@ class MainView: UIViewController {
         tableView.showsVerticalScrollIndicator = false //수직 스크롤 인디게이터를 보이지 않게 함
         tableView.backgroundColor = .white
         tableView.sectionHeaderTopPadding = 0 //상단 패딩을 0으로 지정한다.
+        tableView.contentInset = UIEdgeInsets(top: 99, left: 0, bottom: 0, right: 0)
+        
         return tableView
     }()
     
@@ -62,7 +64,7 @@ class MainView: UIViewController {
         whiteView.addSubview(mainTableView)
         
         mainTableView.snp.makeConstraints { make in
-            make.top.equalTo(mainTopSearchView.snp.bottom)
+            make.top.equalTo(whiteView.snp.top)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(whiteView.snp.bottom)
         }
@@ -76,6 +78,40 @@ class MainView: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
         self.mainTableView.endEditing(true)
+    }
+    
+    var previousScrollViewYOffset: CGFloat = 0.0
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let scrollViewYOffset = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let scrollViewFrameHeight = scrollView.frame.size.height
+        
+        if scrollViewYOffset > previousScrollViewYOffset {
+            // 스크롤을 아래로 내리는 경우
+            if scrollViewYOffset > 0 && scrollViewYOffset + scrollViewFrameHeight < contentHeight {
+                let deltaY = scrollViewYOffset - previousScrollViewYOffset
+                var newTopSearchViewY = self.mainTopSearchView.frame.origin.y - deltaY
+                if newTopSearchViewY < -self.mainTopSearchView.frame.size.height {
+                    newTopSearchViewY = -self.mainTopSearchView.frame.size.height
+                }
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.mainTopSearchView.frame = CGRect(x: 0, y: newTopSearchViewY, width: self.view.frame.size.width, height: self.mainTopSearchView.frame.size.height)
+                })
+            }
+        } else if scrollViewYOffset < previousScrollViewYOffset {
+            // 스크롤을 위로 올리는 경우
+            let deltaY = previousScrollViewYOffset - scrollViewYOffset
+            var newTopSearchViewY = self.mainTopSearchView.frame.origin.y + deltaY
+            if newTopSearchViewY > 0 {
+                newTopSearchViewY = 0
+            }
+            UIView.animate(withDuration: 0.2, animations: {
+                self.mainTopSearchView.frame = CGRect(x: 0, y: newTopSearchViewY, width: self.view.frame.size.width, height: self.mainTopSearchView.frame.size.height)
+            })
+        }
+        
+        previousScrollViewYOffset = scrollViewYOffset
     }
 }
 
