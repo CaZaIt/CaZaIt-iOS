@@ -20,6 +20,14 @@ class MainView: UIViewController {
         return view
     }()
     
+    private let blackView: UIView = {
+        let view = UIView()
+        
+        view.backgroundColor = .black
+        
+        return view
+    }()
+    
     private let mainTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         
@@ -53,12 +61,12 @@ class MainView: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         
-        whiteView.addSubview(mainTopSearchView)
+        view.addSubview(blackView)
         
-        mainTopSearchView.snp.makeConstraints { make in
-            make.top.equalTo(whiteView.snp.top)
+        blackView.snp.makeConstraints { make in
+            make.top.equalTo(view.snp.top)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(99)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.top)
         }
         
         whiteView.addSubview(mainTableView)
@@ -68,6 +76,16 @@ class MainView: UIViewController {
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(whiteView.snp.bottom)
         }
+        
+        whiteView.addSubview(mainTopSearchView)
+        
+        mainTopSearchView.snp.makeConstraints { make in
+            make.top.equalTo(whiteView.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(99)
+        }
+    
+        
     }
     //상단의 시계가 흰색으로 표시되게 하기 위해서 추가하는 코드입니다.
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -84,13 +102,22 @@ class MainView: UIViewController {
     
     //스크롤 시 뷰의 이동을 나타내는 코드입니다.
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        // scrollViewYOffset: 스크롤 뷰의 현재 스크롤 위치를 나타내는 변수입니다.
         let scrollViewYOffset = scrollView.contentOffset.y
+        // contentHeight: 스크롤 뷰의 콘텐츠 높이를 나타내는 변수입니다.
         let contentHeight = scrollView.contentSize.height
+        // scrollViewFrameHeight: 스크롤 뷰의 프레임 높이를 나타내는 변수입니다.
         let scrollViewFrameHeight = scrollView.frame.size.height
+        
+        print("scrollViewYOffset : \(scrollViewYOffset)")
+        print("scrollViewYOffset : \(scrollViewYOffset)")
+        print("contentHeight : \(contentHeight)")
+        print("scrollViewFrameHeight : \(scrollViewFrameHeight)")
         
         if scrollViewYOffset > previousScrollViewYOffset {
             // 스크롤을 아래로 내리는 경우
-            if scrollViewYOffset > 0 && scrollViewYOffset + scrollViewFrameHeight < contentHeight {
+            if scrollViewYOffset > -99.0 {
                 let deltaY = scrollViewYOffset - previousScrollViewYOffset
                 var newTopSearchViewY = self.mainTopSearchView.frame.origin.y - deltaY
                 if newTopSearchViewY < -self.mainTopSearchView.frame.size.height {
@@ -100,7 +127,7 @@ class MainView: UIViewController {
                     self.mainTopSearchView.frame = CGRect(x: 0, y: newTopSearchViewY, width: self.view.frame.size.width, height: self.mainTopSearchView.frame.size.height)
                 })
             }
-        } else if scrollViewYOffset < previousScrollViewYOffset {
+        } else if scrollViewYOffset < previousScrollViewYOffset && scrollViewYOffset + scrollViewFrameHeight < contentHeight{
             // 스크롤을 위로 올리는 경우
             let deltaY = previousScrollViewYOffset - scrollViewYOffset
             var newTopSearchViewY = self.mainTopSearchView.frame.origin.y + deltaY
