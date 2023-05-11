@@ -32,16 +32,13 @@ class MapView: UIViewController, CLLocationManagerDelegate {
     }()
     
     // 화양리 고정좌표
-    let initialPosition = NMGLatLng(lat: 37.54751410359858, lng: 127.07154626749393)
+    let initialPosition = NMGLatLng(lat: 37.54775068501896, lng: 127.07363206370633)
     //15배 확대
     let zoomLevel = NMFCameraUpdate(zoomTo: 15)
     // 화양리 술집들의 위치 설정
     let positions = [
-        NMGLatLng(lat: 37.54808626824304, lng: 127.07149589136833), // 세종원
-        NMGLatLng(lat: 37.547246082345595, lng: 127.0715035759773), // 폼프리츠
-        NMGLatLng(lat: 37.54699992880324, lng: 127.07253876000969), // 지그재그
-        NMGLatLng(lat: 37.54702602096751, lng: 127.07036610171183), // 진맥
-        NMGLatLng(lat: 37.54788670456676, lng: 127.06997933123841) // 그냥포차
+        NMGLatLng(lat: 37.54847570421354, lng: 127.07263694429658), // 롬곡
+        NMGLatLng(lat: 37.549548141704, lng: 127.07511854895762), // 제주몰빵
     ]
     
     private lazy var naverMapView: NMFMapView = {
