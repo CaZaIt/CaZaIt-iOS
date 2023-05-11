@@ -104,41 +104,60 @@ class MainView: UIViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         // scrollViewYOffset: 스크롤 뷰의 현재 스크롤 위치를 나타내는 변수입니다.
-        let scrollViewYOffset = scrollView.contentOffset.y
+        let scrollViewYOffset = scrollView.contentOffset.y //즉, 스크롤이 된 정도를 나타냅니다. 웹툰보는 방향으로 드래그 할 경우 양의 방향으로 증가가 됩니다.
         // contentHeight: 스크롤 뷰의 콘텐츠 높이를 나타내는 변수입니다.
-        let contentHeight = scrollView.contentSize.height
+        let contentHeight = scrollView.contentSize.height //즉, tableView의 전체 높이를 나타냅니다.
         // scrollViewFrameHeight: 스크롤 뷰의 프레임 높이를 나타내는 변수입니다.
-        let scrollViewFrameHeight = scrollView.frame.size.height
+        let scrollViewFrameHeight = scrollView.frame.size.height// 즉, 우리가 볼수있는 tableView의 높이를 나타냅니다.
         
-        print("scrollViewYOffset : \(scrollViewYOffset)")
         print("scrollViewYOffset : \(scrollViewYOffset)")
         print("contentHeight : \(contentHeight)")
         print("scrollViewFrameHeight : \(scrollViewFrameHeight)")
+        print("previousScrollViewYOffset : \(previousScrollViewYOffset)")
         
+        //현재의 tableView의 상단 위치와 바로 직전 tableView의 상단 위치를 비교하여 스크롤을 내릴때와 올라갈 때를 감지합니다.
+        // 스크롤을 아래로 내리는 경우 (우리가 웹툰보는 방향의 스크롤)
         if scrollViewYOffset > previousScrollViewYOffset {
-            // 스크롤을 아래로 내리는 경우
+            
+            //현재 스크롤된 값이 -99(상단 검색창의 높이)보다 높을 경우에만 검색창이 위로 이동하도록 합니다.
+            //tableView의 상단 패딩의 값이 99로 해놓았기 때문에 초기 값은 -99가 됩니다.
             if scrollViewYOffset > -99.0 {
+                //deltaY선언하여 현재의 offset과 이전의 offset값을 비교하여 어느정도 변화했는지 감지합니다.
                 let deltaY = scrollViewYOffset - previousScrollViewYOffset
-                var newTopSearchViewY = self.mainTopSearchView.frame.origin.y - deltaY
-                if newTopSearchViewY < -self.mainTopSearchView.frame.size.height {
-                    newTopSearchViewY = -self.mainTopSearchView.frame.size.height
+                
+                //새로운 검색창의 Y값은 원래 Y값에서 변화된 값을 뺀 값입니다.
+                var newMainTopSearchViewY = self.mainTopSearchView.frame.origin.y - deltaY
+                
+                //검색창의 새로운 Y의 값이 검색창의 높이보다 더 낮아질 경우 검색창이 계속해서 올라가기 때문에 검색창의 높이만큼만 제한합니다.
+                if newMainTopSearchViewY < -self.mainTopSearchView.frame.size.height {
+                    newMainTopSearchViewY = -self.mainTopSearchView.frame.size.height
                 }
+                
+                //검색창의 y의 값을 수정하여 검색창을 위로 이동시킵니다. newMainTopSearchViewY값은 음의 방향으로 이동합니다.
                 UIView.animate(withDuration: 0.2, animations: {
-                    self.mainTopSearchView.frame = CGRect(x: 0, y: newTopSearchViewY, width: self.view.frame.size.width, height: self.mainTopSearchView.frame.size.height)
+                    self.mainTopSearchView.frame = CGRect(x: 0, y: newMainTopSearchViewY, width: self.view.frame.size.width, height: self.mainTopSearchView.frame.size.height)
                 })
             }
-        } else if scrollViewYOffset < previousScrollViewYOffset && scrollViewYOffset + scrollViewFrameHeight < contentHeight{
-            // 스크롤을 위로 올리는 경우
+        }// 스크롤을 위로 올리는 경우 (우리가 웹툰보는 방향과 반대방향의 스크롤), 또한, tableView의 스크롤 된 정도 + tableView가 보여줄 수 있는 높이가 < 전체 tableView의 높이보다 작을 경우에만 검색창이 다시 등장하게 합니다. (즉, 스크롤을 다 하고도 계속 해서 내리면 빈 공백이 스크롤되고 다시 원위치로 약간 돌아올 경우에 검색창이 다시 약간 내려오는 경우를 방지합니다.)
+        else if scrollViewYOffset < previousScrollViewYOffset && scrollViewYOffset + scrollViewFrameHeight < contentHeight{
+            
+            //deltaY선언하여 현재의 offset과 이전의 offset값을 비교하여 어느정도 변화했는지 감지합니다.
             let deltaY = previousScrollViewYOffset - scrollViewYOffset
-            var newTopSearchViewY = self.mainTopSearchView.frame.origin.y + deltaY
-            if newTopSearchViewY > 0 {
-                newTopSearchViewY = 0
+            
+            //새로운 검색창의 Y값은 원래 Y값에서 변화된 값을 더한 값입니다.
+            var newMainTopSearchViewY = self.mainTopSearchView.frame.origin.y + deltaY
+            
+            //만약 원래 검색창의 frame.origin.y값은 0보다 크게 될 경우 검색창이 계속 내려가게 됨으로 0보다 클 경우 0으로 고정합니다.
+            if newMainTopSearchViewY > 0 {
+                newMainTopSearchViewY = 0
             }
+            //검색창의 y의 값을 수정하여 검색창을 아래로 이동시킵니다. newMainTopSearchViewY값은 음수에서 0으로 이동합니다.
             UIView.animate(withDuration: 0.2, animations: {
-                self.mainTopSearchView.frame = CGRect(x: 0, y: newTopSearchViewY, width: self.view.frame.size.width, height: self.mainTopSearchView.frame.size.height)
+                self.mainTopSearchView.frame = CGRect(x: 0, y: newMainTopSearchViewY, width: self.view.frame.size.width, height: self.mainTopSearchView.frame.size.height)
             })
         }
         
+        //이전의 yOffset값을 저장함으로써 스크롤 방향을 정할 때 사용합니다.
         previousScrollViewYOffset = scrollViewYOffset
     }
 }
