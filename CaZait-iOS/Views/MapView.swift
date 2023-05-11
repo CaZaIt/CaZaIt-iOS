@@ -39,6 +39,7 @@ class MapView: UIViewController, CLLocationManagerDelegate {
     let positions = [
         NMGLatLng(lat: 37.54847570421354, lng: 127.07263694429658), // 롬곡
         NMGLatLng(lat: 37.549548141704, lng: 127.07511854895762), // 제주몰빵
+        NMGLatLng(lat: 37.550136780794496, lng: 127.07322701581906), // 유캔두잇
     ]
     
     private lazy var naverMapView: NMFMapView = {
