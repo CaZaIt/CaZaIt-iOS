@@ -30,6 +30,7 @@ class MainTableViewLovedCell: UITableViewCell {
         let label = UILabel()
         
         label.font = UIFont(name: "AppleSDGothicNeoM00-Regular", size: 14)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular) //위에 글씨체가 어색해서 임시로 추가
         label.textColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1)
         label.textAlignment = .center
         label.text = "찜한 매장을 빠르게 확인!"
@@ -47,6 +48,34 @@ class MainTableViewLovedCell: UITableViewCell {
         collectionView.showsHorizontalScrollIndicator = false //수평 스크롤 인디게이터를 보이지 않게 함
         collectionView.backgroundColor = .white
         return collectionView
+    }()
+    
+    private let dottedLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        
+        let shapeLayer = CAShapeLayer()
+        
+        // 점선 색상
+        shapeLayer.strokeColor = UIColor.black.cgColor
+        
+        // 점선 두께
+        shapeLayer.lineWidth = 1.5
+        
+        // 점선 패턴: 2포인트의 선, 2포인트의 공백으로 반복
+        shapeLayer.lineDashPattern = [8, 8]
+        
+        // 점선의 경로
+        view.layer.addSublayer(shapeLayer)
+        
+        // contentView의 bounds를 기준으로 frame 설정
+        view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1)
+
+        
+        view.layer.addSublayer(shapeLayer)
+        
+        
+        return view
     }()
     
 
@@ -88,6 +117,23 @@ class MainTableViewLovedCell: UITableViewCell {
             make.leading.equalTo(lovedCafeLabel.snp.trailing).offset(10)
         }
         
+        
+        
+        contentView.addSubview(dottedLineView)
+        
+        dottedLineView.snp.makeConstraints { make in
+            make.bottom.equalTo(contentView.snp.bottom)
+            make.leading.equalTo(contentView.snp.leading).offset(21)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-21)
+            make.height.equalTo(1.5)
+        }
+        
+        // contentView에 dottedLineView 추가 후, layout이 완료되었을 때 shapeLayer의 path 설정
+        let shapeLayer = dottedLineView.layer.sublayers?.first as? CAShapeLayer
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: 0, y: 0.5))
+        path.addLine(to: CGPoint(x: dottedLineView.bounds.width - 42, y: 0.5))
+        shapeLayer?.path = path.cgPath
     }
 }
 
