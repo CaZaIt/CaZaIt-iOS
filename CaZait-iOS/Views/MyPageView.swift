@@ -40,7 +40,8 @@ class MyPageView: UIViewController{
     private let loginButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .gray
+        button.backgroundColor = UIColor(red: 1.0, green: 0.87, blue: 0.85, alpha: 1.0)
+        button.setImage(UIImage(named: "arrow_circle_right"), for: .normal)
         return button
     }()
     
@@ -261,8 +262,8 @@ class MyPageView: UIViewController{
         }
         
         self.loginButton.snp.makeConstraints { make in
-            make.leading.equalTo(self.logoutLabel.snp.trailing).offset(10)
-            make.top.equalTo(self.whiteView.snp.top).inset(46)
+            make.leading.equalTo(self.logoutLabel.snp.trailing).offset(2)
+            make.top.equalTo(self.whiteView.snp.top).inset(44)
             make.height.equalTo(30)
             make.width.equalTo(30)
         }
