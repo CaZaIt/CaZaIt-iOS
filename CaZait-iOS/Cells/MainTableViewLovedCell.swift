@@ -51,6 +51,7 @@ class MainTableViewLovedCell: UITableViewCell {
     }()
     
     private let dottedLineView: UIView = {
+        //layer는 오토레이아웃 지정이 되지 않기때문에 view를 생성하고 그 안에 layer를 넣어서 하기 위함/
         let view = UIView()
         view.backgroundColor = .clear
         
@@ -68,7 +69,7 @@ class MainTableViewLovedCell: UITableViewCell {
         // 점선의 경로
         view.layer.addSublayer(shapeLayer)
         
-        // contentView의 bounds를 기준으로 frame 설정
+        // contentView의 bounds를 기준으로 frame 설정하여 나중에 수정하기 위해 추가
         view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1)
 
         
@@ -131,10 +132,16 @@ class MainTableViewLovedCell: UITableViewCell {
         }
         
         // contentView에 dottedLineView 추가 후, layout이 완료되었을 때 shapeLayer의 path 설정
+        
+        // dottedLineView의 layer의 첫 번째 sublayer를 CAShapeLayer로 가져옵니다.
         let shapeLayer = dottedLineView.layer.sublayers?.first as? CAShapeLayer
         let path = UIBezierPath()
-        path.move(to: CGPoint(x: 0, y: 0.5))
-        path.addLine(to: CGPoint(x: dottedLineView.bounds.width - 42, y: 0.5))
+        path.move(to: CGPoint(x: 0, y: 0.75)) // path의 시작점을 해당좌표로 이동합니다.
+        
+        // 현재 위치에서 (dottedLineView.bounds.width - 42, 0.75) 좌표까지 직선을 추가합니다.
+        path.addLine(to: CGPoint(x: dottedLineView.bounds.width - 42, y: 0.75))
+        
+        // shapeLayer의 path를 UIBezierPath의 CGPath 표현으로 설정합니다.
         shapeLayer?.path = path.cgPath
     }
 }
