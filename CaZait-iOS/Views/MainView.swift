@@ -35,6 +35,7 @@ class MainView: UIViewController {
         tableView.showsVerticalScrollIndicator = false //수직 스크롤 인디게이터를 보이지 않게 함
         tableView.backgroundColor = .white
         tableView.sectionHeaderTopPadding = 0 //상단 패딩을 0으로 지정한다.
+        tableView.separatorStyle = .none //tableView의 구분선을 없앤다.
         tableView.contentInset = UIEdgeInsets(top: 99, left: 0, bottom: 0, right: 0)
         
         return tableView
