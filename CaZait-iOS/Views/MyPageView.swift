@@ -37,6 +37,13 @@ class MyPageView: UIViewController{
         return label
     }()
     
+    private let loginButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .gray
+        return button
+    }()
+    
     private let payView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -215,6 +222,7 @@ class MyPageView: UIViewController{
         view.addSubview(whiteView)
         whiteView.addSubview(pinkView)
         whiteView.addSubview(logoutLabel)
+        whiteView.addSubview(loginButton)
         whiteView.addSubview(payView)
         payView.addSubview(payLabel)
         payView.addSubview(paymoneyLabel)
@@ -250,6 +258,13 @@ class MyPageView: UIViewController{
         self.logoutLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.whiteView.snp.leading).inset(39)
             make.top.equalTo(self.whiteView.snp.top).inset(46)
+        }
+        
+        self.loginButton.snp.makeConstraints { make in
+            make.leading.equalTo(self.logoutLabel.snp.trailing).offset(10)
+            make.top.equalTo(self.whiteView.snp.top).inset(46)
+            make.height.equalTo(30)
+            make.width.equalTo(30)
         }
         
         self.payView.snp.makeConstraints { make in
@@ -387,6 +402,7 @@ class MyPageView: UIViewController{
         couponButton.addTarget(self, action:#selector(buttonClicked_1), for: .touchUpInside)
         paymentButton.addTarget(self, action:#selector(buttonClicked_2), for: .touchUpInside)
         recentplaceButton.addTarget(self, action: #selector(buttonClicked_3), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(buttonClicked_4), for: .touchUpInside)
     }
     
     //상태표시줄 화이트색의 글씨로 변경
@@ -417,6 +433,13 @@ class MyPageView: UIViewController{
         let recentCafeView = RecentCafeView()
         // 내비게이션 스택으로 RecentCafeView를 푸시
         self.navigationController?.pushViewController(recentCafeView, animated: true)
+    }
+    
+    @objc func buttonClicked_4(_ sender: UIButton) {
+        // RecentCafeView 인스턴스 생성
+        let loginView = LoginView()
+        // 내비게이션 스택으로 RecentCafeView를 푸시
+        self.navigationController?.pushViewController(loginView, animated: true)
     }
 
     

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01B87B582A120F480082FC05 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87B572A120F480082FC05 /* LoginView.swift */; };
 		01B9328129E2E1C3006342F9 /* sampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B9328029E2E1C3006342F9 /* sampleModel.swift */; };
 		01B9328429E2E1DB006342F9 /* sampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B9328329E2E1DB006342F9 /* sampleViewModel.swift */; };
 		01B9328729E2E1F0006342F9 /* sampleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B9328629E2E1F0006342F9 /* sampleService.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		01B87B572A120F480082FC05 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		01B9328029E2E1C3006342F9 /* sampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampleModel.swift; sourceTree = "<group>"; };
 		01B9328329E2E1DB006342F9 /* sampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampleViewModel.swift; sourceTree = "<group>"; };
 		01B9328629E2E1F0006342F9 /* sampleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampleService.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				F122CEF529DF05C300818D7B /* MainTopSearchView.swift */,
 				01B9328829E2E320006342F9 /* MapView.swift */,
 				01B9328A29FF7F22006342F9 /* RecentCafeView.swift */,
+				01B87B572A120F480082FC05 /* LoginView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				01B9328129E2E1C3006342F9 /* sampleModel.swift in Sources */,
 				01B9328429E2E1DB006342F9 /* sampleViewModel.swift in Sources */,
 				F122CEF629DF05C300818D7B /* MainTopSearchView.swift in Sources */,
+				01B87B582A120F480082FC05 /* LoginView.swift in Sources */,
 				01F7A20929D936280058736E /* UITextField+Extenstion.swift in Sources */,
 				01B9328929E2E320006342F9 /* MapView.swift in Sources */,
 				F122CEF229DE8FAD00818D7B /* CafeListCollectionViewCell.swift in Sources */,
