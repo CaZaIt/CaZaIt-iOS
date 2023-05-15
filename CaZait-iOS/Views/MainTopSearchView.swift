@@ -10,26 +10,64 @@ import SnapKit
 
 class MainTopSearchView: UIView {
     
-    private let searchTextfield: InsetTextField = {
+//    private let searchTextfield: InsetTextField = {
+//
+//        let textField = InsetTextField()
+//
+//        textField.placeholder = "search" //text가 비어있을 때 표시되는 글
+//        textField.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+//        textField.layer.cornerRadius = 20 //둥글게 만들어 줍니다.
+//        textField.textColor = UIColor(r: 255, g: 255, b: 255)
+//        textField.setPlaceholder(color: UIColor(r: 255, g: 255, b: 255))
+//        textField.insetX = 47 //왼쪽에 사진을 추가하기 위해 마진을 추가합니다.
+//        textField.addleftimage(image: UIImage(named: "search"))
+//        textField.font = UIFont(name: "AppleSDGothicNeoM00-Regular", size: 16)
+//        textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+//        textField.layer.shadowColor = UIColor.black.cgColor
+//        textField.layer.shadowOffset = CGSize(width: 0, height: 4)
+//        textField.layer.shadowRadius = 4
+//        textField.layer.shadowOpacity = 0.25
+//        textField.keyboardType = .default // 한글 기본 키보드
+//
+//        return textField
+//    }()
+    
+    let searchButton: UIButton = {
+        let button = UIButton()
         
-        let textField = InsetTextField()
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 20
         
-        textField.placeholder = "search" //text가 비어있을 때 표시되는 글
-        textField.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        textField.layer.cornerRadius = 20 //둥글게 만들어 줍니다.
-        textField.textColor = UIColor(r: 255, g: 255, b: 255)
-        textField.setPlaceholder(color: UIColor(r: 255, g: 255, b: 255))
-        textField.insetX = 47 //왼쪽에 사진을 추가하기 위해 마진을 추가합니다.
-        textField.addleftimage(image: UIImage(named: "search"))
-        textField.font = UIFont(name: "AppleSDGothicNeoM00-Regular", size: 16)
-        textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        textField.layer.shadowColor = UIColor.black.cgColor
-        textField.layer.shadowOffset = CGSize(width: 0, height: 4)
-        textField.layer.shadowRadius = 4
-        textField.layer.shadowOpacity = 0.25
-        textField.keyboardType = .default // 한글 기본 키보드
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 0, height: 4)
+        button.layer.shadowRadius = 4
+        button.layer.shadowOpacity = 0.25
         
-        return textField
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "search")
+        imageView.contentMode = .scaleAspectFit
+        
+        let label = UILabel()
+        label.text = "Search"
+        label.textAlignment = .left
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 16)
+        
+        button.addSubview(imageView)
+        
+        imageView.snp.makeConstraints { make in
+            make.leading.equalTo(button.snp.leading).offset(12.6)
+            make.centerY.equalToSuperview()
+        }
+        
+        button.addSubview(label)
+        
+        label.snp.makeConstraints { make in
+            make.leading.equalTo(button.snp.leading).offset(47)
+            make.centerY.equalToSuperview()
+        }
+        
+        return button
     }()
     
     private let logoImageView: UIImageView = {
@@ -68,11 +106,11 @@ class MainTopSearchView: UIView {
     
     
     private func setupConstraints() {
-        addSubview(searchTextfield)
+        addSubview(searchButton)
         addSubview(logoImageView)
         addSubview(menuButton)
         
-        searchTextfield.snp.makeConstraints { make in
+        searchButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
             make.height.equalTo(46)
