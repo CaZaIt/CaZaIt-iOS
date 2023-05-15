@@ -64,10 +64,10 @@ class LovedCollectionViewCell: UICollectionViewCell {
         self.layer.shadowOffset = CGSize(width: 0, height: 5)
         self.layer.cornerRadius = 10
         
-        setupContentViewView()
+        setupContentView()
     }
     
-    func setupContentViewView() {
+    func setupContentView() {
         contentView.addSubview(cafeNameLabel)
         
         cafeNameLabel.snp.makeConstraints { make in
