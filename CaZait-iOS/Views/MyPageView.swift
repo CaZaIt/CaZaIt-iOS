@@ -26,13 +26,13 @@ class MyPageView: UIViewController{
         return view
     }()
     
-    private let logoutLabel: UILabel = {
+    private let loginLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .black
         label.textAlignment = .center
-        label.text = "로그아웃"
+        label.text = "로그인"
         label.numberOfLines = 1
         return label
     }()
@@ -70,7 +70,7 @@ class MyPageView: UIViewController{
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         label.textColor = .white
         label.textAlignment = .center
-        label.text = "1,111"
+        label.text = "-,---"
         label.numberOfLines = 1
         return label
     }()
@@ -222,7 +222,7 @@ class MyPageView: UIViewController{
         
         view.addSubview(whiteView)
         whiteView.addSubview(pinkView)
-        whiteView.addSubview(logoutLabel)
+        whiteView.addSubview(loginLabel)
         whiteView.addSubview(loginButton)
         whiteView.addSubview(payView)
         payView.addSubview(payLabel)
@@ -256,13 +256,13 @@ class MyPageView: UIViewController{
             make.height.equalTo(125)
         }
         
-        self.logoutLabel.snp.makeConstraints { make in
+        self.loginLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.whiteView.snp.leading).inset(39)
             make.top.equalTo(self.whiteView.snp.top).inset(46)
         }
         
         self.loginButton.snp.makeConstraints { make in
-            make.leading.equalTo(self.logoutLabel.snp.trailing).offset(2)
+            make.leading.equalTo(self.loginLabel.snp.trailing).offset(2)
             make.top.equalTo(self.whiteView.snp.top).inset(44)
             make.height.equalTo(30)
             make.width.equalTo(30)
@@ -271,7 +271,7 @@ class MyPageView: UIViewController{
         self.payView.snp.makeConstraints { make in
             make.leading.equalTo(self.whiteView.snp.leading).inset(28)
             make.trailing.equalTo(self.whiteView.snp.trailing).inset(28)
-            make.top.equalTo(self.logoutLabel.snp.bottom).offset(14)
+            make.top.equalTo(self.loginLabel.snp.bottom).offset(14)
             make.bottom.equalTo(self.whiteView.snp.bottom).inset(527)
 //            make.height.equalTo(102)
         }
