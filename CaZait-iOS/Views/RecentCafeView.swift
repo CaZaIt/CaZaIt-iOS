@@ -43,6 +43,12 @@ class RecentCafeView: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        
+        //손가락 옆으로 미는 제스쳐 작동
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+
+        
         // 네비게이션 바 타이틀 설정
         self.title = "최근 본 매장"
         
@@ -73,8 +79,7 @@ class RecentCafeView: UIViewController {
         }
         
     }
-    
-    
+
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -82,6 +87,8 @@ class RecentCafeView: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = true
+        
+        
     }
     
 }
@@ -116,3 +123,4 @@ extension RecentCafeView: UICollectionViewDataSource, UICollectionViewDelegate, 
 }
 
 
+extension RecentCafeView: UIGestureRecognizerDelegate { }
