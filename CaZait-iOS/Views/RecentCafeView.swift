@@ -109,11 +109,24 @@ class RecentCafeView: UIViewController, UICollectionViewDelegate, UICollectionVi
         AddressLabel.numberOfLines = 0 // 여러 줄로 표시 가능하도록 설정
         AddressLabel.lineBreakMode = .byWordWrapping // 단어 단위로 줄바꿈 설정
         
+        let CongestionView = UIView()
+        CongestionView.backgroundColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1)
+        CongestionView.layer.cornerRadius = 20
+        
+        let CongestionLabel = UILabel()
+        CongestionLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        CongestionLabel.textColor = .white
+        CongestionLabel.textAlignment = .center
+        CongestionLabel.text = "보통"
+        CongestionLabel.numberOfLines = 1
+        
         cell.contentView.addSubview(CafeImageView)
         cell.contentView.addSubview(CafeNameLabel)
         cell.contentView.addSubview(DistanceLabel)
         cell.contentView.addSubview(AddressLabel)
-
+        cell.contentView.addSubview(CongestionView)
+        cell.contentView.addSubview(CongestionLabel)
+        
         
         CafeImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(15)
@@ -133,10 +146,21 @@ class RecentCafeView: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
         AddressLabel.snp.makeConstraints { make in
-            make.top.equalTo(CafeNameLabel.snp.bottom).offset(20)
+            make.top.equalTo(CafeNameLabel.snp.bottom).offset(7)
             make.leading.equalTo(CafeImageView.snp.trailing).offset(18)
         }
         
+        CongestionView.snp.makeConstraints { make in
+            make.top.equalTo(AddressLabel.snp.bottom).offset(26)
+            make.leading.equalTo(CafeImageView.snp.trailing).offset(18)
+            make.bottom.equalTo(cell.snp.bottom).inset(20)
+            make.trailing.equalTo(cell.snp.trailing).inset(18)
+        }
+        
+        CongestionLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(CongestionView.snp.centerX)
+            make.centerY.equalTo(CongestionView.snp.centerY)
+        }
         
         return cell
     }
