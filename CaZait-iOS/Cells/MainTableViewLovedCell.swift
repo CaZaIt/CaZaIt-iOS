@@ -86,6 +86,8 @@ class MainTableViewLovedCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        self.backgroundColor = .white
+        
         setupMainTableViewLovedCell()
     }
     
