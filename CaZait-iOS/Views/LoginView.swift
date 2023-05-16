@@ -114,6 +114,10 @@ class LoginView: UIViewController{
         self.navigationController?.navigationBar.backgroundColor = .black
         self.navigationController?.navigationBar.tintColor = .white
         
+        //손가락 옆으로 미는 제스쳐 작동
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
         
         self.view.addSubview(pinkView)
         self.pinkView.addSubview(cazaitLogo)
@@ -174,3 +178,6 @@ class LoginView: UIViewController{
         self.navigationController?.isNavigationBarHidden = true
     }
 }
+
+
+extension LoginView: UIGestureRecognizerDelegate { }
