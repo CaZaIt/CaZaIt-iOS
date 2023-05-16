@@ -31,8 +31,8 @@ class MapView: UIViewController, CLLocationManagerDelegate {
         return label
     }()
     
-    // 화양리 고정좌표
-    let initialPosition = NMGLatLng(lat: 37.54775068501896, lng: 127.07363206370633)
+    // 화양리 고정좌표(세종대 집현관을 중심기준으로)
+    let initialPosition = NMGLatLng(lat: 37.549080572141555, lng: 127.07361073914453)
     //15배 확대
     let zoomLevel = NMFCameraUpdate(zoomTo: 15)
     // 화양리 술집들의 위치 설정
