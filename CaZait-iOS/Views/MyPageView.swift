@@ -412,7 +412,7 @@ class MyPageView: UIViewController{
     }
     
     @objc func buttonClicked_1(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "쿠폰 버튼 클릭", message: "The button was clicked.", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "서비스 준비중입니다.", message: "", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
             // OK 버튼을 클릭하면 실행될 코드
         }
@@ -421,7 +421,7 @@ class MyPageView: UIViewController{
     }
     
     @objc func buttonClicked_2(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "결제내역 버튼 클릭", message: "The button was clicked.", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "서비스 준비중입니다.", message: "", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
             // OK 버튼을 클릭하면 실행될 코드
         }
