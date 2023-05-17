@@ -27,6 +27,7 @@
 		37496607093ADF2DD306E85B /* Pods_CaZait_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 212848CC094DA1C393D1C108 /* Pods_CaZait_iOS.framework */; };
 		F122CEF229DE8FAD00818D7B /* CafeListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F122CEF129DE8FAD00818D7B /* CafeListCollectionViewCell.swift */; };
 		F122CEF629DF05C300818D7B /* MainTopSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F122CEF529DF05C300818D7B /* MainTopSearchView.swift */; };
+		F13FA05E2A13899E0001958D /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FA05D2A13899E0001958D /* SearchView.swift */; };
 		F13FDA7529DD5DD00044C6C3 /* MainTableViewLovedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */; };
 		F13FDA7729DD616E0044C6C3 /* LovedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */; };
 		F13FDA9E29DD91A50044C6C3 /* MainTableViewCafeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */; };
@@ -57,6 +58,7 @@
 		4A556FB32FA1ED34828C5D22 /* Pods-CaZait-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaZait-iOS.debug.xcconfig"; path = "Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		F122CEF129DE8FAD00818D7B /* CafeListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CafeListCollectionViewCell.swift; path = "CaZait-iOS/Cells/CafeListCollectionViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		F122CEF529DF05C300818D7B /* MainTopSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTopSearchView.swift; sourceTree = "<group>"; };
+		F13FA05D2A13899E0001958D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainTableViewLovedCell.swift; path = "CaZait-iOS/Cells/MainTableViewLovedCell.swift"; sourceTree = SOURCE_ROOT; };
 		F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LovedCollectionViewCell.swift; path = "CaZait-iOS/Cells/LovedCollectionViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainTableViewCafeCell.swift; path = "CaZait-iOS/Cells/MainTableViewCafeCell.swift"; sourceTree = SOURCE_ROOT; };
@@ -166,6 +168,7 @@
 				F122CEF529DF05C300818D7B /* MainTopSearchView.swift */,
 				01B9328829E2E320006342F9 /* MapView.swift */,
 				01B9328A29FF7F22006342F9 /* RecentCafeView.swift */,
+				F13FA05D2A13899E0001958D /* SearchView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				01F7A21929D95C150058736E /* MyPageView.swift in Sources */,
 				01F7A20829D936280058736E /* InsetTextField.swift in Sources */,
 				01F7A1F129D935540058736E /* AppDelegate.swift in Sources */,
+				F13FA05E2A13899E0001958D /* SearchView.swift in Sources */,
 				01F7A1F329D935540058736E /* SceneDelegate.swift in Sources */,
 				01F7A21529D95A2B0058736E /* MainView.swift in Sources */,
 				01B9328129E2E1C3006342F9 /* sampleModel.swift in Sources */,

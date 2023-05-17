@@ -50,7 +50,18 @@ class MainView: UIViewController {
         mainTableView.register(MainTableViewLovedCell.self, forCellReuseIdentifier: "MainTableViewLovedCell")
         mainTableView.register(MainTableViewCafeCell.self, forCellReuseIdentifier: "MainTableViewCafeCell")
         
+        // mainTopSearchView의 버튼 액션을 처리하는 메서드를 설정합니다.
+        //상단 검색버튼 클릭시 검색화면으로 이동합니다.
+        mainTopSearchView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
+        
         setupMainTableView()
+    }
+    
+    @objc func searchButtonTapped() {
+        let searchViewController = SearchView()
+        navigationController?.pushViewController(searchViewController, animated: false)
+        //버튼 클릭시 이동하는 화면에서 searchBar가 클릭된 상태로 시작합니다.
+        searchViewController.searchBar.becomeFirstResponder()
     }
     
     func setupMainTableView() {
