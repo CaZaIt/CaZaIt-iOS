@@ -493,15 +493,16 @@
 //        // ParallaxViewController를 자식
 import UIKit
 
-class CafeDetailView: UIViewController, UIScrollViewDelegate {
+class CafeDetailView: UIViewController {
     private let scrollView = UIScrollView()
+    private let parallaxImageView = UIImageView()
     private let headerView = UIView()
     private let segmentedControl = UISegmentedControl()
-    private let parallaxImageView = UIImageView()
+    private let tableView1 = UITableView()
+    private let tableView2 = UITableView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // UIScrollView 설정
         scrollView.delegate = self
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -510,26 +511,26 @@ class CafeDetailView: UIViewController, UIScrollViewDelegate {
         scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
+
         // 헤더뷰 설정
         headerView.backgroundColor = .white
         headerView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(headerView)
-        
+
         // 피럴랙스 효과를 가진 이미지 설정
         parallaxImageView.image = UIImage(named: "big_cafe") // 피럴랙스 이미지 설정
         parallaxImageView.contentMode = .scaleAspectFill
         parallaxImageView.clipsToBounds = true
         parallaxImageView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(parallaxImageView)
-        
+
         parallaxImageView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
         parallaxImageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
         parallaxImageView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
         parallaxImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         parallaxImageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        
-        headerView.topAnchor.constraint(equalTo: parallaxImageView.bottomAnchor).isActive = true
+
+        headerView.topAnchor.constraint(equalTo: parallaxImageView.topAnchor, constant: 300).isActive = true
         headerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
         headerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
         headerView.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -539,18 +540,222 @@ class CafeDetailView: UIViewController, UIScrollViewDelegate {
         segmentedControl.insertSegment(withTitle: "Segment 2", at: 1, animated: false)
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+
         scrollView.addSubview(segmentedControl)
         segmentedControl.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         segmentedControl.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16).isActive = true
 
         // 콘텐츠 높이 설정
         scrollView.contentSize = CGSize(width: view.bounds.width, height: 400)
+
+
+        // 테이블 뷰 설정
+        tableView1.backgroundColor = .white
+        tableView1.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(tableView1)
+
+        tableView1.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16).isActive = true
+        tableView1.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView1.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView1.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+        tableView1.dataSource = self
+        tableView1.delegate = self
+
+        tableView2.backgroundColor = .blue
+        tableView2.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(tableView2)
+
+        tableView2.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16).isActive = true
+        tableView2.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView2.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView2.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+        tableView2.dataSource = self
+        tableView2.delegate = self
+
+        // 초기에는 첫 번째 세그먼트가 선택되도록 설정
+        updateTableViewVisibility()
     }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        // 이미지의 위치를 스크롤 속도보다 더 느리게 이동하도록 설정
-        parallaxImageView.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
+
+    @objc func segmentedControlValueChanged() {
+        updateTableViewVisibility()
+    }
+
+
+        func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            let offsetY = scrollView.contentOffset.y
+            // 이미지의 위치를 스크롤 속도보다 더 느리게 이동하도록 설정
+            parallaxImageView.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
+        }
+
+
+
+    private func updateTableViewVisibility() {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            tableView1.isHidden = false
+            tableView2.isHidden = true
+        } else {
+            tableView1.isHidden = true
+            tableView2.isHidden = false
+        }
     }
 }
 
+extension CafeDetailView: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == tableView1 {
+            return 20 // 첫 번째 테이블 뷰에는 10개의 셀을 표시
+        } else if tableView == tableView2 {
+            return 5 // 두 번째 테이블 뷰에는 5개의 셀을 표시
+        } else {
+            return 0
+        }
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+        cell.textLabel?.text = "Row \(indexPath.row + 1)"
+        return cell
+    }
+}
+
+
+
+
+
+////헤더뷰 안에 세그먼트
+//import UIKit
+//
+//class MapView: UIViewController {
+//    private let scrollView = UIScrollView()
+//    private let parallaxImageView = UIImageView()
+//    private let headerView = UIView()
+//    private let segmentedControl = UISegmentedControl()
+//    private let tableView1 = UITableView()
+//    private let tableView2 = UITableView()
+//
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        // UIScrollView 설정
+//        scrollView.delegate = self
+//        scrollView.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(scrollView)
+//        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+//
+//        // 헤더뷰 설정
+//        headerView.backgroundColor = .white
+//        headerView.translatesAutoresizingMaskIntoConstraints = false
+//        scrollView.addSubview(headerView)
+//
+//        // 피럴랙스 효과를 가진 이미지 설정
+//        parallaxImageView.image = UIImage(named: "big_cafe") // 피럴랙스 이미지 설정
+//        parallaxImageView.contentMode = .scaleAspectFill
+//        parallaxImageView.clipsToBounds = true
+//        parallaxImageView.translatesAutoresizingMaskIntoConstraints = false
+//        scrollView.addSubview(parallaxImageView)
+//
+//        parallaxImageView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+//        parallaxImageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+//        parallaxImageView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+//        parallaxImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+//        parallaxImageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+//
+//        headerView.topAnchor.constraint(equalTo: parallaxImageView.bottomAnchor).isActive = true
+//        headerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+//        headerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+//        headerView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+//
+//        // 세그먼트 컨트롤 설정
+//        segmentedControl.insertSegment(withTitle: "Segment 1", at: 0, animated: false)
+//        segmentedControl.insertSegment(withTitle: "Segment 2", at: 1, animated: false)
+//        segmentedControl.selectedSegmentIndex = 0
+//        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+//        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+//
+//        headerView.addSubview(segmentedControl)
+//        headerView.addSubview(tableView1)
+//        headerView.addSubview(tableView2)
+//
+//        segmentedControl.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 16).isActive = true
+//        segmentedControl.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
+//
+//
+//        // 콘텐츠 높이 설정
+//        scrollView.contentSize = CGSize(width: view.bounds.width, height: 400)
+//
+//
+//        // 테이블 뷰 설정
+//        tableView1.backgroundColor = .white
+//        tableView1.translatesAutoresizingMaskIntoConstraints = false
+//
+//        tableView1.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16).isActive = true
+//        tableView1.leadingAnchor.constraint(equalTo: headerView.leadingAnchor).isActive = true
+//        tableView1.trailingAnchor.constraint(equalTo: headerView.trailingAnchor).isActive = true
+//        tableView1.bottomAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
+//
+//
+//
+//        tableView1.dataSource = self
+//        tableView1.delegate = self
+//
+//        tableView2.backgroundColor = .blue
+//        tableView2.translatesAutoresizingMaskIntoConstraints = false
+//
+//        tableView2.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16).isActive = true
+//         tableView2.leadingAnchor.constraint(equalTo: headerView.leadingAnchor).isActive = true
+//         tableView2.trailingAnchor.constraint(equalTo: headerView.trailingAnchor).isActive = true
+//         tableView2.bottomAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
+//
+//        tableView2.dataSource = self
+//        tableView2.delegate = self
+//
+//        // 초기에는 첫 번째 세그먼트가 선택되도록 설정
+//        updateTableViewVisibility()
+//    }
+//
+//    @objc func segmentedControlValueChanged() {
+//        updateTableViewVisibility()
+//    }
+//
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let offsetY = scrollView.contentOffset.y
+//        // 이미지의 위치를 스크롤 속도보다 더 느리게 이동하도록 설정
+//        parallaxImageView.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
+//    }
+//
+//    private func updateTableViewVisibility() {
+//        if segmentedControl.selectedSegmentIndex == 0 {
+//            tableView1.isHidden = false
+//            tableView2.isHidden = true
+//        } else {
+//            tableView1.isHidden = true
+//            tableView2.isHidden = false
+//        }
+//    }
+//}
+//
+//extension MapView: UITableViewDataSource, UITableViewDelegate {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if tableView == tableView1 {
+//            return 10 // 첫 번째 테이블 뷰에는 10개의 셀을 표시
+//        } else if tableView == tableView2 {
+//            return 5 // 두 번째 테이블 뷰에는 5개의 셀을 표시
+//        } else {
+//            return 0
+//        }
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+//        cell.textLabel?.text = "Row \(indexPath.row + 1)"
+//        return cell
+//    }
+//}
+//
+//
+//
