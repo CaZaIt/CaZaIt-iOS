@@ -96,6 +96,7 @@ iOSInjectionProject/
 ### Xcode ###
 
 ## Xcode 8 and earlier
+*.DS_Store
 
 ### Xcode Patch ###
 *.xcodeproj/*
@@ -108,3 +109,4 @@ iOSInjectionProject/
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,xcode,cocoapodis
 
+.DS_Store
