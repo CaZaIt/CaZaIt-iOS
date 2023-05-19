@@ -26,15 +26,23 @@ class MyPageView: UIViewController{
         return view
     }()
     
-    private let logoutLabel: UILabel = {
+    private let loginLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .black
         label.textAlignment = .center
-        label.text = "로그아웃"
+        label.text = "로그인"
         label.numberOfLines = 1
         return label
+    }()
+    
+    private let loginButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = UIColor(red: 1.0, green: 0.87, blue: 0.85, alpha: 1.0)
+        button.setImage(UIImage(named: "arrow_circle_right"), for: .normal)
+        return button
     }()
     
     private let payView: UIView = {
@@ -62,7 +70,7 @@ class MyPageView: UIViewController{
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         label.textColor = .white
         label.textAlignment = .center
-        label.text = "1,111"
+        label.text = "-,---"
         label.numberOfLines = 1
         return label
     }()
@@ -214,7 +222,8 @@ class MyPageView: UIViewController{
         
         view.addSubview(whiteView)
         whiteView.addSubview(pinkView)
-        whiteView.addSubview(logoutLabel)
+        whiteView.addSubview(loginLabel)
+        whiteView.addSubview(loginButton)
         whiteView.addSubview(payView)
         payView.addSubview(payLabel)
         payView.addSubview(paymoneyLabel)
@@ -247,15 +256,22 @@ class MyPageView: UIViewController{
             make.height.equalTo(125)
         }
         
-        self.logoutLabel.snp.makeConstraints { make in
+        self.loginLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.whiteView.snp.leading).inset(39)
             make.top.equalTo(self.whiteView.snp.top).inset(46)
+        }
+        
+        self.loginButton.snp.makeConstraints { make in
+            make.leading.equalTo(self.loginLabel.snp.trailing).offset(2)
+            make.top.equalTo(self.whiteView.snp.top).inset(44)
+            make.height.equalTo(30)
+            make.width.equalTo(30)
         }
         
         self.payView.snp.makeConstraints { make in
             make.leading.equalTo(self.whiteView.snp.leading).inset(28)
             make.trailing.equalTo(self.whiteView.snp.trailing).inset(28)
-            make.top.equalTo(self.logoutLabel.snp.bottom).offset(14)
+            make.top.equalTo(self.loginLabel.snp.bottom).offset(14)
             make.bottom.equalTo(self.whiteView.snp.bottom).inset(527)
 //            make.height.equalTo(102)
         }
@@ -387,6 +403,7 @@ class MyPageView: UIViewController{
         couponButton.addTarget(self, action:#selector(buttonClicked_1), for: .touchUpInside)
         paymentButton.addTarget(self, action:#selector(buttonClicked_2), for: .touchUpInside)
         recentplaceButton.addTarget(self, action: #selector(buttonClicked_3), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(buttonClicked_4), for: .touchUpInside)
     }
     
     //상태표시줄 화이트색의 글씨로 변경
@@ -395,7 +412,7 @@ class MyPageView: UIViewController{
     }
     
     @objc func buttonClicked_1(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "쿠폰 버튼 클릭", message: "The button was clicked.", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "서비스 준비중입니다.", message: "", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
             // OK 버튼을 클릭하면 실행될 코드
         }
@@ -404,7 +421,7 @@ class MyPageView: UIViewController{
     }
     
     @objc func buttonClicked_2(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "결제내역 버튼 클릭", message: "The button was clicked.", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "서비스 준비중입니다.", message: "", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
             // OK 버튼을 클릭하면 실행될 코드
         }
@@ -417,6 +434,13 @@ class MyPageView: UIViewController{
         let recentCafeView = RecentCafeView()
         // 내비게이션 스택으로 RecentCafeView를 푸시
         self.navigationController?.pushViewController(recentCafeView, animated: true)
+    }
+    
+    @objc func buttonClicked_4(_ sender: UIButton) {
+        // RecentCafeView 인스턴스 생성
+        let loginView = LoginView()
+        // 내비게이션 스택으로 RecentCafeView를 푸시
+        self.navigationController?.pushViewController(loginView, animated: true)
     }
 
     

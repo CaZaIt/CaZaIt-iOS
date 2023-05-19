@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class RecentCafeView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class RecentCafeView: UIViewController {
     
     
     private let pinkView: UIView = {
@@ -39,6 +39,16 @@ class RecentCafeView: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewDidLoad()
         self.view.backgroundColor = .black
         
+        collectionView.register(RecentCafeCollectionViewCell.self, forCellWithReuseIdentifier: "RecentCafeCollectionViewCell")
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        
+        //손가락 옆으로 미는 제스쳐 작동
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+
+        
         // 네비게이션 바 타이틀 설정
         self.title = "최근 본 매장"
         
@@ -61,9 +71,6 @@ class RecentCafeView: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
         self.pinkView.addSubview(collectionView)
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        self.collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         
         self.collectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
@@ -72,48 +79,7 @@ class RecentCafeView: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10 // example number of items
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        cell.backgroundColor = .white
-        cell.layer.cornerRadius = 10
-        cell.layer.masksToBounds = true // cornerRadius가 제대로 표시되도록 설정
-        
-        let imageView = UIImageView(frame: cell.contentView.bounds)
-        imageView.image = UIImage(named: "small_cafe2")
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        
-        cell.contentView.addSubview(imageView)
-        
-        imageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(15)
-            make.leading.equalToSuperview().offset(15)
-            make.trailing.equalToSuperview().inset(213)
-            make.bottom.equalToSuperview().inset(20)
-        }
-        
-        return cell
-    }
-    
-    // MARK: - UICollectionViewDelegateFlowLayout
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.bounds.width
-        return CGSize(width: width-40, height: 172) // example item size
-    }
-    
-    
-    //셀 간격
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 17 // example line spacing
-    }
-    
-    
+
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -121,8 +87,40 @@ class RecentCafeView: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = true
+        
+        
     }
     
+}
+
+extension RecentCafeView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    // collectionView 셀 개수 반환
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    // collectionView 셀 생성 및 반환
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecentCafeCollectionViewCell", for: indexPath) as! RecentCafeCollectionViewCell
+        
+        
+        return cell
+    }
+    
+    // collectionView 셀 크기 반환
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.bounds.width
+        return CGSize(width: width-40, height: 172) // example item size
+    }
+    
+    // collectionView 셀과 셀 사이 간격 반환
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 17
+    }
+
     
 }
+
+
+extension RecentCafeView: UIGestureRecognizerDelegate { }
