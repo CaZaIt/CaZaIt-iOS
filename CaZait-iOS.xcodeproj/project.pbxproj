@@ -25,6 +25,8 @@
 		01F7A21929D95C150058736E /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21829D95C150058736E /* MyPageView.swift */; };
 		01F7A21B29D95C480058736E /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21A29D95C480058736E /* MoreView.swift */; };
 		37496607093ADF2DD306E85B /* Pods_CaZait_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 212848CC094DA1C393D1C108 /* Pods_CaZait_iOS.framework */; };
+		6C4286B92A15D61400560F15 /* CafeDetailViewMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4286B82A15D61400560F15 /* CafeDetailViewMenuCell.swift */; };
+		6C4286BB2A176F3300560F15 /* CafeDetailViewReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4286BA2A176F3300560F15 /* CafeDetailViewReviewCell.swift */; };
 		F122CEF229DE8FAD00818D7B /* CafeListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F122CEF129DE8FAD00818D7B /* CafeListCollectionViewCell.swift */; };
 		F122CEF629DF05C300818D7B /* MainTopSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F122CEF529DF05C300818D7B /* MainTopSearchView.swift */; };
 		F13FDA7529DD5DD00044C6C3 /* MainTableViewLovedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */; };
@@ -55,6 +57,8 @@
 		212848CC094DA1C393D1C108 /* Pods_CaZait_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CaZait_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		395F793F7B4A4B8889040C20 /* Pods-CaZait-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaZait-iOS.release.xcconfig"; path = "Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		4A556FB32FA1ED34828C5D22 /* Pods-CaZait-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaZait-iOS.debug.xcconfig"; path = "Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		6C4286B82A15D61400560F15 /* CafeDetailViewMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeDetailViewMenuCell.swift; sourceTree = "<group>"; };
+		6C4286BA2A176F3300560F15 /* CafeDetailViewReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeDetailViewReviewCell.swift; sourceTree = "<group>"; };
 		F122CEF129DE8FAD00818D7B /* CafeListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CafeListCollectionViewCell.swift; path = "CaZait-iOS/Cells/CafeListCollectionViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		F122CEF529DF05C300818D7B /* MainTopSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTopSearchView.swift; sourceTree = "<group>"; };
 		F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainTableViewLovedCell.swift; path = "CaZait-iOS/Cells/MainTableViewLovedCell.swift"; sourceTree = SOURCE_ROOT; };
@@ -80,6 +84,8 @@
 				F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */,
 				F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */,
 				F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */,
+				6C4286B82A15D61400560F15 /* CafeDetailViewMenuCell.swift */,
+				6C4286BA2A176F3300560F15 /* CafeDetailViewReviewCell.swift */,
 				F122CEF129DE8FAD00818D7B /* CafeListCollectionViewCell.swift */,
 			);
 			path = Cells;
@@ -305,6 +311,7 @@
 				F13FDA7529DD5DD00044C6C3 /* MainTableViewLovedCell.swift in Sources */,
 				F13FDA9E29DD91A50044C6C3 /* MainTableViewCafeCell.swift in Sources */,
 				01F7A1F529D935540058736E /* TabBarView.swift in Sources */,
+				6C4286B92A15D61400560F15 /* CafeDetailViewMenuCell.swift in Sources */,
 				F13FDA7729DD616E0044C6C3 /* LovedCollectionViewCell.swift in Sources */,
 				01F7A21729D95BF70058736E /* CafeDetailView.swift in Sources */,
 				01B9328B29FF7F22006342F9 /* RecentCafeView.swift in Sources */,
@@ -314,6 +321,7 @@
 				01F7A1F329D935540058736E /* SceneDelegate.swift in Sources */,
 				01F7A21529D95A2B0058736E /* MainView.swift in Sources */,
 				01B9328129E2E1C3006342F9 /* sampleModel.swift in Sources */,
+				6C4286BB2A176F3300560F15 /* CafeDetailViewReviewCell.swift in Sources */,
 				01B9328429E2E1DB006342F9 /* sampleViewModel.swift in Sources */,
 				F122CEF629DF05C300818D7B /* MainTopSearchView.swift in Sources */,
 				01F7A20929D936280058736E /* UITextField+Extenstion.swift in Sources */,
