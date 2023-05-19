@@ -30,6 +30,7 @@ class MainTableViewLovedCell: UITableViewCell {
         let label = UILabel()
         
         label.font = UIFont(name: "AppleSDGothicNeoM00-Regular", size: 14)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular) //위에 글씨체가 어색해서 임시로 추가
         label.textColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1)
         label.textAlignment = .center
         label.text = "찜한 매장을 빠르게 확인!"
@@ -49,6 +50,35 @@ class MainTableViewLovedCell: UITableViewCell {
         return collectionView
     }()
     
+    private let dottedLineView: UIView = {
+        //layer는 오토레이아웃 지정이 되지 않기때문에 view를 생성하고 그 안에 layer를 넣어서 하기 위함/
+        let view = UIView()
+        view.backgroundColor = .clear
+        
+        let shapeLayer = CAShapeLayer()
+        
+        // 점선 색상
+        shapeLayer.strokeColor = UIColor.black.cgColor
+        
+        // 점선 두께
+        shapeLayer.lineWidth = 1.5
+        
+        // 점선 패턴: 2포인트의 선, 2포인트의 공백으로 반복
+        shapeLayer.lineDashPattern = [8, 8]
+        
+        // 점선의 경로
+        view.layer.addSublayer(shapeLayer)
+        
+        // contentView의 bounds를 기준으로 frame 설정하여 나중에 수정하기 위해 추가
+        view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1)
+
+        
+        view.layer.addSublayer(shapeLayer)
+        
+        
+        return view
+    }()
+    
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -56,6 +86,8 @@ class MainTableViewLovedCell: UITableViewCell {
         collectionView.register(LovedCollectionViewCell.self, forCellWithReuseIdentifier: "LovedCollectionViewCell")
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        self.backgroundColor = .white
         
         setupMainTableViewLovedCell()
     }
@@ -88,6 +120,29 @@ class MainTableViewLovedCell: UITableViewCell {
             make.leading.equalTo(lovedCafeLabel.snp.trailing).offset(10)
         }
         
+        
+        
+        contentView.addSubview(dottedLineView)
+        
+        dottedLineView.snp.makeConstraints { make in
+            make.bottom.equalTo(contentView.snp.bottom)
+            make.leading.equalTo(contentView.snp.leading).offset(21)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-21)
+            make.height.equalTo(1.5)
+        }
+        
+        // contentView에 dottedLineView 추가 후, layout이 완료되었을 때 shapeLayer의 path 설정
+        
+        // dottedLineView의 layer의 첫 번째 sublayer를 CAShapeLayer로 가져옵니다.
+        let shapeLayer = dottedLineView.layer.sublayers?.first as? CAShapeLayer
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: 0, y: 0.75)) // path의 시작점을 해당좌표로 이동합니다.
+        
+        // 현재 위치에서 (dottedLineView.bounds.width - 42, 0.75) 좌표까지 직선을 추가합니다.
+        path.addLine(to: CGPoint(x: dottedLineView.bounds.width - 42, y: 0.75))
+        
+        // shapeLayer의 path를 UIBezierPath의 CGPath 표현으로 설정합니다.
+        shapeLayer?.path = path.cgPath
     }
 }
 

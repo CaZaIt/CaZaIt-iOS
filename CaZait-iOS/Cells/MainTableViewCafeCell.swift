@@ -71,6 +71,8 @@ class MainTableViewCafeCell: UITableViewCell {
         collectionView.register(CafeListCollectionViewCell.self, forCellWithReuseIdentifier: "CafeListCollectionViewCell")
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        self.backgroundColor = .white
     }
     
     func setupMainTableViewCafeCell() {
