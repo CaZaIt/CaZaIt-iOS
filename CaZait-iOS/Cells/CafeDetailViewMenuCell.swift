@@ -107,12 +107,12 @@ class CafeDetailViewMenuCell: UITableViewCell {
         ])
     }
 
-    func configure(image: UIImage?, title: String, subtitle: String, description: String) {
+    func configure(menuImage: UIImage?, menu: String, price: String, menuDescription: String) {
         // 셀의 내용을 설정합니다.
-        menuImage.image = image
-        menu.text = title
-        price.text = subtitle
-        menuDescription.text = description
+        self.menuImage.image = menuImage
+        self.menu.text = menu
+        self.price.text = price
+        self.menuDescription.text = description
     }
 
     override func layoutSubviews() {

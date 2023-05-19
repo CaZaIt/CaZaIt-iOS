@@ -78,7 +78,6 @@ class CafeDetailViewReviewCell: UITableViewCell {
 
     private func addSubviews() {
         // 셀에 서브뷰들을 추가합니다.
-        contentView.addSubview(star)
         contentView.addSubview(nickname)
         contentView.addSubview(hour)
         contentView.addSubview(review)
@@ -86,39 +85,32 @@ class CafeDetailViewReviewCell: UITableViewCell {
 
     private func setupLayout() {
         // 서브뷰들의 레이아웃을 설정합니다.
-        star.translatesAutoresizingMaskIntoConstraints = false
         nickname.translatesAutoresizingMaskIntoConstraints = false
         hour.translatesAutoresizingMaskIntoConstraints = false
         review.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            star.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-            star.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            star.widthAnchor.constraint(equalToConstant: 80),
-            star.heightAnchor.constraint(equalToConstant: 80),
-
-            nickname.leadingAnchor.constraint(equalTo: star.trailingAnchor, constant: 20),
+            nickname.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             nickname.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
 
             hour.leadingAnchor.constraint(equalTo: nickname.trailingAnchor, constant: 20),
-            hour.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
+            hour.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
 
-            review.leadingAnchor.constraint(equalTo: star.trailingAnchor, constant: 20),
-            review.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 8),
-            review.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            review.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            review.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 6),
+            //review.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
     }
 
-    func configure(image: UIImage?, title: String, subtitle: String, description: String) {
+    func configure(nickname: String, hour: String, review: String) {
         // 셀의 내용을 설정합니다.
-        star.image = image
-        nickname.text = title
-        hour.text = subtitle
-        review.text = description
+        self.nickname.text = nickname
+        self.hour.text = hour
+        self.review.text = review
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
     }
 }

@@ -7,7 +7,20 @@ class CafeDetailView: UIViewController {
     private let segmentedControl = UISegmentedControl()
     private let tableView1 = UITableView()
     private let tableView2 = UITableView()
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            self.navigationController?.isNavigationBarHidden = false
+            // 네비게이션컨트롤러를 통해서 Status Bar 색깔 변경
+            self.navigationController?.navigationBar.barStyle = .black
+            
+        }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+            self.navigationController?.isNavigationBarHidden = true
+        }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -15,10 +28,17 @@ class CafeDetailView: UIViewController {
         scrollView.delegate = self
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
+//        // 스크롤뷰의 contentInsetAdjustmentBehavior를 설정합니다.
+//        if #available(iOS 11.0, *) {
+//            scrollView.contentInsetAdjustmentBehavior = .automatic
+//        } else {
+//            automaticallyAdjustsScrollViewInsets = true
+//        }
 
         // 헤더뷰 설정
         headerView.backgroundColor = .white
@@ -69,7 +89,7 @@ class CafeDetailView: UIViewController {
         headerView.heightAnchor.constraint(equalToConstant: 100).isActive = true
 
         // 세그먼트 컨트롤 설정
-        segmentedControl.insertSegment(withTitle: "카페 메뉴 1", at: 0, animated: false)
+        segmentedControl.insertSegment(withTitle: "카페 메뉴", at: 0, animated: false)
         segmentedControl.insertSegment(withTitle: "평점 및 후기", at: 1, animated: false)
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
@@ -184,7 +204,7 @@ extension CafeDetailView: UITableViewDataSource, UITableViewDelegate {
         // 높이 설정
         return 100
     }
-
+    
 
 
 }
