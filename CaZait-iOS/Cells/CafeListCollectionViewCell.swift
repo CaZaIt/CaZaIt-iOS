@@ -35,6 +35,7 @@ class CafeListCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         
         label.font = UIFont(name: "AppleSDGothicNeoL00-Regular", size: 12)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .thin) //위에 폰트가 적용되지 않아 임시로 추가
         label.textColor = .black
         label.textAlignment = .left
         label.text = "220m"
@@ -47,6 +48,7 @@ class CafeListCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         
         label.font = UIFont(name: "AppleSDGothicNeoL00-Regular", size: 13)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .thin) //위에 폰트가 적용되지 않아 임시로 추가
         label.textColor = .black
         label.textAlignment = .left
         label.text = "서울특별시 광진구 광나루로 375-1 2층(군자동)"
@@ -110,7 +112,7 @@ class CafeListCollectionViewCell: UICollectionViewCell {
         
         cafeLocationDistanceLabel.snp.makeConstraints { make in
             make.centerY.equalTo(cafeNameLabel.snp.centerY)
-            make.leading.equalTo(cafeNameLabel.snp.trailing).offset(34)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-12)
         }
         
         contentView.addSubview(cafeLocationLabel)
