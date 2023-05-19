@@ -1,141 +1,211 @@
 import UIKit
 
 class CafeDetailView: UIViewController {
-
-    private let headerViewHeight: CGFloat = 100
-    private let labelHeight: CGFloat = 30 // 라벨의 높이 값 추가
-    private let cellId = "cell"
-
-    private var tableView: UITableView!
-    private var headerView: UIView!
-    private var headerLabel: UILabel! // 헤더 뷰에 추가할 라벨
-    private var headerViewHeightConstraint: NSLayoutConstraint!
-
+    private let scrollView = UIScrollView()
+    private let parallaxImageView = UIImageView()
+    private let headerView = UIView()
+    private let segmentedControl = UISegmentedControl()
+    private let tableView1 = UITableView()
+    private let tableView2 = UITableView()
+    
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            self.navigationController?.isNavigationBarHidden = false
+            // 네비게이션컨트롤러를 통해서 Status Bar 색깔 변경
+            self.navigationController?.navigationBar.barStyle = .black
+            
+        }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+            self.navigationController?.isNavigationBarHidden = true
+        }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        // UIScrollView 설정
+        scrollView.delegate = self
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
+//        // 스크롤뷰의 contentInsetAdjustmentBehavior를 설정합니다.
+//        if #available(iOS 11.0, *) {
+//            scrollView.contentInsetAdjustmentBehavior = .automatic
+//        } else {
+//            automaticallyAdjustsScrollViewInsets = true
+//        }
 
-        view.backgroundColor = .black
+        // 헤더뷰 설정
+        headerView.backgroundColor = .white
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(headerView)
+        
+        // 첫 번째 라벨 추가
+        let cafeName = UILabel()
+        cafeName.text = "롬곡"
+        cafeName.font = UIFont.systemFont(ofSize: 26, weight: .bold)
+        cafeName.textAlignment = .left
+        cafeName.translatesAutoresizingMaskIntoConstraints = false
+        headerView.addSubview(cafeName)
 
-        setupTableView()
-        setupHeaderView()
-        setupHeaderLabel() // 라벨 추가하는 함수 호출
-        setupHeaderViewConstraints()
-    }
+        // 두 번째 라벨 추가
+        let cafeLocation = UILabel()
+        cafeLocation.text = "서울특별시 광진구 광나루로 375-1 2층(군자동)"
+        cafeLocation.font = UIFont.systemFont(ofSize: 15)
+        cafeLocation.textAlignment = .left
+        cafeLocation.translatesAutoresizingMaskIntoConstraints = false
+        headerView.addSubview(cafeLocation)
 
-    private func setupTableView() {
-        tableView = UITableView(frame: view.bounds, style: .plain)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
-        tableView.contentInsetAdjustmentBehavior = .never
-        tableView.sectionHeaderHeight = headerViewHeight // Sticky Header를 위한 설정
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        // 첫 번째 라벨 제약조건 설정
+        cafeName.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
+        cafeName.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 16).isActive = true
+
+        // 두 번째 라벨 제약조건 설정
+        cafeLocation.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
+        cafeLocation.topAnchor.constraint(equalTo: cafeName.bottomAnchor, constant: 8).isActive = true
+
+
+        // 피럴랙스 효과를 가진 이미지 설정
+        parallaxImageView.image = UIImage(named: "big_cafe") // 피럴랙스 이미지 설정
+        parallaxImageView.contentMode = .scaleAspectFill
+        parallaxImageView.clipsToBounds = true
+        parallaxImageView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(parallaxImageView)
+
+        parallaxImageView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        parallaxImageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+        parallaxImageView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+        parallaxImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        parallaxImageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+
+        headerView.topAnchor.constraint(equalTo: parallaxImageView.bottomAnchor).isActive = true
+        headerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+        headerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+        headerView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+
+        // 세그먼트 컨트롤 설정
+        segmentedControl.insertSegment(withTitle: "카페 메뉴", at: 0, animated: false)
+        segmentedControl.insertSegment(withTitle: "평점 및 후기", at: 1, animated: false)
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+        
+        //segmentedControl.backgroundColor = .white
 
         
-        tableView.contentInsetAdjustmentBehavior = .never
+        // Change text color and the font of the NOT selected (normal) segment
+        segmentedControl.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor(red: 0, green: 0, blue: 0, alpha: 1),
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold)], for: .normal)
+
+        // Change text color and the font of the selected segment
+        segmentedControl.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1),
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold)], for: .selected)
+    
+
+        scrollView.addSubview(segmentedControl)
+        segmentedControl.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        segmentedControl.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16).isActive = true
+
+        // 콘텐츠 높이 설정
+        scrollView.contentSize = CGSize(width: view.bounds.width, height: 400)
+
+
+        // 테이블 뷰 설정
+        tableView1.backgroundColor = .white
+        tableView1.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(tableView1)
+
+        tableView1.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16).isActive = true
+        tableView1.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView1.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView1.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+        tableView1.dataSource = self
+        tableView1.delegate = self
+
+        tableView2.backgroundColor = .white
+        tableView2.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(tableView2)
+
+        tableView2.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16).isActive = true
+        tableView2.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView2.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView2.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+        tableView2.dataSource = self
+        tableView2.delegate = self
         
-        tableView.sectionHeaderTopPadding = 0
+        tableView1.register(CafeDetailViewMenuCell.self, forCellReuseIdentifier: "CafeDetailViewMenuCell")
+        tableView2.register(CafeDetailViewReviewCell.self, forCellReuseIdentifier: "CafeDetailViewReviewCell")
 
-        view.addSubview(tableView)
-        // Add constraints to make the table view fill the safe area
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
 
+        // 초기에는 첫 번째 세그먼트가 선택되도록 설정
+        updateTableViewVisibility()
     }
-    
 
-
-
-    private func setupHeaderView() {
-        headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: headerViewHeight))
-        headerView.backgroundColor = .systemBlue
-
-        tableView.addSubview(headerView) // tableHeaderView 대신 tableView에 추가
-
-    }
-    
-
-    private func setupHeaderViewConstraints() {
-        headerViewHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: headerViewHeight)
-        headerViewHeightConstraint.isActive = true
-
-        headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-
-        headerView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+    @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        updateTableViewVisibility()
     }
 
 
-    private func setupHeaderLabel() {
-        headerLabel = UILabel(frame: CGRect(x: 16, y: 0, width: headerView.bounds.width - 32, height: labelHeight))
-        headerLabel.text = "제주몰빵"
-        headerLabel.textAlignment = .center
-        headerLabel.font = UIFont.boldSystemFont(ofSize: 24)
-        headerLabel.textColor = .white
+        func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            let offsetY = scrollView.contentOffset.y
+            // 이미지의 위치를 스크롤 속도보다 더 느리게 이동하도록 설정
+            parallaxImageView.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
+        }
 
-        headerView.addSubview(headerLabel)
+
+
+    private func updateTableViewVisibility() {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            tableView1.isHidden = false
+            tableView2.isHidden = true
+        } else {
+            tableView1.isHidden = true
+            tableView2.isHidden = false
+        }
     }
 }
 
-extension CafeDetailView: UITableViewDelegate, UITableViewDataSource {
-
+extension CafeDetailView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if tableView == tableView1 {
+            return 20 // 첫 번째 테이블 뷰에는 10개의 셀을 표시
+        } else if tableView == tableView2 {
+            return 5 // 두 번째 테이블 뷰에는 5개의 셀을 표시
+        } else {
+            return 0
+        }
     }
 
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-
-        let segmentControl = UISegmentedControl(items: ["First", "Second"])
-        segmentControl.frame = CGRect(x: 16, y: 0, width: cell.contentView.bounds.width - 32, height: 100)
-        cell.contentView.addSubview(segmentControl)
-
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 800
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let y = scrollView.contentOffset.y + tableView.safeAreaInsets.top
-        guard let headerViewHeightConstraint = headerViewHeightConstraint else {
-            return
+        if tableView == tableView1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CafeDetailViewMenuCell", for: indexPath) as! CafeDetailViewMenuCell
+            //cell.textLabel?.text = "Row \(indexPath.row + 1)"
+            return cell
+        } else if tableView == tableView2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CafeDetailViewReviewCell", for: indexPath) as! CafeDetailViewReviewCell
+            // Configure the cell with the review data
+            return cell
+        } else {
+            return UITableViewCell()
         }
-
-        let newHeaderViewHeight = headerViewHeightConstraint.constant - y
-        //let newHeaderViewHeight = headerViewHeight - y
-
-
-        if newHeaderViewHeight < labelHeight { // 헤더 높이가 라벨 높이보다 작으면
-            headerLabel.alpha = 0 // 라벨 숨김
-        } else { // 그렇지 않으면
-            headerLabel.alpha = 1 // 라벨 보임
-        }
-
-        if newHeaderViewHeight < 0 { // 헤더 높이가 0보다 작으면
-            headerViewHeightConstraint.constant = 0 // 헤더 높이를 0으로 설정
-        } else if newHeaderViewHeight > headerViewHeight { // 헤더 높이가 최대 높이보다 크면
-            headerViewHeightConstraint.constant = headerViewHeight // 헤더 높이를 최대 높이로 설정
-        } else { // 그렇지 않으면
-            headerViewHeightConstraint.constant = newHeaderViewHeight // 새로운 높이로 헤더 높이 업데이트
-        }
-    }
-
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return headerView
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return headerViewHeight
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent // 밝은 배경색일 경우에는 .darkContent
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // 높이 설정
+        return 100
     }
+    
+
 
 }
+

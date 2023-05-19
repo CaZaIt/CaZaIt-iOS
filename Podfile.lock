@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.6.4)
+  - MXParallaxHeader (1.1.0)
   - NMapsGeometry (1.0.1)
   - NMapsMap (3.16.2):
     - NMapsGeometry
@@ -7,22 +8,25 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - MXParallaxHeader
   - NMapsMap
   - SnapKit (~> 5.6.0)
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - MXParallaxHeader
     - NMapsGeometry
     - NMapsMap
     - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
+  MXParallaxHeader: de3c867e10ba46e8f6e20c8ee1f2a910372b3b94
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: aaa64717249b06ae82c3a3addb3a01f0e33100ab
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: d076e47beefc96caedc1ee49862cdc2202c77e78
+PODFILE CHECKSUM: 13b78d007addac208c2d1c2b43b3bc68dca11fdc
 
 COCOAPODS: 1.11.3
