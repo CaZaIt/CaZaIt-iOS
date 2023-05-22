@@ -13,6 +13,8 @@ class CafeDetailView: UIViewController {
             self.navigationController?.isNavigationBarHidden = false
             // 네비게이션컨트롤러를 통해서 Status Bar 색깔 변경
             self.navigationController?.navigationBar.barStyle = .black
+            //self.navigationController?.navigationBar.isTranslucent = true
+
             
         }
     
@@ -33,13 +35,6 @@ class CafeDetailView: UIViewController {
         scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         
-//        // 스크롤뷰의 contentInsetAdjustmentBehavior를 설정합니다.
-//        if #available(iOS 11.0, *) {
-//            scrollView.contentInsetAdjustmentBehavior = .automatic
-//        } else {
-//            automaticallyAdjustsScrollViewInsets = true
-//        }
-
         // 헤더뷰 설정
         headerView.backgroundColor = .white
         headerView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,6 +55,15 @@ class CafeDetailView: UIViewController {
         cafeLocation.textAlignment = .left
         cafeLocation.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(cafeLocation)
+        
+        //edit button
+        let reviewWriteButton =  UIButton()
+        reviewWriteButton.translatesAutoresizingMaskIntoConstraints = false
+        reviewWriteButton.backgroundColor = .black
+        reviewWriteButton.layer.cornerRadius = 20
+        reviewWriteButton.setTitle("리뷰쓰기", for: .normal)
+        reviewWriteButton.addTarget(self, action: #selector(reviewWriteButtonClicked), for: .touchUpInside)
+
 
         // 첫 번째 라벨 제약조건 설정
         cafeName.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
@@ -145,6 +149,12 @@ class CafeDetailView: UIViewController {
         tableView1.register(CafeDetailViewMenuCell.self, forCellReuseIdentifier: "CafeDetailViewMenuCell")
         tableView2.register(CafeDetailViewReviewCell.self, forCellReuseIdentifier: "CafeDetailViewReviewCell")
 
+        tableView2.addSubview(reviewWriteButton)
+        reviewWriteButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 600).isActive = true
+        reviewWriteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        reviewWriteButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        reviewWriteButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
+
 
         // 초기에는 첫 번째 세그먼트가 선택되도록 설정
         updateTableViewVisibility()
@@ -155,12 +165,18 @@ class CafeDetailView: UIViewController {
     }
 
 
-        func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            let offsetY = scrollView.contentOffset.y
-            // 이미지의 위치를 스크롤 속도보다 더 느리게 이동하도록 설정
-            parallaxImageView.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
-        }
-
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        // 이미지의 위치를 스크롤 속도보다 더 느리게 이동하도록 설정
+        parallaxImageView.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
+    }
+    
+    
+    @objc func reviewWriteButtonClicked() {
+        let nextVC = WriteReviewView()
+        navigationController?.pushViewController(nextVC, animated: true)
+        //present(nextVC, animated: true, completion: nil)
+    }
 
 
     private func updateTableViewVisibility() {
