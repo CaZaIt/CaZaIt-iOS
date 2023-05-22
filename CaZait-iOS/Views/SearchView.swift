@@ -48,6 +48,11 @@ class SearchView: UIViewController {
         // 네비게이션 바에 UISearchBar 추가
         navigationItem.titleView = searchBar
         
+        // 네비게이션 색 변경 실패
+//        if let navigationBar = self.navigationController?.navigationBar {
+//            navigationBar.barTintColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
+//        }
+        
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backButtonTapped))
         navigationItem.leftBarButtonItem = backButton
         
