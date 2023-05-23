@@ -291,6 +291,11 @@ class SignupView: UIViewController{
             make.top.equalTo(self.nicknameField.snp.bottom).offset(67)
             make.height.equalTo(46)
         }
+        
+        
+        //중복 확인 버튼 클릭시 이벤트 추가
+        emailButton.addTarget(self, action:#selector(emailCheck), for: .touchUpInside)
+        
     }
     
     @objc func backButtonTapped() {
@@ -302,7 +307,52 @@ class SignupView: UIViewController{
         self.navigationController?.isNavigationBarHidden = true
     }
     
+    @objc func emailCheck() {
+        
+        emailcheck()
+    }
+    
 }
 
-
+// 손가락 제스처 기능 확장
 extension SignupView: UIGestureRecognizerDelegate { }
+
+
+// 중복확인 및 회원가입 통신을 위한 클래스 확장
+extension SignupView {
+    
+    //이메일 중복확인
+    func emailcheck() {
+        
+        guard let email = emailField.text else { return }
+        
+        
+        emailCheckService.shared.emailcheck(email: email) { response in
+            switch response {
+            case .success(let data):
+                guard let data = data as? EmailCheckResponse else { return }
+                let alert = UIAlertController(title: data.message, message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print(data)
+            case .requestErr(let err):
+                print(err)
+            case .pathErr:
+                let alert = UIAlertController(title: "사용할 수 없는 이메일 입니다", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                let alert = UIAlertController(title: "사용할 수 없는 이메일 입니다", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print("networkFail")
+            }
+        }
+    }
+}
