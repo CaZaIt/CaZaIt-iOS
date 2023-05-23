@@ -167,6 +167,8 @@ class LoginView: UIViewController{
             make.height.equalTo(45)
         }
         
+        signupButton.addTarget(self, action:#selector(signupClicked), for: .touchUpInside)
+        
     }
     
     @objc func backButtonTapped() {
@@ -176,6 +178,13 @@ class LoginView: UIViewController{
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    @objc func signupClicked(_ sender: UIButton) {
+        // RecentCafeView 인스턴스 생성
+        let signupView = SignupView()
+        // 내비게이션 스택으로 RecentCafeView를 푸시
+        self.navigationController?.pushViewController(signupView, animated: true)
     }
 }
 
