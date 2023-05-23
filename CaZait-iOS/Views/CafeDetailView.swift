@@ -2,11 +2,12 @@ import UIKit
 
 class CafeDetailView: UIViewController {
     private let scrollView = UIScrollView()
-    private let parallaxImageView = UIImageView()
+    private let cafeImage = UIImageView()
     private let headerView = UIView()
     private let segmentedControl = UISegmentedControl()
     private let tableView1 = UITableView()
     private let tableView2 = UITableView()
+    private let reviewWriteButton = UIButton()
     
     override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
@@ -15,7 +16,6 @@ class CafeDetailView: UIViewController {
             self.navigationController?.navigationBar.barStyle = .black
             //self.navigationController?.navigationBar.isTranslucent = true
 
-            
         }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -26,21 +26,26 @@ class CafeDetailView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+           
+        // 카페 이미지 설정
+        cafeImage.image = UIImage(named: "big_cafe") // 피럴랙스 이미지 설정
+        cafeImage.contentMode = .scaleAspectFill
+        cafeImage.clipsToBounds = true
+        cafeImage.translatesAutoresizingMaskIntoConstraints = false
+
         // UIScrollView 설정
         scrollView.delegate = self
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(scrollView)
-        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         
+        // 콘텐츠 높이 설정
+        scrollView.contentSize = CGSize(width: view.bounds.width, height: 400)
+
+     
         // 헤더뷰 설정
         headerView.backgroundColor = .white
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(headerView)
         
-        // 첫 번째 라벨 추가
+        // 카페 이름 라벨
         let cafeName = UILabel()
         cafeName.text = "롬곡"
         cafeName.font = UIFont.systemFont(ofSize: 26, weight: .bold)
@@ -48,7 +53,7 @@ class CafeDetailView: UIViewController {
         cafeName.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(cafeName)
 
-        // 두 번째 라벨 추가
+        // 카페 위치 라벨
         let cafeLocation = UILabel()
         cafeLocation.text = "서울특별시 광진구 광나루로 375-1 2층(군자동)"
         cafeLocation.font = UIFont.systemFont(ofSize: 15)
@@ -56,41 +61,13 @@ class CafeDetailView: UIViewController {
         cafeLocation.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(cafeLocation)
         
-        //edit button
+        // 리뷰쓰기 버튼
         let reviewWriteButton =  UIButton()
         reviewWriteButton.translatesAutoresizingMaskIntoConstraints = false
         reviewWriteButton.backgroundColor = .black
         reviewWriteButton.layer.cornerRadius = 20
         reviewWriteButton.setTitle("리뷰쓰기", for: .normal)
         reviewWriteButton.addTarget(self, action: #selector(reviewWriteButtonClicked), for: .touchUpInside)
-
-
-        // 첫 번째 라벨 제약조건 설정
-        cafeName.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
-        cafeName.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 16).isActive = true
-
-        // 두 번째 라벨 제약조건 설정
-        cafeLocation.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
-        cafeLocation.topAnchor.constraint(equalTo: cafeName.bottomAnchor, constant: 8).isActive = true
-
-
-        // 피럴랙스 효과를 가진 이미지 설정
-        parallaxImageView.image = UIImage(named: "big_cafe") // 피럴랙스 이미지 설정
-        parallaxImageView.contentMode = .scaleAspectFill
-        parallaxImageView.clipsToBounds = true
-        parallaxImageView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(parallaxImageView)
-
-        parallaxImageView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        parallaxImageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
-        parallaxImageView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
-        parallaxImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-        parallaxImageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-
-        headerView.topAnchor.constraint(equalTo: parallaxImageView.bottomAnchor).isActive = true
-        headerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
-        headerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
-        headerView.heightAnchor.constraint(equalToConstant: 100).isActive = true
 
         // 세그먼트 컨트롤 설정
         segmentedControl.insertSegment(withTitle: "카페 메뉴", at: 0, animated: false)
@@ -99,8 +76,6 @@ class CafeDetailView: UIViewController {
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         
-        //segmentedControl.backgroundColor = .white
-
         
         // Change text color and the font of the NOT selected (normal) segment
         segmentedControl.setTitleTextAttributes([
@@ -111,50 +86,94 @@ class CafeDetailView: UIViewController {
         segmentedControl.setTitleTextAttributes([
             NSAttributedString.Key.foregroundColor: UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1),
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold)], for: .selected)
-    
-
-        scrollView.addSubview(segmentedControl)
-        segmentedControl.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        segmentedControl.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16).isActive = true
-
-        // 콘텐츠 높이 설정
-        scrollView.contentSize = CGSize(width: view.bounds.width, height: 400)
-
-
+   
         // 테이블 뷰 설정
         tableView1.backgroundColor = .white
         tableView1.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(tableView1)
-
-        tableView1.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16).isActive = true
-        tableView1.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView1.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView1.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-
+        
         tableView1.dataSource = self
         tableView1.delegate = self
 
         tableView2.backgroundColor = .white
         tableView2.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(tableView2)
-
-        tableView2.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16).isActive = true
-        tableView2.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView2.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView2.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
         tableView2.dataSource = self
         tableView2.delegate = self
         
+        // 테이블뷰 cell
         tableView1.register(CafeDetailViewMenuCell.self, forCellReuseIdentifier: "CafeDetailViewMenuCell")
         tableView2.register(CafeDetailViewReviewCell.self, forCellReuseIdentifier: "CafeDetailViewReviewCell")
 
+     
+        view.addSubview(cafeImage)
+        view.addSubview(scrollView)
+        scrollView.addSubview(headerView)
+        scrollView.addSubview(segmentedControl)
+        scrollView.addSubview(tableView1)
+        scrollView.addSubview(tableView2)
         tableView2.addSubview(reviewWriteButton)
-        reviewWriteButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 600).isActive = true
-        reviewWriteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        reviewWriteButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        reviewWriteButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
 
+        
+        // 제약 조건
+        cafeImage.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.height.equalTo(250)
+        }
+                
+        scrollView.snp.makeConstraints { make in
+            make.top.equalTo(cafeImage.snp.bottom)
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+           
+        headerView.snp.makeConstraints { make in
+            make.top.equalTo(scrollView.snp.top)
+            make.leading.equalTo(scrollView.snp.leading)
+            make.trailing.equalTo(scrollView.snp.trailing)
+            make.height.equalTo(100)
+        }
+
+        cafeName.snp.makeConstraints { make in
+            make.top.equalTo(headerView.snp.top).offset(16)
+            make.leading.equalTo(headerView.snp.leading).offset(25)
+        }
+        
+        
+        cafeLocation.snp.makeConstraints { make in
+            make.top.equalTo(cafeName.snp.bottom).offset(8)
+            make.leading.equalTo(headerView.snp.leading).offset(25)
+        }
+        
+ 
+        segmentedControl.snp.makeConstraints { make in
+            make.top.equalTo(headerView.snp.bottom).offset(16)
+            make.centerX.equalTo(scrollView.snp.centerX)
+        }
+        
+        
+        tableView1.snp.makeConstraints { make in
+            make.top.equalTo(segmentedControl.snp.bottom).offset(16)
+            make.leading.equalTo(scrollView.snp.leading)
+            make.trailing.equalTo(scrollView.snp.trailing)
+        }
+
+        
+        tableView2.snp.makeConstraints { make in
+            make.top.equalTo(segmentedControl.snp.bottom).offset(16)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.leading.equalTo(scrollView.snp.leading)
+            make.trailing.equalTo(scrollView.snp.trailing)
+        }
+                
+        reviewWriteButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(600)
+            make.centerX.equalTo(view.snp.centerX)
+            make.height.equalTo(45)
+            make.width.equalTo(300)
+        }
 
         // 초기에는 첫 번째 세그먼트가 선택되도록 설정
         updateTableViewVisibility()
@@ -168,7 +187,8 @@ class CafeDetailView: UIViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         // 이미지의 위치를 스크롤 속도보다 더 느리게 이동하도록 설정
-        parallaxImageView.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
+
+
     }
     
     
@@ -224,4 +244,3 @@ extension CafeDetailView: UITableViewDataSource, UITableViewDelegate {
 
 
 }
-
