@@ -55,6 +55,32 @@ class MainView: UIViewController {
         mainTopSearchView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         
         setupMainTableView()
+        getAllCafeInfoData()
+    }
+    
+    func getAllCafeInfoData() {
+        AllCafeService.shared.getAllCafeInfo(longitude : "127.07154626749393", latitude : "37.54751410359858", sort : "distance", limit : "0") { response in
+
+            switch response {
+
+            case .success(let data):
+                guard let listData = data as? AllCafeResponse else {return}
+    //                self.allCafeData = listData
+    //                if let cafeData = allCafeData?.data[0][1] {
+    //                    print(cafeData)
+    //                }
+                print(listData.data[0].count)
+                // 실패할 경우에 분기처리는 아래와 같이 합니다.
+            case .requestErr :
+                print("requestErr")
+            case .pathErr :
+                print("pathErr")
+            case .serverErr :
+                print("serveErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
     }
     
     @objc func searchButtonTapped() {

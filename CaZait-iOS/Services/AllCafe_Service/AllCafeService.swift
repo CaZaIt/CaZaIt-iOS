@@ -92,28 +92,4 @@ class AllCafeService {
 }
 
 
-//func getAllCafeInfoData() {
-//    AllCafeService.shared.getAllCafeInfo(longitude : "127.07154626749393", latitude : "37.54751410359858", sort : "distance", limit : "0") { response in
-//
-//        switch response {
-//
-//        case .success(let data):
-//            guard let listData = data as? AllCafeResponse else {return}
-//            let a = listData.data[0]
-////                self.allCafeData = listData
-////                if let cafeData = allCafeData?.data[0][1] {
-////                    print(cafeData)
-////                }
-//            print(a)
-//            // 실패할 경우에 분기처리는 아래와 같이 합니다.
-//        case .requestErr :
-//            print("requestErr")
-//        case .pathErr :
-//            print("pathErr")
-//        case .serverErr :
-//            print("serveErr")
-//        case .networkFail:
-//            print("networkFail")
-//        }
-//    }
-//}
+
