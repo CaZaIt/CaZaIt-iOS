@@ -168,7 +168,7 @@ class LoginView: UIViewController{
         }
         
         signupButton.addTarget(self, action:#selector(signupClicked), for: .touchUpInside)
-        
+        loginButton.addTarget(self, action: #selector(LogIn), for: .touchUpInside)
     }
     
     @objc func backButtonTapped() {
@@ -186,7 +186,60 @@ class LoginView: UIViewController{
         // 내비게이션 스택으로 RecentCafeView를 푸시
         self.navigationController?.pushViewController(signupView, animated: true)
     }
+    
+    @objc func LogIn() {
+        login()
+    }
 }
 
 
 extension LoginView: UIGestureRecognizerDelegate { }
+
+
+extension LoginView {
+    
+    //로그인
+    func login() {
+        
+        guard let password = passwordtextField.text else { return }
+        guard let email = idtextField.text else { return }
+        
+        
+        loginService.shared.login(email: email, password: password) { response in
+            switch response {
+            case .success(let data):
+                guard let data = data as? LoginResponse else { return }
+                let alert = UIAlertController(title: data.message, message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: { _ in
+                    if (alert.title == "요청이 완료 되었습니다."){
+                        self.navigationController?.popViewController(animated: true)
+                        self.setLoggedInStatus(isLoggedIn: true)
+                    }
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+                print(data)
+            case .requestErr(let err):
+                print(err)
+            case .pathErr:
+                let alert = UIAlertController(title: "다시 로그인하세요", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                let alert = UIAlertController(title: "다시 로그인하세요", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print("networkFail")
+            }
+        }
+    }
+    
+    func setLoggedInStatus(isLoggedIn: Bool) {
+        UserDefaults.standard.set(isLoggedIn, forKey: "isLoggedIn")
+    }
+}
