@@ -66,7 +66,7 @@ class CafeListCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    private let congestionLabel: UILabel = {
+    private let cafeCongestionLabel: UILabel = {
         let label = UILabel()
         
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -120,7 +120,7 @@ class CafeListCollectionViewCell: UICollectionViewCell {
         cafeLocationLabel.snp.makeConstraints { make in
             make.top.equalTo(cafeNameLabel.snp.bottom).offset(4)
             make.leading.equalTo(contentView.snp.leading).offset(14)
-            make.trailing.equalTo(contentView.snp.trailing).offset(12)
+            make.trailing.equalTo(contentView.snp.trailing).offset(14)
         }
         
         contentView.addSubview(congestionView)
@@ -132,12 +132,19 @@ class CafeListCollectionViewCell: UICollectionViewCell {
             make.centerX.equalTo(contentView.snp.centerX)
         }
         
-        contentView.addSubview(congestionLabel)
+        contentView.addSubview(cafeCongestionLabel)
         
-        congestionLabel.snp.makeConstraints { make in
+        cafeCongestionLabel.snp.makeConstraints { make in
             make.centerX.equalTo(congestionView.snp.centerX)
             make.centerY.equalTo(congestionView.snp.centerY)
         }
+    }
+    //전달받은 통신 데이터를 통해 적용해줍니다.
+    func configure(with cafeInfo: CafeInfo) {
+        cafeNameLabel.text = cafeInfo.name
+        cafeLocationLabel.text = cafeInfo.address
+        cafeLocationDistanceLabel.text = String(cafeInfo.distance) + "m"
+        cafeCongestionLabel.text = cafeInfo.congestionStatus
     }
 
     required init?(coder: NSCoder) {
