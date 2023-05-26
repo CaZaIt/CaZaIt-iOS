@@ -109,7 +109,7 @@ class MainTableViewCafeCell: UITableViewCell {
         contentView.addSubview(collectionView)
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(50)
+            make.top.equalTo(contentView.snp.top).offset(45)
             make.leading.equalTo(contentView.snp.leading).offset(12.5)
             make.trailing.equalTo(contentView.snp.trailing).offset(-12.5)
             make.bottom.equalToSuperview()
