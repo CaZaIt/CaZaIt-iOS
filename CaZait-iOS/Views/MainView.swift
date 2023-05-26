@@ -234,9 +234,20 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
         if indexPath.section == 0 {
             return 277
         } else { //section1의 경우 수직방향 collectionView이므로 cell의 갯수에 따라 높이가 다르게 지정된다.
-            let cell = MainTableViewCafeCell()
-            let cellHeight = cell.calculateCellHeight()
-            return cellHeight
+            if let count = self.allCafeData?.data[0].count {
+                let cellCount = CGFloat(count)
+                // collectionCell의 개수
+                var rowCount: CGFloat = cellCount / 2
+                // collectionView의 Row의 개수
+                if cellCount.truncatingRemainder(dividingBy: 2) == 1 {
+                    rowCount += 0.5
+                }
+                print("rowcount = \(rowCount)")
+                let cellHeight: CGFloat = 50 + rowCount * (15 + 15 + 276) // MainTableViewCafeCell의 높이 TitleLabel의 높이 50 + collectionViewCell의 row * (cell의 상단여백 + Celld의 하단여백 + cell의 높이)
+                return cellHeight
+            } else {
+                return 0
+            }
         }
     }
     

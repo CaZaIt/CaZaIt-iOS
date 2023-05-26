@@ -120,13 +120,6 @@ class MainTableViewCafeCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func calculateCellHeight() -> CGFloat {
-        let cellCount : CGFloat = 10 //collectionCell의 갯수
-        let rowCount : CGFloat = (cellCount/2) + (cellCount.truncatingRemainder(dividingBy: 2))//collectionView의 Row의 갯수
-        let cellHeight : CGFloat = 50 + rowCount * (15 + 15 + 276) //MainTableViewCafeCell의 높이 TitleLabel의 높이 50 + collectionViewCell의 row * (cell의 상단여백 + Celld의 하단여백 + cell의 높이)
-        
-        return cellHeight
-    }
 }
 
 extension MainTableViewCafeCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
