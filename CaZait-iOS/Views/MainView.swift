@@ -242,7 +242,6 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
                 if cellCount.truncatingRemainder(dividingBy: 2) == 1 {
                     rowCount += 0.5
                 }
-                print("rowcount = \(rowCount)")
                 let cellHeight: CGFloat = 50 + rowCount * (15 + 15 + 276) // MainTableViewCafeCell의 높이 TitleLabel의 높이 50 + collectionViewCell의 row * (cell의 상단여백 + Celld의 하단여백 + cell의 높이)
                 return cellHeight
             } else {
