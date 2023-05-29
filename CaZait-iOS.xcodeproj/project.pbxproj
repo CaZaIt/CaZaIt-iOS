@@ -45,6 +45,7 @@
 		F13FA0602A151D4F0001958D /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FA05F2A151D4F0001958D /* SearchTableViewCell.swift */; };
 		F13FA0892A1CCDFB0001958D /* AllCafeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FA0882A1CCDFB0001958D /* AllCafeService.swift */; };
 		F13FA08B2A1CD1CD0001958D /* AllCafeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FA08A2A1CD1CD0001958D /* AllCafeModel.swift */; };
+		F13FA08F2A24F6320001958D /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FA08E2A24F6320001958D /* SearchCollectionViewCell.swift */; };
 		F13FDA7529DD5DD00044C6C3 /* MainTableViewLovedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */; };
 		F13FDA7729DD616E0044C6C3 /* LovedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */; };
 		F13FDA9E29DD91A50044C6C3 /* MainTableViewCafeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */; };
@@ -93,6 +94,7 @@
 		F13FA05F2A151D4F0001958D /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		F13FA0882A1CCDFB0001958D /* AllCafeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCafeService.swift; sourceTree = "<group>"; };
 		F13FA08A2A1CD1CD0001958D /* AllCafeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCafeModel.swift; sourceTree = "<group>"; };
+		F13FA08E2A24F6320001958D /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainTableViewLovedCell.swift; path = "CaZait-iOS/Cells/MainTableViewLovedCell.swift"; sourceTree = SOURCE_ROOT; };
 		F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LovedCollectionViewCell.swift; path = "CaZait-iOS/Cells/LovedCollectionViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainTableViewCafeCell.swift; path = "CaZait-iOS/Cells/MainTableViewCafeCell.swift"; sourceTree = SOURCE_ROOT; };
@@ -170,6 +172,7 @@
 				F122CEF129DE8FAD00818D7B /* CafeListCollectionViewCell.swift */,
 				01B87B592A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift */,
 				F13FA05F2A151D4F0001958D /* SearchTableViewCell.swift */,
+				F13FA08E2A24F6320001958D /* SearchCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				01B9328929E2E320006342F9 /* MapView.swift in Sources */,
 				01B87B722A1B99480082FC05 /* File2.swift in Sources */,
 				F122CEF229DE8FAD00818D7B /* CafeListCollectionViewCell.swift in Sources */,
+				F13FA08F2A24F6320001958D /* SearchCollectionViewCell.swift in Sources */,
 				01F7A20729D936280058736E /* UIColor+Extension.swift in Sources */,
 				01B87B6E2A1B993D0082FC05 /* File4.swift in Sources */,
 				01F7A21B29D95C480058736E /* MoreView.swift in Sources */,

@@ -29,6 +29,17 @@ class SearchView: UIViewController {
         return tableView
     }()
     
+    private let searchCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical //스크롤 방향은 수직
+        layout.sectionInset = UIEdgeInsets(top: 18, left: 38, bottom: 18, right: 38)//collectionView와 collectionViewCell사이의 여백
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false //수평 스크롤 인디게이터를 보이지 않게 함
+        collectionView.backgroundColor = .blue
+        return collectionView
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +51,13 @@ class SearchView: UIViewController {
         searchTableView.dataSource = self
         searchTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "SearchTableViewCell")
         
+        searchCollectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: "SearchCollectionViewCell")
+        searchCollectionView.delegate = self
+        searchCollectionView.dataSource = self
+        
         setupNavigation()
         setupSearchTableView()
+        setupSearchCollectionView()
     }
     
     func setupNavigation() {
@@ -49,9 +65,7 @@ class SearchView: UIViewController {
         navigationItem.titleView = searchBar
         
         // 네비게이션 색 변경 실패
-//        if let navigationBar = self.navigationController?.navigationBar {
-//            navigationBar.barTintColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
-//        }
+//        navigationController?.navigationBar.barTintColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1) // 원하는 배경색으로 변경
         
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backButtonTapped))
         navigationItem.leftBarButtonItem = backButton
@@ -71,6 +85,20 @@ class SearchView: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
+    
+    func setupSearchCollectionView() {
+        view.addSubview(searchCollectionView)
+        
+        searchCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        //초기에는 무조건 연관검색어가 나와야하므로 검색버튼을 클릭해서 나오는 collectionView는 히든처리합니다.
+        searchCollectionView.isHidden = true
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -102,12 +130,23 @@ class SearchView: UIViewController {
 extension SearchView: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // 검색 텍스트가 변경될 때마다 자동완성을 업데이트합니다.
+        
+        //검색텍스트가 변경되었으므로 searchTabletionView를 보여줍니다.
+        searchTableView.isHidden = false
+        searchCollectionView.isHidden = true
+        
         updateAutoCompletionResults(for: searchText)
         print("Search keyword: \(searchText)")
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // 검색 버튼을 클릭했을 때의 동작을 처리합니다.
+        
+        //검색버튼을 클릭했으므로 searchCollectionView를 보여줍니다.
+        searchTableView.isHidden = true
+        searchCollectionView.isHidden = false
+        searchBar.resignFirstResponder() // 키보드 내리기
+        
         performSearch(with: searchBar.text)
     }
     
@@ -158,5 +197,48 @@ extension SearchView: UITableViewDelegate, UITableViewDataSource{
         return 50
     }
     
+}
+
+
+extension SearchView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+    
+    // collectionView 셀 개수 반환
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return 13
+    }
+    
+    // collectionView 셀 생성 및 반환
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCollectionViewCell", for: indexPath) as! SearchCollectionViewCell
+        
+        
+        return cell
+    }
+    
+    // collectionView 셀 크기 반환
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 318, height: 147)
+    }
+    
+    // collectionView 셀과 셀 사이 간격 반환
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 18
+    }
+    
+    // collectionView 줄과 줄 사이 간격 반환
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 18
+    }
+    
+    // collectionView 셀이 선택됐을 때 처리할 작업 구현
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Cell \(indexPath.item) selected")
+        
+        // CafeDetailView 호출
+        let cafeDetailView = CafeDetailView() // CafeDetailView 초기화
+        navigationController?.pushViewController(cafeDetailView, animated: true)
+        
+    }
     
 }
