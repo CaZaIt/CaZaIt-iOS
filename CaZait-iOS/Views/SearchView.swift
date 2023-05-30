@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class SearchView: UIViewController {
     
@@ -40,6 +41,18 @@ class SearchView: UIViewController {
         return collectionView
     }()
     
+    private let searchedLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .black
+        label.textAlignment = .left
+        label.text = "'검색할 내용' 검색결과"
+        label.numberOfLines = 1
+        
+       return label
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +69,8 @@ class SearchView: UIViewController {
         searchCollectionView.dataSource = self
         
         setupNavigation()
-        setupSearchTableView()
-        setupSearchCollectionView()
+        setupSearchingView()
+        setupSearchedView()
     }
     
     func setupNavigation() {
@@ -76,7 +89,7 @@ class SearchView: UIViewController {
         self.navigationController?.navigationBar.tintColor = .white
     }
     
-    func setupSearchTableView() {
+    func setupSearchingView() {
         view.addSubview(searchTableView)
         
         searchTableView.snp.makeConstraints { make in
@@ -86,17 +99,26 @@ class SearchView: UIViewController {
         }
     }
     
-    func setupSearchCollectionView() {
+    func setupSearchedView() {
+        
+        view.addSubview(searchedLabel)
+        
+        searchedLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(18)
+            make.leading.equalTo(view.snp.leading).offset(29)
+        }
+        
         view.addSubview(searchCollectionView)
         
         searchCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(searchedLabel.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         
         //초기에는 무조건 연관검색어가 나와야하므로 검색버튼을 클릭해서 나오는 collectionView는 히든처리합니다.
         searchCollectionView.isHidden = true
+        searchedLabel.isHidden = true
     }
     
     
@@ -134,6 +156,7 @@ extension SearchView: UISearchBarDelegate{
         //검색텍스트가 변경되었으므로 searchTabletionView를 보여줍니다.
         searchTableView.isHidden = false
         searchCollectionView.isHidden = true
+        searchedLabel.isHidden = true
         
         updateAutoCompletionResults(for: searchText)
         print("Search keyword: \(searchText)")
@@ -142,9 +165,13 @@ extension SearchView: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // 검색 버튼을 클릭했을 때의 동작을 처리합니다.
         
+        searchedLabel.text = "'\(searchBar.text!)' 검색 결과"
+        
         //검색버튼을 클릭했으므로 searchCollectionView를 보여줍니다.
         searchTableView.isHidden = true
         searchCollectionView.isHidden = false
+        searchedLabel.isHidden = false
+        
         searchBar.resignFirstResponder() // 키보드 내리기
         
         performSearch(with: searchBar.text)
