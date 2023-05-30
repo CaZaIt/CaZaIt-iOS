@@ -11,9 +11,13 @@ import SnapKit
 
 class SearchView: UIViewController {
     
-    let searchBar: UISearchBar = {
+    private var isTableView : Bool = true
+    
+    private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         
+        searchBar.searchTextField.backgroundColor = .black
+        searchBar.tintColor = .white
         searchBar.searchTextField.textColor = UIColor.white
         
         return searchBar
@@ -39,6 +43,14 @@ class SearchView: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false //수평 스크롤 인디게이터를 보이지 않게 함
         collectionView.backgroundColor = .blue
         return collectionView
+    }()
+    
+    private let pinkView: UIView = {
+        let view = UIView()
+        
+        view.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
+        
+        return view
     }()
     
     private let searchedLabel: UILabel = {
@@ -83,10 +95,19 @@ class SearchView: UIViewController {
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backButtonTapped))
         navigationItem.leftBarButtonItem = backButton
         
+        if let navigationBarAppearance = navigationController?.navigationBar.standardAppearance {
+            navigationBarAppearance.configureWithOpaqueBackground()
+            navigationBarAppearance.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
+            navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+            navigationController?.navigationBar.compactAppearance = navigationBarAppearance
+        }
         
         // 내비게이션 바 스타일 변경
-        self.navigationController?.navigationBar.backgroundColor = .black
-        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.backgroundColor = .clear
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
+        self.navigationController?.navigationBar.tintColor = .black
+        
     }
     
     func setupSearchingView() {
@@ -133,7 +154,10 @@ class SearchView: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        searchBar.becomeFirstResponder()
+        //버튼 클릭시 이동하는 화면에서 searchBar가 클릭된 상태로 시작합니다.
+        if (isTableView == true) {
+            searchBar.becomeFirstResponder()
+        }
     }
     
     //mainView에는 네비게이션바가 없기때문에 검색창을 나갈때는 다시 네비게이션바를 없애는 코드를 추가합니다.
@@ -157,6 +181,7 @@ extension SearchView: UISearchBarDelegate{
         searchTableView.isHidden = false
         searchCollectionView.isHidden = true
         searchedLabel.isHidden = true
+        isTableView = true
         
         updateAutoCompletionResults(for: searchText)
         print("Search keyword: \(searchText)")
@@ -171,6 +196,7 @@ extension SearchView: UISearchBarDelegate{
         searchTableView.isHidden = true
         searchCollectionView.isHidden = false
         searchedLabel.isHidden = false
+        isTableView = false
         
         searchBar.resignFirstResponder() // 키보드 내리기
         

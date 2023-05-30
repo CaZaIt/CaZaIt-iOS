@@ -85,8 +85,7 @@ class MainView: UIViewController {
     @objc func searchButtonTapped() {
         let searchViewController = SearchView()
         navigationController?.pushViewController(searchViewController, animated: false)
-        //버튼 클릭시 이동하는 화면에서 searchBar가 클릭된 상태로 시작합니다.
-        searchViewController.searchBar.becomeFirstResponder()
+        
     }
     
     func setupMainTableView() {
