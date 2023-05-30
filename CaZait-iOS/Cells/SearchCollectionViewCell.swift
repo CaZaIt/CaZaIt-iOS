@@ -13,7 +13,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
     private let cafeImageView: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(named: "coffee1")
+        imageView.image = UIImage(named: "search_cafa")
         
         return imageView
     }()
