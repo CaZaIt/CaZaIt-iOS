@@ -118,6 +118,10 @@ class LoginView: UIViewController{
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         
+        // 다른 부분을 탭할 때 키보드 숨기기
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
         
         self.view.addSubview(pinkView)
         self.pinkView.addSubview(cazaitLogo)
@@ -189,6 +193,11 @@ class LoginView: UIViewController{
     
     @objc func LogIn() {
         login()
+    }
+    
+    // 다른 부분을 탭할 때 키보드 숨기기
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 
