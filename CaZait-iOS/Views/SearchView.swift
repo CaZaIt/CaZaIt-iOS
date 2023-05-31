@@ -22,6 +22,18 @@ class SearchView: UIViewController {
         searchBar.tintColor = .white
         searchBar.searchTextField.textColor = UIColor.white
         
+        if let searchTextField = searchBar.value(forKey: "searchField") as? UITextField {
+            // 돋보기 모양 아이콘의 색상 설정
+            if let searchIconView = searchTextField.leftView as? UIImageView {
+                searchIconView.tintColor = .white
+            }
+            
+            // 삭제 버튼의 색상 설정
+            if let clearButton = searchTextField.value(forKey: "clearButton") as? UIButton {
+                clearButton.tintColor = .white
+            }
+        }
+        
         return searchBar
     }()
     
@@ -30,7 +42,7 @@ class SearchView: UIViewController {
         
         tableView.allowsSelection = true
         tableView.showsVerticalScrollIndicator = false //수직 스크롤 인디게이터를 보이지 않게 함
-        tableView.backgroundColor = .yellow
+        tableView.backgroundColor = .black
         tableView.sectionHeaderTopPadding = 0 //상단 패딩을 0으로 지정한다.
         
         return tableView
@@ -43,14 +55,15 @@ class SearchView: UIViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false //수평 스크롤 인디게이터를 보이지 않게 함
-        collectionView.backgroundColor = .blue
+        collectionView.backgroundColor = .white
+        
         return collectionView
     }()
     
-    private let pinkView: UIView = {
-        let view = UIView()
+    private let searchedLabelView: UIView = {
+       let view = UIView()
         
-        view.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
+        view.backgroundColor = .white
         
         return view
     }()
@@ -71,7 +84,7 @@ class SearchView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         searchBar.delegate = self
         
         searchTableView.delegate = self
@@ -82,7 +95,6 @@ class SearchView: UIViewController {
         searchCollectionView.delegate = self
         searchCollectionView.dataSource = self
         
-        setupNavigation()
         setupSearchingView()
         setupSearchedView()
     }
@@ -91,23 +103,11 @@ class SearchView: UIViewController {
         // 네비게이션 바에 UISearchBar 추가
         navigationItem.titleView = searchBar
         
-        // 네비게이션 색 변경 실패
-//        navigationController?.navigationBar.barTintColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1) // 원하는 배경색으로 변경
-        
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backButtonTapped))
         navigationItem.leftBarButtonItem = backButton
         
-//        if let navigationBarAppearance = navigationController?.navigationBar.standardAppearance {
-//            navigationBarAppearance.configureWithOpaqueBackground()
-//            navigationBarAppearance.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
-//            navigationController?.navigationBar.standardAppearance = navigationBarAppearance
-//            navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-//            navigationController?.navigationBar.compactAppearance = navigationBarAppearance
-//        }
-        
         // 내비게이션 바 스타일 변경
-        self.navigationController?.navigationBar.backgroundColor = .clear
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
+        self.navigationController?.navigationBar.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
         self.navigationController?.navigationBar.tintColor = .black
         
     }
@@ -124,23 +124,33 @@ class SearchView: UIViewController {
     
     func setupSearchedView() {
         
-        view.addSubview(searchedLabel)
+        view.addSubview(searchedLabelView)
+        
+        searchedLabelView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.top).offset(42)
+        }
+        
+        searchedLabelView.addSubview(searchedLabel)
         
         searchedLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(18)
-            make.leading.equalTo(view.snp.leading).offset(29)
+            make.bottom.equalTo(searchedLabelView.snp.bottom)
+            make.leading.equalTo(searchedLabelView.snp.leading).offset(29)
         }
         
         view.addSubview(searchCollectionView)
         
         searchCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(searchedLabel.snp.bottom)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(42)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         
         //초기에는 무조건 연관검색어가 나와야하므로 검색버튼을 클릭해서 나오는 collectionView는 히든처리합니다.
         searchCollectionView.isHidden = true
+        searchedLabel.isHidden = true
+        searchedLabelView.isHidden = true
         searchedLabel.isHidden = true
     }
     
@@ -173,6 +183,7 @@ class SearchView: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
         // 네비게이션컨트롤러를 통해서 Status Bar 색깔 변경
         self.navigationController?.navigationBar.barStyle = .black
+        setupNavigation()
         
     }
     
@@ -189,12 +200,35 @@ class SearchView: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.navigationBar.barTintColor = .clear
+        self.navigationController?.navigationBar.backgroundColor = .clear
     }
     
     @objc func backButtonTapped() {
         navigationController?.popViewController(animated: false)
     }
     
+    func searcingCafe() {
+        //검색텍스트가 변경되었으므로 searchTabletionView를 보여줍니다.
+        searchTableView.isHidden = false
+        searchCollectionView.isHidden = true
+        searchedLabelView.isHidden = true
+        searchedLabel.isHidden = true
+        isTableView = true
+    }
+    
+    func searcedCafe() {
+        searchedLabel.text = "'\(searchBar.text!)' 검색 결과"
+        
+        //검색버튼을 클릭했으므로 searchCollectionView를 보여줍니다.
+        searchTableView.isHidden = true
+        searchCollectionView.isHidden = false
+        searchedLabelView.isHidden = false
+        searchedLabel.isHidden = false
+        isTableView = false
+        
+        searchBar.resignFirstResponder() // 키보드 내리기
+    }
 }
 
 
@@ -207,28 +241,16 @@ extension SearchView: UISearchBarDelegate{
             searchTableView.reloadData()
         }
         
-        //검색텍스트가 변경되었으므로 searchTabletionView를 보여줍니다.
-        searchTableView.isHidden = false
-        searchCollectionView.isHidden = true
-        searchedLabel.isHidden = true
-        isTableView = true
-        
+        searcingCafe()
         getSearchCafeInfoData(cafeName: searchText)
+        
         print("Search keyword: \(searchText)")
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // 검색 버튼을 클릭했을 때의 동작을 처리합니다.
         
-        searchedLabel.text = "'\(searchBar.text!)' 검색 결과"
-        
-        //검색버튼을 클릭했으므로 searchCollectionView를 보여줍니다.
-        searchTableView.isHidden = true
-        searchCollectionView.isHidden = false
-        searchedLabel.isHidden = false
-        isTableView = false
-        
-        searchBar.resignFirstResponder() // 키보드 내리기
+        searcedCafe()
     }
     
 }
@@ -269,15 +291,8 @@ extension SearchView: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         searchBar.text = self.searchCafeData?.data[0][indexPath.row].name
-        searchedLabel.text = "'\(searchBar.text!)' 검색 결과"
         
-        //검색버튼을 클릭했으므로 searchCollectionView를 보여줍니다.
-        searchTableView.isHidden = true
-        searchCollectionView.isHidden = false
-        searchedLabel.isHidden = false
-        isTableView = false
-        
-        searchBar.resignFirstResponder() // 키보드 내리기
+        searcedCafe()
     }
 
     //mainTableViewCell의 높이를 지정한다.
