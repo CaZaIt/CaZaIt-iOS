@@ -153,6 +153,7 @@ class SearchView: UIViewController {
                 guard let listData = data as? AllCafeResponse else {return}
                 self.searchCafeData = listData //통신한 데이터를 변수에 저장하고
                 self.searchTableView.reloadData() //통신을 적용하기 위해 테이블 뷰를 리로드합니다
+                self.searchCollectionView.reloadData() //통신을 적용하기 위해 콜렉션 뷰를 리로드합니다.
                 
                 // 실패할 경우에 분기처리는 아래와 같이 합니다.
             case .requestErr :
@@ -279,6 +280,12 @@ extension SearchView: UITableViewDelegate, UITableViewDataSource{
         
         return cell
     }
+    
+    // 셀이 선택되었을 때 작업을 수행할 수 있는 함수
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        print(indexPath.row)
+    }
 
     //mainTableViewCell의 높이를 지정한다.
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -294,13 +301,20 @@ extension SearchView: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     // collectionView 셀 개수 반환
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 13
+        if let count = self.searchCafeData?.data[0].count {
+            return count
+        } else {
+            return 0
+        }
     }
     
     // collectionView 셀 생성 및 반환
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCollectionViewCell", for: indexPath) as! SearchCollectionViewCell
         
+        if let cafeInfo = self.searchCafeData?.data[0][indexPath.row]{
+            cell.configure(with: cafeInfo)
+        }
         
         return cell
     }

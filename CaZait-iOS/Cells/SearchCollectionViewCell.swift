@@ -120,6 +120,12 @@ class SearchCollectionViewCell: UICollectionViewCell {
             make.centerY.equalTo(congestionView.snp.centerY)
         }
     }
+    
+    func configure(with cafeInfo: CafeInfo) {
+        cafeNameLabel.text = cafeInfo.name
+        cafeLocationLabel.text = cafeInfo.address
+        cafeCongestionLabel.text = cafeInfo.congestionStatus
+    }
    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
