@@ -202,13 +202,17 @@ extension SearchView: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // 검색 텍스트가 변경될 때마다 자동완성을 업데이트합니다.
         
+        if (searchText == "") {
+            searchCafeData = nil
+            searchTableView.reloadData()
+        }
+        
         //검색텍스트가 변경되었으므로 searchTabletionView를 보여줍니다.
         searchTableView.isHidden = false
         searchCollectionView.isHidden = true
         searchedLabel.isHidden = true
         isTableView = true
         
-        updateAutoCompletionResults(for: searchText)
         getSearchCafeInfoData(cafeName: searchText)
         print("Search keyword: \(searchText)")
     }
@@ -225,28 +229,8 @@ extension SearchView: UISearchBarDelegate{
         isTableView = false
         
         searchBar.resignFirstResponder() // 키보드 내리기
-        
-        performSearch(with: searchBar.text)
     }
     
-    // 자동완성 결과를 업데이트하는 로직을 구현합니다.
-    func updateAutoCompletionResults(for searchText: String) {
-        // 검색어에 따라 자동완성 결과를 가져오는 로직을 구현합니다.
-        
-        // 예를 들어 API 호출 또는 데이터 소스에서 필터링 등을 수행할 수 있습니다.
-        // 가져온 결과를 화면에 표시하는 방식은 사용하고 있는 데이터 구조에 따라 다를 수 있습니다.
-    }
-    
-    // 검색 동작을 처리하는 로직을 구현합니다.
-    func performSearch(with searchText: String?) {
-        // 검색어를 사용하여 검색 동작을 수행합니다.
-        if let searchText = searchText {
-            print("Performed search with: \(searchText)")
-        } else {
-            print("No search text entered.")
-        }
-        // 예를 들어 API 호출, 데이터베이스 쿼리 등을 수행할 수 있습니다.
-    }
 }
 
 extension SearchView: UITableViewDelegate, UITableViewDataSource{
@@ -284,7 +268,16 @@ extension SearchView: UITableViewDelegate, UITableViewDataSource{
     // 셀이 선택되었을 때 작업을 수행할 수 있는 함수
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print(indexPath.row)
+        searchBar.text = self.searchCafeData?.data[0][indexPath.row].name
+        searchedLabel.text = "'\(searchBar.text!)' 검색 결과"
+        
+        //검색버튼을 클릭했으므로 searchCollectionView를 보여줍니다.
+        searchTableView.isHidden = true
+        searchCollectionView.isHidden = false
+        searchedLabel.isHidden = false
+        isTableView = false
+        
+        searchBar.resignFirstResponder() // 키보드 내리기
     }
 
     //mainTableViewCell의 높이를 지정한다.
@@ -336,7 +329,6 @@ extension SearchView: UICollectionViewDataSource, UICollectionViewDelegate, UICo
     
     // collectionView 셀이 선택됐을 때 처리할 작업 구현
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Cell \(indexPath.item) selected")
         
         // CafeDetailView 호출
         let cafeDetailView = CafeDetailView() // CafeDetailView 초기화
