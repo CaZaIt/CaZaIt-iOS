@@ -11,7 +11,9 @@ import SnapKit
 
 class SearchView: UIViewController {
     
+    //isTableView는 검색을 한 뒤, 그에 해당하는 카페를 보고 난 뒤, 다시 검색했던 collectionView로 돌아올 경우 키보드가 다시 자동생성되는 것을 방지하기 위해서 만든 변수입니다.
     private var isTableView : Bool = true
+    private var searchCafeData : AllCafeResponse?
     
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -95,13 +97,13 @@ class SearchView: UIViewController {
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backButtonTapped))
         navigationItem.leftBarButtonItem = backButton
         
-        if let navigationBarAppearance = navigationController?.navigationBar.standardAppearance {
-            navigationBarAppearance.configureWithOpaqueBackground()
-            navigationBarAppearance.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
-            navigationController?.navigationBar.standardAppearance = navigationBarAppearance
-            navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-            navigationController?.navigationBar.compactAppearance = navigationBarAppearance
-        }
+//        if let navigationBarAppearance = navigationController?.navigationBar.standardAppearance {
+//            navigationBarAppearance.configureWithOpaqueBackground()
+//            navigationBarAppearance.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
+//            navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+//            navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+//            navigationController?.navigationBar.compactAppearance = navigationBarAppearance
+//        }
         
         // 내비게이션 바 스타일 변경
         self.navigationController?.navigationBar.backgroundColor = .clear
@@ -142,6 +144,28 @@ class SearchView: UIViewController {
         searchedLabel.isHidden = true
     }
     
+    func getSearchCafeInfoData(cafeName : String) {
+        SearchCafeService.shared.getSearchCafeInfo(cafeName : cafeName, longitude : "127.07154626749393", latitude : "37.54751410359858", sort : "distance", limit : "0") { response in
+
+            switch response {
+
+            case .success(let data):
+                guard let listData = data as? AllCafeResponse else {return}
+                self.searchCafeData = listData //통신한 데이터를 변수에 저장하고
+                self.searchTableView.reloadData() //통신을 적용하기 위해 테이블 뷰를 리로드합니다
+                
+                // 실패할 경우에 분기처리는 아래와 같이 합니다.
+            case .requestErr :
+                print("requestErr")
+            case .pathErr :
+                print("pathErr")
+            case .serverErr :
+                print("serveErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -184,6 +208,7 @@ extension SearchView: UISearchBarDelegate{
         isTableView = true
         
         updateAutoCompletionResults(for: searchText)
+        getSearchCafeInfoData(cafeName: searchText)
         print("Search keyword: \(searchText)")
     }
     
@@ -232,7 +257,11 @@ extension SearchView: UITableViewDelegate, UITableViewDataSource{
 
     //mainTableView의 각 섹션 마다 cell row 숫자의 갯수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if let count = self.searchCafeData?.data[0].count {
+            return count
+        } else {
+            return 0
+        }
     }
 
     //mainTableView의 각 센션 마다 사용할 cell의 종류
@@ -240,6 +269,13 @@ extension SearchView: UITableViewDelegate, UITableViewDataSource{
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTableViewCell", for: indexPath) as! SearchTableViewCell
         cell.navigationController = navigationController
+        
+        //cell 선택시 보여지는 이벤트를 없앱니다.
+        cell.selectionStyle = .none
+        
+        if let cafeInfo = self.searchCafeData?.data[0][indexPath.row]{
+            cell.configure(with: cafeInfo)
+        }
         
         return cell
     }

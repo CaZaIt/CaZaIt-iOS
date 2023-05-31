@@ -85,7 +85,11 @@ class SearchTableViewCell: UITableViewCell {
             make.height.width.equalTo(15)
         }
         
-        
+    }
+    
+    
+    func configure(with cafeInfo: CafeInfo) {
+        searchExampleLabel.text = cafeInfo.name
     }
     
     required init?(coder: NSCoder) {
