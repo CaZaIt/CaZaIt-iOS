@@ -212,8 +212,16 @@ extension LoginView {
                 let alert = UIAlertController(title: data.message, message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: { _ in
                     if (alert.title == "요청이 완료 되었습니다."){
+                        //로그인 성공 후 자동으로 마이페이지로 이동
                         self.navigationController?.popViewController(animated: true)
-                        self.setLoggedInStatus(isLoggedIn: true)
+                        // 통신을 통해 얻은 jwtToken UserDefault에 저장
+                        UserDefaults.standard.set(data.data?.jwtToken, forKey: "jwtToken")
+                        
+                        if let token = UserDefaults.standard.string(forKey: "jwtToken") {
+                            print("저장된 토큰: \(token)")
+                        } else {
+                            print("토큰이 저장되지 않았습니다.")
+                        }
                     }
                 }))
                 
@@ -239,7 +247,4 @@ extension LoginView {
         }
     }
     
-    func setLoggedInStatus(isLoggedIn: Bool) {
-        UserDefaults.standard.set(isLoggedIn, forKey: "isLoggedIn")
-    }
 }
