@@ -120,7 +120,7 @@ class CafeListCollectionViewCell: UICollectionViewCell {
         cafeLocationLabel.snp.makeConstraints { make in
             make.top.equalTo(cafeNameLabel.snp.bottom).offset(4)
             make.leading.equalTo(contentView.snp.leading).offset(14)
-            make.trailing.equalTo(contentView.snp.trailing).offset(14)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-14)
         }
         
         contentView.addSubview(congestionView)
