@@ -443,10 +443,10 @@ class CafeDetailView: UIViewController {
 
     }
     
-    
+//
 //    func fetchData() { //result = getAllCafeInfo 실행해서 얻은 결과
 //        let service = DetailCafeService() // DetailCafeService 인스턴스 생성
-//        service.getDetailCafeBycafeID(cafeID: 2) { result in
+//        service.getDetailCafeBycafeID(cafeID: "2") { result in
 //            switch result {
 //            case .success(let cafe):
 //                // 성공적으로 데이터를 받아왔을 때의 처리 로직
@@ -463,7 +463,7 @@ class CafeDetailView: UIViewController {
     
     func fetchData() { //result = getAllCafeInfo 실행해서 얻은 결과
         let detailcafeservice = DetailCafeService() // DetailCafeService 인스턴스 생성
-        detailcafeservice.getDetailCafeBycafeID() { result in
+        detailcafeservice.getDetailCafeBycafeID(cafeID: 2) { result in
             switch result {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
