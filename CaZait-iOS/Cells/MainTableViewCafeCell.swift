@@ -166,6 +166,9 @@ extension MainTableViewCafeCell: UICollectionViewDataSource, UICollectionViewDel
         
         // CafeDetailView 호출
         let cafeDetailView = CafeDetailView() // CafeDetailView 초기화
+        
+        //cafeDetailView에서 받은 cafeId를 통해 통신할 수 있도록 값을 전달한다.
+        cafeDetailView.cafeId = self.allCafeData?.data[0][indexPath.row].cafeID
         navigationController?.pushViewController(cafeDetailView, animated: true)
         
     }
