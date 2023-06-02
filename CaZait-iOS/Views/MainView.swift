@@ -11,6 +11,7 @@ import SnapKit
 class MainView: UIViewController {
 
     let mainTopSearchView = MainTopSearchView()
+    private var allCafeData: AllCafeResponse? //통신한 데이터를 저장하기 위한 변수입니다.
     
     private let whiteView: UIView = {
         let view = UIView()
@@ -55,13 +56,36 @@ class MainView: UIViewController {
         mainTopSearchView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         
         setupMainTableView()
+        getAllCafeInfoData()
+    }
+    
+    func getAllCafeInfoData() {
+        AllCafeService.shared.getAllCafeInfo(longitude : "127.07154626749393", latitude : "37.54751410359858", sort : "distance", limit : "0") { response in
+
+            switch response {
+
+            case .success(let data):
+                guard let listData = data as? AllCafeResponse else {return}
+                self.allCafeData = listData //통신한 데이터를 변수에 저장하고
+                self.mainTableView.reloadData() //통신을 적용하기 위해 테이블 뷰를 리로드합니다.
+                
+                // 실패할 경우에 분기처리는 아래와 같이 합니다.
+            case .requestErr :
+                print("requestErr")
+            case .pathErr :
+                print("pathErr")
+            case .serverErr :
+                print("serveErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
     }
     
     @objc func searchButtonTapped() {
         let searchViewController = SearchView()
         navigationController?.pushViewController(searchViewController, animated: false)
-        //버튼 클릭시 이동하는 화면에서 searchBar가 클릭된 상태로 시작합니다.
-        searchViewController.searchBar.becomeFirstResponder()
+        
     }
     
     func setupMainTableView() {
@@ -122,10 +146,10 @@ class MainView: UIViewController {
         // scrollViewFrameHeight: 스크롤 뷰의 프레임 높이를 나타내는 변수입니다.
         let scrollViewFrameHeight = scrollView.frame.size.height// 즉, 우리가 볼수있는 tableView의 높이를 나타냅니다.
         
-        print("scrollViewYOffset : \(scrollViewYOffset)")
-        print("contentHeight : \(contentHeight)")
-        print("scrollViewFrameHeight : \(scrollViewFrameHeight)")
-        print("previousScrollViewYOffset : \(previousScrollViewYOffset)")
+//        print("scrollViewYOffset : \(scrollViewYOffset)")
+//        print("contentHeight : \(contentHeight)")
+//        print("scrollViewFrameHeight : \(scrollViewFrameHeight)")
+//        print("previousScrollViewYOffset : \(previousScrollViewYOffset)")
         
         //현재의 tableView의 상단 위치와 바로 직전 tableView의 상단 위치를 비교하여 스크롤을 내릴때와 올라갈 때를 감지합니다.
         // 스크롤을 아래로 내리는 경우 (우리가 웹툰보는 방향의 스크롤)
@@ -198,6 +222,7 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCafeCell", for: indexPath) as! MainTableViewCafeCell
             cell.navigationController = navigationController
+            cell.configure(with: self.allCafeData) //테이블 뷰 cell에 정보를 전달합니다.
             // 두 번째 섹션에서 사용할 셀 구성
             return cell
         }
@@ -208,9 +233,19 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
         if indexPath.section == 0 {
             return 277
         } else { //section1의 경우 수직방향 collectionView이므로 cell의 갯수에 따라 높이가 다르게 지정된다.
-            let cell = MainTableViewCafeCell()
-            let cellHeight = cell.calculateCellHeight()
-            return cellHeight
+            if let count = self.allCafeData?.data[0].count {
+                let cellCount = CGFloat(count)
+                // collectionCell의 개수
+                var rowCount: CGFloat = cellCount / 2
+                // collectionView의 Row의 개수
+                if cellCount.truncatingRemainder(dividingBy: 2) == 1 {
+                    rowCount += 0.5
+                }
+                let cellHeight: CGFloat = 50 + rowCount * (15 + 15 + 276) // MainTableViewCafeCell의 높이 TitleLabel의 높이 50 + collectionViewCell의 row * (cell의 상단여백 + Celld의 하단여백 + cell의 높이)
+                return cellHeight
+            } else {
+                return 0
+            }
         }
     }
     

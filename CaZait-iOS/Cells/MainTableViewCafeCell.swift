@@ -11,6 +11,7 @@ import SnapKit
 class MainTableViewCafeCell: UITableViewCell {
    
     weak var navigationController: UINavigationController?
+    private var allCafeData: AllCafeResponse? //MainView에서 날라온 정보를 저장합니다.
     
     private let checkCafeLabel: UILabel = {
         let label = UILabel()
@@ -75,6 +76,12 @@ class MainTableViewCafeCell: UITableViewCell {
         self.backgroundColor = .white
     }
     
+    // MainView에서 날라온 정보를 저장한 뒤, 다시 콜렉션뷰를 리로드합니다.
+    func configure(with data: AllCafeResponse?) {
+        self.allCafeData = data
+        self.collectionView.reloadData()
+    }
+    
     func setupMainTableViewCafeCell() {
         contentView.addSubview(checkCafeLabel)
         
@@ -102,7 +109,7 @@ class MainTableViewCafeCell: UITableViewCell {
         contentView.addSubview(collectionView)
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(50)
+            make.top.equalTo(contentView.snp.top).offset(45)
             make.leading.equalTo(contentView.snp.leading).offset(12.5)
             make.trailing.equalTo(contentView.snp.trailing).offset(-12.5)
             make.bottom.equalToSuperview()
@@ -113,26 +120,27 @@ class MainTableViewCafeCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func calculateCellHeight() -> CGFloat {
-        let cellCount : CGFloat = 10 //collectionCell의 갯수
-        let rowCount : CGFloat = (cellCount/2) + (cellCount.truncatingRemainder(dividingBy: 2))//collectionView의 Row의 갯수
-        let cellHeight : CGFloat = 50 + rowCount * (15 + 15 + 276) //MainTableViewCafeCell의 높이 TitleLabel의 높이 50 + collectionViewCell의 row * (cell의 상단여백 + Celld의 하단여백 + cell의 높이)
-        
-        return cellHeight
-    }
 }
 
 extension MainTableViewCafeCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     // collectionView 셀 개수 반환
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        //통신에서 저장된 변수를 통해 cell 갯수를 정합니다.
+        if let count = self.allCafeData?.data[0].count {
+            return count
+        } else {
+            return 0
+        }
     }
     
     // collectionView 셀 생성 및 반환
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeListCollectionViewCell", for: indexPath) as! CafeListCollectionViewCell
-        
+        //통신에서 날라온 정보를 이용해서 콜렉션 뷰 셀에 데이터를 전달합니다.
+        if let cafeInfo = self.allCafeData?.data[0][indexPath.row]{
+            cell.configure(with: cafeInfo)
+        }
         
         return cell
     }
