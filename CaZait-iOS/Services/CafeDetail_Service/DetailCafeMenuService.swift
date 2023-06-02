@@ -9,9 +9,9 @@ import Foundation
 import Alamofire
 
 class DetailCafeMenuService{
-    func getDetailCafeMenuBycafeID(completion: @escaping (Result<[DetailCafeMenu], Error>) -> Void) {
-        let url = "https://cazait.shop/api/menus/cafe/2"
-
+    func getDetailCafeMenuBycafeID(cafeID: Int, completion: @escaping (Result<[DetailCafeMenu], Error>) -> Void) {
+        let url = APIConstants.detailCafeMenuURL + "/\(cafeID)"
+        
         AF.request(url)
             .validate()
             .responseDecodable(of: DetailCafeMenuResponse.self) { response in
