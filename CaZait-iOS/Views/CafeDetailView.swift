@@ -442,25 +442,7 @@ class CafeDetailView: UIViewController {
         //tableView1.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
 
     }
-    
-//
-//    func fetchData() { //result = getAllCafeInfo 실행해서 얻은 결과
-//        let service = DetailCafeService() // DetailCafeService 인스턴스 생성
-//        service.getDetailCafeBycafeID(cafeID: "2") { result in
-//            switch result {
-//            case .success(let cafe):
-//                // 성공적으로 데이터를 받아왔을 때의 처리 로직
-//                print(cafe) // 받아온 데이터 사용 예시
-//                // UI 업데이트 또는 필요한 작업 수행
-//            case .failure(let error):
-//                // 데이터를 받아오지 못했을 때의 처리 로직
-//                print(error.localizedDescription) // 에러 메시지 출력 예시
-//                // 에러 메시지를 보여줄 수 있는 방식으로 처리
-//                print(error)
-//            }
-//        }
-//    }
-    
+
     func fetchData() { //result = getAllCafeInfo 실행해서 얻은 결과
         let detailcafeservice = DetailCafeService() // DetailCafeService 인스턴스 생성
         detailcafeservice.getDetailCafeBycafeID(cafeID: 2) { result in
@@ -484,7 +466,7 @@ class CafeDetailView: UIViewController {
         }
         
         let detailcafemenuservice = DetailCafeMenuService()
-        detailcafemenuservice.getDetailCafeMenuBycafeID() { result in
+        detailcafemenuservice.getDetailCafeMenuBycafeID(cafeID: 2) { result in
             switch result {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
