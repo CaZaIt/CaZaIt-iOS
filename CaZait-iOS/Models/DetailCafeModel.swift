@@ -21,11 +21,11 @@ struct DetailCafe: Codable {
     let address: String
     let longitude: String
     let latitude: String
-    let getCafeImageRes: [CafeImage]
+    let getCafeImageRes: [DetailCafeImage]
     let logResult: String?
 }
 
-struct CafeImage: Codable {
+struct DetailCafeImage: Codable {
     let cafeImageId: Int
     let imageUrl: String
 }
