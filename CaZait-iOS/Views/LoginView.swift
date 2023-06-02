@@ -118,6 +118,10 @@ class LoginView: UIViewController{
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         
+        // 다른 부분을 탭할 때 키보드 숨기기
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
         
         self.view.addSubview(pinkView)
         self.pinkView.addSubview(cazaitLogo)
@@ -167,6 +171,8 @@ class LoginView: UIViewController{
             make.height.equalTo(45)
         }
         
+        signupButton.addTarget(self, action:#selector(signupClicked), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(LogIn), for: .touchUpInside)
     }
     
     @objc func backButtonTapped() {
@@ -177,7 +183,77 @@ class LoginView: UIViewController{
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = true
     }
+    
+    @objc func signupClicked(_ sender: UIButton) {
+        // RecentCafeView 인스턴스 생성
+        let signupView = SignupView()
+        // 내비게이션 스택으로 RecentCafeView를 푸시
+        self.navigationController?.pushViewController(signupView, animated: true)
+    }
+    
+    @objc func LogIn() {
+        login()
+    }
+    
+    // 다른 부분을 탭할 때 키보드 숨기기
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
 
 
 extension LoginView: UIGestureRecognizerDelegate { }
+
+
+extension LoginView {
+    
+    //로그인
+    func login() {
+        
+        guard let password = passwordtextField.text else { return }
+        guard let email = idtextField.text else { return }
+        
+        
+        loginService.shared.login(email: email, password: password) { response in
+            switch response {
+            case .success(let data):
+                guard let data = data as? LoginResponse else { return }
+                let alert = UIAlertController(title: data.message, message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: { _ in
+                    if (alert.title == "요청이 완료 되었습니다."){
+                        //로그인 성공 후 자동으로 마이페이지로 이동
+                        self.navigationController?.popViewController(animated: true)
+                        // 통신을 통해 얻은 jwtToken UserDefault에 저장
+                        UserDefaults.standard.set(data.data?.jwtToken, forKey: "jwtToken")
+                        
+                        if let token = UserDefaults.standard.string(forKey: "jwtToken") {
+                            print("저장된 토큰: \(token)")
+                        } else {
+                            print("토큰이 저장되지 않았습니다.")
+                        }
+                    }
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+                print(data)
+            case .requestErr(let err):
+                print(err)
+            case .pathErr:
+                let alert = UIAlertController(title: "다시 로그인하세요", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                let alert = UIAlertController(title: "다시 로그인하세요", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print("networkFail")
+            }
+        }
+    }
+    
+}

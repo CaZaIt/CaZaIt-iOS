@@ -32,7 +32,7 @@ class MyPageView: UIViewController{
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .black
         label.textAlignment = .center
-        label.text = "로그인"
+//        label.text = "로그인"
         label.numberOfLines = 1
         return label
     }()
@@ -214,6 +214,16 @@ class MyPageView: UIViewController{
         imageView.image = UIImage(named: "graph")
         return imageView
     }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if UserDefaults.standard.string(forKey: "jwtToken") != nil {
+            loginLabel.text = "로그아웃"
+        }
+        else {
+            loginLabel.text = "로그인"
+        }
+    }
     
     
     override func viewDidLoad() {
@@ -438,10 +448,30 @@ class MyPageView: UIViewController{
     
     @objc func buttonClicked_4(_ sender: UIButton) {
         // RecentCafeView 인스턴스 생성
-        let loginView = LoginView()
-        // 내비게이션 스택으로 RecentCafeView를 푸시
-        self.navigationController?.pushViewController(loginView, animated: true)
+        
+        if (loginLabel.text == "로그인") {
+            let loginView = LoginView()
+            // 내비게이션 스택으로 RecentCafeView를 푸시
+            self.navigationController?.pushViewController(loginView, animated: true)
+        }
+        
+        if (loginLabel.text == "로그아웃") {
+            UserDefaults.standard.removeObject(forKey: "jwtToken")
+
+            let alertController = UIAlertController(title: "로그아웃되었습니다.", message: "", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                // OK 버튼을 클릭하면 실행될 코드
+            }
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+            
+            loginLabel.text = "로그인"
+            
+        }
+        
+        
     }
+    
 
     
     
