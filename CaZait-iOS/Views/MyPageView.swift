@@ -215,6 +215,11 @@ class MyPageView: UIViewController{
         return imageView
     }()
     
+    private let dottedLineView: DottedLineView = {
+        return DottedLineView()
+    }()
+
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if UserDefaults.standard.string(forKey: "jwtToken") != nil {
@@ -239,7 +244,7 @@ class MyPageView: UIViewController{
         payView.addSubview(paymoneyLabel)
         payView.addSubview(paywonLabel)
         whiteView.addSubview(mypagemenuView)
-        whiteView.addSubview(horizontalLine)
+        whiteView.addSubview(dottedLineView)
         whiteView.addSubview(myConsumptionLabel)
         mypagemenuView.addSubview(couponButton)
         mypagemenuView.addSubview(paymentButton)
@@ -387,9 +392,14 @@ class MyPageView: UIViewController{
             make.width.equalTo(1)
         }
         
+//        self.dottedLineView.snp.makeConstraints { make in
+//            make.bottom.equalTo(whiteView.snp.bottom)
+//            make.leading.equalTo(contentView.snp.leading).offset(21)
+//            make.trailing.equalTo(contentView.snp.trailing).offset(-21)
+//            make.height.equalTo(1.5)
+//        }
         
-        
-        self.horizontalLine.snp.makeConstraints { make in
+        self.dottedLineView.snp.makeConstraints { make in
             make.leading.equalTo(self.whiteView.snp.leading).inset(28)
             make.trailing.equalTo(self.whiteView.snp.trailing).inset(28)
             make.top.equalTo(self.mypagemenuView.snp.bottom).offset(30)
@@ -398,7 +408,7 @@ class MyPageView: UIViewController{
         
         self.myConsumptionLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.whiteView.snp.leading).inset(39)
-            make.top.equalTo(self.horizontalLine.snp.bottom).offset(15)
+            make.top.equalTo(self.dottedLineView.snp.bottom).offset(15)
             make.bottom.equalTo(self.whiteView.snp.bottom).inset(281)
         }
         
@@ -472,8 +482,36 @@ class MyPageView: UIViewController{
         
     }
     
-
-    
-    
 }
 
+
+class DottedLineView: UIView {
+    let shapeLayer: CAShapeLayer = {
+        let layer = CAShapeLayer()
+        layer.strokeColor = UIColor.black.cgColor
+        layer.lineWidth = 1.5
+        layer.lineDashPattern = [8, 8]
+        return layer
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .clear
+        self.layer.addSublayer(shapeLayer)
+        // Autolayout을 위해 추가
+        self.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // 레이어의 경로 설정
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: 0, y: 0))
+        path.addLine(to: CGPoint(x: self.frame.width, y: 0))
+        shapeLayer.path = path.cgPath
+    }
+}
