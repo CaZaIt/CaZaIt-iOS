@@ -244,7 +244,7 @@ extension SearchView: UISearchBarDelegate{
         searcingCafe()
         getSearchCafeInfoData(cafeName: searchText)
         
-        print("Search keyword: \(searchText)")
+        //print("Search keyword: \(searchText)")
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
