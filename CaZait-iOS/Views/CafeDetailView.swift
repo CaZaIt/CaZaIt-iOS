@@ -255,6 +255,10 @@ class CafeDetailView: UIViewController {
     private let scrollView = UIScrollView()
     private let parallaxImageView = UIImageView()
     private let headerView = UIView()
+    private let cafeName = UILabel()
+    private let cafeLocation = UILabel()
+    private let reviewWriteButton =  UIButton()
+
     private let segmentedControl = UISegmentedControl()
     private let tableView1 = UITableView()
     private let tableView2 = UITableView()
@@ -264,15 +268,17 @@ class CafeDetailView: UIViewController {
             self.navigationController?.isNavigationBarHidden = false
             // 네비게이션컨트롤러를 통해서 Status Bar 색깔 변경
             self.navigationController?.navigationBar.barStyle = .black
-            //self.navigationController?.navigationBar.isTranslucent = true
+            self.navigationController?.navigationBar.isTranslucent = true
+        
+            fetchData() //setver에서 CafeInfoById를 front에 페치해야함, view did load전에
 
-            
         }
     
     override func viewWillDisappear(_ animated: Bool) {
             super.viewWillDisappear(animated)
             self.navigationController?.isNavigationBarHidden = true
         }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -291,22 +297,16 @@ class CafeDetailView: UIViewController {
         headerView.backgroundColor = .white
         headerView.translatesAutoresizingMaskIntoConstraints = false
         
-        // 첫 번째 라벨 추가
-        let cafeName = UILabel()
-        cafeName.text = "롬곡"
+
         cafeName.font = UIFont.systemFont(ofSize: 26, weight: .bold)
         cafeName.textAlignment = .left
         cafeName.translatesAutoresizingMaskIntoConstraints = false
 
-        // 두 번째 라벨 추가
-        let cafeLocation = UILabel()
-        cafeLocation.text = "서울특별시 광진구 광나루로 375-1 2층(군자동)"
         cafeLocation.font = UIFont.systemFont(ofSize: 15)
         cafeLocation.textAlignment = .left
         cafeLocation.translatesAutoresizingMaskIntoConstraints = false
         
         //edit button
-        let reviewWriteButton =  UIButton()
         reviewWriteButton.translatesAutoresizingMaskIntoConstraints = false
         reviewWriteButton.backgroundColor = .black
         reviewWriteButton.layer.cornerRadius = 20
@@ -357,7 +357,6 @@ class CafeDetailView: UIViewController {
         tableView2.addSubview(reviewWriteButton)
 
 
-    
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
@@ -397,20 +396,23 @@ class CafeDetailView: UIViewController {
             
         }
         // 콘텐츠 높이 설정
-        scrollView.contentSize = CGSize(width: view.bounds.width, height: 400)
+        //scrollView.contentSize = CGSize(width: view.bounds.width, height: 400)
         
         tableView1.snp.makeConstraints { make in
             make.top.equalTo(segmentedControl.snp.bottom).offset(16)
             make.bottom.equalTo(view.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
+        //tableView1.alwaysBounceVertical = false
+        tableView1.isUserInteractionEnabled = false // 테이블뷰 스크롤 막기
         
         tableView2.snp.makeConstraints { make in
             make.top.equalTo(segmentedControl.snp.bottom).offset(16)
             make.bottom.equalTo(view.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
-
+        
+        tableView2.isUserInteractionEnabled = false // 테이블뷰 스크롤 막기
 
         tableView1.register(CafeDetailViewMenuCell.self, forCellReuseIdentifier: "CafeDetailViewMenuCell")
         tableView2.register(CafeDetailViewReviewCell.self, forCellReuseIdentifier: "CafeDetailViewReviewCell")
@@ -422,6 +424,8 @@ class CafeDetailView: UIViewController {
 
         // 초기에는 첫 번째 세그먼트가 선택되도록 설정
         updateTableViewVisibility()
+        
+        scrollView.updateContentSize()
     }
 
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
@@ -432,15 +436,73 @@ class CafeDetailView: UIViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         // 이미지의 위치를 스크롤 속도보다 더 느리게 이동하도록 설정
-        //parallaxImageView.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
-        headerView.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
-        segmentedControl.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
-        tableView1.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
-
-
+        parallaxImageView.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
+        //headerView.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
+        //segmentedControl.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
+        //tableView1.transform = CGAffineTransform(translationX: 0, y: -offsetY/2)
 
     }
     
+    
+//    func fetchData() { //result = getAllCafeInfo 실행해서 얻은 결과
+//        let service = DetailCafeService() // DetailCafeService 인스턴스 생성
+//        service.getDetailCafeBycafeID(cafeID: 2) { result in
+//            switch result {
+//            case .success(let cafe):
+//                // 성공적으로 데이터를 받아왔을 때의 처리 로직
+//                print(cafe) // 받아온 데이터 사용 예시
+//                // UI 업데이트 또는 필요한 작업 수행
+//            case .failure(let error):
+//                // 데이터를 받아오지 못했을 때의 처리 로직
+//                print(error.localizedDescription) // 에러 메시지 출력 예시
+//                // 에러 메시지를 보여줄 수 있는 방식으로 처리
+//                print(error)
+//            }
+//        }
+//    }
+    
+    func fetchData() { //result = getAllCafeInfo 실행해서 얻은 결과
+        let detailcafeservice = DetailCafeService() // DetailCafeService 인스턴스 생성
+        detailcafeservice.getDetailCafeBycafeID() { result in
+            switch result {
+            case .success(let cafe):
+                // 성공적으로 데이터를 받아왔을 때의 처리 로직
+                print(cafe) // 받아온 데이터 사용 예시
+                // UI 업데이트 또는 필요한 작업 수행
+                DispatchQueue.main.async {
+                    self.cafeName.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
+                    self.cafeLocation.text = cafe.address
+
+                }
+            case .failure(let error):
+                // 데이터를 받아오지 못했을 때의 처리 로직
+                print(error.localizedDescription)
+                // 에러 메시지 출력 예시
+                // 에러 메시지를 보여줄 수 있는 방식으로 처리
+                print(error)
+            }
+        }
+        
+        let detailcafemenuservice = DetailCafeMenuService()
+        detailcafemenuservice.getDetailCafeMenuBycafeID() { result in
+            switch result {
+            case .success(let cafe):
+                // 성공적으로 데이터를 받아왔을 때의 처리 로직
+                print(cafe) // 받아온 데이터 사용 예시
+                // UI 업데이트 또는 필요한 작업 수행
+//                DispatchQueue.main.async {
+//                }
+            case .failure(let error):
+                // 데이터를 받아오지 못했을 때의 처리 로직
+                print(error.localizedDescription)
+                // 에러 메시지 출력 예시
+                // 에러 메시지를 보여줄 수 있는 방식으로 처리
+                print(error)
+            }
+        }
+
+    }
+
     
     @objc func reviewWriteButtonClicked() {
         let nextVC = WriteReviewView()
@@ -495,3 +557,23 @@ extension CafeDetailView: UITableViewDataSource, UITableViewDelegate {
 
 }
 
+extension UIScrollView {
+    func updateContentSize() {
+        let unionCalculatedTotalRect = recursiveUnionInDepthFor(view: self)
+        
+        // 계산된 크기로 컨텐츠 사이즈 설정
+        self.contentSize = CGSize(width: self.frame.width, height: unionCalculatedTotalRect.height+50)
+    }
+    
+    private func recursiveUnionInDepthFor(view: UIView) -> CGRect {
+        var totalRect: CGRect = .zero
+        
+        // 모든 자식 View의 컨트롤의 크기를 재귀적으로 호출하며 최종 영역의 크기를 설정
+        for subView in view.subviews {
+            totalRect = totalRect.union(recursiveUnionInDepthFor(view: subView))
+        }
+        
+        // 최종 계산 영역의 크기를 반환
+        return totalRect.union(view.frame)
+    }
+}
