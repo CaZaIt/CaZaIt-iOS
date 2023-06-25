@@ -17,25 +17,14 @@ struct AllCafeResponse: Codable {
 // MARK: - Datum
 struct CafeInfo: Codable {
     let cafeID: Int
-    let congestionStatus, name, address, longitude: String
-    let latitude: String
-    let getCafeImageRes: [CafeImage]
+    let congestionStatus, name, address: String
+    let longitude, latitude: String
+    let cafeImages: [String]
     let distance: Int
     let favorite: Bool
-
+    
     enum CodingKeys: String, CodingKey {
         case cafeID = "cafeId"
-        case congestionStatus, name, address, longitude, latitude, getCafeImageRes, distance, favorite
-    }
-}
-
-// MARK: - GetCafeImageRe
-struct CafeImage: Codable {
-    let cafeImageID: Int
-    let imageURL: String
-
-    enum CodingKeys: String, CodingKey {
-        case cafeImageID = "cafeImageId"
-        case imageURL = "imageUrl"
+        case congestionStatus, name, address, longitude, latitude, cafeImages, distance, favorite
     }
 }
