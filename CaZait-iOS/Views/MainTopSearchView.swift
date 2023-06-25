@@ -10,28 +10,6 @@ import SnapKit
 
 class MainTopSearchView: UIView {
     
-//    private let searchTextfield: InsetTextField = {
-//
-//        let textField = InsetTextField()
-//
-//        textField.placeholder = "search" //text가 비어있을 때 표시되는 글
-//        textField.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-//        textField.layer.cornerRadius = 20 //둥글게 만들어 줍니다.
-//        textField.textColor = UIColor(r: 255, g: 255, b: 255)
-//        textField.setPlaceholder(color: UIColor(r: 255, g: 255, b: 255))
-//        textField.insetX = 47 //왼쪽에 사진을 추가하기 위해 마진을 추가합니다.
-//        textField.addleftimage(image: UIImage(named: "search"))
-//        textField.font = UIFont(name: "AppleSDGothicNeoM00-Regular", size: 16)
-//        textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-//        textField.layer.shadowColor = UIColor.black.cgColor
-//        textField.layer.shadowOffset = CGSize(width: 0, height: 4)
-//        textField.layer.shadowRadius = 4
-//        textField.layer.shadowOpacity = 0.25
-//        textField.keyboardType = .default // 한글 기본 키보드
-//
-//        return textField
-//    }()
-    
     let searchButton: UIButton = {
         let button = UIButton()
         
@@ -80,16 +58,25 @@ class MainTopSearchView: UIView {
         return imageView
     }()
     
-    let menuButton: UIButton = {
+    let notificationButton: UIButton = {
         let button = UIButton()
         
-        button.backgroundColor = .black
-        button.layer.cornerRadius = 18.5
+//        button.backgroundColor = .black
+//        button.layer.cornerRadius = 18.5
         button.clipsToBounds = true //해당 뷰의 bounds 밖으로 넘치는 콘텐츠를 잘라내서 보여줄지 여부를 결정
-        button.setImage(UIImage(named:"menu"), for: .normal)
+        button.setImage(UIImage(named:"notifications"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         
         return button
+    }()
+    
+    private let notificationDotView: UIView = {
+        let view = UIView()
+        
+        view.backgroundColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1)
+        view.layer.cornerRadius = 3
+        
+        return view
     }()
     
     override init(frame: CGRect) {
@@ -108,7 +95,8 @@ class MainTopSearchView: UIView {
     private func setupConstraints() {
         addSubview(searchButton)
         addSubview(logoImageView)
-        addSubview(menuButton)
+        addSubview(notificationButton)
+        addSubview(notificationDotView)
         
         searchButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -122,12 +110,26 @@ class MainTopSearchView: UIView {
             make.centerY.equalToSuperview()
         }
         
-        menuButton.snp.makeConstraints { make in
+        notificationButton.snp.makeConstraints { make in
             make.trailing.equalTo(self.snp.trailing).offset(-23)
             make.centerY.equalToSuperview()
             make.height.equalTo(37)
             make.width.equalTo(37)
         }
+        
+        notificationDotView.snp.makeConstraints { make in
+            make.top.equalTo(notificationButton.snp.top).offset(3)
+            make.trailing.equalTo(notificationButton.snp.trailing).offset(-1)
+            make.height.equalTo(6)
+            make.width.equalTo(6)
+        }
     }
 
+    func hiddenNotificationDot() {
+        notificationDotView.isHidden = true
+    }
+    
+    func appearNotificationDot() {
+        notificationDotView.isHidden = false
+    }
 }

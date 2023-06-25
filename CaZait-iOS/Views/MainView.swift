@@ -54,6 +54,7 @@ class MainView: UIViewController {
         // mainTopSearchView의 버튼 액션을 처리하는 메서드를 설정합니다.
         //상단 검색버튼 클릭시 검색화면으로 이동합니다.
         mainTopSearchView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
+        mainTopSearchView.notificationButton.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
         
         setupMainTableView()
         getAllCafeInfoData()
@@ -85,7 +86,12 @@ class MainView: UIViewController {
     @objc func searchButtonTapped() {
         let searchViewController = SearchView()
         navigationController?.pushViewController(searchViewController, animated: false)
-        
+    }
+    
+    @objc func notificationButtonTapped() {
+        mainTopSearchView.hiddenNotificationDot()
+        let searchViewController = NotificationView()
+        navigationController?.pushViewController(searchViewController, animated: true)
     }
     
     func setupMainTableView() {
@@ -128,11 +134,6 @@ class MainView: UIViewController {
         return .lightContent // 밝은 배경색일 경우에는 .darkContent
     }
     
-    //다른 곳 클릭시 키보드 내려가게 만들기
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-        self.mainTableView.endEditing(true)
-    }
     
     var previousScrollViewYOffset: CGFloat = 0.0
     

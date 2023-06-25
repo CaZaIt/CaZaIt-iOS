@@ -63,6 +63,8 @@
 		F13FDA7529DD5DD00044C6C3 /* MainTableViewLovedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */; };
 		F13FDA7729DD616E0044C6C3 /* LovedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */; };
 		F13FDA9E29DD91A50044C6C3 /* MainTableViewCafeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */; };
+		F1F98D5D2A481FA50055BF21 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5C2A481FA50055BF21 /* NotificationView.swift */; };
+		F1F98D5F2A482DAF0055BF21 /* NotificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -126,6 +128,8 @@
 		F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainTableViewLovedCell.swift; path = "CaZait-iOS/Cells/MainTableViewLovedCell.swift"; sourceTree = SOURCE_ROOT; };
 		F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LovedCollectionViewCell.swift; path = "CaZait-iOS/Cells/LovedCollectionViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainTableViewCafeCell.swift; path = "CaZait-iOS/Cells/MainTableViewCafeCell.swift"; sourceTree = SOURCE_ROOT; };
+		F1F98D5C2A481FA50055BF21 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +212,7 @@
 				01B87B592A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift */,
 				F13FA05F2A151D4F0001958D /* SearchTableViewCell.swift */,
 				F13FA08E2A24F6320001958D /* SearchCollectionViewCell.swift */,
+				F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -313,6 +318,7 @@
 				01B87B572A120F480082FC05 /* LoginView.swift */,
 				F13FA05D2A13899E0001958D /* SearchView.swift */,
 				01B87B752A1CCD920082FC05 /* SignupView.swift */,
+				F1F98D5C2A481FA50055BF21 /* NotificationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -449,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01B9328729E2E1F0006342F9 /* sampleService.swift in Sources */,
+				F1F98D5F2A482DAF0055BF21 /* NotificationCollectionViewCell.swift in Sources */,
 				F13FA0892A1CCDFB0001958D /* AllCafeService.swift in Sources */,
 				F13FDA7529DD5DD00044C6C3 /* MainTableViewLovedCell.swift in Sources */,
 				F13FDA9E29DD91A50044C6C3 /* MainTableViewCafeCell.swift in Sources */,
@@ -483,6 +490,7 @@
 				01B9328429E2E1DB006342F9 /* sampleViewModel.swift in Sources */,
 				01B87B622A1B97E60082FC05 /* NetworkResult.swift in Sources */,
 				F13FA0952A2644F40001958D /* SearchCafeService.swift in Sources */,
+				F1F98D5D2A481FA50055BF21 /* NotificationView.swift in Sources */,
 				6C4286FD2A29DB6300560F15 /* DetailCafeMenuModel.swift in Sources */,
 				01B87B7C2A1CF20E0082FC05 /* NicknameCheckService.swift in Sources */,
 				01B87B742A1B994D0082FC05 /* File1.swift in Sources */,
