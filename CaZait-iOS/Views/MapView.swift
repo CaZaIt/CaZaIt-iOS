@@ -11,6 +11,9 @@ import NMapsMap
 class MapView: UIViewController, CLLocationManagerDelegate {
 
     var locationManager = CLLocationManager()
+    
+    var currentLatitude: CLLocationDegrees = 0.0
+    var currentLongitude: CLLocationDegrees = 0.0
 
     private let topview: UIView = {
         let top = UIView()
@@ -53,6 +56,7 @@ class MapView: UIViewController, CLLocationManagerDelegate {
         self.view.addSubview(self.topview)
         self.topview.addSubview(self.mapLabel)
 
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
@@ -105,13 +109,16 @@ class MapView: UIViewController, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
+        
+        let count = 0
 
-        let latitude = location.coordinate.latitude
-        let longitude = location.coordinate.longitude
+        currentLatitude = location.coordinate.latitude
+        currentLongitude = location.coordinate.longitude
 
-        print("Latitude: \(latitude), Longitude: \(longitude)")
-
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: latitude, lng: longitude))
+        print("Latitude: \(currentLatitude), Longitude: \(currentLongitude)")
+        
+        
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentLatitude, lng: currentLongitude))
         cameraUpdate.animation = .easeIn
         naverMapView.moveCamera(cameraUpdate)
     }
