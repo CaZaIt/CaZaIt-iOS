@@ -12,6 +12,7 @@ class MainView: UIViewController {
 
     let mainTopSearchView = MainTopSearchView()
     private var allCafeData: AllCafeResponse? //통신한 데이터를 저장하기 위한 변수입니다.
+    var sortMethod :String = "distance" //거리순, 혼잡도순에 대한 통신하기 위한 변수입니다.
     
     private let whiteView: UIView = {
         let view = UIView()
@@ -61,7 +62,7 @@ class MainView: UIViewController {
     }
     
     func getAllCafeInfoData() {
-        AllCafeService.shared.getAllCafeInfo(longitude : "127.07154626749393", latitude : "37.54751410359858", sort : "distance", limit : "0") { response in
+        AllCafeService.shared.getAllCafeInfo(longitude : "127.07154626749393", latitude : "37.54751410359858", sort : sortMethod, limit : "0") { response in
 
             switch response {
 
@@ -92,6 +93,31 @@ class MainView: UIViewController {
         mainTopSearchView.hiddenNotificationDot()
         let searchViewController = NotificationView()
         navigationController?.pushViewController(searchViewController, animated: true)
+    }
+    //거리순, 혼잡도순을 고를 수 있는 버튼입니다.
+    @objc func showPopup() {
+        
+        let alertController = UIAlertController(title: "정렬 방식 선택", message: nil, preferredStyle: .actionSheet)
+        
+        let distanceAction = UIAlertAction(title: "거리순", style: .default) { (action) in
+            // 거리순 정렬을 처리하는 코드 작성
+            self.sortMethod = "distance"
+            self.getAllCafeInfoData()
+        }
+        
+        let congestionAction = UIAlertAction(title: "혼잡도순", style: .default) { (action) in
+            // 혼잡도순 정렬을 처리하는 코드 작성
+            self.sortMethod = "congestion"
+            self.getAllCafeInfoData()
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        
+        alertController.addAction(distanceAction)
+        alertController.addAction(congestionAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     func setupMainTableView() {
@@ -224,7 +250,16 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
             let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCafeCell", for: indexPath) as! MainTableViewCafeCell
             cell.navigationController = navigationController
             cell.configure(with: self.allCafeData) //테이블 뷰 cell에 정보를 전달합니다.
-            // 두 번째 섹션에서 사용할 셀 구성
+            
+            //거리순, 혼잡도순을 고르는 버튼을 클릭했을 때
+            cell.cafeListSettingButton.addTarget(self, action: #selector(showPopup), for: .touchUpInside)
+            //tableViewCell의 Label을 변경해줍니다.
+            if sortMethod == "distance" {
+                cell.cafeListSettingLabel.text = "거리순"
+            } else {
+                cell.cafeListSettingLabel.text = "혼잡도순"
+            }
+            
             return cell
         }
     }

@@ -26,7 +26,7 @@ class MainTableViewCafeCell: UITableViewCell {
         return label
     }()
     
-    private let cafeListSettingButton: UIButton = {
+    let cafeListSettingButton: UIButton = {
         let button = UIButton()
         
         button.backgroundColor = .black
@@ -34,12 +34,11 @@ class MainTableViewCafeCell: UITableViewCell {
         button.clipsToBounds = true //해당 뷰의 bounds 밖으로 넘치는 콘텐츠를 잘라내서 보여줄지 여부를 결정
         button.setImage(UIImage(named:"tune"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
-        button.addTarget(self, action: #selector(showPopup), for: .touchUpInside)
         
         return button
     }()
     
-    private let cafeListSettingLabel: UILabel = {
+    let cafeListSettingLabel: UILabel = {
         let label = UILabel()
         
         label.font = UIFont(name: "AppleSDGothicNeoM00-Bold", size: 14)
@@ -121,42 +120,6 @@ class MainTableViewCafeCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func showPopup() {
-        let alertController = UIAlertController(title: "정렬 방식 선택", message: nil, preferredStyle: .actionSheet)
-        
-        let distanceAction = UIAlertAction(title: "거리순", style: .default) { (action) in
-            // 거리순 정렬을 처리하는 코드 작성
-            self.cafeListSettingLabel.text = "거리순"
-        }
-        
-        let congestionAction = UIAlertAction(title: "혼잡도순", style: .default) { (action) in
-            // 혼잡도순 정렬을 처리하는 코드 작성
-            self.cafeListSettingLabel.text = "혼잡도순"
-        }
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        
-        alertController.addAction(distanceAction)
-        alertController.addAction(congestionAction)
-        alertController.addAction(cancelAction)
-        
-        // 현재 뷰 컨트롤러에서 팝업을 표시
-        if let viewController = findViewController() {
-            viewController.present(alertController, animated: true, completion: nil)
-        }
-    }
-    
-    // 셀이 속한 뷰 컨트롤러를 찾는 메서드
-    private func findViewController() -> UIViewController? {
-        var responder: UIResponder? = self
-        while responder != nil {
-            if let viewController = responder as? UIViewController {
-                return viewController
-            }
-            responder = responder?.next
-        }
-        return nil
-    }
 }
 
 extension MainTableViewCafeCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
