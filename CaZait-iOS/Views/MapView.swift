@@ -58,14 +58,14 @@ class MapView: UIViewController, CLLocationManagerDelegate {
         self.view.addSubview(self.topview)
         self.topview.addSubview(self.mapLabel)
         
-        
+        // Location Manager 설정
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         
         setUI()
         
-        
+        // 위치 업데이트 시작
         DispatchQueue.global().async {
             if CLLocationManager.locationServicesEnabled() {
                 print("Location services are enabled")
@@ -75,6 +75,7 @@ class MapView: UIViewController, CLLocationManagerDelegate {
             }
         }
         
+        // 마커 추가
         for position in positions {
             let marker = NMFMarker(position: position)
             marker.width = 20
@@ -112,13 +113,14 @@ class MapView: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
-        
+        // 현재 위치 업데이트
         currentLatitude = location.coordinate.latitude
         currentLongitude = location.coordinate.longitude
         
         print("Latitude: \(currentLatitude), Longitude: \(currentLongitude)")
         
         
+        // 처음 위치 업데이트일 경우에만 카메라 이동
         if isFirstLocationUpdate {
             let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentLatitude, lng: currentLongitude))
             cameraUpdate.animation = .none
