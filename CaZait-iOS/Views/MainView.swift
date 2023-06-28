@@ -14,6 +14,8 @@ class MainView: UIViewController {
     private var allCafeData: AllCafeResponse? //통신한 데이터를 저장하기 위한 변수입니다.
     var sortMethod :String = "distance" //거리순, 혼잡도순에 대한 통신하기 위한 변수입니다.
     
+    private let refreshControl = UIRefreshControl()
+    
     private let whiteView: UIView = {
         let view = UIView()
         
@@ -39,6 +41,7 @@ class MainView: UIViewController {
         tableView.sectionHeaderTopPadding = 0 //상단 패딩을 0으로 지정한다.
         tableView.separatorStyle = .none //tableView의 구분선을 없앤다.
         tableView.contentInset = UIEdgeInsets(top: 99, left: 0, bottom: 0, right: 0)
+
         
         return tableView
     }()
@@ -56,6 +59,9 @@ class MainView: UIViewController {
         //상단 검색버튼 클릭시 검색화면으로 이동합니다.
         mainTopSearchView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         mainTopSearchView.notificationButton.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
+        
+        refreshControl.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
+        mainTableView.refreshControl = refreshControl
         
         setupMainTableView()
         getAllCafeInfoData()
@@ -118,6 +124,18 @@ class MainView: UIViewController {
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc private func refreshTableView() {
+        // 새로고침 작업을 수행합니다.
+        // 데이터를 업데이트하거나 추가 작업을 수행하는 등의 로직을 구현합니다.
+        
+        // 새로고침 작업이 완료되면 UI를 업데이트합니다.
+        DispatchQueue.main.async {
+            self.getAllCafeInfoData()
+            print("리프레쉬 되는 중 입니다.!!!")
+            self.refreshControl.endRefreshing() // RefreshControl을 종료합니다.
+        }
     }
     
     func setupMainTableView() {
