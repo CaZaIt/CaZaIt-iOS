@@ -44,6 +44,7 @@ class SearchView: UIViewController {
         tableView.showsVerticalScrollIndicator = false //수직 스크롤 인디게이터를 보이지 않게 함
         tableView.backgroundColor = .black
         tableView.sectionHeaderTopPadding = 0 //상단 패딩을 0으로 지정한다.
+        tableView.isScrollEnabled = false
         
         return tableView
     }()
