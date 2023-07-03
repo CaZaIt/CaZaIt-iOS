@@ -11,6 +11,15 @@ import SnapKit
 
 class NotificationView: UIViewController {
     
+    private let navigationBarAppearance : UINavigationBarAppearance = {
+        let navigationBar = UINavigationBarAppearance()
+        
+        navigationBar.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1) // 기존 배경 색상 유지
+        navigationBar.shadowColor = UIColor.clear // 기존 그림자 색상 유지
+        navigationBar.configureWithTransparentBackground()
+        
+        return navigationBar
+    }()
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -37,17 +46,8 @@ class NotificationView: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
-        self.title = "알림확인"
-        // 네비게이션 바의 제목 속성 설정
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-
-        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backButtonTapped))
-        navigationItem.leftBarButtonItem = backButton
-        // 내비게이션 바 스타일 변경
-        self.navigationController?.navigationBar.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
-        self.navigationController?.navigationBar.tintColor = .black
-        
+        setupNavigation()
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     @objc func backButtonTapped() {
@@ -57,6 +57,8 @@ class NotificationView: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.navigationBar.barTintColor = .clear
+        self.navigationController?.navigationBar.backgroundColor = .clear
     }
     
     func setupNotificationView() {
@@ -67,8 +69,22 @@ class NotificationView: UIViewController {
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
-        
-        
+    }
+    
+    func setupNavigation() {
+        self.navigationController?.isNavigationBarHidden = false
+        self.title = "알림확인"
+        // 네비게이션 바의 제목 속성 설정
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backButtonTapped))
+        navigationItem.leftBarButtonItem = backButton
+        // 내비게이션 바 스타일 변경
+        self.navigationController?.navigationBar.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
+        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.navigationBar.barStyle = .black
+        self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
 }
 
