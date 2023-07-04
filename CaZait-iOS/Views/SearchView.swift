@@ -15,6 +15,16 @@ class SearchView: UIViewController {
     private var isTableView : Bool = true
     private var searchCafeData : AllCafeResponse?
     
+    private let navigationBarAppearance : UINavigationBarAppearance = {
+        let navigationBar = UINavigationBarAppearance()
+        
+        navigationBar.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1) // 기존 배경 색상 유지
+        navigationBar.shadowColor = UIColor.clear // 기존 그림자 색상 유지
+        navigationBar.configureWithTransparentBackground()
+        
+        return navigationBar
+    }()
+    
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         
@@ -110,7 +120,8 @@ class SearchView: UIViewController {
         // 내비게이션 바 스타일 변경
         self.navigationController?.navigationBar.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
         self.navigationController?.navigationBar.tintColor = .black
-        
+        self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
     func setupSearchingView() {
