@@ -65,6 +65,8 @@
 		F13FDA9E29DD91A50044C6C3 /* MainTableViewCafeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */; };
 		F1F98D5D2A481FA50055BF21 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5C2A481FA50055BF21 /* NotificationView.swift */; };
 		F1F98D5F2A482DAF0055BF21 /* NotificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */; };
+		F1F98D652A54068F0055BF21 /* FavoritesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D642A54068F0055BF21 /* FavoritesModel.swift */; };
+		F1F98D682A5409710055BF21 /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D672A5409710055BF21 /* FavoritesService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +132,8 @@
 		F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainTableViewCafeCell.swift; path = "CaZait-iOS/Cells/MainTableViewCafeCell.swift"; sourceTree = SOURCE_ROOT; };
 		F1F98D5C2A481FA50055BF21 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCollectionViewCell.swift; sourceTree = "<group>"; };
+		F1F98D642A54068F0055BF21 /* FavoritesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModel.swift; sourceTree = "<group>"; };
+		F1F98D672A5409710055BF21 /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +232,7 @@
 				01B87B7D2A1CF2390082FC05 /* nicknamecheckModel.swift */,
 				01B87B812A1CF7420082FC05 /* signupModel.swift */,
 				01B87B832A1E30C60082FC05 /* loginModel.swift */,
+				F1F98D642A54068F0055BF21 /* FavoritesModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -243,6 +248,7 @@
 		01B9328529E2E1E5006342F9 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F1F98D662A5409550055BF21 /* Favorites_Service */,
 				01B87B682A1B990E0082FC05 /* SearchCafe_Service */,
 				01B87B672A1B98F40082FC05 /* AllCafe_Service */,
 				01B87B662A1B98E30082FC05 /* SignUp_Service */,
@@ -338,6 +344,14 @@
 				212848CC094DA1C393D1C108 /* Pods_CaZait_iOS.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F1F98D662A5409550055BF21 /* Favorites_Service */ = {
+			isa = PBXGroup;
+			children = (
+				F1F98D672A5409710055BF21 /* FavoritesService.swift */,
+			);
+			path = Favorites_Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -481,11 +495,13 @@
 				6C4286FB2A29DB4900560F15 /* DetailCafeMenuService.swift in Sources */,
 				F13FA05E2A13899E0001958D /* SearchView.swift in Sources */,
 				01F7A1F329D935540058736E /* SceneDelegate.swift in Sources */,
+				F1F98D652A54068F0055BF21 /* FavoritesModel.swift in Sources */,
 				01F7A21529D95A2B0058736E /* MainView.swift in Sources */,
 				01B87B862A1E36B20082FC05 /* LoginService.swift in Sources */,
 				01B87B822A1CF7420082FC05 /* signupModel.swift in Sources */,
 				01B87B7E2A1CF2390082FC05 /* nicknamecheckModel.swift in Sources */,
 				01B9328129E2E1C3006342F9 /* sampleModel.swift in Sources */,
+				F1F98D682A5409710055BF21 /* FavoritesService.swift in Sources */,
 				6C4286BB2A176F3300560F15 /* CafeDetailViewReviewCell.swift in Sources */,
 				01B9328429E2E1DB006342F9 /* sampleViewModel.swift in Sources */,
 				01B87B622A1B97E60082FC05 /* NetworkResult.swift in Sources */,
