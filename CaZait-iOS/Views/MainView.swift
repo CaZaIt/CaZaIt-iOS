@@ -12,6 +12,8 @@ class MainView: UIViewController {
 
     let mainTopSearchView = MainTopSearchView()
     private var allCafeData: AllCafeResponse? //통신한 데이터를 저장하기 위한 변수입니다.
+    private var favoritesData: FavoritesResponse?
+    
     var sortMethod :String = "distance" //거리순, 혼잡도순에 대한 통신하기 위한 변수입니다.
     
     private let refreshControl = UIRefreshControl()
@@ -75,6 +77,29 @@ class MainView: UIViewController {
             case .success(let data):
                 guard let listData = data as? AllCafeResponse else {return}
                 self.allCafeData = listData //통신한 데이터를 변수에 저장하고
+                self.mainTableView.reloadData() //통신을 적용하기 위해 테이블 뷰를 리로드합니다.
+                
+                // 실패할 경우에 분기처리는 아래와 같이 합니다.
+            case .requestErr :
+                print("requestErr")
+            case .pathErr :
+                print("pathErr")
+            case .serverErr :
+                print("serveErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
+    }
+    
+    func getFavoritesCafeInfoData() {
+        FavoritesService.shared.getFavoritesCafeInfo(userId: "1") { response in
+            
+            switch response {
+                
+            case .success(let data):
+                guard let cafeData = data as? FavoritesResponse else {return}
+                self.favoritesData = cafeData //통신한 데이터를 변수에 저장하고
                 self.mainTableView.reloadData() //통신을 적용하기 위해 테이블 뷰를 리로드합니다.
                 
                 // 실패할 경우에 분기처리는 아래와 같이 합니다.
@@ -261,6 +286,7 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewLovedCell", for: indexPath) as! MainTableViewLovedCell
             cell.navigationController = navigationController
+            cell.configure(with: self.favoritesData)
             // 첫 번째 섹션에서 사용할 셀 구성
             return cell
         }

@@ -99,6 +99,11 @@ class LovedCollectionViewCell: UICollectionViewCell {
             make.centerY.equalTo(congestionView.snp.centerY)
         }
     }
+    
+    //전달받은 통신 데이터를 통해 적용해줍니다.
+    func configure(with favoritesInfo: FavoritesInfo) {
+        
+    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
