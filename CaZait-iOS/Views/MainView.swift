@@ -277,7 +277,11 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
 
     //mainTableView의 각 섹션 마다 cell row 숫자의 갯수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if section == 0 {
+            return 1 //만약 favorite 통신을 하여 안의 정보가 없을 경우 cell의 개수를 0으로 만들어서 화면을 보이지 않게 할 수 있다.
+        } else {
+            return 1
+        }
     }
 
     //mainTableView의 각 센션 마다 사용할 cell의 종류
