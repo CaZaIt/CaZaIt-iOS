@@ -12,6 +12,7 @@ class MainTableViewLovedCell: UITableViewCell {
 
     //이동하려는 viewController가 navigationController 내에서 push될 수 있도록 navigationController를 추가
     weak var navigationController: UINavigationController?
+    private var favoritesCafeData: FavoritesResponse? //mainView에서 날라온 정보를 저장.
     
     private let lovedCafeLabel: UILabel = {
         let label = UILabel()
@@ -95,6 +96,12 @@ class MainTableViewLovedCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MainView에서 날라온 정보를 저장한 뒤, 다시 콜렉션뷰를 리로드합니다.
+    func configure(with data: FavoritesResponse?) {
+        self.favoritesCafeData = data
+        self.collectionView.reloadData()
+    }
 
     func setupMainTableViewLovedCell() {
         contentView.addSubview(collectionView)
@@ -156,8 +163,10 @@ extension MainTableViewLovedCell: UICollectionViewDataSource, UICollectionViewDe
     // collectionView 셀 생성 및 반환
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LovedCollectionViewCell", for: indexPath) as! LovedCollectionViewCell
-        
-        
+        //통신에서 날라온 정보를 이용해서 콜렉션 뷰 셀에 데이터를 전달합니다.
+        if let cafeInfo = self.favoritesCafeData?.data[indexPath.row]{
+            cell.configure(with: cafeInfo)
+        }
         return cell
     }
     

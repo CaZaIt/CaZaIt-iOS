@@ -12,6 +12,11 @@ class MainView: UIViewController {
 
     let mainTopSearchView = MainTopSearchView()
     private var allCafeData: AllCafeResponse? //통신한 데이터를 저장하기 위한 변수입니다.
+    private var favoritesData: FavoritesResponse?
+    
+    var sortMethod :String = "distance" //거리순, 혼잡도순에 대한 통신하기 위한 변수입니다.
+    
+    private let refreshControl = UIRefreshControl()
     
     private let whiteView: UIView = {
         let view = UIView()
@@ -38,6 +43,7 @@ class MainView: UIViewController {
         tableView.sectionHeaderTopPadding = 0 //상단 패딩을 0으로 지정한다.
         tableView.separatorStyle = .none //tableView의 구분선을 없앤다.
         tableView.contentInset = UIEdgeInsets(top: 99, left: 0, bottom: 0, right: 0)
+
         
         return tableView
     }()
@@ -54,13 +60,17 @@ class MainView: UIViewController {
         // mainTopSearchView의 버튼 액션을 처리하는 메서드를 설정합니다.
         //상단 검색버튼 클릭시 검색화면으로 이동합니다.
         mainTopSearchView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
+        mainTopSearchView.notificationButton.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
+        
+        refreshControl.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
+        mainTableView.refreshControl = refreshControl
         
         setupMainTableView()
         getAllCafeInfoData()
     }
     
     func getAllCafeInfoData() {
-        AllCafeService.shared.getAllCafeInfo(longitude : "127.07154626749393", latitude : "37.54751410359858", sort : "distance", limit : "0") { response in
+        AllCafeService.shared.getAllCafeInfo(longitude : "127.07154626749393", latitude : "37.54751410359858", sort : sortMethod, limit : "0") { response in
 
             switch response {
 
@@ -82,10 +92,75 @@ class MainView: UIViewController {
         }
     }
     
+    func getFavoritesCafeInfoData() {
+        FavoritesService.shared.getFavoritesCafeInfo(userId: "1") { response in
+            
+            switch response {
+                
+            case .success(let data):
+                guard let cafeData = data as? FavoritesResponse else {return}
+                self.favoritesData = cafeData //통신한 데이터를 변수에 저장하고
+                self.mainTableView.reloadData() //통신을 적용하기 위해 테이블 뷰를 리로드합니다.
+                
+                // 실패할 경우에 분기처리는 아래와 같이 합니다.
+            case .requestErr :
+                print("requestErr")
+            case .pathErr :
+                print("pathErr")
+            case .serverErr :
+                print("serveErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
+    }
+    
     @objc func searchButtonTapped() {
         let searchViewController = SearchView()
         navigationController?.pushViewController(searchViewController, animated: false)
+    }
+    
+    @objc func notificationButtonTapped() {
+        mainTopSearchView.hiddenNotificationDot()
+        let searchViewController = NotificationView()
+        navigationController?.pushViewController(searchViewController, animated: true)
+    }
+    //거리순, 혼잡도순을 고를 수 있는 버튼입니다.
+    @objc func showPopup() {
         
+        let alertController = UIAlertController(title: "정렬 방식 선택", message: nil, preferredStyle: .actionSheet)
+        
+        let distanceAction = UIAlertAction(title: "거리순", style: .default) { (action) in
+            // 거리순 정렬을 처리하는 코드 작성
+            self.sortMethod = "distance"
+            self.getAllCafeInfoData()
+        }
+        
+        let congestionAction = UIAlertAction(title: "혼잡도순", style: .default) { (action) in
+            // 혼잡도순 정렬을 처리하는 코드 작성
+            self.sortMethod = "congestion"
+            self.getAllCafeInfoData()
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        
+        alertController.addAction(distanceAction)
+        alertController.addAction(congestionAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc private func refreshTableView() {
+        // 새로고침 작업을 수행합니다.
+        // 데이터를 업데이트하거나 추가 작업을 수행하는 등의 로직을 구현합니다.
+        
+        // 새로고침 작업이 완료되면 UI를 업데이트합니다.
+        DispatchQueue.main.async {
+            self.getAllCafeInfoData()
+            print("리프레쉬 되는 중 입니다.!!!")
+            self.refreshControl.endRefreshing() // RefreshControl을 종료합니다.
+        }
     }
     
     func setupMainTableView() {
@@ -128,11 +203,6 @@ class MainView: UIViewController {
         return .lightContent // 밝은 배경색일 경우에는 .darkContent
     }
     
-    //다른 곳 클릭시 키보드 내려가게 만들기
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-        self.mainTableView.endEditing(true)
-    }
     
     var previousScrollViewYOffset: CGFloat = 0.0
     
@@ -207,7 +277,11 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
 
     //mainTableView의 각 섹션 마다 cell row 숫자의 갯수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if section == 0 {
+            return 1 //만약 favorite 통신을 하여 안의 정보가 없을 경우 cell의 개수를 0으로 만들어서 화면을 보이지 않게 할 수 있다.
+        } else {
+            return 1
+        }
     }
 
     //mainTableView의 각 센션 마다 사용할 cell의 종류
@@ -216,6 +290,7 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewLovedCell", for: indexPath) as! MainTableViewLovedCell
             cell.navigationController = navigationController
+            cell.configure(with: self.favoritesData)
             // 첫 번째 섹션에서 사용할 셀 구성
             return cell
         }
@@ -223,7 +298,16 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
             let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCafeCell", for: indexPath) as! MainTableViewCafeCell
             cell.navigationController = navigationController
             cell.configure(with: self.allCafeData) //테이블 뷰 cell에 정보를 전달합니다.
-            // 두 번째 섹션에서 사용할 셀 구성
+            
+            //거리순, 혼잡도순을 고르는 버튼을 클릭했을 때
+            cell.cafeListSettingButton.addTarget(self, action: #selector(showPopup), for: .touchUpInside)
+            //tableViewCell의 Label을 변경해줍니다.
+            if sortMethod == "distance" {
+                cell.cafeListSettingLabel.text = "거리순"
+            } else {
+                cell.cafeListSettingLabel.text = "혼잡도순"
+            }
+            
             return cell
         }
     }

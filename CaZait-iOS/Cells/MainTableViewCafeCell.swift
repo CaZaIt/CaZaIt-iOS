@@ -26,7 +26,7 @@ class MainTableViewCafeCell: UITableViewCell {
         return label
     }()
     
-    private let cafeListSettingButton: UIButton = {
+    let cafeListSettingButton: UIButton = {
         let button = UIButton()
         
         button.backgroundColor = .black
@@ -38,7 +38,7 @@ class MainTableViewCafeCell: UITableViewCell {
         return button
     }()
     
-    private let cafeListSettingLabel: UILabel = {
+    let cafeListSettingLabel: UILabel = {
         let label = UILabel()
         
         label.font = UIFont(name: "AppleSDGothicNeoM00-Bold", size: 14)

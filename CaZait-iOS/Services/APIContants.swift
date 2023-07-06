@@ -33,4 +33,5 @@ struct APIConstants {
     
     static let loginURL = baseURL + "/api/auths/log-in?role=user" // 로그인(유저)
     
+    static let favoritesURL = baseURL + "api/favorites/user"
 }
