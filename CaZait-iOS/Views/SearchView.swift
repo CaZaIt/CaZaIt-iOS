@@ -241,6 +241,11 @@ class SearchView: UIViewController {
         
         searchBar.resignFirstResponder() // 키보드 내리기
     }
+    
+    //상단의 시계가 흰색으로 표시되게 하기 위해서 추가하는 코드입니다.
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent // 밝은 배경색일 경우에는 .darkContent
+    }
 }
 
 
