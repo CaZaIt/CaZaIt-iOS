@@ -25,6 +25,17 @@ class MoreView: UIViewController{
         return view
     }()
     
+    private let moreLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.text = "더보기"
+        label.numberOfLines = 1
+        return label
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +43,7 @@ class MoreView: UIViewController{
         
         view.addSubview(whiteView)
         whiteView.addSubview(pinkView)
+        whiteView.addSubview(moreLabel)
         
         
         self.whiteView.snp.makeConstraints { make in
@@ -43,7 +55,12 @@ class MoreView: UIViewController{
         self.pinkView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(self.whiteView.snp.top)
-            make.height.equalTo(115)
+            make.height.equalTo(100)
+        }
+        
+        self.moreLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).inset(30)
         }
     }
 }

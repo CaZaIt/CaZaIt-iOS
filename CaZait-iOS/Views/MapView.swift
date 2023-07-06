@@ -5,13 +5,17 @@
 //  Created by 강석호 on 2023/04/09.
 //
 
-import Foundation
-import NMapsMap
 import CoreLocation
-
-import UIKit
+import NMapsMap
 
 class MapView: UIViewController, CLLocationManagerDelegate {
+    
+    var locationManager = CLLocationManager()
+    
+    var isFirstLocationUpdate = true
+    
+    var currentLatitude: CLLocationDegrees = 0.0
+    var currentLongitude: CLLocationDegrees = 0.0
     
     private let topview: UIView = {
         let top = UIView()
@@ -31,11 +35,6 @@ class MapView: UIViewController, CLLocationManagerDelegate {
         return label
     }()
     
-    // 화양리 고정좌표(세종대 집현관을 중심기준으로)
-    let initialPosition = NMGLatLng(lat: 37.549080572141555, lng: 127.07361073914453)
-    //15배 확대
-    let zoomLevel = NMFCameraUpdate(zoomTo: 15)
-    // 화양리 술집들의 위치 설정
     let positions = [
         NMGLatLng(lat: 37.54847570421354, lng: 127.07263694429658), // 롬곡
         NMGLatLng(lat: 37.549548141704, lng: 127.07511854895762), // 제주몰빵
@@ -43,16 +42,14 @@ class MapView: UIViewController, CLLocationManagerDelegate {
     ]
     
     private lazy var naverMapView: NMFMapView = {
-        let mapView = NMFMapView() // 지도 객체 생성
+        let mapView = NMFMapView()
         mapView.translatesAutoresizingMaskIntoConstraints = false
-        mapView.allowsZooming = true // 줌 가능
-        mapView.logoInteractionEnabled = false // 로고 터치 불가능
-        mapView.allowsScrolling = true // 스크롤 가능
-        mapView.moveCamera(NMFCameraUpdate(scrollTo: initialPosition,zoomTo: 16)) // 화양리로 시작좌표 설정 && 줌 확대 16배
+        mapView.allowsZooming = true
+        mapView.logoInteractionEnabled = false
+        mapView.positionMode = .direction
+        mapView.allowsScrolling = true
         return mapView
     }()
-    
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,10 +58,24 @@ class MapView: UIViewController, CLLocationManagerDelegate {
         self.view.addSubview(self.topview)
         self.topview.addSubview(self.mapLabel)
         
+        // Location Manager 설정
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
         
         setUI()
         
-        //마커 생성 및 설정
+        // 위치 업데이트 시작
+        DispatchQueue.global().async {
+            if CLLocationManager.locationServicesEnabled() {
+                print("Location services are enabled")
+                self.locationManager.startUpdatingLocation()
+            } else {
+                print("Location services are disabled")
+            }
+        }
+        
+        // 마커 추가
         for position in positions {
             let marker = NMFMarker(position: position)
             marker.width = 20
@@ -87,13 +98,8 @@ class MapView: UIViewController, CLLocationManagerDelegate {
     }
     
     func setUI() {
-        // 슈퍼뷰에 지도 뷰를 서브뷰로 넣어줌
         self.view.addSubview(naverMapView)
-        
-        // constraints 사용하기 위함
         naverMapView.translatesAutoresizingMaskIntoConstraints = false
-        
-        // constraints 세팅
         naverMapView.topAnchor.constraint(equalTo: self.topview.bottomAnchor, constant: 0).isActive = true
         naverMapView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
         naverMapView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
@@ -101,9 +107,32 @@ class MapView: UIViewController, CLLocationManagerDelegate {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent // 밝은 배경색일 경우에는 .darkContent
+        return .lightContent
     }
-
-
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        
+        // 현재 위치 업데이트
+        currentLatitude = location.coordinate.latitude
+        currentLongitude = location.coordinate.longitude
+        
+        print("Latitude: \(currentLatitude), Longitude: \(currentLongitude)")
+        
+        
+        // 처음 위치 업데이트일 경우에만 카메라 이동
+        if isFirstLocationUpdate {
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentLatitude, lng: currentLongitude))
+            cameraUpdate.animation = .none
+            naverMapView.moveCamera(cameraUpdate)
+            
+            isFirstLocationUpdate = false
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            locationManager.startUpdatingLocation()
+        }
+    }
 }
