@@ -224,10 +224,10 @@ extension LoginView {
                         //로그인 성공 후 자동으로 마이페이지로 이동
                         self.navigationController?.popViewController(animated: true)
                         // 통신을 통해 얻은 jwtToken UserDefault에 저장
-                        UserDefaults.standard.set(data.data?.jwtToken, forKey: "jwtToken")
+                        UserDefaults.standard.set(data.data?.accessToken, forKey: "accessToken")
                         
-                        if let token = UserDefaults.standard.string(forKey: "jwtToken") {
-                            print("저장된 토큰: \(token)")
+                        if let token = UserDefaults.standard.string(forKey: "accessToken") {
+                            print("저장된 엑세스토큰: \(token)")
                         } else {
                             print("토큰이 저장되지 않았습니다.")
                         }

@@ -16,8 +16,8 @@ struct LoginResponse: Codable {
 
 struct LoginData: Codable {
     let email: String
-    let id: Int
-    let jwtToken: String
+    let id: String
+    let accessToken: String
     let refreshToken: String
     let role: String
 }
