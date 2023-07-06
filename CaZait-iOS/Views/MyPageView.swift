@@ -222,7 +222,7 @@ class MyPageView: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if UserDefaults.standard.string(forKey: "jwtToken") != nil {
+        if UserDefaults.standard.string(forKey: "accessToken") != nil {
             loginLabel.text = "로그아웃"
         }
         else {
@@ -466,7 +466,7 @@ class MyPageView: UIViewController{
         }
         
         if (loginLabel.text == "로그아웃") {
-            UserDefaults.standard.removeObject(forKey: "jwtToken")
+            UserDefaults.standard.removeObject(forKey: "accessToken")
 
             let alertController = UIAlertController(title: "로그아웃되었습니다.", message: "", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
