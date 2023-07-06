@@ -223,13 +223,27 @@ extension LoginView {
                     if (alert.title == "요청이 완료 되었습니다."){
                         //로그인 성공 후 자동으로 마이페이지로 이동
                         self.navigationController?.popViewController(animated: true)
-                        // 통신을 통해 얻은 jwtToken UserDefault에 저장
+                        // 통신을 통해 얻은 accessToken UserDefault에 저장
                         UserDefaults.standard.set(data.data?.accessToken, forKey: "accessToken")
+                        // 통신을 통해 얻은 accessToken UserDefault에 저장
+                        UserDefaults.standard.set(data.data?.refreshToken, forKey: "refreshToken")
+                        // 통신을 통해 얻은 accessToken UserDefault에 저장
+                        UserDefaults.standard.set(data.data?.id, forKey: "userId")
                         
-                        if let token = UserDefaults.standard.string(forKey: "accessToken") {
-                            print("저장된 엑세스토큰: \(token)")
+                        if let accessToken = UserDefaults.standard.string(forKey: "accessToken") {
+                            print("저장된 엑세스토큰: \(accessToken)")
                         } else {
                             print("토큰이 저장되지 않았습니다.")
+                        }
+                        if let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") {
+                            print("저장된 리프레시토큰: \(refreshToken)")
+                        } else {
+                            print("토큰이 저장되지 않았습니다.")
+                        }
+                        if let userId = UserDefaults.standard.string(forKey: "userId") {
+                            print("저장된 유저아이디: \(userId)")
+                        } else {
+                            print("Id가 저장되지 않았습니다.")
                         }
                     }
                 }))
