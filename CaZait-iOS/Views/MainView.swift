@@ -7,12 +7,15 @@
 
 import UIKit
 import SnapKit
+import CoreLocation
 
 class MainView: UIViewController {
 
     let mainTopSearchView = MainTopSearchView()
     private var allCafeData: AllCafeResponse? //통신한 데이터를 저장하기 위한 변수입니다.
     private var favoritesData: FavoritesResponse?
+    private var longitude: String?
+    private var latitude : String?
     
     var sortMethod :String = "distance" //거리순, 혼잡도순에 대한 통신하기 위한 변수입니다.
     
@@ -65,6 +68,7 @@ class MainView: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
         mainTableView.refreshControl = refreshControl
         
+        getlocationData()
         setupMainTableView()
         getAllCafeInfoData()
     }
@@ -115,6 +119,18 @@ class MainView: UIViewController {
         }
     }
     
+    func getlocationData() {
+        LocationManager.shared.startUpdatingLocation()
+        
+        // Access the current location after it is updated
+        if let currentLocation = LocationManager.shared.currentLocation {
+            // Do something with the current location
+            print("Current location: \(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
+            self.latitude = String(currentLocation.coordinate.latitude)
+            self.longitude = String(currentLocation.coordinate.longitude)
+        }
+    }
+    
     @objc func searchButtonTapped() {
         let searchViewController = SearchView()
         navigationController?.pushViewController(searchViewController, animated: false)
@@ -159,6 +175,7 @@ class MainView: UIViewController {
         DispatchQueue.main.async {
             self.getAllCafeInfoData()
             print("리프레쉬 되는 중 입니다.!!!")
+            self.getlocationData()
             self.refreshControl.endRefreshing() // RefreshControl을 종료합니다.
         }
     }
@@ -333,5 +350,5 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
         }
     }
     
-    
 }
+
