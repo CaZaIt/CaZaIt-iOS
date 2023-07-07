@@ -306,7 +306,7 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
         //section이 0일 경우에는 찜한 매장이므로, 찜한매장의 데이터가 없다는 것은 찜한 매장이 없다는 뜻이므로 section0의 cell 개수를 0으로 바꿔 찜한매장의 cell을 안보이게 없앱니다.
         if section == 0 {
             if let data = favoritesData {
-                return data.data.count
+                return 1
             } else {
                 return 0
             }

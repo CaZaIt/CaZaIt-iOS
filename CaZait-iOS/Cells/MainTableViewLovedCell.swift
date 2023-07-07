@@ -157,7 +157,11 @@ extension MainTableViewLovedCell: UICollectionViewDataSource, UICollectionViewDe
     
     // collectionView 셀 개수 반환
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        if let data = self.favoritesCafeData {
+            return data.data.count
+        } else {
+            return 0
+        }
     }
     
     // collectionView 셀 생성 및 반환
