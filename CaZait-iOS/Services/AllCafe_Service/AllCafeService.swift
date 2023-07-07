@@ -21,8 +21,20 @@ class AllCafeService {
     // **해당 completion클로저에는 네트워크의 결과를 담아서 호출하게 되고, VC에서 꺼내서 처리할 예정
     func getAllCafeInfo(longitude : String, latitude : String, sort : String, limit : String, completion : @escaping (NetworkResult<Any>) -> Void) {
         
-        //데이터를 받아오려는 주소와 필요한 헤더를 Key-Value형태로 작성
-        let url = "\(APIConstants.allCafeURL)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
+        let userId = UserDefaults.standard.string(forKey: "userId")
+        
+        var url: String
+        if let userId = userId, !userId.isEmpty {
+            // 유저 디폴트값이 있는 경우
+            url = "\(APIConstants.allCafeURL)/user/\(userId)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
+        } else {
+            // 유저 디폴트값이 없는 경우
+            url = "\(APIConstants.allCafeURL)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
+        }
+        
+        print("카페 전체 조회 url 입니다!!!!!")
+        print(url)
+        
         
         //이렇게 통신 요청보낼거야! 라는 요청서라고 보면 된다.
         // URL 주소를 가지고, GET 방식을 통해, JSONEncoding 인코딩 방식으로
