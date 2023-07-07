@@ -32,9 +32,6 @@ class AllCafeService {
             url = "\(APIConstants.allCafeURL)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
         }
         
-        print("카페 전체 조회 url 입니다!!!!!")
-        print(url)
-        
         
         //이렇게 통신 요청보낼거야! 라는 요청서라고 보면 된다.
         // URL 주소를 가지고, GET 방식을 통해, JSONEncoding 인코딩 방식으로
