@@ -19,9 +19,9 @@ class FavoritesService {
     //->getAllShop 함수가 종료되든 말든 상관없이 completion은 탈출 클로저이기 때문에,
     //전달된다면 이후에 외부에서도 사용가능
     // **해당 completion클로저에는 네트워크의 결과를 담아서 호출하게 되고, VC에서 꺼내서 처리할 예정
-    func getFavoritesCafeInfo(userId : String, completion : @escaping (NetworkResult<Any>) -> Void) {
+    func getFavoritesCafeInfo(completion : @escaping (NetworkResult<Any>) -> Void) {
         
-        //데이터를 받아오려는 주소와 필요한 헤더를 Key-Value형태로 작성
+        let userId = UserDefaults.standard.string(forKey: "userId")!
         let url = "\(APIConstants.favoritesURL)/\(userId)"
         
         //이렇게 통신 요청보낼거야! 라는 요청서라고 보면 된다.
