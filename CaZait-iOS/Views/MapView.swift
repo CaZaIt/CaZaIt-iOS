@@ -16,6 +16,11 @@ class MapView: UIViewController, CLLocationManagerDelegate {
     
     var currentLatitude: CLLocationDegrees = 0.0
     var currentLongitude: CLLocationDegrees = 0.0
+    var infoWindow: NMFInfoWindow?
+    
+    var marker1: NMFMarker!
+    var marker2: NMFMarker!
+    var marker3: NMFMarker!
     
     private let topview: UIView = {
         let top = UIView()
@@ -35,11 +40,11 @@ class MapView: UIViewController, CLLocationManagerDelegate {
         return label
     }()
     
-    let positions = [
-        NMGLatLng(lat: 37.54847570421354, lng: 127.07263694429658), // 롬곡
-        NMGLatLng(lat: 37.549548141704, lng: 127.07511854895762), // 제주몰빵
-        NMGLatLng(lat: 37.550136780794496, lng: 127.07322701581906), // 유캔두잇
-    ]
+//    let positions = [
+//        NMGLatLng(lat: 37.54847570421354, lng: 127.07263694429658), // 롬곡
+//        NMGLatLng(lat: 37.549548141704, lng: 127.07511854895762), // 제주몰빵
+//        NMGLatLng(lat: 37.550136780794496, lng: 127.07322701581906), // 유캔두잇
+//    ]
     
     private lazy var naverMapView: NMFMapView = {
         let mapView = NMFMapView()
@@ -65,6 +70,25 @@ class MapView: UIViewController, CLLocationManagerDelegate {
         
         setUI()
         
+        // 마커 생성 및 설정
+        marker1 = NMFMarker(position: NMGLatLng(lat: 37.54847570421354, lng: 127.07263694429658))
+        marker1.width = 20
+        marker1.height = 30
+        marker1.iconTintColor = .blue
+        marker1.mapView = self.naverMapView
+        
+        marker2 = NMFMarker(position: NMGLatLng(lat: 37.549548141704, lng: 127.07511854895762))
+        marker2.width = 20
+        marker2.height = 30
+        marker2.iconTintColor = .blue
+        marker2.mapView = self.naverMapView
+        
+        marker3 = NMFMarker(position: NMGLatLng(lat: 37.550136780794496, lng: 127.07322701581906))
+        marker3.width = 20
+        marker3.height = 30
+        marker3.iconTintColor = .blue
+        marker3.mapView = self.naverMapView
+        
         // 위치 업데이트 시작
         DispatchQueue.global().async {
             if CLLocationManager.locationServicesEnabled() {
@@ -75,14 +99,20 @@ class MapView: UIViewController, CLLocationManagerDelegate {
             }
         }
         
+        // 정보 창 설정
+        infoWindow = NMFInfoWindow()
+        let dataSource = NMFInfoWindowDefaultTextSource.data()
+        dataSource.title = "정보 창 내용"
+        infoWindow?.dataSource = dataSource
+        
         // 마커 추가
-        for position in positions {
-            let marker = NMFMarker(position: position)
-            marker.width = 20
-            marker.height = 30
-            marker.iconTintColor = .blue
-            marker.mapView = self.naverMapView
-        }
+//        for position in positions {
+//            let marker = NMFMarker(position: position)
+//            marker.width = 20
+//            marker.height = 30
+//            marker.iconTintColor = .blue
+//            marker.mapView = self.naverMapView
+//        }
         
         self.topview.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
@@ -94,7 +124,30 @@ class MapView: UIViewController, CLLocationManagerDelegate {
             make.center.equalTo(topview)
         }
         
+        // 마커 클릭 시 정보 창 열기/닫기
+        let handler = { [weak self] (overlay: NMFOverlay) -> Bool in
+            if let marker = overlay as? NMFMarker {
+                if marker.infoWindow == nil {
+                    // 현재 마커에 정보 창이 열려있지 않을 경우 엶
+                    self?.infoWindow?.open(with: marker)
+                } else {
+                    // 이미 현재 마커에 정보 창이 열려있을 경우 닫음
+                    self?.infoWindow?.close()
+                }
+            }
+            return true
+        }
         
+        marker1.touchHandler = handler
+        marker2.touchHandler = handler
+        marker3.touchHandler = handler
+        
+        
+    }
+    
+    // 지도를 탭하면 정보 창 닫기
+    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        infoWindow?.close()
     }
     
     func setUI() {
