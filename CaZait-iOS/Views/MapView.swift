@@ -8,7 +8,7 @@
 import CoreLocation
 import NMapsMap
 
-class MapView: UIViewController, CLLocationManagerDelegate {
+class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시작좌표인 클래스
     
     var locationManager = CLLocationManager()
     

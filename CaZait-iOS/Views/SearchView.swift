@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class SearchView: UIViewController {
+class SearchView: UIViewController,UIGestureRecognizerDelegate {
     
     //isTableView는 검색을 한 뒤, 그에 해당하는 카페를 보고 난 뒤, 다시 검색했던 collectionView로 돌아올 경우 키보드가 다시 자동생성되는 것을 방지하기 위해서 만든 변수입니다.
     private var isTableView : Bool = true
@@ -116,6 +116,10 @@ class SearchView: UIViewController {
         
         setupSearchingView()
         setupSearchedView()
+        
+        //손가락 옆으로 미는 제스쳐 작동
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     

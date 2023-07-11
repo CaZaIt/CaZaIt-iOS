@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class NotificationView: UIViewController {
+class NotificationView: UIViewController,UIGestureRecognizerDelegate {
     
     private let navigationBarAppearance : UINavigationBarAppearance = {
         let navigationBar = UINavigationBarAppearance()
@@ -40,6 +40,10 @@ class NotificationView: UIViewController {
         collectionView.register(NotificationCollectionViewCell.self, forCellWithReuseIdentifier: "NotificationCollectionViewCell")
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        //손가락 옆으로 미는 제스쳐 작동
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         setupNotificationView()
     }
@@ -75,13 +79,13 @@ class NotificationView: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
         self.title = "알림확인"
         // 네비게이션 바의 제목 속성 설정
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backButtonTapped))
         navigationItem.leftBarButtonItem = backButton
         // 내비게이션 바 스타일 변경
-        self.navigationController?.navigationBar.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
-        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.navigationBar.backgroundColor = .black
+        self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.barStyle = .black
         self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
