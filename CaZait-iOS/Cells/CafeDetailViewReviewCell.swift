@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class CafeDetailViewReviewCell: UITableViewCell {
+    var stars: [UIImageView] = []
 
     private let star: UIImageView = {
         let image = UIImageView()
@@ -78,16 +79,29 @@ class CafeDetailViewReviewCell: UITableViewCell {
 
     private func addSubviews() {
         // 셀에 서브뷰들을 추가합니다.
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor =  UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1).cgColor
+        contentView.layer.cornerRadius = 10
+        contentView.clipsToBounds = true
+        
+        // 그림자 효과를 위한 설정
+//        self.layer.shadowColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1).cgColor
+//        self.layer.shadowOpacity = 0.3
+//        self.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        self.layer.shadowRadius = 4
+
         contentView.addSubview(nickname)
         contentView.addSubview(hour)
         contentView.addSubview(review)
     }
+    
 
     private func setupLayout() {
         // 서브뷰들의 레이아웃을 설정합니다.
         nickname.translatesAutoresizingMaskIntoConstraints = false
         hour.translatesAutoresizingMaskIntoConstraints = false
         review.translatesAutoresizingMaskIntoConstraints = false
+
 
         NSLayoutConstraint.activate([
             nickname.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
@@ -99,6 +113,7 @@ class CafeDetailViewReviewCell: UITableViewCell {
             review.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             review.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 6),
             //review.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+  
         ])
     }
 
@@ -111,6 +126,7 @@ class CafeDetailViewReviewCell: UITableViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 20, bottom: 10, right: 20))
     }
 }
+

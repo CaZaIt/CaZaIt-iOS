@@ -103,3 +103,4 @@ class BaseView: UIView {
     func configure() {}
     func bind() {}
 }
+
