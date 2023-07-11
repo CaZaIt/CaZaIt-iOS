@@ -21,11 +21,5 @@ struct DetailCafe: Codable {
     let address: String
     let longitude: String
     let latitude: String
-    let getCafeImageRes: [DetailCafeImage]
-    let logResult: String?
-}
-
-struct DetailCafeImage: Codable {
-    let cafeImageId: Int
-    let imageUrl: String
+    let cafeImages: [String]
 }

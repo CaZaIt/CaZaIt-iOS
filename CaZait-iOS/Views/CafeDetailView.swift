@@ -4,8 +4,8 @@ import Foundation
 
 class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
-    var tableView1HeightConstant: CGFloat = 400
-    var tableView2HeightConstant: CGFloat = 400
+    var collectionView1HeightConstant: CGFloat = 400
+    var collectionView2HeightConstant: CGFloat = 400
     
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
@@ -56,11 +56,31 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     let heartEmptyImage = UIImage(systemName: "heart",
                                   withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .medium))?.withTintColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), renderingMode: .alwaysOriginal)
     
+    private let collectionView1: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 348, height: 115) // 각 셀의 크기를 설정합니다.
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 13 // 셀 행 사이의 최소 간격을 설정합니다.
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        // 셀 등록
+        collectionView.backgroundColor = UIColor.white // 배경색을 설정
+
+        return collectionView
+    }()
     
-    
-    private let tableView1 = UITableView()
-    private let tableView2 = UITableView()
-    
+    private let collectionView2: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 348, height: 115) // 각 셀의 크기를 설정합니다.
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 13 // 셀 행 사이의 최소 간격을 설정합니다.
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        // 셀 등록
+        collectionView.backgroundColor = UIColor.white // 배경색을 설정
+
+        return collectionView
+    }()
     
     var cafeId : Int?
     
@@ -74,11 +94,14 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.backgroundColor = .white
         
-        //fetchData() //setver에서 CafeInfoById를 front에 페치해야함, view did load전에
+        fetchData() //setver에서 CafeInfoById를 front에 페치해야함, view did load전에
         
         // 뒤로가기 버튼 추가
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))
         self.navigationItem.leftBarButtonItem = backButton
+        
+        stickyHeaderViewSegmentControl.isHidden = true
+
     }
     
     @objc func backButtonTapped() {
@@ -88,6 +111,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = true
+        
     }
     
     
@@ -95,7 +119,13 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         super.viewDidLoad()
         view.backgroundColor = .black
         //print("!!!!!!!!!!!!!", cafeId)
+        collectionView1.dataSource = self
+        collectionView1.delegate = self
+        collectionView1.register(CafeDetailViewMenuCell.self, forCellWithReuseIdentifier: "CafeDetailViewMenuCell")
         
+        collectionView2.dataSource = self
+        collectionView2.delegate = self
+        collectionView2.register(CafeDetailViewReviewCell.self, forCellWithReuseIdentifier: "CafeDetailViewReviewCell")
         // UIScrollView 설정
         scrollView.delegate = self
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -107,18 +137,16 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         cafeView.backgroundColor = .white
         cafeView.layer.cornerRadius = 30
         cafeView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        //        let maskLayer = CAShapeLayer()
-        //        let cornerRadius: CGFloat = 15
-        //        maskLayer.path = UIBezierPath(roundedRect: cafeView.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)).cgPath
-        //        cafeView.layer.mask = maskLayer
-        
+      
         cafeName.font = UIFont.systemFont(ofSize: 26, weight: .bold)
         cafeName.text = "카페네임"
+        cafeName.textColor = .black
         cafeName.textAlignment = .left
         cafeName.translatesAutoresizingMaskIntoConstraints = false
         
         cafeLocation.font = UIFont.systemFont(ofSize: 15)
         cafeLocation.text = "카페위치"
+        cafeName.textColor = .black
         cafeLocation.textAlignment = .left
         cafeLocation.translatesAutoresizingMaskIntoConstraints = false
         
@@ -144,11 +172,12 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         reviewWriteButton.addTarget(self, action: #selector(reviewWriteButtonClicked), for: .touchUpInside)
         
         setSegmentControl()
-        setTableView()
         setHeartButton()
         
         view.addSubview(scrollView)
         view.addSubview(stickyHeaderViewSegmentControl)
+        stickyHeaderViewSegmentControl.isHidden = true
+
         scrollView.addSubview(stackView)
         nestedStackView.addArrangedSubview(cafeImage)
         nestedStackView.addArrangedSubview(cafeView)
@@ -160,13 +189,12 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         cafeView.layer.addSublayer(dottedLine) // 점선을 추가한 CAShapeLayer를 yourView의 서브레이어로 추가합니다.
         
         stackView.addArrangedSubview(headerViewSegmentControl)
-        //stackView.addArrangedSubview(label2)
         
-        stackView.addArrangedSubview(tableView1)
-        stackView.addArrangedSubview(tableView2)
-        tableView2.addSubview(reviewWriteButton)
-        
-        
+        stackView.addArrangedSubview(collectionView1)
+        stackView.addArrangedSubview(collectionView2)
+
+        collectionView2.addSubview(reviewWriteButton)
+
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -216,23 +244,26 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             make.top.equalTo(cafeView.snp.top).offset(35)
         }
         
+
+        let numberOfRowsInCollectionView1 = collectionView1.dataSource?.collectionView(collectionView1, numberOfItemsInSection: 0) ?? 0
+        let numberOfRowsInCollectionView2 = collectionView1.dataSource?.collectionView(collectionView2, numberOfItemsInSection: 0) ?? 0
         
-        let numberOfRowsInTableView1 = tableView1.dataSource?.tableView(tableView1, numberOfRowsInSection: 0) ?? 0
-        let numberOfRowsInTableView2 = tableView2.dataSource?.tableView(tableView2, numberOfRowsInSection: 0) ?? 0
+        collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13)
+        collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13)
+
+
+        print(collectionView1HeightConstant)
+
         
-        tableView1HeightConstant = CGFloat(numberOfRowsInTableView1 ) * 115
-        tableView2HeightConstant = CGFloat(numberOfRowsInTableView2 ) * 115
-        
-        
-        tableView1.snp.makeConstraints {
-            $0.height.equalTo(tableView1HeightConstant).priority(.low)
+        collectionView1.snp.makeConstraints {
+            $0.height.equalTo(collectionView1HeightConstant).priority(.low)
         }
         
-        tableView2.snp.makeConstraints {
-            $0.height.equalTo(tableView2HeightConstant).priority(.low)
+        collectionView2.snp.makeConstraints {
+            $0.height.equalTo(collectionView2HeightConstant).priority(.low)
         }
         
-        reviewWriteButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 650).isActive = true
+        reviewWriteButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 600).isActive = true
         reviewWriteButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 310).isActive = true
         reviewWriteButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
         reviewWriteButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
@@ -271,12 +302,13 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     }
     
     private func updateTableViewVisibility() {
+        
         if headerViewSegmentControl.selectedSegmentIndex == 0 {
-            tableView1.isHidden = false
-            tableView2.isHidden = true
+            collectionView1.isHidden = false
+            collectionView2.isHidden = true
         } else {
-            tableView1.isHidden = true
-            tableView2.isHidden = false
+            collectionView1.isHidden = true
+            collectionView2.isHidden = false
         }
     }
     
@@ -343,84 +375,58 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         
     }
     
+
     
+        func fetchData() { //result = getAllCafeInfo 실행해서 얻은 결과
     
-    func setTableView(){
-        // 테이블 뷰 설정
-        tableView1.backgroundColor = .white
-        tableView1.translatesAutoresizingMaskIntoConstraints = false
-        
-        tableView1.dataSource = self
-        tableView1.delegate = self
-        
-        tableView2.backgroundColor = .white
-        tableView2.translatesAutoresizingMaskIntoConstraints = false
-        
-        tableView2.dataSource = self
-        tableView2.delegate = self
-        
-        
-        tableView1.register(CafeDetailViewMenuCell.self, forCellReuseIdentifier: "CafeDetailViewMenuCell")
-        tableView2.register(CafeDetailViewReviewCell.self, forCellReuseIdentifier: "CafeDetailViewReviewCell")
-        
-        tableView1.separatorStyle = UITableViewCell.SeparatorStyle.none
-        tableView2.separatorStyle = UITableViewCell.SeparatorStyle.none
-        
-        
-        
-        //        tableView1.separatorStyle = .none
-        //        tableView1.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-        //
-    }
+            guard let cafeId = cafeId else {
+                // cafeId가 nil일 경우에 대한 처리 로직
+                print("cafeId가 nil입니다.")
+                return
+            }
+            print("cafeID: ",cafeId)
+            let detailcafeservice = DetailCafeService() // DetailCafeService 인스턴스 생성
+            detailcafeservice.getDetailCafeBycafeID(cafeID: cafeId) { result in
+                switch result {
+                case .success(let cafe):
+                    // 성공적으로 데이터를 받아왔을 때의 처리 로직
+                    print(cafe) // 받아온 데이터 사용 예시
+                    // UI 업데이트 또는 필요한 작업 수행
+                    DispatchQueue.main.async {
+                        self.cafeName.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
+                        self.cafeLocation.text = cafe.address
     
-    //    func fetchData() { //result = getAllCafeInfo 실행해서 얻은 결과
-    //
-    //        guard let cafeId = cafeId else {
-    //            // cafeId가 nil일 경우에 대한 처리 로직
-    //            print("cafeId가 nil입니다.")
-    //            return
-    //        }
-    //
-    //        let detailcafeservice = DetailCafeService() // DetailCafeService 인스턴스 생성
-    //        detailcafeservice.getDetailCafeBycafeID(cafeID: 2) { result in
-    //            switch result {
-    //            case .success(let cafe):
-    //                // 성공적으로 데이터를 받아왔을 때의 처리 로직
-    //                print(cafe) // 받아온 데이터 사용 예시
-    //                // UI 업데이트 또는 필요한 작업 수행
-    //                DispatchQueue.main.async {
-    //                    self.cafeName.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
-    //                    self.cafeLocation.text = cafe.address
-    //
-    //                }
-    //            case .failure(let error):
-    //                // 데이터를 받아오지 못했을 때의 처리 로직
-    //                print(error.localizedDescription)
-    //                // 에러 메시지 출력 예시
-    //                // 에러 메시지를 보여줄 수 있는 방식으로 처리
-    //                print(error)
-    //            }
-    //        }
-    //
-    //        let detailcafemenuservice = DetailCafeMenuService()
-    //        detailcafemenuservice.getDetailCafeMenuBycafeID(cafeID: 2) { result in
-    //            switch result {
-    //            case .success(let cafe):
-    //                // 성공적으로 데이터를 받아왔을 때의 처리 로직
-    //                print(cafe) // 받아온 데이터 사용 예시
-    //                // UI 업데이트 또는 필요한 작업 수행
-    ////                DispatchQueue.main.async {
-    ////                }
-    //            case .failure(let error):
-    //                // 데이터를 받아오지 못했을 때의 처리 로직
-    //                print(error.localizedDescription)
-    //                // 에러 메시지 출력 예시
-    //                // 에러 메시지를 보여줄 수 있는 방식으로 처리
-    //                print(error)
-    //            }
-    //        }
-    //
-    //    }
+                    }
+                case .failure(let error):
+                    // 데이터를 받아오지 못했을 때의 처리 로직
+                    print(error.localizedDescription)
+                    // 에러 메시지 출력 예시
+                    // 에러 메시지를 보여줄 수 있는 방식으로 처리
+                    print(error)
+                }
+            }
+    
+            let detailcafemenuservice = DetailCafeMenuService()
+            detailcafemenuservice.getDetailCafeMenuBycafeID(cafeID: cafeId) { result in
+                switch result {
+                case .success(let cafe):
+                    // 성공적으로 데이터를 받아왔을 때의 처리 로직
+                    print(cafe) // 받아온 데이터 사용 예시
+                    // UI 업데이트 또는 필요한 작업 수행
+//                    DispatchQueue.main.async {
+//
+//                    }
+                    print("cafe menu: ", cafe.count)
+                case .failure(let error):
+                    // 데이터를 받아오지 못했을 때의 처리 로직
+                    print(error.localizedDescription)
+                    // 에러 메시지 출력 예시
+                    // 에러 메시지를 보여줄 수 있는 방식으로 처리
+                    print(error)
+                }
+            }
+    
+        }
     
     
     @objc func reviewWriteButtonClicked() {
@@ -432,61 +438,48 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
 }
 
-extension CafeDetailView: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == tableView1 {
-            return 10 // 첫 번째 테이블 뷰에는 10개의 셀을 표시
-        } else if tableView == tableView2 {
-            return 20 // 두 번째 테이블 뷰에는 5개의 셀을 표시
+extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == collectionView1 {
+
+            return 10
+        } else if collectionView == collectionView2 {
+            return 20
         } else {
             return 0
         }
     }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == tableView1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CafeDetailViewMenuCell", for: indexPath) as! CafeDetailViewMenuCell
-            cell.selectionStyle = .none
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == collectionView1{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeDetailViewMenuCell", for: indexPath) as! CafeDetailViewMenuCell
             
             return cell
-        } else if tableView == tableView2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CafeDetailViewReviewCell", for: indexPath) as! CafeDetailViewReviewCell
-            cell.selectionStyle = .none
+        }else if collectionView == collectionView2 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeDetailViewReviewCell", for: indexPath) as! CafeDetailViewReviewCell
+            
             return cell
-        } else {
-            return UITableViewCell()
+        }else {
+            return UICollectionViewCell()
         }
+
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if tableView == tableView1 {
-            return 115
-        } else if tableView == tableView2 {
-            return 115
-        }
-        return 0
-    }
-    //
-    //    func tableView(_ tableView: UITableView, widthForRowAt indexPath: IndexPath) -> CGFloat {
-    //        if tableView == tableView1 {
-    //            return 115
-    //        } else if tableView == tableView2 {
-    //            return 115
-    //        }
-    //        return 0
-    //
-    //    }
 }
+
 
 extension CafeDetailView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // contentOffset.y: 손가락을 위로 올리면 + 값, 손가락을 아래로 내리면 - 값
-        //        print(scrollView.contentOffset.y, headerViewSegmentControl.frame.minY)
+        //print(scrollView.contentOffset.y, headerViewSegmentControl.frame.minY)
         
         // 5. 핵심 - frame.minY를 통해 sticky 타이밍을 계산
         let shouldShowSticky = scrollView.contentOffset.y >= headerViewSegmentControl.frame.minY
         stickyHeaderViewSegmentControl.isHidden = !shouldShowSticky
+        
+        if headerViewSegmentControl.frame.minY == 0.0 {
+            stickyHeaderViewSegmentControl.isHidden = true
+        }
     }
 }
 

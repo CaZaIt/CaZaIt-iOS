@@ -9,6 +9,5 @@ target 'CaZait-iOS' do
   pod 'Alamofire'
   pod 'SnapKit', '~> 5.6.0'
   pod 'NMapsMap'
-  pod "MXParallaxHeader"
 
 end
