@@ -15,6 +15,7 @@ class NotificationView: UIViewController,UIGestureRecognizerDelegate {
         let navigationBar = UINavigationBarAppearance()
         
         navigationBar.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1) // 기존 배경 색상 유지
+        navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationBar.shadowColor = UIColor.clear // 기존 그림자 색상 유지
         navigationBar.configureWithTransparentBackground()
         
@@ -78,9 +79,7 @@ class NotificationView: UIViewController,UIGestureRecognizerDelegate {
     func setupNavigation() {
         self.navigationController?.isNavigationBarHidden = false
         self.title = "알림확인"
-        // 네비게이션 바의 제목 속성 설정
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-
+        
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backButtonTapped))
         navigationItem.leftBarButtonItem = backButton
         // 내비게이션 바 스타일 변경
