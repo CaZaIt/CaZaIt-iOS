@@ -7,8 +7,8 @@
 
 import UIKit
 
-class CafeDetailViewMenuCell: UITableViewCell {
-
+class CafeDetailViewMenuCell: UICollectionViewCell {
+    
     private let menuImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
@@ -17,9 +17,9 @@ class CafeDetailViewMenuCell: UITableViewCell {
             image.image = coffeeImage
         }
         
-        image.layer.borderWidth = 1.0
-        image.layer.masksToBounds = false
-        image.layer.borderColor = UIColor(red: 253/255, green: 172/255, blue: 159/255, alpha: 1).cgColor
+        //image.layer.borderWidth = 1.0
+        //image.layer.masksToBounds = false
+        //image.layer.borderColor = UIColor(red: 253/255, green: 172/255, blue: 159/255, alpha: 1).cgColor
         image.layer.cornerRadius = 5
         image.clipsToBounds = true // cornerRadius 설정 후, corner 부분이 제대로 출력되게 하기 위해서 사용합니다.
 
@@ -64,34 +64,40 @@ class CafeDetailViewMenuCell: UITableViewCell {
         
         return label
     }()
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupCell()
         addSubviews()
         setupLayout()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setupCell() {
         // 셀의 설정을 수행합니다.
         backgroundColor = .white
-    }
+        contentView.clipsToBounds = true
+        
+         // 그림자 효과를 위한 설정
+        layer.shadowColor = UIColor(red: 1, green: 0.774, blue: 0.735, alpha: 1).cgColor
+        self.layer.shadowOpacity = 1
+        self.layer.shadowOffset = CGSize(width: 4, height: 4)
+        self.layer.shadowRadius = 9
+        self.layer.cornerRadius = 10
 
+    }
+    
     private func addSubviews() {
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor =  UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1).cgColor
-        contentView.layer.cornerRadius = 10
-        // 셀에 서브뷰들을 추가합니다.
-        contentView.addSubview(menuImage)
-        contentView.addSubview(menu)
-        contentView.addSubview(price)
-        contentView.addSubview(menuDescription)
+        // 서브뷰들을 추가합니다.
+        addSubview(menuImage)
+        addSubview(menu)
+        addSubview(price)
+        addSubview(menuDescription)
     }
-
+    
     private func setupLayout() {
         // 서브뷰들의 레이아웃을 설정합니다.
         menuImage.translatesAutoresizingMaskIntoConstraints = false
@@ -101,7 +107,8 @@ class CafeDetailViewMenuCell: UITableViewCell {
 
         NSLayoutConstraint.activate([
             menuImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-            menuImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            //menuImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            menuImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             menuImage.widthAnchor.constraint(equalToConstant: 80),
             menuImage.heightAnchor.constraint(equalToConstant: 80),
 
@@ -116,17 +123,12 @@ class CafeDetailViewMenuCell: UITableViewCell {
             //menuDescription.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
-
+    
     func configure(menuImage: UIImage?, menu: String, price: String, menuDescription: String) {
         // 셀의 내용을 설정합니다.
         self.menuImage.image = menuImage
         self.menu.text = menu
         self.price.text = price
         self.menuDescription.text = description
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 20, bottom: 10, right: 20))
     }
 }
