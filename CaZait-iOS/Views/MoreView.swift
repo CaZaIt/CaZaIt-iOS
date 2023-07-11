@@ -9,6 +9,9 @@ import UIKit
 
 class MoreView: UIViewController{
     
+    let table = UITableView()
+    let testArr = ["공지사항", "앱 설정","고객센터","약관 및 정책"]
+    
     private let whiteView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -62,6 +65,64 @@ class MoreView: UIViewController{
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).inset(30)
         }
+        
+        table.delegate = self
+        table.dataSource = self
+                
+        attribute()
+        layout()
+    }
+    
+    func layout() {
+            whiteView.addSubview(table)
+            table.translatesAutoresizingMaskIntoConstraints = false
+            table.topAnchor.constraint(equalTo: pinkView.bottomAnchor, constant: 40).isActive = true
+            table.bottomAnchor.constraint(equalTo: whiteView.bottomAnchor, constant: 0).isActive = true
+            table.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor, constant: 0).isActive = true
+            table.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor, constant: 0).isActive = true
+        }
+    func attribute() {
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 }
 
+extension MoreView: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return testArr.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = table.dequeueReusableCell(withIdentifier: "cell",for: indexPath) as UITableViewCell
+        
+        lazy var imgView: UIImageView = {
+            let view = UIImageView()
+            view.contentMode = .scaleAspectFit
+            view.image = UIImage(systemName: "sun.max")
+            view.tintColor = UIColor(r: 255, g: 115, b: 91)
+            return view
+        }()
+        cell.contentView.addSubview(imgView)
+        imgView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.width.equalTo(21.87)
+            make.height.equalTo(27.33)
+            make.left.equalToSuperview().inset(36.47)
+        }
+        cell.textLabel?.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalTo(imgView.snp.right).offset(24.67)
+        }
+        
+        cell.textLabel?.text = testArr[indexPath.row]
+        cell.textLabel?.textColor = UIColor(r: 255, g: 115, b: 91)
+        cell.backgroundColor = .white
+        cell.selectionStyle = .none
+        
+        tableView.backgroundColor = .white
+        tableView.separatorColor = UIColor(r: 255, g: 115, b: 91)
+        
+        return cell
+    }
+    
+    
+}
