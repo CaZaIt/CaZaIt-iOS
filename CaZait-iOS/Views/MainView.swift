@@ -14,6 +14,7 @@ class MainView: UIViewController {
     let mainTopSearchView = MainTopSearchView()
     private var allCafeData: AllCafeResponse? //통신한 데이터를 저장하기 위한 변수입니다.
     private var favoritesData: FavoritesResponse?
+    private let locationManager = LocationManager.shared
     private var longitude: String?
     private var latitude : String?
     
@@ -52,6 +53,7 @@ class MainView: UIViewController {
     }()
     
     override func viewWillAppear(_ animated: Bool) {
+        locationManager.startUpdatingLocation()
         getAllCafeInfoData()
         getFavoritesCafeInfoData()
     }
@@ -77,26 +79,37 @@ class MainView: UIViewController {
         setupMainTableView()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // 뷰 컨트롤러가 사라질 때 위치 업데이트 중지
+        locationManager.stopUpdatingLocation()
+    }
+    
     func getAllCafeInfoData() {
-        AllCafeService.shared.getAllCafeInfo(longitude : "127.07154626749393", latitude : "37.54751410359858", sort : sortMethod, limit : "0") { response in
-
-            switch response {
-
-            case .success(let data):
-                guard let listData = data as? AllCafeResponse else {return}
-                self.allCafeData = listData //통신한 데이터를 변수에 저장하고
-                self.mainTableView.reloadData() //통신을 적용하기 위해 테이블 뷰를 리로드합니다.
+        if let long = longitude, let lat = latitude {
+            AllCafeService.shared.getAllCafeInfo(longitude : long, latitude : lat, sort : sortMethod, limit : "0") { response in
                 
-                // 실패할 경우에 분기처리는 아래와 같이 합니다.
-            case .requestErr :
-                print("requestErr")
-            case .pathErr :
-                print("pathErr")
-            case .serverErr :
-                print("serveErr")
-            case .networkFail:
-                print("networkFail")
+                switch response {
+                    
+                case .success(let data):
+                    guard let listData = data as? AllCafeResponse else {return}
+                    self.allCafeData = listData //통신한 데이터를 변수에 저장하고
+                    self.mainTableView.reloadData() //통신을 적용하기 위해 테이블 뷰를 리로드합니다.
+                    
+                    // 실패할 경우에 분기처리는 아래와 같이 합니다.
+                case .requestErr :
+                    print("requestErr")
+                case .pathErr :
+                    print("pathErr")
+                case .serverErr :
+                    print("serveErr")
+                case .networkFail:
+                    print("networkFail")
+                }
             }
+        } else {
+            // `longitude` 또는 `latitude` 중 하나라도 옵셔널 값이 없는 경우에 실행될 코드 블록
+            print("Either longitude or latitude is nil")
         }
     }
     
@@ -128,14 +141,14 @@ class MainView: UIViewController {
     }
     
     func getlocationData() {
-        LocationManager.shared.startUpdatingLocation()
-        
-        // Access the current location after it is updated
-        if let currentLocation = LocationManager.shared.currentLocation {
-            // Do something with the current location
+        if let currentLocation = locationManager.currentLocation {
+            // 위치 정보 사용
             print("Current location: \(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
             self.latitude = String(currentLocation.coordinate.latitude)
             self.longitude = String(currentLocation.coordinate.longitude)
+        } else {
+            // 위치 정보가 아직 업데이트되지 않았음
+            print("Location data is not available yet.")
         }
     }
     
@@ -365,4 +378,3 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
     }
     
 }
-
