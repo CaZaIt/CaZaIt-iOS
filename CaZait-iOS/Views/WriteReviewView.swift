@@ -65,25 +65,35 @@ class WriteReviewView: UIViewController{
     }()
     
 
-    let textfield1: InsetTextField = {
-
-        let textField = InsetTextField();
-
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "공백 포함 최대 50자 이내로 작성해주세요."
-        textField.setPlaceholder(color: UIColor(red: 0.708, green: 0.708, blue: 0.708, alpha: 1))
-        textField.backgroundColor = .white
-        textField.layer.cornerRadius = 25
-        //textField.setPlaceholder(color: UIColor(r: 93, g: 36, b: 36))
-        textField.insetX = 47.25
-        textField.textColor = .black
-        textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(red: 0.363, green: 0.142, blue: 0.142, alpha: 1).cgColor
-
-        return textField
-
+//    let textfield1: InsetTextField = {
+//
+//        let textField = InsetTextField();
+//
+//        textField.translatesAutoresizingMaskIntoConstraints = false
+//        textField.placeholder = "공백 포함 최대 50자 이내로 작성해주세요."
+//        textField.setPlaceholder(color: UIColor(red: 0.708, green: 0.708, blue: 0.708, alpha: 1))
+//        textField.backgroundColor = .white
+//        textField.layer.cornerRadius = 25
+//        //textField.setPlaceholder(color: UIColor(r: 93, g: 36, b: 36))
+//        textField.insetX = 47.25
+//        textField.textColor = .black
+//        textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+//        textField.layer.borderWidth = 1
+//        textField.layer.borderColor = UIColor(red: 0.363, green: 0.142, blue: 0.142, alpha: 1).cgColor
+//
+//        return textField
+//
+//    }()
+    
+    let textfield1: UILabel = {
+        let text2 = UILabel()
+        text2.text = "다른 이용자를 위해 카페 리뷰를 남겨주세요."
+        text2.textColor = .black
+        text2.translatesAutoresizingMaskIntoConstraints = false
+        text2.font = .italicSystemFont(ofSize: 15)
+        return text2
     }()
+
     
     let placeholder = "공백 포함 최대 50자 이내로 작성해주세요."
 
@@ -211,5 +221,6 @@ class WriteReviewView: UIViewController{
         navigationItem.titleView = titleName
     }
 }
+
 
 

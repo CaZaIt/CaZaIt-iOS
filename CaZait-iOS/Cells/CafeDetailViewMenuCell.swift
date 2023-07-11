@@ -17,6 +17,13 @@ class CafeDetailViewMenuCell: UITableViewCell {
             image.image = coffeeImage
         }
         
+        image.layer.borderWidth = 1.0
+        image.layer.masksToBounds = false
+        image.layer.borderColor = UIColor(red: 253/255, green: 172/255, blue: 159/255, alpha: 1).cgColor
+        image.layer.cornerRadius = 5
+        image.clipsToBounds = true // cornerRadius 설정 후, corner 부분이 제대로 출력되게 하기 위해서 사용합니다.
+
+        
         return image
     }()
 
@@ -24,7 +31,7 @@ class CafeDetailViewMenuCell: UITableViewCell {
     private let menu: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.textColor = .black
         label.textAlignment = .left
         label.text = "아메리카노"
@@ -51,7 +58,7 @@ class CafeDetailViewMenuCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .black
         label.textAlignment = .left
-        label.text = "우리나라 원두를 사용하여 더욱 달달한 풍미가 살아있는 아메리카노"
+        label.text = "우리나라 원두를 사용하여 \n더욱 달달한 풍미가 살아있는 아메리카노"
         label.numberOfLines = 0 // 자동으로 줄 수 결정
 
         
@@ -75,6 +82,9 @@ class CafeDetailViewMenuCell: UITableViewCell {
     }
 
     private func addSubviews() {
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor =  UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1).cgColor
+        contentView.layer.cornerRadius = 10
         // 셀에 서브뷰들을 추가합니다.
         contentView.addSubview(menuImage)
         contentView.addSubview(menu)
@@ -95,15 +105,15 @@ class CafeDetailViewMenuCell: UITableViewCell {
             menuImage.widthAnchor.constraint(equalToConstant: 80),
             menuImage.heightAnchor.constraint(equalToConstant: 80),
 
-            menu.leadingAnchor.constraint(equalTo: menuImage.trailingAnchor, constant: 20),
-            menu.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
+            menu.leadingAnchor.constraint(equalTo: menuImage.trailingAnchor, constant: 25),
+            menu.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
 
-            price.leadingAnchor.constraint(equalTo: menu.trailingAnchor, constant: 20),
-            price.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
+            price.leadingAnchor.constraint(equalTo: menuImage.trailingAnchor, constant: 150),
+            price.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22),
 
-            menuDescription.leadingAnchor.constraint(equalTo: menuImage.trailingAnchor, constant: 20),
+            menuDescription.leadingAnchor.constraint(equalTo: menuImage.trailingAnchor, constant: 25),
             menuDescription.topAnchor.constraint(equalTo: menu.bottomAnchor, constant: 8),
-            menuDescription.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            //menuDescription.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
 
@@ -117,6 +127,6 @@ class CafeDetailViewMenuCell: UITableViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 20, bottom: 10, right: 20))
     }
 }
