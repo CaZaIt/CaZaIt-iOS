@@ -91,6 +91,14 @@ class SearchView: UIViewController {
        return label
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+        // 네비게이션컨트롤러를 통해서 Status Bar 색깔 변경
+        self.navigationController?.navigationBar.barStyle = .black
+        setupNavigation()
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,6 +116,24 @@ class SearchView: UIViewController {
         
         setupSearchingView()
         setupSearchedView()
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        //버튼 클릭시 이동하는 화면에서 searchBar가 클릭된 상태로 시작합니다.
+        if (isTableView == true) {
+            searchBar.becomeFirstResponder()
+        }
+    }
+    
+    //mainView에는 네비게이션바가 없기때문에 검색창을 나갈때는 다시 네비게이션바를 없애는 코드를 추가합니다.
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.navigationBar.barTintColor = .clear
+        self.navigationController?.navigationBar.backgroundColor = .clear
     }
     
     func setupNavigation() {
@@ -190,31 +216,6 @@ class SearchView: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
-        // 네비게이션컨트롤러를 통해서 Status Bar 색깔 변경
-        self.navigationController?.navigationBar.barStyle = .black
-        setupNavigation()
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        //버튼 클릭시 이동하는 화면에서 searchBar가 클릭된 상태로 시작합니다.
-        if (isTableView == true) {
-            searchBar.becomeFirstResponder()
-        }
-    }
-    
-    //mainView에는 네비게이션바가 없기때문에 검색창을 나갈때는 다시 네비게이션바를 없애는 코드를 추가합니다.
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.isNavigationBarHidden = true
-        self.navigationController?.navigationBar.barTintColor = .clear
-        self.navigationController?.navigationBar.backgroundColor = .clear
-    }
     
     @objc func backButtonTapped() {
         navigationController?.popViewController(animated: false)

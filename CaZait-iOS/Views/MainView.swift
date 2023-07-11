@@ -51,6 +51,11 @@ class MainView: UIViewController {
         return tableView
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        getAllCafeInfoData()
+        getFavoritesCafeInfoData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -70,7 +75,6 @@ class MainView: UIViewController {
         
         getlocationData()
         setupMainTableView()
-        getAllCafeInfoData()
     }
     
     func getAllCafeInfoData() {
@@ -97,24 +101,28 @@ class MainView: UIViewController {
     }
     
     func getFavoritesCafeInfoData() {
-        FavoritesService.shared.getFavoritesCafeInfo(userId: "1") { response in
-            
-            switch response {
+        let userId = UserDefaults.standard.string(forKey: "userId")
+        if let userId = userId, !userId.isEmpty {
+            // 유저 디폴트값이 있는 경우
+            FavoritesService.shared.getFavoritesCafeInfo() { response in
                 
-            case .success(let data):
-                guard let cafeData = data as? FavoritesResponse else {return}
-                self.favoritesData = cafeData //통신한 데이터를 변수에 저장하고
-                self.mainTableView.reloadData() //통신을 적용하기 위해 테이블 뷰를 리로드합니다.
-                
-                // 실패할 경우에 분기처리는 아래와 같이 합니다.
-            case .requestErr :
-                print("requestErr")
-            case .pathErr :
-                print("pathErr")
-            case .serverErr :
-                print("serveErr")
-            case .networkFail:
-                print("networkFail")
+                switch response {
+                    
+                case .success(let data):
+                    guard let cafeData = data as? FavoritesResponse else {return}
+                    self.favoritesData = cafeData //통신한 데이터를 변수에 저장하고
+                    self.mainTableView.reloadData() //통신을 적용하기 위해 테이블 뷰를 리로드합니다.
+                    
+                    // 실패할 경우에 분기처리는 아래와 같이 합니다.
+                case .requestErr :
+                    print("requestErr")
+                case .pathErr :
+                    print("pathErr")
+                case .serverErr :
+                    print("serveErr")
+                case .networkFail:
+                    print("networkFail")
+                }
             }
         }
     }
@@ -174,6 +182,7 @@ class MainView: UIViewController {
         // 새로고침 작업이 완료되면 UI를 업데이트합니다.
         DispatchQueue.main.async {
             self.getAllCafeInfoData()
+            self.getFavoritesCafeInfoData()
             print("리프레쉬 되는 중 입니다.!!!")
             self.getlocationData()
             self.refreshControl.endRefreshing() // RefreshControl을 종료합니다.
@@ -294,8 +303,13 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
 
     //mainTableView의 각 섹션 마다 cell row 숫자의 갯수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //section이 0일 경우에는 찜한 매장이므로, 찜한매장의 데이터가 없다는 것은 찜한 매장이 없다는 뜻이므로 section0의 cell 개수를 0으로 바꿔 찜한매장의 cell을 안보이게 없앱니다.
         if section == 0 {
-            return 1 //만약 favorite 통신을 하여 안의 정보가 없을 경우 cell의 개수를 0으로 만들어서 화면을 보이지 않게 할 수 있다.
+            if let data = favoritesData {
+                return 1
+            } else {
+                return 0
+            }
         } else {
             return 1
         }

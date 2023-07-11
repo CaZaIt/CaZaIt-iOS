@@ -102,7 +102,9 @@ class LovedCollectionViewCell: UICollectionViewCell {
     
     //전달받은 통신 데이터를 통해 적용해줍니다.
     func configure(with favoritesInfo: FavoritesInfo) {
-        
+        cafeNameLabel.text = favoritesInfo.name
+        cafeLocationLabel.text = favoritesInfo.address
+        congestionLabel.text = favoritesInfo.congestion
     }
 
     required init?(coder: NSCoder) {
