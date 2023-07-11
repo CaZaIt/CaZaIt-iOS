@@ -220,7 +220,7 @@ extension LoginView {
                 guard let data = data as? LoginResponse else { return }
                 let alert = UIAlertController(title: data.message, message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: { _ in
-                    if (alert.title == "요청이 완료 되었습니다."){
+                    if (alert.title == "로그인이 완료되었습니다"){
                         //로그인 성공 후 자동으로 마이페이지로 이동
                         self.navigationController?.popViewController(animated: true)
                         // 통신을 통해 얻은 accessToken UserDefault에 저장
