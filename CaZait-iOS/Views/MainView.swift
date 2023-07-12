@@ -318,12 +318,16 @@ extension MainView: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //section이 0일 경우에는 찜한 매장이므로, 찜한매장의 데이터가 없다는 것은 찜한 매장이 없다는 뜻이므로 section0의 cell 개수를 0으로 바꿔 찜한매장의 cell을 안보이게 없앱니다.
         if section == 0 {
-            if let data = favoritesData {
-                return 1
-            } else {
+            if let data = favoritesData { //즐겨찾기가 옵셔널상태가 아니일 경우 즐겨찾기가 추가된 적이 있다는 뜻.
+                if data.data.isEmpty { //즐겨찾기가 추가된 적이 있지만 모두 삭제하여 옵셔널 갑은 아니지만 비어있을 경우
+                    return 0
+                } else { //즐겨찾기 목록이 있을 경우
+                    return 1
+                }
+            } else { //아직 옵셔널값으로 있다는 뜻은 즐겨찾기가 추가된 적이 한번도 없다는 뜻.
                 return 0
             }
-        } else {
+        } else { //두번째 섹션은 카페 리스트조회이므로 무조건 cell이 존재.
             return 1
         }
     }
