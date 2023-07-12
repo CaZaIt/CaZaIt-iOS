@@ -113,10 +113,10 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
     }
 
     
-    func configure(nickname: String, hour: String, review: String) {
+    func configure(nickname: String, review: String) {
         // 셀의 내용을 설정합니다.
         self.nickname.text = nickname
-        self.hour.text = hour
+        //self.hour.text = hour
         self.review.text = review
     }
 }
