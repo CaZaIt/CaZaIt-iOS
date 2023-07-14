@@ -24,7 +24,7 @@ class SplashVC: UIViewController{
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 1.0, green: 0.87, blue: 0.85, alpha: 1.0)
         
-        getlocationData()
+        LocationManager.shared.startUpdatingLocation()
         
         // 스플래시 화면을 나타내는 로직 및 딜레이 등을 구현
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
@@ -41,15 +41,6 @@ class SplashVC: UIViewController{
             make.bottom.equalTo(self.view.snp.bottom).inset(380)
         }
         
-    }
-    func getlocationData() {
-        LocationManager.shared.startUpdatingLocation()
-        
-        // Access the current location after it is updated
-        if let currentLocation = LocationManager.shared.currentLocation {
-            // Do something with the current location
-            print("Current location: \(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
-        }
     }
 }
 

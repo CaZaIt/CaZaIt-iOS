@@ -10,11 +10,13 @@ import SnapKit
 import CoreLocation
 
 class MainView: UIViewController {
+    
 
     let mainTopSearchView = MainTopSearchView()
     private var allCafeData: AllCafeResponse? //통신한 데이터를 저장하기 위한 변수입니다.
     private var favoritesData: FavoritesResponse?
     private let locationManager = LocationManager.shared
+    private var retryTimer: Timer?
     private var longitude: String?
     private var latitude : String?
     
@@ -52,11 +54,6 @@ class MainView: UIViewController {
         return tableView
     }()
     
-    override func viewWillAppear(_ animated: Bool) {
-        locationManager.startUpdatingLocation()
-        getAllCafeInfoData()
-        getFavoritesCafeInfoData()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,9 +71,10 @@ class MainView: UIViewController {
         
         refreshControl.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
         mainTableView.refreshControl = refreshControl
-        
-        getlocationData()
         setupMainTableView()
+        
+        requestLocation()
+        getFavoritesCafeInfoData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -106,6 +104,7 @@ class MainView: UIViewController {
                 case .networkFail:
                     print("networkFail")
                 }
+                self.retryTimer?.invalidate() //위치를 받았으니 타이머 종료
             }
         } else {
             // `longitude` 또는 `latitude` 중 하나라도 옵셔널 값이 없는 경우에 실행될 코드 블록
@@ -146,9 +145,21 @@ class MainView: UIViewController {
             print("Current location: \(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
             self.latitude = String(currentLocation.coordinate.latitude)
             self.longitude = String(currentLocation.coordinate.longitude)
+            
+            getAllCafeInfoData()
         } else {
             // 위치 정보가 아직 업데이트되지 않았음
             print("Location data is not available yet.")
+        }
+    }
+    
+    private func requestLocation() {
+        // 위치 정보 요청
+        locationManager.startUpdatingLocation()
+        
+        // 타이머를 사용하여 일정 시간마다 위치 정보 재시도
+        retryTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { [weak self] _ in
+            self?.getlocationData()
         }
     }
     
