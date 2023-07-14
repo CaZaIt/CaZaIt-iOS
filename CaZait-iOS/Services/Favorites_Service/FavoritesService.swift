@@ -76,7 +76,7 @@ class FavoritesService {
         let decoder = JSONDecoder()
         
         // 실패하면 pathErr로 빼고, 성공하면 decodeData에 값을 뺀다.
-        guard let decodedData = try? decoder.decode(AllCafeResponse.self, from: data) else { return .pathErr }
+        guard let decodedData = try? decoder.decode(FavoritesResponse.self, from: data) else { return .pathErr }
         // 성공적으로 decode를 마치면 success에다가 data 부분을 담아서 completion을 호출
         return .success(decodedData as Any)
     }
