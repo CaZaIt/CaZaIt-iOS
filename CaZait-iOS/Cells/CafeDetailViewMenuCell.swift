@@ -13,21 +13,15 @@ class CafeDetailViewMenuCell: UICollectionViewCell {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         
-        if let coffeeImage = UIImage(named: "coffee1") {
-            image.image = coffeeImage
-        }
-        
-        //image.layer.borderWidth = 1.0
-        //image.layer.masksToBounds = false
-        //image.layer.borderColor = UIColor(red: 253/255, green: 172/255, blue: 159/255, alpha: 1).cgColor
+//        if let coffeeImage = UIImage(named: "coffee1") {
+//            image.image = coffeeImage
+//        }
         image.layer.cornerRadius = 5
         image.clipsToBounds = true // cornerRadius 설정 후, corner 부분이 제대로 출력되게 하기 위해서 사용합니다.
 
-        
         return image
     }()
 
-    
     private let menu: UILabel = {
         let label = UILabel()
         
@@ -124,11 +118,24 @@ class CafeDetailViewMenuCell: UICollectionViewCell {
         ])
     }
     
-    func configure(menuImage: UIImage?, menu: String, price: String, menuDescription: String) {
+    func configure(imageURL: String?, menu: String, price: String, menuDescription: String) {
         // 셀의 내용을 설정합니다.
-        self.menuImage.image = menuImage
+        if let imageURL = imageURL, let url = URL(string: imageURL) {
+            URLSession.shared.dataTask(with: url) { data, _, error in
+                if let error = error {
+                    print("Failed to download image:", error)
+                    return
+                }
+                if let data = data, let downloadedImage = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self.menuImage.image = downloadedImage
+                    }
+                }
+            }.resume()
+        }
         self.menu.text = menu
         self.price.text = price
-        self.menuDescription.text = description
+        self.menuDescription.text = menuDescription
+        
     }
 }

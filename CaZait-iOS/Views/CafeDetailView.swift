@@ -7,6 +7,9 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     var collectionView1HeightConstant: CGFloat = 400
     var collectionView2HeightConstant: CGFloat = 400
     
+    var cafeMenu: [DetailCafeMenu]?
+    var cafeReview: [DetailCafeReview]?
+    
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
         view.backgroundColor = .white
@@ -86,22 +89,20 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+                
         self.navigationController?.isNavigationBarHidden = false
-        // 네비게이션컨트롤러를 통해서 Status Bar 색깔 변경
         self.navigationController?.navigationBar.barStyle = .default
         self.navigationController?.navigationBar.tintColor = .black
-        
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.backgroundColor = .white
-        
-        fetchData() //setver에서 CafeInfoById를 front에 페치해야함, view did load전에
         
         // 뒤로가기 버튼 추가
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))
         self.navigationItem.leftBarButtonItem = backButton
         
-        stickyHeaderViewSegmentControl.isHidden = true
-
+        getDetailCafe()
+        getDetailCafeMenu()
+        getDetailCafeReview()
     }
     
     @objc func backButtonTapped() {
@@ -169,6 +170,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         reviewWriteButton.clipsToBounds = true
         reviewWriteButton.backgroundColor = .black
         reviewWriteButton.layer.cornerRadius = 30
+        reviewWriteButton.setImage(UIImage(named: "pencil"), for: .normal)
         reviewWriteButton.addTarget(self, action: #selector(reviewWriteButtonClicked), for: .touchUpInside)
         
         setSegmentControl()
@@ -193,8 +195,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         stackView.addArrangedSubview(collectionView1)
         stackView.addArrangedSubview(collectionView2)
 
-        collectionView2.addSubview(reviewWriteButton)
-
+        view.addSubview(reviewWriteButton)
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -306,9 +307,11 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         if headerViewSegmentControl.selectedSegmentIndex == 0 {
             collectionView1.isHidden = false
             collectionView2.isHidden = true
+            reviewWriteButton.isHidden = true
         } else {
             collectionView1.isHidden = true
             collectionView2.isHidden = false
+            reviewWriteButton.isHidden = false
         }
     }
     
@@ -375,64 +378,105 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         
     }
     
-
-    
-        func fetchData() { //result = getAllCafeInfo 실행해서 얻은 결과
-    
-            guard let cafeId = cafeId else {
-                // cafeId가 nil일 경우에 대한 처리 로직
-                print("cafeId가 nil입니다.")
-                return
-            }
-            print("cafeID: ",cafeId)
-            let detailcafeservice = DetailCafeService() // DetailCafeService 인스턴스 생성
-            detailcafeservice.getDetailCafeBycafeID(cafeID: cafeId) { result in
-                switch result {
-                case .success(let cafe):
-                    // 성공적으로 데이터를 받아왔을 때의 처리 로직
-                    print(cafe) // 받아온 데이터 사용 예시
-                    // UI 업데이트 또는 필요한 작업 수행
-                    DispatchQueue.main.async {
-                        self.cafeName.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
-                        self.cafeLocation.text = cafe.address
-    
-                    }
-                case .failure(let error):
-                    // 데이터를 받아오지 못했을 때의 처리 로직
-                    print(error.localizedDescription)
-                    // 에러 메시지 출력 예시
-                    // 에러 메시지를 보여줄 수 있는 방식으로 처리
-                    print(error)
+    func getDetailCafe() {
+        guard let cafeId = cafeId else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("cafeId가 nil입니다.")
+            return
+        }
+        print("cafeID: ",cafeId)
+        let detailcafeservice = DetailCafeService() // DetailCafeService 인스턴스 생성
+        detailcafeservice.getDetailCafeBycafeID(cafeID: cafeId) { result in
+            switch result {
+            case .success(let cafe):
+                // 성공적으로 데이터를 받아왔을 때의 처리 로직
+                print(cafe) // 받아온 데이터 사용 예시
+                // UI 업데이트 또는 필요한 작업 수행
+                DispatchQueue.main.async {
+                    self.cafeName.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
+                    self.cafeLocation.text = cafe.address
                 }
+            case .failure(let error):
+                // 데이터를 받아오지 못했을 때의 처리 로직
+                print(error.localizedDescription)
+                // 에러 메시지 출력 예시
+                // 에러 메시지를 보여줄 수 있는 방식으로 처리
+                print(error)
             }
+        }
+    }
     
-            let detailcafemenuservice = DetailCafeMenuService()
-            detailcafemenuservice.getDetailCafeMenuBycafeID(cafeID: cafeId) { result in
-                switch result {
-                case .success(let cafe):
-                    // 성공적으로 데이터를 받아왔을 때의 처리 로직
-                    print(cafe) // 받아온 데이터 사용 예시
-                    // UI 업데이트 또는 필요한 작업 수행
-//                    DispatchQueue.main.async {
+    func getDetailCafeMenu() { //result = getAllCafeInfo 실행해서 얻은 결과
+        guard let cafeId = cafeId else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("cafeId가 nil입니다.")
+            return
+        }
+        let detailcafemenuservice = DetailCafeMenuService()
+        detailcafemenuservice.getDetailCafeMenuBycafeID(cafeID: cafeId) { [self] result in
+            switch result {
+            case .success(let response):
+                // 성공적으로 데이터를 받아왔을 때의 처리 로직
+                self.cafeMenu = response
+                print(response)
+//                print(self.cafeMenu)
 //
-//                    }
-                    print("cafe menu: ", cafe.count)
-                case .failure(let error):
-                    // 데이터를 받아오지 못했을 때의 처리 로직
-                    print(error.localizedDescription)
-                    // 에러 메시지 출력 예시
-                    // 에러 메시지를 보여줄 수 있는 방식으로 처리
-                    print(error)
-                }
+//                for menu in response {
+//                    let name = menu.name
+//                    let description = menu.description
+//                    let price = menu.price
+//
+//                    print("name: \(name)")
+//                    print("description: \(description)")
+//                    print("price: \(price)")
+//                }
+                collectionView1.reloadData() // 컬렉션 뷰 리로드
+
+                print("cafe menu: ", response.count)
+            case .failure(let error):
+                // 데이터를 받아오지 못했을 때의 처리 로직
+                print(error.localizedDescription)
+                // 에러 메시지 출력 예시
+                // 에러 메시지를 보여줄 수 있는 방식으로 처리
+                print(error)
             }
-    
         }
     
+    }
+    
+    func getDetailCafeReview() { //result = getAllCafeInfo 실행해서 얻은 결과
+        guard let cafeId = cafeId else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("cafeId가 nil입니다.")
+            return
+        }
+        let detailcafereviewservice = DetailCafeReviewService()
+        detailcafereviewservice.getDetailCafeReviewBycafeID(cafeID: cafeId) { [self] result in
+            switch result {
+            case .success(let response):
+                // 성공적으로 데이터를 받아왔을 때의 처리 로직
+                self.cafeReview = response.reviewResponses
+                //print(response)
+                print(self.cafeReview)
+
+                collectionView1.reloadData() // 컬렉션 뷰 리로드
+
+                //print("cafe menu: ", [response].count)
+            case .failure(let error):
+                // 데이터를 받아오지 못했을 때의 처리 로직
+                print(error.localizedDescription)
+                // 에러 메시지 출력 예시
+                // 에러 메시지를 보여줄 수 있는 방식으로 처리
+                print(error)
+            }
+        }
+    
+    }
+
     
     @objc func reviewWriteButtonClicked() {
         let nextVC = WriteReviewView()
         navigationController?.pushViewController(nextVC, animated: true)
-        //present(nextVC, animated: true, completion: nil)
     }
     
     
@@ -441,23 +485,40 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
 extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collectionView1 {
-
-            return 10
+//            if let count = cafeMenu?.count {
+//                print("collectionview1 : ", count)
+//                return count
+//            }
+            return 1
         } else if collectionView == collectionView2 {
-            return 20
-        } else {
-            return 0
+            return 1
         }
+            return 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == collectionView1{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeDetailViewMenuCell", for: indexPath) as! CafeDetailViewMenuCell
-            
+            //print("cell")
+            //print("row : ", cafeMenu?[indexPath.row])
+            //print("cafe menu : " ,cafeMenu)
+            if let menu = cafeMenu?[indexPath.row] {
+                //print("menu :", menu)
+//                print("name: \(menu.name)")
+//                print("description: \(menu.description)")
+//                print("price: \(menu.price)")
+                cell.configure(imageURL: menu.imageUrl, menu: menu.name, price: "\(menu.price)", menuDescription: menu.description)
+            }else {
+                cell.configure(imageURL: nil, menu: "아메리카노", price: "3500", menuDescription: "맛있다!")
+            }
+
             return cell
         }else if collectionView == collectionView2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeDetailViewReviewCell", for: indexPath) as! CafeDetailViewReviewCell
-            
+            if let review = cafeReview?[indexPath.row]{
+                cell.configure(nickname: review.userId, review: review.content)
+            }
+
             return cell
         }else {
             return UICollectionViewCell()
