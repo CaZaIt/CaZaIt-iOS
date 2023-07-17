@@ -43,6 +43,9 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
+        view.layer.cornerRadius = 10
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1).cgColor
         view.isHidden = true
         return view
     }()
@@ -59,18 +62,18 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
     private let AddressLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "서울특별시 광진구 광나루로\n375-1 2층(군자동)"
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.text = "서울특별시 광진구 광나루로 375-1 2층(군자동)"
+        label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = .black
-        label.numberOfLines = 0 // 여러 줄로 표시 가능하도록 설정
-        label.lineBreakMode = .byWordWrapping // 단어 단위로 줄바꿈 설정
+        label.numberOfLines = 1 // 여러 줄로 표시 가능하도록 설정
+//        label.lineBreakMode = .byWordWrapping // 단어 단위로 줄바꿈 설정
         return label
     }()
     
     private let CongestionView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1)
-        view.layer.cornerRadius = 20
+        view.layer.cornerRadius = 15
         return view
     }()
     
@@ -121,7 +124,7 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
         marker2.iconTintColor = .blue
         marker2.mapView = self.naverMapView
         
-        marker3 = NMFMarker(position: NMGLatLng(lat: 37.550136780794496, lng: 127.07322701581906))
+        marker3 = NMFMarker(position: NMGLatLng(lat: 37.55150266147334, lng: 127.07612770012503))
         marker3.width = 20
         marker3.height = 30
         marker3.iconTintColor = .blue
@@ -161,6 +164,7 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
                 if marker == self?.marker1 {
                     if self?.customView.isHidden == true {
                         print("마커1 클릭")
+                        self?.CafeNameLabel.text = "롬곡"
                         self?.customView.isHidden = false
                     } else {
                         self?.customView.isHidden = true
@@ -168,6 +172,7 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
                 } else if marker == self?.marker2 {
                     if self?.customView.isHidden == true {
                         print("마커2 클릭")
+                        self?.CafeNameLabel.text = "제주몰빵"
                         self?.customView.isHidden = false
                     } else {
                         self?.customView.isHidden = true
@@ -175,6 +180,7 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
                 } else if marker == self?.marker3 {
                     if self?.customView.isHidden == true {
                         print("마커3 클릭")
+                        self?.CafeNameLabel.text = "보난자"
                         self?.customView.isHidden = false
                     } else {
                         self?.customView.isHidden = true
@@ -214,6 +220,28 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
         CafeNameLabel.leadingAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
         CafeNameLabel.trailingAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.trailingAnchor, constant: -225).isActive = true
         CafeNameLabel.bottomAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.bottomAnchor, constant: -72).isActive = true
+        
+        self.customView.addSubview(self.AddressLabel)
+        AddressLabel.translatesAutoresizingMaskIntoConstraints = false
+        AddressLabel.topAnchor.constraint(equalTo: self.customView.topAnchor, constant: 44).isActive = true
+        AddressLabel.leadingAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        AddressLabel.trailingAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+        AddressLabel.bottomAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true
+        
+        self.customView.addSubview(self.CongestionView)
+        CongestionView.translatesAutoresizingMaskIntoConstraints = false
+        CongestionView.topAnchor.constraint(equalTo: self.AddressLabel.bottomAnchor, constant: 1).isActive = true
+        CongestionView.leadingAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        CongestionView.trailingAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+        CongestionView.bottomAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.bottomAnchor, constant: -14).isActive = true
+        
+        self.customView.addSubview(self.CongestionLabel)
+        CongestionLabel.translatesAutoresizingMaskIntoConstraints = false
+        CongestionLabel.topAnchor.constraint(equalTo: self.CongestionView.topAnchor, constant: 7).isActive = true
+        CongestionLabel.leadingAnchor.constraint(equalTo: self.CongestionView.safeAreaLayoutGuide.leadingAnchor, constant: 50).isActive = true
+        CongestionLabel.trailingAnchor.constraint(equalTo: self.CongestionView.safeAreaLayoutGuide.trailingAnchor, constant: -50).isActive = true
+        CongestionLabel.bottomAnchor.constraint(equalTo: self.CongestionView.safeAreaLayoutGuide.bottomAnchor, constant: -7).isActive = true
+
         
     }
     
