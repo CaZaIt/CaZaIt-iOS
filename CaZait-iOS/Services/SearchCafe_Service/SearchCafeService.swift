@@ -37,13 +37,18 @@ class SearchCafeService {
             url = "\(APIConstants.searchCafeURL)/\(cafeNameEncoded)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
         }
         
+        var header : HTTPHeaders = ["Content-Type" : "application/json"]
+        if let bearerToken = UserDefaults.standard.string(forKey: "accessToken") {
+            header["Authorization"] = "Bearer \(bearerToken)"
+        }
         
         //이렇게 통신 요청보낼거야! 라는 요청서라고 보면 된다.
         // URL 주소를 가지고, GET 방식을 통해, JSONEncoding 인코딩 방식으로
         // 헤더 정보와 함께 REquest를 보내기 위한 정보를 묶어서 dataRequest에 저장해둔다.
         let dataRequest = AF.request(url,
                                      method: .get,
-                                     encoding: JSONEncoding.default)
+                                     encoding: JSONEncoding.default,
+                                     headers: header)
         
         //위에서 적어둔 요청서를 가지고 진짜 서버에 보내서 통신 Request를 하는 중
         //통신이 완료되면 클로저를 통해서 dataResponse라는 이름으로 결과가 도착
