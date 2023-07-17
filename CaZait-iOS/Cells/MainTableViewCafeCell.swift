@@ -147,7 +147,7 @@ extension MainTableViewCafeCell: UICollectionViewDataSource, UICollectionViewDel
     
     // collectionView 셀 크기 반환
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 166, height: 276)
+        return CGSize(width: UIScreen.main.bounds.width/2 - 37, height: 276)
     }
     
     // collectionView 셀과 셀 사이 간격 반환
