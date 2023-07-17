@@ -15,7 +15,7 @@ class loginService {
 //(2)싱글통 객체를 선언해서 앱 어디에서든지 접근가능하도록 한다
     private init() {}
     
-    func login(email: String, password: String, completion: @escaping(NetworkResult<Any>) -> Void)
+    func login(accountNumber: String, password: String, completion: @escaping(NetworkResult<Any>) -> Void)
     {
         let url = APIConstants.loginURL //통신할 API 주소
         
@@ -24,7 +24,7 @@ class loginService {
         
         //요청 바디
         let body : Parameters = [
-            "email" : email,
+            "accountNumber" : accountNumber,
             "password" : password,
         ]
         

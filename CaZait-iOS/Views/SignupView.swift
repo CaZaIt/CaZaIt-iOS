@@ -333,10 +333,10 @@ extension SignupView {
     //이메일 중복확인
     func emailcheck() {
         
-        guard let email = emailField.text else { return }
+        guard let accountNumber = emailField.text else { return }
         
         
-        emailCheckService.shared.emailcheck(email: email) { response in
+        emailCheckService.shared.emailcheck(accountNumber: accountNumber) { response in
             switch response {
             case .success(let data):
                 guard let data = data as? EmailCheckResponse else { return }
@@ -348,7 +348,7 @@ extension SignupView {
             case .requestErr(let err):
                 print(err)
             case .pathErr:
-                let alert = UIAlertController(title: "사용할 수 없는 이메일 입니다", message: "", preferredStyle: .alert)
+                let alert = UIAlertController(title: "사용할 수 없는 아이디 입니다", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
                 self.present(alert, animated: true, completion: nil)
@@ -356,7 +356,7 @@ extension SignupView {
             case .serverErr:
                 print("serverErr")
             case .networkFail:
-                let alert = UIAlertController(title: "사용할 수 없는 이메일 입니다", message: "", preferredStyle: .alert)
+                let alert = UIAlertController(title: "사용할 수 없는 아이디 입니다", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
                 self.present(alert, animated: true, completion: nil)

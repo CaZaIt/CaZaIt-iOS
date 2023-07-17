@@ -15,16 +15,16 @@ class emailCheckService {
 //(2)싱글통 객체를 선언해서 앱 어디에서든지 접근가능하도록 한다
     private init() {}
     
-    func emailcheck(email: String, completion: @escaping(NetworkResult<Any>) -> Void)
+    func emailcheck(accountNumber: String, completion: @escaping(NetworkResult<Any>) -> Void)
     {
-        let url = APIConstants.emailcheckURL //통신할 API 주소
+        let url = "https://cazait.shop/api/users/accountnumber" //통신할 API 주소
         
         //HTTP Headers : 요청 헤더
         let header : HTTPHeaders = ["Content-Type" : "application/json"]
         
         //요청 바디
         let body : Parameters = [
-            "email" : email
+            "accountNumber" : accountNumber
         ]
         
         //요청서 //Request 생성

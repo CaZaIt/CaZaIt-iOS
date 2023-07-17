@@ -211,10 +211,10 @@ extension LoginView {
     func login() {
         
         guard let password = passwordtextField.text else { return }
-        guard let email = idtextField.text else { return }
+        guard let accountNumber = idtextField.text else { return }
         
         
-        loginService.shared.login(email: email, password: password) { response in
+        loginService.shared.login(accountNumber: accountNumber, password: password) { response in
             switch response {
             case .success(let data):
                 guard let data = data as? LoginResponse else { return }
