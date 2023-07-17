@@ -368,7 +368,7 @@ extension SearchView: UICollectionViewDataSource, UICollectionViewDelegate, UICo
         let cafeDetailView = CafeDetailView() // CafeDetailView 초기화
         
         //cafeDetailView에서 받은 cafeId를 통해 통신할 수 있도록 값을 전달한다.
-        cafeDetailView.cafeId = self.searchCafeData?.data[0][indexPath.row].cafeID
+        cafeDetailView.cafeId = self.searchCafeData?.data[0][indexPath.row].cafeId
         
         navigationController?.pushViewController(cafeDetailView, animated: true)
         

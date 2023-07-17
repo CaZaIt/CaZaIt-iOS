@@ -10,6 +10,15 @@ import SnapKit
 
 class CafeListCollectionViewCell: UICollectionViewCell {
     
+    private let congestionMapping: [String: String] = [
+        "NONE": "미등록",
+        "CLOSE": "종료",
+        "FREE": "여유",
+        "NORMAL": "보통",
+        "CROWDED": "혼잡",
+        "VERYCROWDED": "매우혼잡"
+    ]
+    
     private let cafeImageView: UIImageView = {
         let imageView = UIImageView()
         
@@ -144,7 +153,7 @@ class CafeListCollectionViewCell: UICollectionViewCell {
         cafeNameLabel.text = cafeInfo.name
         cafeLocationLabel.text = cafeInfo.address
         cafeLocationDistanceLabel.text = String(cafeInfo.distance) + "m"
-        cafeCongestionLabel.text = cafeInfo.congestionStatus
+        cafeCongestionLabel.text = congestionMapping[cafeInfo.congestionStatus]
     }
 
     required init?(coder: NSCoder) {
