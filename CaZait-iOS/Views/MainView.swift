@@ -295,7 +295,7 @@ class MainView: UIViewController {
                 })
             }
         }// 스크롤을 위로 올리는 경우 (우리가 웹툰보는 방향과 반대방향의 스크롤), 또한, tableView의 스크롤 된 정도 + tableView가 보여줄 수 있는 높이가 < 전체 tableView의 높이보다 작을 경우에만 검색창이 다시 등장하게 합니다. (즉, 스크롤을 다 하고도 계속 해서 내리면 빈 공백이 스크롤되고 다시 원위치로 약간 돌아올 경우에 검색창이 다시 약간 내려오는 경우를 방지합니다.)
-        else if scrollViewYOffset < previousScrollViewYOffset && scrollViewYOffset + scrollViewFrameHeight < contentHeight{
+        else if scrollViewYOffset < previousScrollViewYOffset && scrollViewYOffset + scrollViewFrameHeight < contentHeight || scrollViewFrameHeight > contentHeight{
             
             //deltaY선언하여 현재의 offset과 이전의 offset값을 비교하여 어느정도 변화했는지 감지합니다.
             let deltaY = previousScrollViewYOffset - scrollViewYOffset
