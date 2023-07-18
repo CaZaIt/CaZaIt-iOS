@@ -21,6 +21,8 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
     var marker2: NMFMarker!
     var marker3: NMFMarker!
     
+    let markerImage = UIImage(named: "marker")
+    
     private let topview: UIView = {
         let top = UIView()
         top.translatesAutoresizingMaskIntoConstraints = false
@@ -113,21 +115,21 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
         
         // 마커 생성 및 설정
         marker1 = NMFMarker(position: NMGLatLng(lat: 37.54847570421354, lng: 127.07263694429658))
-        marker1.width = 20
-        marker1.height = 30
-        marker1.iconTintColor = .blue
+        marker1.width = 40
+        marker1.height = 50
+        marker1.iconImage = NMFOverlayImage(image: markerImage!)
         marker1.mapView = self.naverMapView
         
         marker2 = NMFMarker(position: NMGLatLng(lat: 37.549548141704, lng: 127.07511854895762))
-        marker2.width = 20
-        marker2.height = 30
-        marker2.iconTintColor = .blue
+        marker2.width = 40
+        marker2.height = 50
+        marker2.iconImage = NMFOverlayImage(image: markerImage!)
         marker2.mapView = self.naverMapView
         
         marker3 = NMFMarker(position: NMGLatLng(lat: 37.55150266147334, lng: 127.07612770012503))
-        marker3.width = 20
-        marker3.height = 30
-        marker3.iconTintColor = .blue
+        marker3.width = 40
+        marker3.height = 50
+        marker3.iconImage = NMFOverlayImage(image: markerImage!)
         marker3.mapView = self.naverMapView
         
         // 위치 업데이트 시작
