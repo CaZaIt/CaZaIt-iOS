@@ -66,6 +66,8 @@
 		F13FDA7529DD5DD00044C6C3 /* MainTableViewLovedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */; };
 		F13FDA7729DD616E0044C6C3 /* LovedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */; };
 		F13FDA9E29DD91A50044C6C3 /* MainTableViewCafeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */; };
+		F154DA752A69023E00B6C7F0 /* RefreshTokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F154DA742A69023E00B6C7F0 /* RefreshTokenService.swift */; };
+		F154DA772A6904FE00B6C7F0 /* RefreshTokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F154DA762A6904FE00B6C7F0 /* RefreshTokenModel.swift */; };
 		F1F98D5D2A481FA50055BF21 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5C2A481FA50055BF21 /* NotificationView.swift */; };
 		F1F98D5F2A482DAF0055BF21 /* NotificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */; };
 		F1F98D652A54068F0055BF21 /* FavoritesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D642A54068F0055BF21 /* FavoritesModel.swift */; };
@@ -137,6 +139,8 @@
 		F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainTableViewLovedCell.swift; path = "CaZait-iOS/Cells/MainTableViewLovedCell.swift"; sourceTree = SOURCE_ROOT; };
 		F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LovedCollectionViewCell.swift; path = "CaZait-iOS/Cells/LovedCollectionViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainTableViewCafeCell.swift; path = "CaZait-iOS/Cells/MainTableViewCafeCell.swift"; sourceTree = SOURCE_ROOT; };
+		F154DA742A69023E00B6C7F0 /* RefreshTokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenService.swift; sourceTree = "<group>"; };
+		F154DA762A6904FE00B6C7F0 /* RefreshTokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenModel.swift; sourceTree = "<group>"; };
 		F1F98D5C2A481FA50055BF21 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCollectionViewCell.swift; sourceTree = "<group>"; };
 		F1F98D642A54068F0055BF21 /* FavoritesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModel.swift; sourceTree = "<group>"; };
@@ -243,6 +247,7 @@
 				01B87B812A1CF7420082FC05 /* signupModel.swift */,
 				01B87B832A1E30C60082FC05 /* loginModel.swift */,
 				F1F98D642A54068F0055BF21 /* FavoritesModel.swift */,
+				F154DA762A6904FE00B6C7F0 /* RefreshTokenModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 				01B9328629E2E1F0006342F9 /* sampleService.swift */,
 				01B87B5F2A1B90700082FC05 /* APIContants.swift */,
 				01B87B612A1B97E50082FC05 /* NetworkResult.swift */,
+				F154DA742A69023E00B6C7F0 /* RefreshTokenService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -488,6 +494,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F154DA772A6904FE00B6C7F0 /* RefreshTokenModel.swift in Sources */,
 				01B9328729E2E1F0006342F9 /* sampleService.swift in Sources */,
 				F1F98D5F2A482DAF0055BF21 /* NotificationCollectionViewCell.swift in Sources */,
 				F13FA0892A1CCDFB0001958D /* AllCafeService.swift in Sources */,
@@ -499,6 +506,7 @@
 				01B87B602A1B90700082FC05 /* APIContants.swift in Sources */,
 				F13FA08B2A1CD1CD0001958D /* AllCafeModel.swift in Sources */,
 				01B87B7A2A1CDC2D0082FC05 /* emailcheckModel.swift in Sources */,
+				F154DA752A69023E00B6C7F0 /* RefreshTokenService.swift in Sources */,
 				01B87B6C2A1B99290082FC05 /* File5.swift in Sources */,
 				6C4286B92A15D61400560F15 /* CafeDetailViewMenuCell.swift in Sources */,
 				F13FDA7729DD616E0044C6C3 /* LovedCollectionViewCell.swift in Sources */,
