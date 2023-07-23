@@ -21,21 +21,10 @@ class AllCafeService {
     // **해당 completion클로저에는 네트워크의 결과를 담아서 호출하게 되고, VC에서 꺼내서 처리할 예정
     func getAllCafeInfo(longitude : String, latitude : String, sort : String, limit : String, completion : @escaping (NetworkResult<Any>) -> Void) {
         
-        let userId = UserDefaults.standard.string(forKey: "userId")
         
-        var url: String
-        if let userId = userId, !userId.isEmpty {
-            // 유저 디폴트값이 있는 경우
-            url = "\(APIConstants.allCafeURL)/user/\(userId)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
-        } else {
-            // 유저 디폴트값이 없는 경우
-            url = "\(APIConstants.allCafeURL)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
-        }
+        let url = "\(APIConstants.allCafeURL)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
         
         var header : HTTPHeaders = ["Content-Type" : "application/json"]
-        if let bearerToken = UserDefaults.standard.string(forKey: "accessToken") {
-            header["Authorization"] = "Bearer \(bearerToken)"
-        }
         
         
         //이렇게 통신 요청보낼거야! 라는 요청서라고 보면 된다.
