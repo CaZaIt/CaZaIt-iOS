@@ -24,7 +24,7 @@ class AllCafeService {
         
         let url = "\(APIConstants.allCafeURL)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
         
-        var header : HTTPHeaders = ["Content-Type" : "application/json"]
+        let header : HTTPHeaders = ["Content-Type" : "application/json"]
         
         
         //이렇게 통신 요청보낼거야! 라는 요청서라고 보면 된다.

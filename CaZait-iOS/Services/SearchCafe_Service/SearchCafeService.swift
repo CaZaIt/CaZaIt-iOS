@@ -26,21 +26,9 @@ class SearchCafeService {
         //url에서 한글 path는 url에서 유효한 문자가 아니므로 인식하지 못한다. 그래서 url 인코딩을 통해 특수문자를 url에서 사용가능한 형태로 변환하기 위해 사용한다.
         let cafeNameEncoded = cafeName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         
-        let userId = UserDefaults.standard.string(forKey: "userId")
+        let url = "\(APIConstants.searchCafeURL)/\(cafeNameEncoded)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
         
-        var url: String
-        if let userId = userId, !userId.isEmpty {
-            // 유저 디폴트값이 있는 경우
-            url = "\(APIConstants.searchCafeURL)/\(cafeNameEncoded)/user/\(userId)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
-        } else {
-            // 유저 디폴트값이 없는 경우
-            url = "\(APIConstants.searchCafeURL)/\(cafeNameEncoded)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
-        }
-        
-        var header : HTTPHeaders = ["Content-Type" : "application/json"]
-        if let bearerToken = UserDefaults.standard.string(forKey: "accessToken") {
-            header["Authorization"] = "Bearer \(bearerToken)"
-        }
+        let header : HTTPHeaders = ["Content-Type" : "application/json"]
         
         //이렇게 통신 요청보낼거야! 라는 요청서라고 보면 된다.
         // URL 주소를 가지고, GET 방식을 통해, JSONEncoding 인코딩 방식으로
