@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class SearchCollectionViewCell: UICollectionViewCell {
     
@@ -134,6 +135,9 @@ class SearchCollectionViewCell: UICollectionViewCell {
         cafeNameLabel.text = cafeInfo.name
         cafeLocationLabel.text = cafeInfo.address
         cafeCongestionLabel.text = congestionMapping[cafeInfo.congestionStatus]
+        
+        let url = URL(string: cafeInfo.cafeImages[0])
+        cafeImageView.kf.setImage(with: url)
     }
    
     required init?(coder: NSCoder) {
