@@ -84,6 +84,9 @@ class RefreshTokenService {
         // data를 AllMenuResponse형으로 decode 해준다.
         // 실패하면 pathErr로 빼고, 성공하면 decodeData에 값을 뺀다.
         guard let decodedData = try? decoder.decode(RefreshTokenResponse.self, from: data) else { return .pathErr }
+        UserDefaults.standard.set(decodedData.data.accessToken, forKey: "accessToken")
+        // 통신을 통해 얻은 accessToken UserDefault에 저장
+        UserDefaults.standard.set(decodedData.data.refreshToken, forKey: "refreshToken")
         // 성공적으로 decode를 마치면 success에다가 data 부분을 담아서 completion을 호출
         return .success(decodedData as Any)
     }

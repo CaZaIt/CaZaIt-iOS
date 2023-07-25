@@ -103,6 +103,8 @@ class MainView: UIViewController {
                     print("serveErr")
                 case .networkFail:
                     print("networkFail")
+                default:
+                    print("error")
                 }
                 self.retryTimer?.invalidate() //위치를 받았으니 타이머 종료
             }
