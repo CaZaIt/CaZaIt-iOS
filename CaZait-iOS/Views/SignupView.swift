@@ -130,24 +130,24 @@ class SignupView: UIViewController{
         return textField
     }()
     
-    //이메일 Label
-    private let emailLabel: UILabel = {
+    //아이디 Label
+    private let idLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.textColor = .black
         label.textAlignment = .center
-        label.text = "이메일"
+        label.text = "아이디"
         label.numberOfLines = 1
         return label
     }()
     
     //이메일 TextLabel
-    private let emailField: InsetTextField = {
+    private let idField: InsetTextField = {
         let textField = InsetTextField()
         textField.insetX = 16
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "예: kazait123@naver.com"
+        textField.placeholder = "예: kazait123"
         textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         textField.backgroundColor = .white
         textField.isSecureTextEntry = false
@@ -164,6 +164,71 @@ class SignupView: UIViewController{
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("중복확인", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = UIColor(r: 255, g: 115, b: 91)
+        button.layer.cornerRadius = 20
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    private let phonenumberLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.text = "핸드폰번호"
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private let phonenumberField: InsetTextField = {
+        let textField = InsetTextField()
+        textField.insetX = 16
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "예: 01012345678"
+        textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        textField.backgroundColor = .white
+        textField.isSecureTextEntry = false
+        textField.layer.cornerRadius = 20
+        textField.clipsToBounds = true
+        textField.textColor = UIColor(r: 93, g: 36, b: 36)
+        textField.setPlaceholder(color: UIColor(r: 181, g: 181, b: 181))
+        return textField
+    }()
+    
+    private let phonenumberButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("인증번호발송", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = UIColor(r: 255, g: 115, b: 91)
+        button.layer.cornerRadius = 20
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    private let certifyField: InsetTextField = {
+        let textField = InsetTextField()
+        textField.insetX = 16
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "예: 123456"
+        textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        textField.backgroundColor = .white
+        textField.isSecureTextEntry = false
+        textField.layer.cornerRadius = 20
+        textField.clipsToBounds = true
+        textField.textColor = UIColor(r: 93, g: 36, b: 36)
+        textField.setPlaceholder(color: UIColor(r: 181, g: 181, b: 181))
+        return textField
+    }()
+    
+    private let certifyButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("인증확인", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor(r: 255, g: 115, b: 91)
         button.layer.cornerRadius = 20
@@ -214,8 +279,8 @@ class SignupView: UIViewController{
         
         
         self.view.addSubview(pinkView)
-        self.pinkView.addSubview(emailLabel)
-        self.pinkView.addSubview(emailField)
+        self.pinkView.addSubview(idLabel)
+        self.pinkView.addSubview(idField)
         self.pinkView.addSubview(emailButton)
 //        self.pinkView.addSubview(descriptionLabel)
         self.pinkView.addSubview(pwLabel)
@@ -225,6 +290,11 @@ class SignupView: UIViewController{
         self.pinkView.addSubview(nicknameLabel)
         self.pinkView.addSubview(nicknameField)
         self.pinkView.addSubview(nicknameButton)
+        self.pinkView.addSubview(phonenumberLabel)
+        self.pinkView.addSubview(phonenumberField)
+        self.pinkView.addSubview(phonenumberButton)
+        self.pinkView.addSubview(certifyField)
+        self.pinkView.addSubview(certifyButton)
         self.pinkView.addSubview(joinButton)
         
         
@@ -233,25 +303,25 @@ class SignupView: UIViewController{
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
-        self.emailLabel.snp.makeConstraints { make in
+        self.idLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(39)
             make.top.equalTo(self.pinkView.safeAreaLayoutGuide.snp.top).inset(41)
         }
-        self.emailField.snp.makeConstraints { make in
+        self.idField.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(30)
             make.trailing.equalTo(self.pinkView.snp.trailing).inset(134)
-            make.top.equalTo(self.emailLabel.snp.bottom).offset(7)
+            make.top.equalTo(self.idLabel.snp.bottom).offset(7)
             make.height.equalTo(43)
         }
         self.emailButton.snp.makeConstraints { make in
-            make.leading.equalTo(self.emailField.snp.trailing).offset(10)
+            make.leading.equalTo(self.idField.snp.trailing).offset(10)
             make.trailing.equalTo(self.pinkView.snp.trailing).inset(23)
-            make.top.equalTo(self.emailLabel.snp.bottom).offset(7)
+            make.top.equalTo(self.idLabel.snp.bottom).offset(7)
             make.height.equalTo(44)
         }
         self.pwLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(39)
-            make.top.equalTo(self.emailField.snp.bottom).offset(27)
+            make.top.equalTo(self.idField.snp.bottom).offset(20)
         }
         self.pwField.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(30)
@@ -261,7 +331,7 @@ class SignupView: UIViewController{
         }
         self.pwLabel_1.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(39)
-            make.top.equalTo(self.pwField.snp.bottom).offset(27)
+            make.top.equalTo(self.pwField.snp.bottom).offset(20)
         }
         self.pwField_1.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(30)
@@ -271,7 +341,7 @@ class SignupView: UIViewController{
         }
         self.nicknameLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(39)
-            make.top.equalTo(self.pwField_1.snp.bottom).offset(27)
+            make.top.equalTo(self.pwField_1.snp.bottom).offset(20)
         }
         self.nicknameField.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(30)
@@ -285,10 +355,40 @@ class SignupView: UIViewController{
             make.top.equalTo(self.nicknameLabel.snp.bottom).offset(7)
             make.height.equalTo(44)
         }
+        self.phonenumberLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.pinkView.snp.leading).inset(39)
+            make.top.equalTo(self.nicknameField.snp.bottom).offset(20)
+        }
+        self.phonenumberField.snp.makeConstraints { make in
+            make.leading.equalTo(self.pinkView.snp.leading).inset(30)
+            make.trailing.equalTo(self.pinkView.snp.trailing).inset(134)
+            make.top.equalTo(self.phonenumberLabel.snp.bottom).offset(7)
+            make.height.equalTo(43)
+        }
+        self.phonenumberButton.snp.makeConstraints { make in
+            make.leading.equalTo(self.phonenumberField.snp.trailing).offset(10)
+            make.trailing.equalTo(self.pinkView.snp.trailing).inset(23)
+            make.top.equalTo(self.phonenumberLabel.snp.bottom).offset(7)
+            make.height.equalTo(44)
+        }
+        self.certifyField.snp.makeConstraints { make in
+            make.leading.equalTo(self.pinkView.snp.leading).inset(30)
+            make.trailing.equalTo(self.pinkView.snp.trailing).inset(134)
+            make.top.equalTo(self.phonenumberField.snp.bottom).offset(20)
+            make.height.equalTo(43)
+        }
+        self.certifyButton.snp.makeConstraints { make in
+            make.leading.equalTo(self.phonenumberField.snp.trailing).offset(10)
+            make.trailing.equalTo(self.pinkView.snp.trailing).inset(23)
+            make.top.equalTo(self.phonenumberField.snp.bottom).offset(20)
+            make.height.equalTo(44)
+        }
+        
+        
         self.joinButton.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(122)
             make.trailing.equalTo(self.pinkView.snp.trailing).inset(122)
-            make.top.equalTo(self.nicknameField.snp.bottom).offset(67)
+            make.top.equalTo(self.certifyField.snp.bottom).offset(40)
             make.height.equalTo(46)
         }
         
@@ -333,7 +433,7 @@ extension SignupView {
     //이메일 중복확인
     func emailcheck() {
         
-        guard let accountNumber = emailField.text else { return }
+        guard let accountNumber = idField.text else { return }
         
         
         emailCheckService.shared.emailcheck(accountNumber: accountNumber) { response in
@@ -403,7 +503,7 @@ extension SignupView {
         
         guard let nickname = nicknameField.text else { return }
         guard let password = pwField.text else { return }
-        guard let email = emailField.text else { return }
+        guard let email = idField.text else { return }
         
         
         signupService.shared.signup(email: email, password: password, nickname: nickname) { response in
