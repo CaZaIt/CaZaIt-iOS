@@ -186,9 +186,9 @@ class LoginView: UIViewController{
     
     @objc func signupClicked(_ sender: UIButton) {
         // RecentCafeView 인스턴스 생성
-        let signupView = SignupView()
+        let termsView = TermsView()
         // 내비게이션 스택으로 RecentCafeView를 푸시
-        self.navigationController?.pushViewController(signupView, animated: true)
+        self.navigationController?.pushViewController(termsView, animated: true)
     }
     
     @objc func LogIn() {
