@@ -4,8 +4,22 @@
 //
 //  Created by J on 2023/05/22.
 //
+//
 
 import UIKit
+
+protocol RateViewDelegate: AnyObject {
+    func didRate(_ rateView: RateView, withNumberOfStars stars: Int)
+}
+//
+//  RateView.swift
+//  CaZait-iOS
+//
+//  Created by J on 2023/05/22.
+//
+
+import UIKit
+
 
 class RateView: BaseView {
 
@@ -15,7 +29,10 @@ class RateView: BaseView {
     var currentStar: Int = 0
 
     private var buttons: [UIButton] = []
+    
+    weak var delegate: RateViewDelegate?
 
+    
     lazy var stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
@@ -84,7 +101,12 @@ class RateView: BaseView {
         }
 
         currentStar = end + 1
+        
+        delegate?.didRate(self, withNumberOfStars: currentStar)
+
     }
+    
+
 }
 
 
@@ -103,4 +125,3 @@ class BaseView: UIView {
     func configure() {}
     func bind() {}
 }
-

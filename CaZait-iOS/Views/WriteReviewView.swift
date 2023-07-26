@@ -11,15 +11,12 @@ import SnapKit
 
 class WriteReviewView: UIViewController{
    
-//    var navBar: UINavigationBar = UINavigationBar()
-        
-    let title1: UILabel = {
-        let text = UILabel()
-        text.text = "리뷰쓰기"
-        text.textColor = .white
-        text.translatesAutoresizingMaskIntoConstraints = false
-        text.font = .boldSystemFont(ofSize: 25)
-        return text
+    var selectedStarCount: Int = 0
+    
+    let backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
+        return view
     }()
     
     let label1: UILabel = {
@@ -42,7 +39,7 @@ class WriteReviewView: UIViewController{
     
     lazy var rateView: RateView = {
         let view = RateView()
-
+        view.delegate = self
         return view
     }()
 
@@ -65,35 +62,26 @@ class WriteReviewView: UIViewController{
     }()
     
 
-//    let textfield1: InsetTextField = {
-//
-//        let textField = InsetTextField();
-//
-//        textField.translatesAutoresizingMaskIntoConstraints = false
-//        textField.placeholder = "공백 포함 최대 50자 이내로 작성해주세요."
-//        textField.setPlaceholder(color: UIColor(red: 0.708, green: 0.708, blue: 0.708, alpha: 1))
-//        textField.backgroundColor = .white
-//        textField.layer.cornerRadius = 25
-//        //textField.setPlaceholder(color: UIColor(r: 93, g: 36, b: 36))
-//        textField.insetX = 47.25
-//        textField.textColor = .black
-//        textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-//        textField.layer.borderWidth = 1
-//        textField.layer.borderColor = UIColor(red: 0.363, green: 0.142, blue: 0.142, alpha: 1).cgColor
-//
-//        return textField
-//
-//    }()
-    
-    let textfield1: UILabel = {
-        let text2 = UILabel()
-        text2.text = "다른 이용자를 위해 카페 리뷰를 남겨주세요."
-        text2.textColor = .black
-        text2.translatesAutoresizingMaskIntoConstraints = false
-        text2.font = .italicSystemFont(ofSize: 15)
-        return text2
-    }()
+    let textfield1: InsetTextField = {
 
+        let textField = InsetTextField();
+
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "공백 포함 최대 50자 이내로 작성해주세요."
+        textField.setPlaceholder(color: UIColor(red: 0.708, green: 0.708, blue: 0.708, alpha: 1))
+        textField.backgroundColor = .white
+        textField.layer.cornerRadius = 25
+        //textField.setPlaceholder(color: UIColor(r: 93, g: 36, b: 36))
+        textField.insetX = 47.25
+        textField.textColor = .black
+        textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(red: 0.363, green: 0.142, blue: 0.142, alpha: 1).cgColor
+
+        return textField
+
+    }()
+    
     
     let placeholder = "공백 포함 최대 50자 이내로 작성해주세요."
 
@@ -130,21 +118,45 @@ class WriteReviewView: UIViewController{
 //        button1.layer.shadowOpacity = 1.0
 //        button1.layer.shadowRadius = 6
 //        button1.layer.shadowOffset = CGSize(width: 0, height: 5)
+        button1.addTarget(WriteReviewView.self, action: #selector(postButtonTapped), for: .touchUpInside)
         return button1
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.navigationBar.barStyle = .default
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.backgroundColor = .black
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 20, weight: .bold),
+            .foregroundColor: UIColor.white
+        ]
+
+        self.navigationController?.navigationBar.titleTextAttributes = attributes
+        self.title = "리뷰쓰기"
+
+        
+        // 뒤로가기 버튼 추가
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))
+        self.navigationItem.leftBarButtonItem = backButton
+    }
 
     override func viewDidLoad(){
         super.viewDidLoad()
-        
+      
+        view.backgroundColor = .black
 
-//        self.setNavBarToTheView()
-        self.setTitleView()
-//        setupAutoLayout()
-//        setupTextView()
-        
-        view.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
-
+        view.addSubview(backgroundView)
+        backgroundView.snp.makeConstraints{ maker in
+            maker.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            maker.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
+            maker.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
+        }
         
         self.view.addSubview(label1)
         label1.snp.makeConstraints { maker in
@@ -156,16 +168,16 @@ class WriteReviewView: UIViewController{
         
         self.view.addSubview(text1)
         text1.snp.makeConstraints { maker in
-            maker.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(100)
+            maker.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(55)
             maker.leading.equalTo(view.snp.leading).offset(37)
         }
         
 
         self.view.addSubview(rateView)
-        rateView.translatesAutoresizingMaskIntoConstraints = false
-        rateView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        rateView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-
+        rateView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+        }
 
         self.view.addSubview(text2)
         text2.snp.makeConstraints { maker in
@@ -190,37 +202,52 @@ class WriteReviewView: UIViewController{
             maker.height.equalTo(46)
         }
         
-        self.view.addSubview(title1)
-        title1.snp.makeConstraints { maker in
-            maker.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
-            maker.centerX.equalToSuperview()
-        }
 
     }
 
-    
-//    func setNavBarToTheView() {
-//        UINavigationBar.appearance().isTranslucent = false
-//        self.navBar.frame = CGRectMake(0, 0, 393, 106)
-//        self.navBar.backgroundColor = UIColor(red: 0.363, green: 0.142, blue: 0.142, alpha: 1)
-//        self.view.addSubview(navBar)
-//
-//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
     }
     
-    func setTitleView(){
-        let titleName = UILabel()
-        titleName.text = "리뷰쓰기"
-        titleName.font = UIFont.boldSystemFont(ofSize: 20)
-        titleName.textColor = .white
-        titleName.sizeToFit()
+    @objc func postButtonTapped() {
+        guard let inputText = textfield1.text else {
+            return
+        }
+        print(inputText)
+        print(selectedStarCount)
         
-        navigationItem.titleView = titleName
+        let review = Review(score: selectedStarCount, content: inputText)
+
+        // ReviewService의 인스턴스를 생성
+        let reviewWriteService = ReviewWriteService()
+
+        // 리뷰 작성 통신
+        if let userId = UserDefaults.standard.string(forKey: "userId") {
+            reviewWriteService.postReview(userId: userId, cafeId: 1, review: review) { result in
+                switch result {
+                case .success(let reviewResponse):
+
+                    print("리뷰 ID: \(reviewResponse.data.reviewId)")
+                case .failure(let error):
+
+                    print("에러 메시지: \(error.localizedDescription)")
+                }
+            }
+        } else {
+            print("userId 값이 없음")
+        }
+    }
+
+    @objc func backButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
-
-
+extension WriteReviewView: RateViewDelegate{
+    // RateViewDelegate 메서드 구현
+    func didRate(_ rateView: RateView, withNumberOfStars stars: Int) {
+        print("별점: \(stars)개")
+        selectedStarCount = stars
+    }
+}

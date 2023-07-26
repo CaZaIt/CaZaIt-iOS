@@ -92,9 +92,9 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.barStyle = .default
-        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.backgroundColor = .black
         
         // 뒤로가기 버튼 추가
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))
@@ -287,10 +287,49 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         isHeartSelected = !isHeartSelected
         if isHeartSelected {
             heartButton.setImage(heartFillImage, for: .normal)
+            registerFavoriteCafe()
             
         } else {
             heartButton.setImage(heartEmptyImage, for: .normal)
-            
+            deleteFavoriteCafe()
+        }
+    }
+    
+    private func registerFavoriteCafe(){
+        let registerFavoriteDetailCafeService = RegisterFavoriteDetailCafeService()
+
+        if let userId = UserDefaults.standard.string(forKey: "userId") {
+            registerFavoriteDetailCafeService.postFavoriteDetailCafe(userId: userId, cafeId: 1) { result in
+                switch result {
+                case .success(let registerFavoriteDetailCafeResponse):
+
+                    print((registerFavoriteDetailCafeResponse.data) , "번 카페 관심 등록")
+                case .failure(let error):
+
+                    print("에러 메시지: \(error.localizedDescription)")
+                }
+            }
+        } else {
+            print("userId 값이 없음")
+        }
+    }
+    
+    private func deleteFavoriteCafe(){
+        let deleteFavoriteDetailCafeService = DeleteFavoriteDetailCafeService()
+
+        if let userId = UserDefaults.standard.string(forKey: "userId") {
+            deleteFavoriteDetailCafeService.deleteFavoriteDetailCafe(userId: userId, cafeId: 1) { result in
+                switch result {
+                case .success(let deleteFavoriteDetailCafeResponse):
+
+                    print((deleteFavoriteDetailCafeResponse.data) , "번 카페 관심 해제")
+                case .failure(let error):
+
+                    print("에러 메시지: \(error.localizedDescription)")
+                }
+            }
+        } else {
+            print("userId 값이 없음")
         }
     }
     
@@ -378,6 +417,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         
     }
     
+
     func getDetailCafe() {
         guard let cafeId = cafeId else {
             // cafeId가 nil일 경우에 대한 처리 로직
