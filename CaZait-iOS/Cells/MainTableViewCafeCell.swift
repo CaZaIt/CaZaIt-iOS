@@ -147,7 +147,7 @@ extension MainTableViewCafeCell: UICollectionViewDataSource, UICollectionViewDel
     
     // collectionView 셀 크기 반환
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 166, height: 276)
+        return CGSize(width: UIScreen.main.bounds.width/2 - 37, height: 276)
     }
     
     // collectionView 셀과 셀 사이 간격 반환
@@ -168,7 +168,7 @@ extension MainTableViewCafeCell: UICollectionViewDataSource, UICollectionViewDel
         let cafeDetailView = CafeDetailView() // CafeDetailView 초기화
         
         //cafeDetailView에서 받은 cafeId를 통해 통신할 수 있도록 값을 전달한다.
-        cafeDetailView.cafeId = self.allCafeData?.data[0][indexPath.row].cafeID
+        cafeDetailView.cafeId = self.allCafeData?.data[0][indexPath.row].cafeId
         navigationController?.pushViewController(cafeDetailView, animated: true)
         
     }

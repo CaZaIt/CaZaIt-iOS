@@ -21,16 +21,10 @@ class AllCafeService {
     // **해당 completion클로저에는 네트워크의 결과를 담아서 호출하게 되고, VC에서 꺼내서 처리할 예정
     func getAllCafeInfo(longitude : String, latitude : String, sort : String, limit : String, completion : @escaping (NetworkResult<Any>) -> Void) {
         
-        let userId = UserDefaults.standard.string(forKey: "userId")
         
-        var url: String
-        if let userId = userId, !userId.isEmpty {
-            // 유저 디폴트값이 있는 경우
-            url = "\(APIConstants.allCafeURL)/user/\(userId)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
-        } else {
-            // 유저 디폴트값이 없는 경우
-            url = "\(APIConstants.allCafeURL)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
-        }
+        let url = "\(APIConstants.allCafeURL)?longitude=\(longitude)&latitude=\(latitude)&sort=\(sort)&limit=\(limit)"
+        
+        let header : HTTPHeaders = ["Content-Type" : "application/json"]
         
         
         //이렇게 통신 요청보낼거야! 라는 요청서라고 보면 된다.
@@ -38,7 +32,8 @@ class AllCafeService {
         // 헤더 정보와 함께 REquest를 보내기 위한 정보를 묶어서 dataRequest에 저장해둔다.
         let dataRequest = AF.request(url,
                                      method: .get,
-                                     encoding: JSONEncoding.default)
+                                     encoding: JSONEncoding.default,
+                                     headers: header)
         
         //위에서 적어둔 요청서를 가지고 진짜 서버에 보내서 통신 Request를 하는 중
         //통신이 완료되면 클로저를 통해서 dataResponse라는 이름으로 결과가 도착

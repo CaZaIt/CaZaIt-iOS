@@ -34,4 +34,6 @@ struct APIConstants {
     static let loginURL = baseURL + "/api/auths/log-in?role=user" // 로그인(유저)
     
     static let favoritesURL = baseURL + "/api/favorites/user" //찜한매장확인
+    
+    static let refreshURL = baseURL + "/api/auths/refresh" //토큰 재발급
 }

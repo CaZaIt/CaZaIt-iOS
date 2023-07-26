@@ -10,6 +10,15 @@ import SnapKit
 
 class LovedCollectionViewCell: UICollectionViewCell {
     
+    private let congestionMapping: [String: String] = [
+        "NONE": "미등록",
+        "CLOSE": "종료",
+        "FREE": "여유",
+        "NORMAL": "보통",
+        "CROWDED": "혼잡",
+        "VERYCROWDED": "매우혼잡"
+    ]
+    
     private let cafeNameLabel: UILabel = {
         let label = UILabel()
         
@@ -104,7 +113,7 @@ class LovedCollectionViewCell: UICollectionViewCell {
     func configure(with favoritesInfo: FavoritesInfo) {
         cafeNameLabel.text = favoritesInfo.name
         cafeLocationLabel.text = favoritesInfo.address
-        congestionLabel.text = favoritesInfo.congestion
+        congestionLabel.text = congestionMapping[favoritesInfo.congestion]
     }
 
     required init?(coder: NSCoder) {

@@ -7,8 +7,18 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class SearchCollectionViewCell: UICollectionViewCell {
+    
+    private let congestionMapping: [String: String] = [
+        "NONE": "미등록",
+        "CLOSE": "종료",
+        "FREE": "여유",
+        "NORMAL": "보통",
+        "CROWDED": "혼잡",
+        "VERYCROWDED": "매우혼잡"
+    ]
     
     private let cafeImageView: UIImageView = {
         let imageView = UIImageView()
@@ -124,7 +134,10 @@ class SearchCollectionViewCell: UICollectionViewCell {
     func configure(with cafeInfo: CafeInfo) {
         cafeNameLabel.text = cafeInfo.name
         cafeLocationLabel.text = cafeInfo.address
-        cafeCongestionLabel.text = cafeInfo.congestionStatus
+        cafeCongestionLabel.text = congestionMapping[cafeInfo.congestionStatus]
+        
+        let url = URL(string: cafeInfo.cafeImages[0])
+        cafeImageView.kf.setImage(with: url)
     }
    
     required init?(coder: NSCoder) {

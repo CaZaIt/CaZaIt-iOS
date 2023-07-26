@@ -16,15 +16,10 @@ struct AllCafeResponse: Codable {
 
 // MARK: - Datum
 struct CafeInfo: Codable {
-    let cafeID: Int
+    let cafeId: Int
     let congestionStatus, name, address: String
     let longitude, latitude: String
     let cafeImages: [String]
     let distance: Int
     let favorite: Bool
-    
-    enum CodingKeys: String, CodingKey {
-        case cafeID = "cafeId"
-        case congestionStatus, name, address, longitude, latitude, cafeImages, distance, favorite
-    }
 }
