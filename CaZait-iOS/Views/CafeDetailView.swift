@@ -92,9 +92,9 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.barStyle = .default
-        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.backgroundColor = .black
         
         // 뒤로가기 버튼 추가
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))

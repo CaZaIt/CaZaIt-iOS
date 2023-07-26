@@ -12,15 +12,12 @@ import SnapKit
 class WriteReviewView: UIViewController{
    
     var selectedStarCount: Int = 0
-
-//    let title1: UILabel = {
-//        let text = UILabel()
-//        text.text = "리뷰쓰기"
-//        text.textColor = .white
-//        text.translatesAutoresizingMaskIntoConstraints = false
-//        text.font = .boldSystemFont(ofSize: 25)
-//        return text
-//    }()
+    
+    let backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
+        return view
+    }()
     
     let label1: UILabel = {
         let label = UILabel()
@@ -130,10 +127,17 @@ class WriteReviewView: UIViewController{
         
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.barStyle = .default
-        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.backgroundColor = .white
-        self.navigationController?.navigationBar.topItem?.title = "리뷰쓰기"
+        self.navigationController?.navigationBar.backgroundColor = .black
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 20, weight: .bold),
+            .foregroundColor: UIColor.white
+        ]
+
+        self.navigationController?.navigationBar.titleTextAttributes = attributes
+        self.title = "리뷰쓰기"
 
         
         // 뒤로가기 버튼 추가
@@ -143,15 +147,16 @@ class WriteReviewView: UIViewController{
 
     override func viewDidLoad(){
         super.viewDidLoad()
-        
+      
+        view.backgroundColor = .black
 
-//        self.setNavBarToTheView()
-        //self.setTitleView()
-//        setupAutoLayout()
-//        setupTextView()
-        
-        view.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
-
+        view.addSubview(backgroundView)
+        backgroundView.snp.makeConstraints{ maker in
+            maker.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            maker.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
+            maker.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
+        }
         
         self.view.addSubview(label1)
         label1.snp.makeConstraints { maker in
@@ -197,35 +202,18 @@ class WriteReviewView: UIViewController{
             maker.height.equalTo(46)
         }
         
-//        self.view.addSubview(title1)
-//        title1.snp.makeConstraints { maker in
-//            maker.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
-//            maker.centerX.equalToSuperview()
-//        }
 
     }
 
-    
-//    func setNavBarToTheView() {
-//        UINavigationBar.appearance().isTranslucent = false
-//        self.navBar.frame = CGRectMake(0, 0, 393, 106)
-//        self.navBar.backgroundColor = UIColor(red: 0.363, green: 0.142, blue: 0.142, alpha: 1)
-//        self.view.addSubview(navBar)
-//
-//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
     }
     
     @objc func postButtonTapped() {
-        // 버튼이 눌렸을 때 호출되는 메서드입니다.
-        // 텍스트 필드의 텍스트를 가져옵니다.
         guard let inputText = textfield1.text else {
             return
         }
-        
-        
         print(inputText)
         print(selectedStarCount)
         
@@ -251,16 +239,6 @@ class WriteReviewView: UIViewController{
         }
     }
 
-    
-//    func setTitleView(){
-//        let titleName = UILabel()
-//        titleName.text = "리뷰쓰기"
-//        titleName.font = UIFont.boldSystemFont(ofSize: 20)
-//        titleName.textColor = .white
-//        titleName.sizeToFit()
-//
-//        navigationItem.titleView = titleName
-//    }
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }
