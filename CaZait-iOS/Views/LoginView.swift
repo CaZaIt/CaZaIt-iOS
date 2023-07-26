@@ -186,9 +186,9 @@ class LoginView: UIViewController{
     
     @objc func signupClicked(_ sender: UIButton) {
         // RecentCafeView 인스턴스 생성
-        let signupView = SignupView()
+        let termsView = TermsView()
         // 내비게이션 스택으로 RecentCafeView를 푸시
-        self.navigationController?.pushViewController(signupView, animated: true)
+        self.navigationController?.pushViewController(termsView, animated: true)
     }
     
     @objc func LogIn() {
@@ -211,10 +211,10 @@ extension LoginView {
     func login() {
         
         guard let password = passwordtextField.text else { return }
-        guard let email = idtextField.text else { return }
+        guard let accountNumber = idtextField.text else { return }
         
         
-        loginService.shared.login(email: email, password: password) { response in
+        loginService.shared.login(accountNumber: accountNumber, password: password) { response in
             switch response {
             case .success(let data):
                 guard let data = data as? LoginResponse else { return }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		019D16A52A56CBB500766E9D /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16A42A56CBB500766E9D /* SplashView.swift */; };
+		019D16A72A712F9700766E9D /* TermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16A62A712F9700766E9D /* TermsView.swift */; };
 		01B87B582A120F480082FC05 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87B572A120F480082FC05 /* LoginView.swift */; };
 		01B87B5A2A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87B592A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift */; };
 		01B87B602A1B90700082FC05 /* APIContants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87B5F2A1B90700082FC05 /* APIContants.swift */; };
@@ -81,6 +82,7 @@
 
 /* Begin PBXFileReference section */
 		019D16A42A56CBB500766E9D /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		019D16A62A712F9700766E9D /* TermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsView.swift; sourceTree = "<group>"; };
 		01B87B572A120F480082FC05 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		01B87B592A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCafeCollectionViewCell.swift; sourceTree = "<group>"; };
 		01B87B5F2A1B90700082FC05 /* APIContants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIContants.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 				01B87B752A1CCD920082FC05 /* SignupView.swift */,
 				F1F98D5C2A481FA50055BF21 /* NotificationView.swift */,
 				019D16A42A56CBB500766E9D /* SplashView.swift */,
+				019D16A62A712F9700766E9D /* TermsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				01B87B802A1CF4D00082FC05 /* SignupService.swift in Sources */,
 				01B87B842A1E30C60082FC05 /* loginModel.swift in Sources */,
 				01B87B6E2A1B993D0082FC05 /* File4.swift in Sources */,
+				019D16A72A712F9700766E9D /* TermsView.swift in Sources */,
 				01F7A21B29D95C480058736E /* MoreView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
