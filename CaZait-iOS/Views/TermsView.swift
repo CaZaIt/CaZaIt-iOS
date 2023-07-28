@@ -296,8 +296,9 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         
         nextButton.addTarget(self, action:#selector(signupClicked), for: .touchUpInside)
         // 버튼에 액션 추가
-        allcheckBoxButton.addTarget(self, action: #selector(checkBoxTapped), for: .touchUpInside)
+        allcheckBoxButton.addTarget(self, action: #selector(allcheckBoxTapped), for: .touchUpInside)
         checkBoxButton_1.addTarget(self, action: #selector(checkBoxTapped), for: .touchUpInside)
+        checkBoxButton_2.addTarget(self, action: #selector(checkBoxTapped), for: .touchUpInside)
         
     }
     
@@ -306,6 +307,16 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
     }
     
     // 체크박스 버튼을 탭할 때 호출되는 액션 메서드
+    @objc func allcheckBoxTapped(sender: UIButton) {
+        // 현재 상태를 반전시킴
+        isCheckBoxChecked = !isCheckBoxChecked
+        sender.isSelected = isCheckBoxChecked
+        
+        // 모든 체크박스 버튼의 선택 상태를 allcheckBoxButton에 맞춤
+        checkBoxButton_1.isSelected = isCheckBoxChecked
+        checkBoxButton_2.isSelected = isCheckBoxChecked
+    }
+    
     @objc func checkBoxTapped(sender: UIButton) {
         // 현재 상태를 반전시킴
         isCheckBoxChecked = !isCheckBoxChecked
@@ -313,10 +324,18 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
     }
     
     @objc func signupClicked(_ sender: UIButton) {
-        // RecentCafeView 인스턴스 생성
-        let signupView = SignupView()
-        // 내비게이션 스택으로 RecentCafeView를 푸시
-        self.navigationController?.pushViewController(signupView, animated: true)
+        // Check if both checkboxes are selected
+        if checkBoxButton_1.isSelected && checkBoxButton_2.isSelected {
+            // All checkboxes are selected, navigate to the next view
+            let signupView = SignupView()
+            self.navigationController?.pushViewController(signupView, animated: true)
+        } else {
+            // Show an alert if any of the checkboxes is not selected
+            let alert = UIAlertController(title: "약관동의 필요", message: "약관에 동의해야 다음으로 진행할 수 있습니다.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
