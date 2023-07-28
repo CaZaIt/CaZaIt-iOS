@@ -41,6 +41,17 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         return label
     }()
     
+    private let essentialLabel_2: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.text = "필수"
+        label.numberOfLines = 1
+        return label
+    }()
+    
     private let placeAgreeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -48,6 +59,17 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         label.textColor = .black
         label.textAlignment = .center
         label.text = "위치정보 기반 서비스 이용약관"
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private let infoAgreeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.text = "개인정보 수집 및 이용 동의"
         label.numberOfLines = 1
         return label
     }()
@@ -63,7 +85,26 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         return label
     }()
     
-    private let rightArrowButton: UIButton = {
+    private let rightArrowButton_1: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        button.tintColor = UIColor(r: 255, g: 115, b: 91)
+        return button
+    }()
+    
+    private let detailLabel_2: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        label.textColor = UIColor(r: 255, g: 115, b: 91)
+        label.textAlignment = .center
+        label.text = "개인정보 수집 및 이용 동의 내용 보기"
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private let rightArrowButton_2: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
@@ -83,6 +124,16 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
     
     // 체크박스 버튼
     private let checkBoxButton_1: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "square"), for: .normal)
+        button.setImage(UIImage(systemName: "checkmark.square.fill"), for: .selected)
+        button.tintColor = .black
+        return button
+    }()
+    
+    // 체크박스 버튼
+    private let checkBoxButton_2: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "square"), for: .normal)
@@ -149,7 +200,12 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         self.pinkView.addSubview(placeAgreeLabel)
         self.pinkView.addSubview(checkBoxButton_1)
         self.pinkView.addSubview(detailLabel_1)
-        self.pinkView.addSubview(rightArrowButton)
+        self.pinkView.addSubview(rightArrowButton_1)
+        self.pinkView.addSubview(essentialLabel_2)
+        self.pinkView.addSubview(infoAgreeLabel)
+        self.pinkView.addSubview(checkBoxButton_2)
+        self.pinkView.addSubview(detailLabel_2)
+        self.pinkView.addSubview(rightArrowButton_2)
         
         
         
@@ -198,9 +254,36 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
             make.leading.equalTo(self.essentialLabel_1.snp.trailing).offset(16)
         }
         
-        self.rightArrowButton.snp.makeConstraints { make in
+        self.rightArrowButton_1.snp.makeConstraints { make in
             make.top.equalTo(self.placeAgreeLabel.snp.bottom).offset(3)
             make.leading.equalTo(self.detailLabel_1.snp.trailing).offset(3)
+            make.width.height.equalTo(10)
+        }
+        
+        self.essentialLabel_2.snp.makeConstraints { make in
+            make.top.equalTo(self.detailLabel_1.snp.bottom).offset(25)
+            make.leading.equalTo(self.pinkView.snp.leading).inset(39)
+        }
+        
+        self.infoAgreeLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.detailLabel_1.snp.bottom).offset(25)
+            make.leading.equalTo(self.essentialLabel_2.snp.trailing).offset(16)
+        }
+        
+        self.checkBoxButton_2.snp.makeConstraints { make in
+            make.top.equalTo(self.detailLabel_1.snp.bottom).offset(22)
+            make.trailing.equalTo(self.pinkView.snp.trailing).inset(35)
+            make.width.height.equalTo(30)
+        }
+        
+        self.detailLabel_2.snp.makeConstraints { make in
+            make.top.equalTo(self.infoAgreeLabel.snp.bottom).offset(1)
+            make.leading.equalTo(self.essentialLabel_2.snp.trailing).offset(16)
+        }
+        
+        self.rightArrowButton_2.snp.makeConstraints { make in
+            make.top.equalTo(self.infoAgreeLabel.snp.bottom).offset(3)
+            make.leading.equalTo(self.detailLabel_2.snp.trailing).offset(3)
             make.width.height.equalTo(10)
         }
         
