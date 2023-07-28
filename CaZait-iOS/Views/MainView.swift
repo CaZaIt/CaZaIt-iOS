@@ -54,6 +54,12 @@ class MainView: UIViewController {
         return tableView
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        requestLocation()
+        getFavoritesCafeInfoData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,8 +79,8 @@ class MainView: UIViewController {
         mainTableView.refreshControl = refreshControl
         setupMainTableView()
         
-        requestLocation()
-        getFavoritesCafeInfoData()
+//        requestLocation()
+//        getFavoritesCafeInfoData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -103,8 +109,6 @@ class MainView: UIViewController {
                     print("serveErr")
                 case .networkFail:
                     print("networkFail")
-                default:
-                    print("error")
                 }
                 self.retryTimer?.invalidate() //위치를 받았으니 타이머 종료
             }
@@ -138,6 +142,10 @@ class MainView: UIViewController {
                     print("networkFail")
                 }
             }
+        } else {
+            // 앱을 실행하는 중간에 앱을 로그아웃했을 경우에 찜한 매장을 nil로 바꾼다. 찜한매장은 로그인 이용자만 사용 가능하기 때문이다.
+            self.favoritesData = nil
+            self.mainTableView.reloadData()
         }
     }
     

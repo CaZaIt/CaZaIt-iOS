@@ -8,7 +8,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
-  - Kingfisher (~> 6.3.1)
+  - Kingfisher
   - NMapsMap
   - SnapKit (~> 5.6.0)
 
@@ -27,6 +27,6 @@ SPEC CHECKSUMS:
   NMapsMap: aaa64717249b06ae82c3a3addb3a01f0e33100ab
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 13e4841f297ebc6b5ddef83ec3904285df4c4742
+PODFILE CHECKSUM: d03fe0ef5c99587b4da990764b18e3ef145e5e73
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
