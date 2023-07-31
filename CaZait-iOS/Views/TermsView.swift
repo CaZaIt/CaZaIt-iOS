@@ -299,6 +299,7 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         allcheckBoxButton.addTarget(self, action: #selector(allcheckBoxTapped), for: .touchUpInside)
         checkBoxButton_1.addTarget(self, action: #selector(checkBoxTapped), for: .touchUpInside)
         checkBoxButton_2.addTarget(self, action: #selector(checkBoxTapped), for: .touchUpInside)
+        rightArrowButton_1.addTarget(self, action: #selector(placeDetailClicked), for: .touchUpInside)
         
     }
     
@@ -336,6 +337,12 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
         }
+    }
+    
+    @objc func placeDetailClicked(_ sender: UIButton) {
+            let placeDetailView = PlaceDetailTermsView()
+            self.navigationController?.pushViewController(placeDetailView, animated: true)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
