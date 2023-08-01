@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class PlaceDetailTermsView: UIViewController, UIGestureRecognizerDelegate{
+class PersonalInfoDetailTermsView: UIViewController, UIGestureRecognizerDelegate{
     
     var textView: UITextView!
     
@@ -33,7 +33,7 @@ class PlaceDetailTermsView: UIViewController, UIGestureRecognizerDelegate{
         self.view.backgroundColor = .black
         
         // 네비게이션 바 타이틀 설정
-        self.title = "위치정보 기반 서비스 이용약관"
+        self.title = "개인정보 기반 서비스 이용약관"
         
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         

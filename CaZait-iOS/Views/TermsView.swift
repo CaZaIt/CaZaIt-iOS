@@ -300,7 +300,7 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         checkBoxButton_1.addTarget(self, action: #selector(checkBoxTapped), for: .touchUpInside)
         checkBoxButton_2.addTarget(self, action: #selector(checkBoxTapped), for: .touchUpInside)
         rightArrowButton_1.addTarget(self, action: #selector(placeDetailClicked), for: .touchUpInside)
-        
+        rightArrowButton_2.addTarget(self, action: #selector(personalInfoDetailClicked), for: .touchUpInside)
     }
     
     @objc func backButtonTapped() {
@@ -342,6 +342,12 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
     @objc func placeDetailClicked(_ sender: UIButton) {
             let placeDetailView = PlaceDetailTermsView()
             self.navigationController?.pushViewController(placeDetailView, animated: true)
+        
+    }
+    
+    @objc func personalInfoDetailClicked(_ sender: UIButton) {
+            let personalInfoDetailView = PersonalInfoDetailTermsView()
+            self.navigationController?.pushViewController(personalInfoDetailView, animated: true)
         
     }
     
