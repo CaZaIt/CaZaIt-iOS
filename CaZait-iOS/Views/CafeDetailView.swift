@@ -245,22 +245,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             make.top.equalTo(cafeView.snp.top).offset(35)
         }
         
-
-//        let numberOfRowsInCollectionView1 = collectionView1.dataSource?.collectionView(collectionView1, numberOfItemsInSection: 0) ?? 0
-//        let numberOfRowsInCollectionView2 = collectionView1.dataSource?.collectionView(collectionView2, numberOfItemsInSection: 0) ?? 0
-//
-//        collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13)
-//        collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13)
-
-
-        
-//        collectionView1.snp.makeConstraints {
-//            $0.height.equalTo(collectionView1HeightConstant).priority(.low)
-//        }
-        
-//        collectionView2.snp.makeConstraints {
-//            $0.height.equalTo(collectionView2HeightConstant).priority(.low)
-//        }
         
         reviewWriteButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 600).isActive = true
         reviewWriteButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 310).isActive = true
@@ -297,8 +281,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         let registerFavoriteDetailCafeService = RegisterFavoriteDetailCafeService()
 
         guard let cafeId = cafeId else {
-            // cafeId가 nil일 경우에 대한 처리 로직
-            print("cafeId가 nil입니다.")
+            print("cafeId nil")
             return
         }
         if let userId = UserDefaults.standard.string(forKey: "userId") {
@@ -314,6 +297,13 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             }
         } else {
             print("userId 값이 없음")
+            let alertController = UIAlertController(title: "로그인 후 이용가능합니다.", message: "", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                // OK 버튼을 클릭하면 실행될 코드
+            }
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+            heartButton.setImage(heartEmptyImage, for: .normal)
         }
     }
     
@@ -533,7 +523,17 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     @objc func reviewWriteButtonClicked() {
         let nextVC = WriteReviewView()
         nextVC.cafeId = self.cafeId
-        navigationController?.pushViewController(nextVC, animated: true)
+        if UserDefaults.standard.string(forKey: "accessToken") != nil {
+            navigationController?.pushViewController(nextVC, animated: true)
+        }
+        else {
+            let alertController = UIAlertController(title: "로그인 후 이용가능합니다.", message: "", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                // OK 버튼을 클릭하면 실행될 코드
+            }
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     
