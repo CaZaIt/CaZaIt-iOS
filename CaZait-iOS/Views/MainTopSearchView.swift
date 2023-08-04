@@ -85,6 +85,8 @@ class MainTopSearchView: UIView {
         self.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
         self.layer.cornerRadius = 30
         self.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        hiddenNotificationDot()
     }
     
     required init?(coder aDecoder: NSCoder) {
