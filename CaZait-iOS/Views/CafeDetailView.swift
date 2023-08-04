@@ -296,12 +296,17 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     private func registerFavoriteCafe(){
         let registerFavoriteDetailCafeService = RegisterFavoriteDetailCafeService()
 
+        guard let cafeId = cafeId else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("cafeId가 nil입니다.")
+            return
+        }
         if let userId = UserDefaults.standard.string(forKey: "userId") {
-            registerFavoriteDetailCafeService.postFavoriteDetailCafe(userId: userId, cafeId: 1) { result in
+            registerFavoriteDetailCafeService.postFavoriteDetailCafe(userId: userId, cafeId: cafeId) { result in
                 switch result {
                 case .success(let registerFavoriteDetailCafeResponse):
-
-                    print((registerFavoriteDetailCafeResponse.data) , "번 카페 관심 등록")
+                    print((registerFavoriteDetailCafeResponse.data))
+                    print(cafeId, "번 카페 관심 등록")
                 case .failure(let error):
 
                     print("에러 메시지: \(error.localizedDescription)")
@@ -314,15 +319,20 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     private func deleteFavoriteCafe(){
         let deleteFavoriteDetailCafeService = DeleteFavoriteDetailCafeService()
+        
+        guard let cafeId = cafeId else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("cafeId가 nil입니다.")
+            return
+        }
 
         if let userId = UserDefaults.standard.string(forKey: "userId") {
-            deleteFavoriteDetailCafeService.deleteFavoriteDetailCafe(userId: userId, cafeId: 1) { result in
+            deleteFavoriteDetailCafeService.deleteFavoriteDetailCafe(userId: userId, cafeId: cafeId) { result in
                 switch result {
                 case .success(let deleteFavoriteDetailCafeResponse):
-
-                    print((deleteFavoriteDetailCafeResponse.data) , "번 카페 관심 해제")
+                    print((deleteFavoriteDetailCafeResponse.data))
+                    print(cafeId, "번 카페 관심 해제")
                 case .failure(let error):
-
                     print("에러 메시지: \(error.localizedDescription)")
                 }
             }
@@ -584,7 +594,7 @@ extension CafeDetailView: UIScrollViewDelegate {
         // contentOffset.y: 손가락을 위로 올리면 + 값, 손가락을 아래로 내리면 - 값
         //print(scrollView.contentOffset.y, headerViewSegmentControl.frame.minY)
         
-        // 5. 핵심 - frame.minY를 통해 sticky 타이밍을 계산
+        // frame.minY를 통해 sticky 타이밍 계산
         let shouldShowSticky = scrollView.contentOffset.y >= headerViewSegmentControl.frame.minY
         stickyHeaderViewSegmentControl.isHidden = !shouldShowSticky
         
