@@ -222,7 +222,7 @@ class MyPageView: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if UserDefaults.standard.string(forKey: "accessToken") != nil {
+        if UserDefaults.standard.string(forKey: "userId") != nil {
             loginLabel.text = "로그아웃"
         }
         else {
@@ -453,7 +453,7 @@ class MyPageView: UIViewController{
         // RecentCafeView 인스턴스 생성
         let recentCafeView = RecentCafeView()
         // 내비게이션 스택으로 RecentCafeView를 푸시
-        if UserDefaults.standard.string(forKey: "accessToken") != nil {
+        if UserDefaults.standard.string(forKey: "userId") != nil {
             self.navigationController?.pushViewController(recentCafeView, animated: true)
         }
         else {
@@ -478,8 +478,9 @@ class MyPageView: UIViewController{
         }
         
         if (loginLabel.text == "로그아웃") {
-            UserDefaults.standard.removeObject(forKey: "accessToken")
-            UserDefaults.standard.removeObject(forKey: "refreshToken")
+            KeyChain.delete(key: "accessToken")
+            KeyChain.delete(key: "refreshToken")
+            
             UserDefaults.standard.removeObject(forKey: "userId")
 
             let alertController = UIAlertController(title: "로그아웃되었습니다.", message: "", preferredStyle: .alert)
