@@ -10,7 +10,8 @@ import SnapKit
 
 
 class WriteReviewView: UIViewController{
-   
+    var cafeId : Int?
+    
     var selectedStarCount: Int = 0
     
     let backgroundView: UIView = {
@@ -223,14 +224,19 @@ class WriteReviewView: UIViewController{
         let reviewWriteService = ReviewWriteService()
 
         // 리뷰 작성 통신
+        guard let cafeId = cafeId else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("cafeId가 nil입니다.")
+            return
+        }
+        print("cafeId : ", cafeId)
         if let userId = UserDefaults.standard.string(forKey: "userId") {
-            reviewWriteService.postReview(userId: userId, cafeId: 1, review: review) { result in
+            reviewWriteService.postReview(userId: userId, cafeId: cafeId, review: review) { result in
                 switch result {
                 case .success(let reviewResponse):
 
                     print("리뷰 ID: \(reviewResponse.data.reviewId)")
                 case .failure(let error):
-
                     print("에러 메시지: \(error.localizedDescription)")
                 }
             }
@@ -243,6 +249,7 @@ class WriteReviewView: UIViewController{
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }
+
 }
 
 extension WriteReviewView: RateViewDelegate{

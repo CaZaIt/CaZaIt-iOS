@@ -10,13 +10,15 @@ import Alamofire
 
 class RegisterFavoriteDetailCafeService {
     func postFavoriteDetailCafe(userId: String, cafeId: Int, completion: @escaping (Result<RegisterFavoriteDetailCafeResponse, Error>) -> Void) {
-        let url = APIConstants.baseURL + "/api/favorite/user/\(userId)/cafe/\(cafeId)"
+        let url = APIConstants.baseURL + "/api/favorites/user/\(userId)/cafe/\(cafeId)"
         
         var header : HTTPHeaders = ["Content-Type" : "application/json"]
         if let bearerToken = UserDefaults.standard.string(forKey: "accessToken") {
             header["Authorization"] = "Bearer \(bearerToken)"
         }
-        
+//        if let bearerToken = KeyChain.read(key: "accessToken") {
+//                    header["Authorization"] = "Bearer \(bearerToken)"
+//        }
         AF.request(url, method: .post, encoding: JSONEncoding.default, headers: header)
             .validate()
             .responseDecodable(of: RegisterFavoriteDetailCafeResponse.self) { response in

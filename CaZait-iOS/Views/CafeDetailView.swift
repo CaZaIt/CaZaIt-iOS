@@ -245,22 +245,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             make.top.equalTo(cafeView.snp.top).offset(35)
         }
         
-
-//        let numberOfRowsInCollectionView1 = collectionView1.dataSource?.collectionView(collectionView1, numberOfItemsInSection: 0) ?? 0
-//        let numberOfRowsInCollectionView2 = collectionView1.dataSource?.collectionView(collectionView2, numberOfItemsInSection: 0) ?? 0
-//
-//        collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13)
-//        collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13)
-
-
-        
-//        collectionView1.snp.makeConstraints {
-//            $0.height.equalTo(collectionView1HeightConstant).priority(.low)
-//        }
-        
-//        collectionView2.snp.makeConstraints {
-//            $0.height.equalTo(collectionView2HeightConstant).priority(.low)
-//        }
         
         reviewWriteButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 600).isActive = true
         reviewWriteButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 310).isActive = true
@@ -296,38 +280,64 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     private func registerFavoriteCafe(){
         let registerFavoriteDetailCafeService = RegisterFavoriteDetailCafeService()
 
-        if let userId = UserDefaults.standard.string(forKey: "userId") {
-            registerFavoriteDetailCafeService.postFavoriteDetailCafe(userId: userId, cafeId: 1) { result in
+        guard let cafeId = cafeId else {
+            print("cafeId nil")
+            return
+        }
+        
+        guard let userId = UserDefaults.standard.string(forKey: "userId") else {
+            print("userId nil")
+            return
+        }
+
+        if UserDefaults.standard.string(forKey: "accessToken") != nil  {
+            registerFavoriteDetailCafeService.postFavoriteDetailCafe(userId: userId, cafeId: cafeId) { result in
                 switch result {
                 case .success(let registerFavoriteDetailCafeResponse):
-
-                    print((registerFavoriteDetailCafeResponse.data) , "번 카페 관심 등록")
+                    print((registerFavoriteDetailCafeResponse.data))
+                    print(cafeId, "번 카페 관심 등록")
                 case .failure(let error):
 
                     print("에러 메시지: \(error.localizedDescription)")
                 }
             }
         } else {
-            print("userId 값이 없음")
+            let alertController = UIAlertController(title: "로그인 후 이용가능합니다.", message: "", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                // OK 버튼을 클릭하면 실행될 코드
+            }
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+            heartButton.setImage(heartEmptyImage, for: .normal)
         }
     }
     
     private func deleteFavoriteCafe(){
         let deleteFavoriteDetailCafeService = DeleteFavoriteDetailCafeService()
+        
+        guard let cafeId = cafeId else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("cafeId nil")
+            return
+        }
+        
+        guard let userId = UserDefaults.standard.string(forKey: "userId") else {
+            print("userId nil")
+            return
+        }
 
-        if let userId = UserDefaults.standard.string(forKey: "userId") {
-            deleteFavoriteDetailCafeService.deleteFavoriteDetailCafe(userId: userId, cafeId: 1) { result in
+        if UserDefaults.standard.string(forKey: "accessToken") != nil {
+            deleteFavoriteDetailCafeService.deleteFavoriteDetailCafe(userId: userId, cafeId: cafeId) { result in
                 switch result {
                 case .success(let deleteFavoriteDetailCafeResponse):
-
-                    print((deleteFavoriteDetailCafeResponse.data) , "번 카페 관심 해제")
+                    print((deleteFavoriteDetailCafeResponse.data))
+                    print(cafeId, "번 카페 관심 해제")
                 case .failure(let error):
-
                     print("에러 메시지: \(error.localizedDescription)")
                 }
             }
         } else {
-            print("userId 값이 없음")
+            print("로그인 후 이용가능합니다.")
         }
     }
     
@@ -428,7 +438,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             switch result {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
-                print(cafe) // 받아온 데이터 사용 예시
+                //print(cafe) // 받아온 데이터 사용 예시
                 // UI 업데이트 또는 필요한 작업 수행
                 DispatchQueue.main.async {
                     self.cafeName.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
@@ -456,7 +466,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             case .success(let response):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 self.cafeMenu = response
-                print(response)
+                //print(response)
 //                print(self.cafeMenu)
 //
 //                for menu in response {
@@ -470,9 +480,9 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
 //                }
                 collectionView1.reloadData() // 컬렉션 뷰 리로드
 
-                print("cafe menu: ", response.count)
+                // print("cafe menu: ", response.count)
                 let numberOfRowsInCollectionView1 = response.count
-                collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13)
+                collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13) // 115 셀 높이, 13 셀 간격
                 collectionView1.snp.makeConstraints {
                     $0.height.equalTo(collectionView1HeightConstant).priority(.low)
                 }
@@ -501,14 +511,12 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 self.cafeReview = response.reviewResponses
                 //print(response)
-                print(self.cafeReview)
-                //[cafeReview].count
+                //print(self.cafeReview)
 
-                collectionView1.reloadData() // 컬렉션 뷰 리로드
-
-                print("cafe review: ", [cafeReview].count)
-                let numberOfRowsInCollectionView2 = [response].count
-                collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13)
+                collectionView2.reloadData() // 컬렉션 뷰 리로드
+                
+                let numberOfRowsInCollectionView2 = cafeReview!.count
+                collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13) // 115 셀 높이, 13 셀 간격
                 collectionView2.snp.makeConstraints {
                     $0.height.equalTo(collectionView2HeightConstant).priority(.low)
                 }
@@ -521,11 +529,21 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         }
     
     }
-
     
     @objc func reviewWriteButtonClicked() {
         let nextVC = WriteReviewView()
-        navigationController?.pushViewController(nextVC, animated: true)
+        nextVC.cafeId = self.cafeId
+        if UserDefaults.standard.string(forKey: "accessToken") != nil {
+            navigationController?.pushViewController(nextVC, animated: true)
+        }
+        else {
+            let alertController = UIAlertController(title: "로그인 후 이용가능합니다.", message: "", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                // OK 버튼을 클릭하면 실행될 코드
+            }
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     
@@ -535,12 +553,17 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collectionView1 {
             if let count = cafeMenu?.count {
-                print("collectionview1 : ", count)
-                print(type(of: count))
+               // print("collectionview1 count: ", count)
+                //print(type(of: count))
                 return count
             }
             return 1
         } else if collectionView == collectionView2 {
+            //print("collection2")
+            if let count = cafeReview?.count {
+                //print("collectionview2 count :", count)
+                return count
+            }
             return 1
         }
             return 0
@@ -566,7 +589,7 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
         }else if collectionView == collectionView2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeDetailViewReviewCell", for: indexPath) as! CafeDetailViewReviewCell
             if let review = cafeReview?[indexPath.row]{
-                cell.configure(nickname: review.userId, review: review.content)
+                cell.configure(nickname: review.userId, review: review.content, score: review.score)
             }
 
             return cell
@@ -584,7 +607,7 @@ extension CafeDetailView: UIScrollViewDelegate {
         // contentOffset.y: 손가락을 위로 올리면 + 값, 손가락을 아래로 내리면 - 값
         //print(scrollView.contentOffset.y, headerViewSegmentControl.frame.minY)
         
-        // 5. 핵심 - frame.minY를 통해 sticky 타이밍을 계산
+        // frame.minY를 통해 sticky 타이밍 계산
         let shouldShowSticky = scrollView.contentOffset.y >= headerViewSegmentControl.frame.minY
         stickyHeaderViewSegmentControl.isHidden = !shouldShowSticky
         

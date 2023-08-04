@@ -12,16 +12,19 @@ class ReviewWriteService {
     func postReview(userId: String, cafeId: Int, review: Review, completion: @escaping (Result<ReviewResponse, Error>) -> Void) {
         let url = APIConstants.baseURL + "/api/reviews/user/\(userId)/cafe/\(cafeId)"
         
-        let headers: HTTPHeaders = [
-            "Authorization": "Bearer eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJpYXQiOjE2OTAzMDM3NDAsImV4cCI6MTY5MDMwNTU0MCwidXNlcklkeCI6IjE3NDMzYjk4LTRmMzItNDBmNS1hMmMzLWMxMzY1YjMzYmNlNCJ9.a_IbYlrVk_mx2RcpzRgYtcjgvWe0TJ_jkdCOEBpuZL8" // 여기에 발급받은 JWT 토큰을 넣어주세요.
-        ]
-        
+        var header : HTTPHeaders = ["Content-Type" : "application/json"]
+        if let bearerToken = UserDefaults.standard.string(forKey: "accessToken") {
+            header["Authorization"] = "Bearer \(bearerToken)"
+        }
+//        if let bearerToken = KeyChain.read(key: "accessToken") {
+//                    header["Authorization"] = "Bearer \(bearerToken)"
+//        }
         let parameters: [String: Any] = [
             "score": review.score,
             "content": review.content
         ]
         
-        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header)
             .validate()
             .responseDecodable(of: ReviewResponse.self) { response in
                 switch response.result {

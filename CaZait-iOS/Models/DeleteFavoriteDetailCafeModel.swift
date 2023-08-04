@@ -11,9 +11,6 @@ struct DeleteFavoriteDetailResponse: Codable {
     let code: Int
     let result: String
     let message: String
-    let data: DeleteFavoriteDetailData
+    let data: String
 }
 
-struct DeleteFavoriteDetailData: Codable {
-    let id: Int
-}

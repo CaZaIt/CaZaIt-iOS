@@ -17,6 +17,10 @@ class DeleteFavoriteDetailCafeService {
             header["Authorization"] = "Bearer \(bearerToken)"
         }
         
+//        if let bearerToken = KeyChain.read(key: "accessToken") {
+//                    header["Authorization"] = "Bearer \(bearerToken)"
+//        }
+        
         AF.request(url, method: .delete, headers: header)
             .validate()
             .responseDecodable(of: DeleteFavoriteDetailResponse.self) { response in
