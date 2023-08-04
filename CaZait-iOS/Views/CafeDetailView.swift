@@ -284,13 +284,8 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             print("cafeId nil")
             return
         }
-        
-        guard let userId = UserDefaults.standard.string(forKey: "userId") else {
-            print("userId nil")
-            return
-        }
 
-        if UserDefaults.standard.string(forKey: "accessToken") != nil  {
+        if let userId = UserDefaults.standard.string(forKey: "userId")  {
             registerFavoriteDetailCafeService.postFavoriteDetailCafe(userId: userId, cafeId: cafeId) { result in
                 switch result {
                 case .success(let registerFavoriteDetailCafeResponse):
@@ -326,7 +321,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             return
         }
 
-        if UserDefaults.standard.string(forKey: "accessToken") != nil {
+        if let userId = UserDefaults.standard.string(forKey: "userId") {
             deleteFavoriteDetailCafeService.deleteFavoriteDetailCafe(userId: userId, cafeId: cafeId) { result in
                 switch result {
                 case .success(let deleteFavoriteDetailCafeResponse):
@@ -533,7 +528,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     @objc func reviewWriteButtonClicked() {
         let nextVC = WriteReviewView()
         nextVC.cafeId = self.cafeId
-        if UserDefaults.standard.string(forKey: "accessToken") != nil {
+        if let userId = UserDefaults.standard.string(forKey: "userId") {
             navigationController?.pushViewController(nextVC, animated: true)
         }
         else {
