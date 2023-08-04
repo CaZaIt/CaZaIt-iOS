@@ -747,9 +747,9 @@
 				DEVELOPMENT_TEAM = 7S6PH8TVFD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CaZait-iOS/Info.plist";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치정보 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치정보 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치정보 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "내 위치 조회를 통해 카페 정보를 받아올 때 사용합니다. 거부할 시 필수 기능이 제한됩니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "내 위치 조회를 통해 카페 정보를 받아올 때 사용합니다. 거부할 시 필수 기능이 제한됩니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "내 위치 조회를 통해 카페 정보를 받아올 때 사용합니다. 거부할 시 필수 기능이 제한됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
@@ -779,9 +779,9 @@
 				DEVELOPMENT_TEAM = 7S6PH8TVFD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CaZait-iOS/Info.plist";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치정보 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치정보 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치정보 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "내 위치 조회를 통해 카페 정보를 받아올 때 사용합니다. 거부할 시 필수 기능이 제한됩니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "내 위치 조회를 통해 카페 정보를 받아올 때 사용합니다. 거부할 시 필수 기능이 제한됩니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "내 위치 조회를 통해 카페 정보를 받아올 때 사용합니다. 거부할 시 필수 기능이 제한됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
