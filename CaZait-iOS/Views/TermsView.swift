@@ -41,6 +41,17 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         return label
     }()
     
+    private let essentialLabel_2: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.text = "필수"
+        label.numberOfLines = 1
+        return label
+    }()
+    
     private let placeAgreeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -48,6 +59,17 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         label.textColor = .black
         label.textAlignment = .center
         label.text = "위치정보 기반 서비스 이용약관"
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private let infoAgreeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.text = "개인정보 수집 및 이용 동의"
         label.numberOfLines = 1
         return label
     }()
@@ -63,7 +85,26 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         return label
     }()
     
-    private let rightArrowButton: UIButton = {
+    private let rightArrowButton_1: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        button.tintColor = UIColor(r: 255, g: 115, b: 91)
+        return button
+    }()
+    
+    private let detailLabel_2: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        label.textColor = UIColor(r: 255, g: 115, b: 91)
+        label.textAlignment = .center
+        label.text = "개인정보 수집 및 이용 동의 내용 보기"
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private let rightArrowButton_2: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
@@ -83,6 +124,16 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
     
     // 체크박스 버튼
     private let checkBoxButton_1: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "square"), for: .normal)
+        button.setImage(UIImage(systemName: "checkmark.square.fill"), for: .selected)
+        button.tintColor = .black
+        return button
+    }()
+    
+    // 체크박스 버튼
+    private let checkBoxButton_2: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "square"), for: .normal)
@@ -149,7 +200,12 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         self.pinkView.addSubview(placeAgreeLabel)
         self.pinkView.addSubview(checkBoxButton_1)
         self.pinkView.addSubview(detailLabel_1)
-        self.pinkView.addSubview(rightArrowButton)
+        self.pinkView.addSubview(rightArrowButton_1)
+        self.pinkView.addSubview(essentialLabel_2)
+        self.pinkView.addSubview(infoAgreeLabel)
+        self.pinkView.addSubview(checkBoxButton_2)
+        self.pinkView.addSubview(detailLabel_2)
+        self.pinkView.addSubview(rightArrowButton_2)
         
         
         
@@ -198,9 +254,36 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
             make.leading.equalTo(self.essentialLabel_1.snp.trailing).offset(16)
         }
         
-        self.rightArrowButton.snp.makeConstraints { make in
+        self.rightArrowButton_1.snp.makeConstraints { make in
             make.top.equalTo(self.placeAgreeLabel.snp.bottom).offset(3)
             make.leading.equalTo(self.detailLabel_1.snp.trailing).offset(3)
+            make.width.height.equalTo(10)
+        }
+        
+        self.essentialLabel_2.snp.makeConstraints { make in
+            make.top.equalTo(self.detailLabel_1.snp.bottom).offset(25)
+            make.leading.equalTo(self.pinkView.snp.leading).inset(39)
+        }
+        
+        self.infoAgreeLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.detailLabel_1.snp.bottom).offset(25)
+            make.leading.equalTo(self.essentialLabel_2.snp.trailing).offset(16)
+        }
+        
+        self.checkBoxButton_2.snp.makeConstraints { make in
+            make.top.equalTo(self.detailLabel_1.snp.bottom).offset(22)
+            make.trailing.equalTo(self.pinkView.snp.trailing).inset(35)
+            make.width.height.equalTo(30)
+        }
+        
+        self.detailLabel_2.snp.makeConstraints { make in
+            make.top.equalTo(self.infoAgreeLabel.snp.bottom).offset(1)
+            make.leading.equalTo(self.essentialLabel_2.snp.trailing).offset(16)
+        }
+        
+        self.rightArrowButton_2.snp.makeConstraints { make in
+            make.top.equalTo(self.infoAgreeLabel.snp.bottom).offset(3)
+            make.leading.equalTo(self.detailLabel_2.snp.trailing).offset(3)
             make.width.height.equalTo(10)
         }
         
@@ -213,9 +296,11 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         
         nextButton.addTarget(self, action:#selector(signupClicked), for: .touchUpInside)
         // 버튼에 액션 추가
-        allcheckBoxButton.addTarget(self, action: #selector(checkBoxTapped), for: .touchUpInside)
+        allcheckBoxButton.addTarget(self, action: #selector(allcheckBoxTapped), for: .touchUpInside)
         checkBoxButton_1.addTarget(self, action: #selector(checkBoxTapped), for: .touchUpInside)
-        
+        checkBoxButton_2.addTarget(self, action: #selector(checkBoxTapped), for: .touchUpInside)
+        rightArrowButton_1.addTarget(self, action: #selector(placeDetailClicked), for: .touchUpInside)
+        rightArrowButton_2.addTarget(self, action: #selector(personalInfoDetailClicked), for: .touchUpInside)
     }
     
     @objc func backButtonTapped() {
@@ -223,6 +308,16 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
     }
     
     // 체크박스 버튼을 탭할 때 호출되는 액션 메서드
+    @objc func allcheckBoxTapped(sender: UIButton) {
+        // 현재 상태를 반전시킴
+        isCheckBoxChecked = !isCheckBoxChecked
+        sender.isSelected = isCheckBoxChecked
+        
+        // 모든 체크박스 버튼의 선택 상태를 allcheckBoxButton에 맞춤
+        checkBoxButton_1.isSelected = isCheckBoxChecked
+        checkBoxButton_2.isSelected = isCheckBoxChecked
+    }
+    
     @objc func checkBoxTapped(sender: UIButton) {
         // 현재 상태를 반전시킴
         isCheckBoxChecked = !isCheckBoxChecked
@@ -230,10 +325,30 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
     }
     
     @objc func signupClicked(_ sender: UIButton) {
-        // RecentCafeView 인스턴스 생성
-        let signupView = SignupView()
-        // 내비게이션 스택으로 RecentCafeView를 푸시
-        self.navigationController?.pushViewController(signupView, animated: true)
+        // Check if both checkboxes are selected
+        if checkBoxButton_1.isSelected && checkBoxButton_2.isSelected {
+            // All checkboxes are selected, navigate to the next view
+            let signupView = SignupView()
+            self.navigationController?.pushViewController(signupView, animated: true)
+        } else {
+            // Show an alert if any of the checkboxes is not selected
+            let alert = UIAlertController(title: "약관동의 필요", message: "약관에 동의해야 다음으로 진행할 수 있습니다.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func placeDetailClicked(_ sender: UIButton) {
+            let placeDetailView = PlaceDetailTermsView()
+            self.navigationController?.pushViewController(placeDetailView, animated: true)
+        
+    }
+    
+    @objc func personalInfoDetailClicked(_ sender: UIButton) {
+            let personalInfoDetailView = PersonalInfoDetailTermsView()
+            self.navigationController?.pushViewController(personalInfoDetailView, animated: true)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {

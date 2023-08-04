@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		019D16A52A56CBB500766E9D /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16A42A56CBB500766E9D /* SplashView.swift */; };
 		019D16A72A712F9700766E9D /* TermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16A62A712F9700766E9D /* TermsView.swift */; };
+		019D16A92A77E3CF00766E9D /* PlaceDetailTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16A82A77E3CF00766E9D /* PlaceDetailTermsView.swift */; };
+		019D16AB2A78D65500766E9D /* PersonalInfoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16AA2A78D65500766E9D /* PersonalInfoDetailView.swift */; };
+		019D16AD2A792EF700766E9D /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16AC2A792EF700766E9D /* NoticeView.swift */; };
+		019D16AF2A79323800766E9D /* CustomerCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16AE2A79323800766E9D /* CustomerCenterView.swift */; };
 		01B87B582A120F480082FC05 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87B572A120F480082FC05 /* LoginView.swift */; };
 		01B87B5A2A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87B592A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift */; };
 		01B87B602A1B90700082FC05 /* APIContants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87B5F2A1B90700082FC05 /* APIContants.swift */; };
@@ -85,6 +89,10 @@
 /* Begin PBXFileReference section */
 		019D16A42A56CBB500766E9D /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		019D16A62A712F9700766E9D /* TermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsView.swift; sourceTree = "<group>"; };
+		019D16A82A77E3CF00766E9D /* PlaceDetailTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailTermsView.swift; sourceTree = "<group>"; };
+		019D16AA2A78D65500766E9D /* PersonalInfoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoDetailView.swift; sourceTree = "<group>"; };
+		019D16AC2A792EF700766E9D /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
+		019D16AE2A79323800766E9D /* CustomerCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerCenterView.swift; sourceTree = "<group>"; };
 		01B87B572A120F480082FC05 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		01B87B592A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCafeCollectionViewCell.swift; sourceTree = "<group>"; };
 		01B87B5F2A1B90700082FC05 /* APIContants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIContants.swift; sourceTree = "<group>"; };
@@ -364,6 +372,10 @@
 				F1F98D5C2A481FA50055BF21 /* NotificationView.swift */,
 				019D16A42A56CBB500766E9D /* SplashView.swift */,
 				019D16A62A712F9700766E9D /* TermsView.swift */,
+				019D16A82A77E3CF00766E9D /* PlaceDetailTermsView.swift */,
+				019D16AA2A78D65500766E9D /* PersonalInfoDetailView.swift */,
+				019D16AC2A792EF700766E9D /* NoticeView.swift */,
+				019D16AE2A79323800766E9D /* CustomerCenterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -524,6 +536,7 @@
 				6CC990722A703A91008ABE53 /* ReviewWriteService.swift in Sources */,
 				01F7A1F529D935540058736E /* TabBarView.swift in Sources */,
 				F1F98D6B2A56B43D0055BF21 /* LocationManager.swift in Sources */,
+				019D16AD2A792EF700766E9D /* NoticeView.swift in Sources */,
 				6C4286F72A2987ED00560F15 /* DetailCafeModel.swift in Sources */,
 				01B87B602A1B90700082FC05 /* APIContants.swift in Sources */,
 				F13FA08B2A1CD1CD0001958D /* AllCafeModel.swift in Sources */,
@@ -547,10 +560,12 @@
 				6C4286F32A1B7A1C00560F15 /* WriteReviewView.swift in Sources */,
 				6C4286FB2A29DB4900560F15 /* DetailCafeMenuService.swift in Sources */,
 				F13FA05E2A13899E0001958D /* SearchView.swift in Sources */,
+				019D16A92A77E3CF00766E9D /* PlaceDetailTermsView.swift in Sources */,
 				01F7A1F329D935540058736E /* SceneDelegate.swift in Sources */,
 				6CC9907E2A7047DE008ABE53 /* DeleteFavoriteDetailCafeModel.swift in Sources */,
 				F1F98D652A54068F0055BF21 /* FavoritesModel.swift in Sources */,
 				6CB6A7E82A5EF442003FAB86 /* DetailCafeReviewService.swift in Sources */,
+				019D16AB2A78D65500766E9D /* PersonalInfoDetailView.swift in Sources */,
 				01F7A21529D95A2B0058736E /* MainView.swift in Sources */,
 				01B87B862A1E36B20082FC05 /* LoginService.swift in Sources */,
 				01B87B822A1CF7420082FC05 /* signupModel.swift in Sources */,
@@ -565,6 +580,7 @@
 				F1F98D5D2A481FA50055BF21 /* NotificationView.swift in Sources */,
 				6C4286FD2A29DB6300560F15 /* DetailCafeMenuModel.swift in Sources */,
 				01B87B7C2A1CF20E0082FC05 /* NicknameCheckService.swift in Sources */,
+				019D16AF2A79323800766E9D /* CustomerCenterView.swift in Sources */,
 				6CB6A7E62A5EF26A003FAB86 /* DetailCafeReviewModel.swift in Sources */,
 				01B87B742A1B994D0082FC05 /* File1.swift in Sources */,
 				6CC9907A2A7045BA008ABE53 /* DeleteFavoriteDetailCafeService.swift in Sources */,
