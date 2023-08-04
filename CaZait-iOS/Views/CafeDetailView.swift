@@ -284,7 +284,13 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             print("cafeId nil")
             return
         }
-        if let userId = UserDefaults.standard.string(forKey: "userId") {
+        
+        guard let userId = UserDefaults.standard.string(forKey: "userId") else {
+            print("userId nil")
+            return
+        }
+
+        if UserDefaults.standard.string(forKey: "accessToken") != nil  {
             registerFavoriteDetailCafeService.postFavoriteDetailCafe(userId: userId, cafeId: cafeId) { result in
                 switch result {
                 case .success(let registerFavoriteDetailCafeResponse):
@@ -296,7 +302,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 }
             }
         } else {
-            print("userId 값이 없음")
             let alertController = UIAlertController(title: "로그인 후 이용가능합니다.", message: "", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
                 // OK 버튼을 클릭하면 실행될 코드
@@ -312,11 +317,16 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         
         guard let cafeId = cafeId else {
             // cafeId가 nil일 경우에 대한 처리 로직
-            print("cafeId가 nil입니다.")
+            print("cafeId nil")
+            return
+        }
+        
+        guard let userId = UserDefaults.standard.string(forKey: "userId") else {
+            print("userId nil")
             return
         }
 
-        if let userId = UserDefaults.standard.string(forKey: "userId") {
+        if UserDefaults.standard.string(forKey: "accessToken") != nil {
             deleteFavoriteDetailCafeService.deleteFavoriteDetailCafe(userId: userId, cafeId: cafeId) { result in
                 switch result {
                 case .success(let deleteFavoriteDetailCafeResponse):
@@ -327,7 +337,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 }
             }
         } else {
-            print("userId 값이 없음")
+            print("로그인 후 이용가능합니다.")
         }
     }
     
