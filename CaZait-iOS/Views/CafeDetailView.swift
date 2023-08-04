@@ -525,11 +525,12 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
 extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collectionView1 {
-//            if let count = cafeMenu?.count {
-//                print("collectionview1 : ", count)
-//                return count
-//            }
-            return 1
+            if let count = cafeMenu?.count {
+                print("collectionview1 : ", count)
+                print(type(of: count))
+                return count
+            }
+            //return 1
         } else if collectionView == collectionView2 {
             return 1
         }

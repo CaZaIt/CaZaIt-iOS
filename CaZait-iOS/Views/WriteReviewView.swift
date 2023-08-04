@@ -118,7 +118,7 @@ class WriteReviewView: UIViewController{
 //        button1.layer.shadowOpacity = 1.0
 //        button1.layer.shadowRadius = 6
 //        button1.layer.shadowOffset = CGSize(width: 0, height: 5)
-        button1.addTarget(WriteReviewView.self, action: #selector(postButtonTapped), for: .touchUpInside)
+        button1.addTarget(self, action: #selector(postButtonTapped), for: .touchUpInside)
         return button1
     }()
     
@@ -216,7 +216,7 @@ class WriteReviewView: UIViewController{
         }
         print(inputText)
         print(selectedStarCount)
-        
+
         let review = Review(score: selectedStarCount, content: inputText)
 
         // ReviewService의 인스턴스를 생성
@@ -238,6 +238,7 @@ class WriteReviewView: UIViewController{
             print("userId 값이 없음")
         }
     }
+
 
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
