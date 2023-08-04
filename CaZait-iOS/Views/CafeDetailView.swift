@@ -4,7 +4,7 @@ import Foundation
 
 class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
-    var collectionView1HeightConstant: CGFloat = 400
+    var collectionView1HeightConstant: CGFloat = 100
     var collectionView2HeightConstant: CGFloat = 400
     
     var cafeMenu: [DetailCafeMenu]?
@@ -246,23 +246,21 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         }
         
 
-        let numberOfRowsInCollectionView1 = collectionView1.dataSource?.collectionView(collectionView1, numberOfItemsInSection: 0) ?? 0
-        let numberOfRowsInCollectionView2 = collectionView1.dataSource?.collectionView(collectionView2, numberOfItemsInSection: 0) ?? 0
-        
-        collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13)
-        collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13)
+//        let numberOfRowsInCollectionView1 = collectionView1.dataSource?.collectionView(collectionView1, numberOfItemsInSection: 0) ?? 0
+//        let numberOfRowsInCollectionView2 = collectionView1.dataSource?.collectionView(collectionView2, numberOfItemsInSection: 0) ?? 0
+//
+//        collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13)
+//        collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13)
 
 
-        print(collectionView1HeightConstant)
-
         
-        collectionView1.snp.makeConstraints {
-            $0.height.equalTo(collectionView1HeightConstant).priority(.low)
-        }
+//        collectionView1.snp.makeConstraints {
+//            $0.height.equalTo(collectionView1HeightConstant).priority(.low)
+//        }
         
-        collectionView2.snp.makeConstraints {
-            $0.height.equalTo(collectionView2HeightConstant).priority(.low)
-        }
+//        collectionView2.snp.makeConstraints {
+//            $0.height.equalTo(collectionView2HeightConstant).priority(.low)
+//        }
         
         reviewWriteButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 600).isActive = true
         reviewWriteButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 310).isActive = true
@@ -473,6 +471,12 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 collectionView1.reloadData() // 컬렉션 뷰 리로드
 
                 print("cafe menu: ", response.count)
+                let numberOfRowsInCollectionView1 = response.count
+                collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13)
+                collectionView1.snp.makeConstraints {
+                    $0.height.equalTo(collectionView1HeightConstant).priority(.low)
+                }
+                
             case .failure(let error):
                 // 데이터를 받아오지 못했을 때의 처리 로직
                 print(error.localizedDescription)
@@ -498,15 +502,20 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 self.cafeReview = response.reviewResponses
                 //print(response)
                 print(self.cafeReview)
+                //[cafeReview].count
 
                 collectionView1.reloadData() // 컬렉션 뷰 리로드
 
-                //print("cafe menu: ", [response].count)
+                print("cafe review: ", [cafeReview].count)
+                let numberOfRowsInCollectionView2 = [response].count
+                collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13)
+                collectionView2.snp.makeConstraints {
+                    $0.height.equalTo(collectionView2HeightConstant).priority(.low)
+                }
+                
             case .failure(let error):
-                // 데이터를 받아오지 못했을 때의 처리 로직
                 print(error.localizedDescription)
-                // 에러 메시지 출력 예시
-                // 에러 메시지를 보여줄 수 있는 방식으로 처리
+                // 에러 메시지 출력
                 print(error)
             }
         }
@@ -530,7 +539,7 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
                 print(type(of: count))
                 return count
             }
-            //return 1
+            return 1
         } else if collectionView == collectionView2 {
             return 1
         }
