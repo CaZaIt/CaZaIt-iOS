@@ -95,22 +95,24 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
     private func setupLayout() {
         // 서브뷰들의 레이아웃을 설정합니다.
         nickname.translatesAutoresizingMaskIntoConstraints = false
-        hour.translatesAutoresizingMaskIntoConstraints = false
+        //hour.translatesAutoresizingMaskIntoConstraints = false
         review.translatesAutoresizingMaskIntoConstraints = false
-
-
-        NSLayoutConstraint.activate([
-            nickname.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            nickname.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
-
-            hour.leadingAnchor.constraint(equalTo: nickname.trailingAnchor, constant: 20),
-            hour.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
-
-            review.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            review.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 6),
-            //review.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
-  
-        ])
+        
+        
+        nickname.snp.makeConstraints { make in
+            make.leading.equalTo(contentView.snp.leading).offset(20)
+            make.top.equalTo(contentView.snp.top).offset(50)
+        }
+        
+        //        hour.snp.makeConstraints { make in
+        //            make.leading.equalTo(nickname.snp.trailing).offset(20)
+        //            make.top.equalTo(contentView.snp.top).offset(50)
+        //        }
+        
+        review.snp.makeConstraints { make in
+            make.leading.equalTo(contentView.snp.leading).offset(20)
+            make.top.equalTo(nickname.snp.bottom).offset(6)
+        }
     }
     
     func displayStars(starCount: Int) {

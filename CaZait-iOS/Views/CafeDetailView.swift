@@ -482,7 +482,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
 
                 // print("cafe menu: ", response.count)
                 let numberOfRowsInCollectionView1 = response.count
-                collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13)
+                collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13) // 115 셀 높이, 13 셀 간격
                 collectionView1.snp.makeConstraints {
                     $0.height.equalTo(collectionView1HeightConstant).priority(.low)
                 }
@@ -511,18 +511,12 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 self.cafeReview = response.reviewResponses
                 //print(response)
-                print(self.cafeReview)
-                
-                if let count = cafeReview?.count {
-                    print("count :", count)
-                } else {
-                    print("cafeReview가 nil이거나, 배열이 비어있습니다.")
-                }
-                
+                //print(self.cafeReview)
+
                 collectionView2.reloadData() // 컬렉션 뷰 리로드
                 
                 let numberOfRowsInCollectionView2 = cafeReview!.count
-                collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13)
+                collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13) // 115 셀 높이, 13 셀 간격
                 collectionView2.snp.makeConstraints {
                     $0.height.equalTo(collectionView2HeightConstant).priority(.low)
                 }
@@ -549,15 +543,15 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collectionView1 {
             if let count = cafeMenu?.count {
-                print("collectionview1 count: ", count)
-                print(type(of: count))
+               // print("collectionview1 count: ", count)
+                //print(type(of: count))
                 return count
             }
             return 1
         } else if collectionView == collectionView2 {
-            print("collection2")
+            //print("collection2")
             if let count = cafeReview?.count {
-                print("collectionview2 count :", count)
+                //print("collectionview2 count :", count)
                 return count
             }
             return 1
