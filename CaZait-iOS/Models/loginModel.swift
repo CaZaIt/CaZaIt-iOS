@@ -15,7 +15,7 @@ struct LoginResponse: Codable {
 }
 
 struct LoginData: Codable {
-    let accountNumber: String
+    let accountName: String
     let id: String
     let accessToken: String
     let refreshToken: String
