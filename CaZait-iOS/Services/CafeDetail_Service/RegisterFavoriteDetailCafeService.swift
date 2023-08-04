@@ -16,7 +16,9 @@ class RegisterFavoriteDetailCafeService {
         if let bearerToken = UserDefaults.standard.string(forKey: "accessToken") {
             header["Authorization"] = "Bearer \(bearerToken)"
         }
-        
+//        if let bearerToken = KeyChain.read(key: "accessToken") {
+//                    header["Authorization"] = "Bearer \(bearerToken)"
+//        }
         AF.request(url, method: .post, encoding: JSONEncoding.default, headers: header)
             .validate()
             .responseDecodable(of: RegisterFavoriteDetailCafeResponse.self) { response in

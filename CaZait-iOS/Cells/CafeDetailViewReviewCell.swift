@@ -8,19 +8,19 @@ import UIKit
 
 class CafeDetailViewReviewCell: UICollectionViewCell {
     
-    var stars: [UIImageView] = []
-
-    private let star: UIImageView = {
-        let image = UIImageView()
-        image.contentMode = .scaleAspectFill
-        
-        if let coffeeImage = UIImage(named: "coffee1") {
-            image.image = coffeeImage
-        }
-        
-        return image
+    var score = 1
+    // 꽉찬 별
+    lazy var starFillImage: UIImage? = {
+        return UIImage(systemName: "star.fill",
+                       withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .medium))?.withTintColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), renderingMode: .alwaysOriginal)
     }()
 
+    // 빈별
+    lazy var starEmptyImage: UIImage? = {
+        return UIImage(systemName: "star",
+                       withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .medium))?.withTintColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), renderingMode: .alwaysOriginal)
+    }()
+    
     
     private let nickname: UILabel = {
         let label = UILabel()
@@ -65,6 +65,7 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         setupCell()
         addSubviews()
         setupLayout()
+        //displayStars(starCount: score)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -100,10 +101,10 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
 
         NSLayoutConstraint.activate([
             nickname.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            nickname.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
+            nickname.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
 
             hour.leadingAnchor.constraint(equalTo: nickname.trailingAnchor, constant: 20),
-            hour.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            hour.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
 
             review.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             review.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 6),
@@ -111,12 +112,45 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
   
         ])
     }
+    
+    func displayStars(starCount: Int) {
+        let containerView = UIView()
+        contentView.addSubview(containerView)
+        var previousStarImageView: UIImageView?
+
+        for index in 1...5 {
+            let starImageView = UIImageView(image: index <= starCount ? starFillImage : starEmptyImage)
+            containerView.addSubview(starImageView)
+            
+            starImageView.snp.makeConstraints { make in
+                // 별 이미지 뷰가 이전 별 이미지 뷰 뒤에 오도록 설정
+                if let previousStar = previousStarImageView {
+                    make.leading.equalTo(previousStar.snp.trailing).offset(2)
+                } else {
+                    make.leading.equalTo(containerView.snp.leading)
+                }
+                make.top.equalTo(containerView.snp.top)
+                make.width.height.equalTo(24) // 별 이미지 뷰 크기 설정
+                
+                previousStarImageView = starImageView // 이전 별 이미지 뷰를 업데이트
+            }
+        }
+        
+        containerView.snp.makeConstraints { make in
+            make.leading.equalTo(contentView.snp.leading).offset(20)
+            make.top.equalTo(contentView.snp.top).offset(18)
+        }
+
+    }
 
     
-    func configure(nickname: String, review: String) {
+    func configure(nickname: String, review: String, score: Int) {
         // 셀의 내용을 설정합니다.
         self.nickname.text = nickname
         //self.hour.text = hour
         self.review.text = review
+        self.score = score
+        displayStars(starCount: score)
+
     }
 }

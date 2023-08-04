@@ -438,7 +438,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             switch result {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
-                print(cafe) // 받아온 데이터 사용 예시
+                //print(cafe) // 받아온 데이터 사용 예시
                 // UI 업데이트 또는 필요한 작업 수행
                 DispatchQueue.main.async {
                     self.cafeName.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
@@ -466,7 +466,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             case .success(let response):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 self.cafeMenu = response
-                print(response)
+                //print(response)
 //                print(self.cafeMenu)
 //
 //                for menu in response {
@@ -480,7 +480,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
 //                }
                 collectionView1.reloadData() // 컬렉션 뷰 리로드
 
-                print("cafe menu: ", response.count)
+                // print("cafe menu: ", response.count)
                 let numberOfRowsInCollectionView1 = response.count
                 collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13)
                 collectionView1.snp.makeConstraints {
@@ -512,12 +512,16 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 self.cafeReview = response.reviewResponses
                 //print(response)
                 print(self.cafeReview)
-                //[cafeReview].count
-
-                collectionView1.reloadData() // 컬렉션 뷰 리로드
-
-                print("cafe review: ", [cafeReview].count)
-                let numberOfRowsInCollectionView2 = [response].count
+                
+                if let count = cafeReview?.count {
+                    print("count :", count)
+                } else {
+                    print("cafeReview가 nil이거나, 배열이 비어있습니다.")
+                }
+                
+                collectionView2.reloadData() // 컬렉션 뷰 리로드
+                
+                let numberOfRowsInCollectionView2 = cafeReview!.count
                 collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13)
                 collectionView2.snp.makeConstraints {
                     $0.height.equalTo(collectionView2HeightConstant).priority(.low)
@@ -531,10 +535,10 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         }
     
     }
-
     
     @objc func reviewWriteButtonClicked() {
         let nextVC = WriteReviewView()
+        nextVC.cafeId = self.cafeId
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
@@ -545,12 +549,17 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collectionView1 {
             if let count = cafeMenu?.count {
-                print("collectionview1 : ", count)
+                print("collectionview1 count: ", count)
                 print(type(of: count))
                 return count
             }
             return 1
         } else if collectionView == collectionView2 {
+            print("collection2")
+            if let count = cafeReview?.count {
+                print("collectionview2 count :", count)
+                return count
+            }
             return 1
         }
             return 0
@@ -576,7 +585,7 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
         }else if collectionView == collectionView2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeDetailViewReviewCell", for: indexPath) as! CafeDetailViewReviewCell
             if let review = cafeReview?[indexPath.row]{
-                cell.configure(nickname: review.userId, review: review.content)
+                cell.configure(nickname: review.userId, review: review.content, score: review.score)
             }
 
             return cell
