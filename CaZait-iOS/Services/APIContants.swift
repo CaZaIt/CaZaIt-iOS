@@ -27,13 +27,17 @@ struct APIConstants {
     
     static let signupURL = baseURL + "/api/users/sign-up" // 회원가입
     
-    static let nicknamecheckURL = baseURL + "/api/users/nickname" // 닉네임 중복확인
+    static let nicknamecheckURL = baseURL + "/api/users/duplicate-check/nickname" // 닉네임 중복확인
     
-    static let emailcheckURL = baseURL + "/api/users/email" // 이메일 중복확인
+    static let emailcheckURL = baseURL + "/api/users/duplicate-check/accountname" // 아이디 중복확인
     
     static let loginURL = baseURL + "/api/auths/log-in?role=user" // 로그인(유저)
     
     static let favoritesURL = baseURL + "/api/favorites/user" //찜한매장확인
     
     static let refreshURL = baseURL + "/api/auths/refresh" //토큰 재발급
+    
+    static let messageSendURL = baseURL + "/api/auths/messages/codes/send/sign-up" //인증번호 발송
+    
+    static let messageSendCheckURL = baseURL + "/api/auths/messages/codes/verify" //인증번호 확인
 }

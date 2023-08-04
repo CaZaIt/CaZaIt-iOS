@@ -13,6 +13,8 @@
 		019D16AB2A78D65500766E9D /* PersonalInfoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16AA2A78D65500766E9D /* PersonalInfoDetailView.swift */; };
 		019D16AD2A792EF700766E9D /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16AC2A792EF700766E9D /* NoticeView.swift */; };
 		019D16AF2A79323800766E9D /* CustomerCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16AE2A79323800766E9D /* CustomerCenterView.swift */; };
+		019D16B12A7CE37700766E9D /* MessageSendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16B02A7CE37700766E9D /* MessageSendModel.swift */; };
+		019D16B32A7CE47900766E9D /* MessageSendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16B22A7CE47900766E9D /* MessageSendService.swift */; };
 		01B87B582A120F480082FC05 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87B572A120F480082FC05 /* LoginView.swift */; };
 		01B87B5A2A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87B592A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift */; };
 		01B87B602A1B90700082FC05 /* APIContants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87B5F2A1B90700082FC05 /* APIContants.swift */; };
@@ -93,6 +95,8 @@
 		019D16AA2A78D65500766E9D /* PersonalInfoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoDetailView.swift; sourceTree = "<group>"; };
 		019D16AC2A792EF700766E9D /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		019D16AE2A79323800766E9D /* CustomerCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerCenterView.swift; sourceTree = "<group>"; };
+		019D16B02A7CE37700766E9D /* MessageSendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSendModel.swift; sourceTree = "<group>"; };
+		019D16B22A7CE47900766E9D /* MessageSendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSendService.swift; sourceTree = "<group>"; };
 		01B87B572A120F480082FC05 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		01B87B592A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCafeCollectionViewCell.swift; sourceTree = "<group>"; };
 		01B87B5F2A1B90700082FC05 /* APIContants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIContants.swift; sourceTree = "<group>"; };
@@ -220,6 +224,7 @@
 				01B87B772A1CDB2F0082FC05 /* EmailCheckService.swift */,
 				01B87B7B2A1CF20E0082FC05 /* NicknameCheckService.swift */,
 				01B87B7F2A1CF4D00082FC05 /* SignupService.swift */,
+				019D16B22A7CE47900766E9D /* MessageSendService.swift */,
 			);
 			path = SignUp_Service;
 			sourceTree = "<group>";
@@ -276,6 +281,7 @@
 				01B87B832A1E30C60082FC05 /* loginModel.swift */,
 				F1F98D642A54068F0055BF21 /* FavoritesModel.swift */,
 				F154DA762A6904FE00B6C7F0 /* RefreshTokenModel.swift */,
+				019D16B02A7CE37700766E9D /* MessageSendModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -556,6 +562,7 @@
 				01F7A21929D95C150058736E /* MyPageView.swift in Sources */,
 				01F7A20829D936280058736E /* InsetTextField.swift in Sources */,
 				6C4286F92A29880200560F15 /* DetailCafeService.swift in Sources */,
+				019D16B12A7CE37700766E9D /* MessageSendModel.swift in Sources */,
 				01F7A1F129D935540058736E /* AppDelegate.swift in Sources */,
 				6C4286F32A1B7A1C00560F15 /* WriteReviewView.swift in Sources */,
 				6C4286FB2A29DB4900560F15 /* DetailCafeMenuService.swift in Sources */,
@@ -589,6 +596,7 @@
 				01B87B582A120F480082FC05 /* LoginView.swift in Sources */,
 				01B87B762A1CCD930082FC05 /* SignupView.swift in Sources */,
 				01F7A20929D936280058736E /* UITextField+Extenstion.swift in Sources */,
+				019D16B32A7CE47900766E9D /* MessageSendService.swift in Sources */,
 				01B87B782A1CDB2F0082FC05 /* EmailCheckService.swift in Sources */,
 				01B9328929E2E320006342F9 /* MapView.swift in Sources */,
 				01B87B722A1B99480082FC05 /* File2.swift in Sources */,

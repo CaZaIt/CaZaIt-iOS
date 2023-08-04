@@ -397,6 +397,7 @@ class SignupView: UIViewController{
         emailButton.addTarget(self, action:#selector(emailCheck), for: .touchUpInside)
         nicknameButton.addTarget(self, action:#selector(nicknameCheck), for: .touchUpInside)
         joinButton.addTarget(self, action:#selector(SignUp), for: .touchUpInside)
+        phonenumberButton.addTarget(self, action:#selector(messageSend), for: .touchUpInside)
         
     }
     
@@ -421,6 +422,10 @@ class SignupView: UIViewController{
         signup()
     }
     
+    @objc func messageSend() {
+        messagesend()
+    }
+    
 }
 
 // 손가락 제스처 기능 확장
@@ -433,10 +438,10 @@ extension SignupView {
     //이메일 중복확인
     func emailcheck() {
         
-        guard let accountNumber = idField.text else { return }
+        guard let accountName = idField.text else { return }
         
         
-        emailCheckService.shared.emailcheck(accountNumber: accountNumber) { response in
+        emailCheckService.shared.emailcheck(accountName: accountName) { response in
             switch response {
             case .success(let data):
                 guard let data = data as? EmailCheckResponse else { return }
@@ -474,7 +479,7 @@ extension SignupView {
             switch response {
             case .success(let data):
                 guard let data = data as? NicknameCheckResponse else { return }
-                let alert = UIAlertController(title: data.message, message: "", preferredStyle: .alert)
+                let alert = UIAlertController(title: "인증번호가 전송되었습니다.", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
                 self.present(alert, animated: true, completion: nil)
@@ -498,6 +503,41 @@ extension SignupView {
             }
         }
     }
+    //인증번호 발송
+    func messagesend() {
+        
+        guard let recipientPhoneNumber = phonenumberField.text else { return }
+        
+        
+        messageSendService.shared.messageSend(recipientPhoneNumber: recipientPhoneNumber) { response in
+            switch response {
+            case .success(let data):
+                guard let data = data as? MessageSendResponse else { return }
+                let alert = UIAlertController(title: data.message, message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print(data)
+            case .requestErr(let err):
+                print(err)
+            case .pathErr:
+                let alert = UIAlertController(title: "인증할 수 없는 번호 입니다", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                let alert = UIAlertController(title: "인증할 수 없는 번호 입니다", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print("networkFail")
+            }
+        }
+    }
+    
     //가입하기
     func signup() {
         
