@@ -10,6 +10,7 @@ import UIKit
 
 class RecentCafeView: UIViewController {
     
+    private var recentCafes = [RecentModel]()
     
     private let pinkView: UIView = {
         let view = UIView()
@@ -91,6 +92,15 @@ class RecentCafeView: UIViewController {
         self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
+    
+    // 새로운 카페 정보를 추가
+    func addRecentCafe(cafe: RecentModel) {
+        if let index = recentCafes.firstIndex(of: cafe) {
+            // 이미 존재하는 카페면 배열에서 제거하고 다시 맨 앞에 추가하여 최근 본 것으로 갱신
+            recentCafes.remove(at: index)
+        }
+        recentCafes.insert(cafe, at: 0)
+    }
 
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
@@ -99,7 +109,6 @@ class RecentCafeView: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = true
-        
         
     }
     
