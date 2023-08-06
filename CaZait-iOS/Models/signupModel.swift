@@ -13,12 +13,13 @@ struct SignupResponse: Codable {
     let data: SignupData?
     let message: String
     let result: String
+    let code: Int
 }
 
 // MARK: - SignupData
 struct SignupData: Codable {
-    let email: String
+    let accountName: String
     let id: Int
     let nickname: String
-    let password: String
+    let phoneNumber: String
 }

@@ -398,6 +398,7 @@ class SignupView: UIViewController{
         nicknameButton.addTarget(self, action:#selector(nicknameCheck), for: .touchUpInside)
         joinButton.addTarget(self, action:#selector(SignUp), for: .touchUpInside)
         phonenumberButton.addTarget(self, action:#selector(messageSend), for: .touchUpInside)
+        certifyButton.addTarget(self, action:#selector(messageVerify), for: .touchUpInside)
         
     }
     
@@ -425,6 +426,11 @@ class SignupView: UIViewController{
     @objc func messageSend() {
         messagesend()
     }
+    
+    @objc func messageVerify() {
+        messageverify()
+    }
+    
     
 }
 
@@ -530,6 +536,42 @@ extension SignupView {
                 print("serverErr")
             case .networkFail:
                 let alert = UIAlertController(title: "인증할 수 없는 번호 입니다", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print("networkFail")
+            }
+        }
+    }
+    
+    //인증번호 발송
+    func messageverify() {
+        
+        guard let recipientPhoneNumber = phonenumberField.text else { return }
+        guard let verificationCode = certifyField.text else { return }
+        
+        
+        messageVerifyService.shared.messageVerify(recipientPhoneNumber: recipientPhoneNumber, verificationCode: verificationCode) { response in
+            switch response {
+            case .success(let data):
+                guard let data = data as? MessageVerifyResponse else { return }
+                let alert = UIAlertController(title: data.message, message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print(data)
+            case .requestErr(let err):
+                print(err)
+            case .pathErr:
+                let alert = UIAlertController(title: "인증에 실패하였습니다.", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                let alert = UIAlertController(title: "인증에 실패하였습니다.", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
                 self.present(alert, animated: true, completion: nil)
