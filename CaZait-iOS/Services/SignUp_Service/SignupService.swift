@@ -15,7 +15,7 @@ class signupService {
     static let shared = signupService()
 //(2)싱글통 객체를 선언해서 앱 어디에서든지 접근가능하도록 한다
     private init() {}
-    
+    //파라미터 변경(8/6)
     func signup(accountName: String, password: String, nickname: String, phoneNumber: String, completion: @escaping(NetworkResult<Any>) -> Void)
     {
         let url = APIConstants.signupURL //통신할 API 주소
