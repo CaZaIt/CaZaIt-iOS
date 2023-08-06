@@ -166,11 +166,21 @@ extension MainTableViewCafeCell: UICollectionViewDataSource, UICollectionViewDel
         
         // CafeDetailView 호출
         let cafeDetailView = CafeDetailView() // CafeDetailView 초기화
+        let recentCafeView = RecentCafeView() // RecentCafeView 초기화
         
         //cafeDetailView에서 받은 cafeId를 통해 통신할 수 있도록 값을 전달한다.
         cafeDetailView.cafeId = self.allCafeData?.data[0][indexPath.row].cafeId
         navigationController?.pushViewController(cafeDetailView, animated: true)
         
+
+        //cafeDetailView에서 받은 recentCafeModel를 통해 통신할 수 있도록 값을 전달한다.
+        let recentCafe = RecentModel(
+            cafeImage: self.allCafeData?.data[0][indexPath.row].cafeImages[0] ?? "",
+            cafeName: self.allCafeData?.data[0][indexPath.row].name ?? "",
+            cafeLocation: self.allCafeData?.data[0][indexPath.row].address ?? "",
+            cafeCongestion: self.allCafeData?.data[0][indexPath.row].congestionStatus ?? ""
+        )
+        recentCafeView.addRecentCafe(cafe: recentCafe)
     }
     
 }
