@@ -170,8 +170,6 @@ extension MainTableViewCafeCell: UICollectionViewDataSource, UICollectionViewDel
         
         //cafeDetailView에서 받은 cafeId를 통해 통신할 수 있도록 값을 전달한다.
         cafeDetailView.cafeId = self.allCafeData?.data[0][indexPath.row].cafeId
-        navigationController?.pushViewController(cafeDetailView, animated: true)
-        
 
         //cafeDetailView에서 받은 recentCafeModel를 통해 통신할 수 있도록 값을 전달한다.
         let recentCafe = RecentModel(
@@ -181,6 +179,8 @@ extension MainTableViewCafeCell: UICollectionViewDataSource, UICollectionViewDel
             cafeCongestion: self.allCafeData?.data[0][indexPath.row].congestionStatus ?? ""
         )
         recentCafeView.addRecentCafe(cafe: recentCafe)
+        
+        navigationController?.pushViewController(cafeDetailView, animated: true)
     }
     
 }
