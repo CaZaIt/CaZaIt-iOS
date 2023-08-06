@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RecentModel {
+struct RecentModel: Equatable {
     let cafeImage : String
     let cafeName : String
     let cafeLocation : String
