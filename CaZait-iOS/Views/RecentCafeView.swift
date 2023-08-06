@@ -100,6 +100,23 @@ class RecentCafeView: UIViewController {
             recentCafes.remove(at: index)
         }
         recentCafes.insert(cafe, at: 0)
+        
+        saveRecentCafesToUserDefaults()
+    }
+    
+    // 저장
+    func saveRecentCafesToUserDefaults() {
+        let encodedData = try? JSONEncoder().encode(recentCafes)
+        UserDefaults.standard.set(encodedData, forKey: "recentCafes")
+    }
+
+    // 불러오기
+    func loadRecentCafesFromUserDefaults() {
+        if let encodedData = UserDefaults.standard.data(forKey: "recentCafes") {
+            if let decodedCafes = try? JSONDecoder().decode([RecentModel].self, from: encodedData) {
+                recentCafes = decodedCafes
+            }
+        }
     }
 
     @objc func backButtonTapped() {
