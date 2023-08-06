@@ -6,8 +6,9 @@
 //
 
 import Foundation
-
-struct RecentModel: Equatable {
+//동일한 모델이 있는지 확인하기 위해 Equatable를 사용하였고,
+// 리스트를 UserDefaults에 저장하기 위해 Encodable 프로토콜을 사용하였다.
+struct RecentModel: Equatable, Encodable {
     let cafeImage : String
     let cafeName : String
     let cafeLocation : String
