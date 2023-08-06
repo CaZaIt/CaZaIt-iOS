@@ -31,7 +31,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     private let cafeImage: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "big_cafe")
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         return view
@@ -433,8 +432,9 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             switch result {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
-                //print(cafe) // 받아온 데이터 사용 예시
+                print(cafe) // 받아온 데이터 사용 예시
                 // UI 업데이트 또는 필요한 작업 수행
+                //print(cafe.cafeImages[1])
                 DispatchQueue.main.async {
                     self.cafeName.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
                     self.cafeLocation.text = cafe.address
