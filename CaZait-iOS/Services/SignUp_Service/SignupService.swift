@@ -16,7 +16,7 @@ class signupService {
 //(2)싱글통 객체를 선언해서 앱 어디에서든지 접근가능하도록 한다
     private init() {}
     
-    func signup(email: String, password: String, nickname: String, completion: @escaping(NetworkResult<Any>) -> Void)
+    func signup(accountName: String, password: String, nickname: String, phoneNumber: String, completion: @escaping(NetworkResult<Any>) -> Void)
     {
         let url = APIConstants.signupURL //통신할 API 주소
         
@@ -25,9 +25,10 @@ class signupService {
         
         //요청 바디
         let body : Parameters = [
-            "email" : email,
+            "accountName" : accountName,
             "password" : password,
-            "nickname" : nickname
+            "nickname" : nickname,
+            "phoneNumber" : phoneNumber
         ]
         
         //요청서 //Request 생성

@@ -277,6 +277,10 @@ class SignupView: UIViewController{
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         
+        // 다른 부분을 탭할 때 키보드 숨기기
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
         
         self.view.addSubview(pinkView)
         self.pinkView.addSubview(idLabel)
@@ -431,6 +435,10 @@ class SignupView: UIViewController{
         messageverify()
     }
     
+    // 다른 부분을 탭할 때 키보드 숨기기
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
     
 }
 
@@ -485,7 +493,7 @@ extension SignupView {
             switch response {
             case .success(let data):
                 guard let data = data as? NicknameCheckResponse else { return }
-                let alert = UIAlertController(title: "인증번호가 전송되었습니다.", message: "", preferredStyle: .alert)
+                let alert = UIAlertController(title: "사용가능한 닉네임입니다.", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
                 self.present(alert, animated: true, completion: nil)
@@ -583,12 +591,13 @@ extension SignupView {
     //가입하기
     func signup() {
         
-        guard let nickname = nicknameField.text else { return }
-        guard let password = pwField.text else { return }
-        guard let email = idField.text else { return }
+        guard let nickname_sign = nicknameField.text else { return }
+        guard let password_sign = pwField.text else { return }
+        guard let accountName_sign = idField.text else { return }
+        guard let phoneNumber_sign = phonenumberField.text else { return }
         
         
-        signupService.shared.signup(email: email, password: password, nickname: nickname) { response in
+        signupService.shared.signup(accountName: accountName_sign, password: password_sign, nickname: nickname_sign,phoneNumber: phoneNumber_sign) { response in
             switch response {
             case .success(let data):
                 guard let data = data as? SignupResponse else { return }
@@ -600,7 +609,7 @@ extension SignupView {
             case .requestErr(let err):
                 print(err)
             case .pathErr:
-                let alert = UIAlertController(title: "사용할 수 없는 닉네임 입니다", message: "", preferredStyle: .alert)
+                let alert = UIAlertController(title: "회원가입에 실패하였습니다.", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
                 self.present(alert, animated: true, completion: nil)
@@ -608,7 +617,7 @@ extension SignupView {
             case .serverErr:
                 print("serverErr")
             case .networkFail:
-                let alert = UIAlertController(title: "사용할 수 없는 닉네임 입니다", message: "", preferredStyle: .alert)
+                let alert = UIAlertController(title: "회원가입에 실패하였습니다.", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
                 self.present(alert, animated: true, completion: nil)
