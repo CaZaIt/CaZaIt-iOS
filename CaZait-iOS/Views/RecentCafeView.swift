@@ -46,7 +46,7 @@ class RecentCafeView: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
         // 네비게이션컨트롤러를 통해서 Status Bar 색깔 변경
         self.navigationController?.navigationBar.barStyle = .black
-        
+        loadRecentCafesFromUserDefaults()
     }
     
     override func viewDidLoad() {
@@ -95,11 +95,14 @@ class RecentCafeView: UIViewController {
     
     // 새로운 카페 정보를 추가
     func addRecentCafe(cafe: RecentModel) {
+        loadRecentCafesFromUserDefaults()
         if let index = recentCafes.firstIndex(of: cafe) {
             // 이미 존재하는 카페면 배열에서 제거하고 다시 맨 앞에 추가하여 최근 본 것으로 갱신
             recentCafes.remove(at: index)
         }
         recentCafes.insert(cafe, at: 0)
+        print("recentCafe 출력됩니다")
+        print(recentCafes)
         
         saveRecentCafesToUserDefaults()
     }
@@ -135,13 +138,13 @@ extension RecentCafeView: UICollectionViewDataSource, UICollectionViewDelegate, 
     
     // collectionView 셀 개수 반환
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return recentCafes.count
     }
     
     // collectionView 셀 생성 및 반환
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecentCafeCollectionViewCell", for: indexPath) as! RecentCafeCollectionViewCell
-        
+        cell.configure(with: recentCafes[indexPath.row])
         
         return cell
     }

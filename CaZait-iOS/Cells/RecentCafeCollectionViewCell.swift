@@ -5,14 +5,23 @@
 //  Created by 강석호 on 2023/05/15.
 //
 
-import Foundation
 import UIKit
 import SnapKit
+import Kingfisher
+
+private let congestionMapping: [String: String] = [
+    "NONE": "미등록",
+    "CLOSE": "종료",
+    "FREE": "여유",
+    "NORMAL": "보통",
+    "CROWDED": "혼잡",
+    "VERYCROWDED": "매우혼잡"
+]
 
 class RecentCafeCollectionViewCell: UICollectionViewCell {
     
     
-    private let CafeImageView: UIImageView = {
+    private let cafeImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "small_cafe2")
         view.contentMode = .scaleAspectFill
@@ -20,7 +29,7 @@ class RecentCafeCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    private let CafeNameLabel: UILabel = {
+    private let cafeNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "롬곡"
@@ -28,17 +37,17 @@ class RecentCafeCollectionViewCell: UICollectionViewCell {
         label.textColor = .black
         return label
     }()
-    
-    private let DistanceLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "220m"
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .black
-        return label
-    }()
+//
+//    private let DistanceLabel: UILabel = {
+//        let label = UILabel()
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        label.text = "220m"
+//        label.font = UIFont.systemFont(ofSize: 12)
+//        label.textColor = .black
+//        return label
+//    }()
 
-    private let AddressLabel: UILabel = {
+    private let addressLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "서울특별시 광진구 광나루로\n375-1 2층(군자동)"
@@ -49,14 +58,14 @@ class RecentCafeCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let CongestionView: UIImageView = {
+    private let congestionView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1)
         view.layer.cornerRadius = 20
         return view
     }()
     
-    private let CongestionLabel: UILabel = {
+    private let congestionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .white
@@ -76,47 +85,51 @@ class RecentCafeCollectionViewCell: UICollectionViewCell {
         setupContentView()
     }
     
+    func configure(with recentCafe: RecentModel) {
+        cafeNameLabel.text = recentCafe.cafeName
+        addressLabel.text = recentCafe.cafeLocation
+        congestionLabel.text = congestionMapping[recentCafe.cafeCongestion]
+        
+        let url = URL(string: recentCafe.cafeImage)
+        cafeImageView.kf.setImage(with: url)
+    }
+    
     func setupContentView() {        
-        contentView.addSubview(CafeImageView)
-        contentView.addSubview(CafeNameLabel)
-        contentView.addSubview(DistanceLabel)
-        contentView.addSubview(AddressLabel)
-        contentView.addSubview(CongestionView)
-        contentView.addSubview(CongestionLabel)
+        contentView.addSubview(cafeImageView)
+        contentView.addSubview(cafeNameLabel)
+        contentView.addSubview(addressLabel)
+        contentView.addSubview(congestionView)
+        contentView.addSubview(congestionLabel)
         
         
-        CafeImageView.snp.makeConstraints { make in
+        cafeImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(15)
             make.leading.equalToSuperview().offset(15)
             make.trailing.equalToSuperview().inset(213)
             make.bottom.equalToSuperview().inset(20)
         }
         
-        CafeNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(CafeImageView.snp.top).inset(10)
-            make.leading.equalTo(CafeImageView.snp.trailing).offset(18)
+        cafeNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(cafeImageView.snp.top).inset(10)
+            make.leading.equalTo(cafeImageView.snp.trailing).offset(18)
         }
         
-        DistanceLabel.snp.makeConstraints { make in
-            make.top.equalTo(CafeImageView.snp.top).inset(20)
-            make.leading.equalTo(CafeNameLabel.snp.trailing).offset(10)
+        addressLabel.snp.makeConstraints { make in
+            make.top.equalTo(cafeNameLabel.snp.bottom).offset(7)
+            make.leading.equalTo(cafeImageView.snp.trailing).offset(18)
+            make.trailing.equalTo(contentView.snp.trailing).inset(18)
         }
         
-        AddressLabel.snp.makeConstraints { make in
-            make.top.equalTo(CafeNameLabel.snp.bottom).offset(7)
-            make.leading.equalTo(CafeImageView.snp.trailing).offset(18)
-        }
-        
-        CongestionView.snp.makeConstraints { make in
-            make.top.equalTo(AddressLabel.snp.bottom).offset(26)
-            make.leading.equalTo(CafeImageView.snp.trailing).offset(18)
+        congestionView.snp.makeConstraints { make in
+            make.top.equalTo(addressLabel.snp.bottom).offset(26)
+            make.leading.equalTo(cafeImageView.snp.trailing).offset(18)
             make.bottom.equalTo(contentView.snp.bottom).inset(20)
             make.trailing.equalTo(contentView.snp.trailing).inset(18)
         }
         
-        CongestionLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(CongestionView.snp.centerX)
-            make.centerY.equalTo(CongestionView.snp.centerY)
+        congestionLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(congestionView.snp.centerX)
+            make.centerY.equalTo(congestionView.snp.centerY)
         }
         
     }
