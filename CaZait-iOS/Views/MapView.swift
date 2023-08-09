@@ -10,6 +10,7 @@ import NMapsMap
 
 class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시작좌표인 클래스
     
+    private var allCafeData: AllCafeResponse? //통신한 데이터를 저장하기 위한 변수입니다.
     var locationManager = CLLocationManager()
     
     var isFirstLocationUpdate = true
@@ -110,6 +111,7 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
+        getAllCafeInfoData()
         
         setUI()
         
@@ -270,6 +272,31 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
             isFirstLocationUpdate = false
         }
     }
+    
+    func getAllCafeInfoData() {
+        
+        AllCafeService.shared.getAllCafeInfo(longitude : String(currentLongitude), latitude : String(currentLatitude), sort : "distance", limit : "0") { response in
+            
+            switch response {
+                
+            case .success(let data):
+                guard let listData = data as? AllCafeResponse else {return}
+                self.allCafeData = listData //통신한 데이터를 변수에 저장하고
+                
+                
+                // 실패할 경우에 분기처리는 아래와 같이 합니다.
+            case .requestErr :
+                print("requestErr")
+            case .pathErr :
+                print("pathErr")
+            case .serverErr :
+                print("serveErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
+    }
+    
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse || status == .authorizedAlways {
