@@ -47,6 +47,7 @@ class RecentCafeView: UIViewController {
         // 네비게이션컨트롤러를 통해서 Status Bar 색깔 변경
         self.navigationController?.navigationBar.barStyle = .black
         loadRecentCafesFromUserDefaults()
+        collectionView.reloadData()
     }
     
     override func viewDidLoad() {
