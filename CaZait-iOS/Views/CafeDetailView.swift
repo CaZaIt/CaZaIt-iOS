@@ -439,7 +439,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 print(cafe) // 받아온 데이터 사용 예시
-                // UI 업데이트 또는 필요한 작업 수행                
                 if let imageURL = cafe.cafeImages.first, let url = URL(string: imageURL) {
                     URLSession.shared.dataTask(with: url) { data, _, error in
                         if let error = error {
@@ -455,7 +454,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 }
 
                 DispatchQueue.main.async {
-                    self.cafeName.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
+                    self.cafeName.text = cafe.name
                     self.cafeLocation.text = cafe.address
                 }
             case .failure(let error):
@@ -487,8 +486,20 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 print(cafe) // 받아온 데이터 사용 예시
-                // UI 업데이트 또는 필요한 작업 수행
-                //print(cafe.cafeImages[1])
+                
+                if let imageURL = cafe.cafeImages.first, let url = URL(string: imageURL) {
+                    URLSession.shared.dataTask(with: url) { data, _, error in
+                        if let error = error {
+                            print("Failed to download image:", error)
+                            return
+                        }
+                        if let data = data, let downloadedImage = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                self.cafeImage.image = downloadedImage
+                            }
+                        }
+                    }.resume()
+                }
                 DispatchQueue.main.async {
                     self.cafeName.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
                     self.cafeLocation.text = cafe.address
