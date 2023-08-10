@@ -99,7 +99,13 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))
         self.navigationItem.leftBarButtonItem = backButton
         
-        getDetailCafe()
+        if let userId = UserDefaults.standard.string(forKey: "userId") {
+            getDetailCafeToken()
+            print("Token")
+        } else {
+            getDetailCafe()
+            print("notToken")
+        }
         getDetailCafeMenu()
         getDetailCafeReview()
     }
@@ -429,6 +435,41 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         print("cafeID: ",cafeId)
         let detailcafeservice = DetailCafeService() // DetailCafeService 인스턴스 생성
         detailcafeservice.getDetailCafeBycafeID(cafeID: cafeId) { result in
+            switch result {
+            case .success(let cafe):
+                // 성공적으로 데이터를 받아왔을 때의 처리 로직
+                print(cafe) // 받아온 데이터 사용 예시
+                // UI 업데이트 또는 필요한 작업 수행
+                //print(cafe.cafeImages[1])
+                DispatchQueue.main.async {
+                    self.cafeName.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
+                    self.cafeLocation.text = cafe.address
+                }
+            case .failure(let error):
+                // 데이터를 받아오지 못했을 때의 처리 로직
+                print(error.localizedDescription)
+                // 에러 메시지 출력 예시
+                // 에러 메시지를 보여줄 수 있는 방식으로 처리
+                print(error)
+            }
+        }
+    }
+    
+    func getDetailCafeToken() {
+        guard let cafeId = cafeId else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("cafeId가 nil")
+            return
+        }
+        
+        guard let userId = UserDefaults.standard.string(forKey: "userId") else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("userID가 nil")
+            return
+        }
+        
+        let detailcafeservice = DetailCafeService() // DetailCafeService 인스턴스 생성
+        detailcafeservice.getDetailCafeBycafeIDToken(cafeID: cafeId, userID: userId) { result in
             switch result {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
