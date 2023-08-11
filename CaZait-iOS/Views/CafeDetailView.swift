@@ -89,13 +89,16 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-                
+        
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.backgroundColor = .black
         self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
         self.navigationController?.navigationBar.barStyle = .default
         self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.backgroundColor = .black
-        
+        self.navigationController?.navigationBar.isTranslucent = false
+
         // 뒤로가기 버튼 추가
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))
         self.navigationItem.leftBarButtonItem = backButton
@@ -126,7 +129,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        //print("!!!!!!!!!!!!!", cafeId)
+
         collectionView1.dataSource = self
         collectionView1.delegate = self
         collectionView1.register(CafeDetailViewMenuCell.self, forCellWithReuseIdentifier: "CafeDetailViewMenuCell")
