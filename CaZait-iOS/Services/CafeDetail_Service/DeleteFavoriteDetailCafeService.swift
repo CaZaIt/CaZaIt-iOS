@@ -13,13 +13,10 @@ class DeleteFavoriteDetailCafeService {
         let url = APIConstants.baseURL + "/api/favorites/delete/\(userId)/\(cafeId)"
         
         var header : HTTPHeaders = ["Content-Type" : "application/json"]
-        if let bearerToken = UserDefaults.standard.string(forKey: "accessToken") {
+        if let bearerToken = KeyChain.read(key: "accessToken") {
             header["Authorization"] = "Bearer \(bearerToken)"
         }
         
-//        if let bearerToken = KeyChain.read(key: "accessToken") {
-//                    header["Authorization"] = "Bearer \(bearerToken)"
-//        }
         
         AF.request(url, method: .delete, headers: header)
             .validate()

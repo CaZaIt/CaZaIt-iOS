@@ -13,7 +13,7 @@ class ReviewWriteService {
         let url = APIConstants.baseURL + "/api/reviews/user/\(userId)/cafe/\(cafeId)"
         
         var header : HTTPHeaders = ["Content-Type" : "application/json"]
-        if let bearerToken = UserDefaults.standard.string(forKey: "accessToken") {
+        if let bearerToken = KeyChain.read(key: "accessToken") {
             header["Authorization"] = "Bearer \(bearerToken)"
         }
 //        if let bearerToken = KeyChain.read(key: "accessToken") {
