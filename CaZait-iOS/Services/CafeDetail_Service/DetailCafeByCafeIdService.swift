@@ -8,15 +8,15 @@
 import Foundation
 import Alamofire
 
-class DetailCafeService{
-    func getDetailCafeBycafeID(cafeID: Int, completion: @escaping (Result<DetailCafe, Error>) -> Void) {
+class DetailCafeByCafeIdService{
+    func getDetailCafeBycafeID(cafeID: Int, completion: @escaping (Result<DetailCafeByCafeIdData, Error>) -> Void) {
         let url = APIConstants.detailCafeURL + "/\(cafeID)"
         
         print(url)
 
         AF.request(url)
             .validate()
-            .responseDecodable(of: DetailCafeResponse.self) { response in
+            .responseDecodable(of: DetailCafeByCafeIdResponse.self) { response in
                 switch response.result {
                 case .success(let cafeResponse):
                     if cafeResponse.result == "SUCCESS" {
@@ -31,7 +31,7 @@ class DetailCafeService{
             }
     }
     
-    func getDetailCafeBycafeIDToken(cafeID: Int, userID: String, completion: @escaping (Result<DetailCafe, Error>) -> Void) {
+    func getDetailCafeBycafeIDToken(cafeID: Int, userID: String, completion: @escaping (Result<DetailCafeByCafeIdData, Error>) -> Void) {
         let url = APIConstants.detailCafeURL + "/\(cafeID)" + "/user/\(userID)"
         
         print(url)
@@ -43,7 +43,7 @@ class DetailCafeService{
 
         AF.request(url, method: .get, encoding: JSONEncoding.default, headers: header)
             .validate()
-            .responseDecodable(of: DetailCafeResponse.self) { response in
+            .responseDecodable(of: DetailCafeByCafeIdResponse.self) { response in
                 switch response.result {
                 case .success(let cafeResponse):
                     if cafeResponse.result == "SUCCESS" {

@@ -1,20 +1,20 @@
 //
-//  DetailCafeModel.swift
+//  DetailCafeByCafeNameModel.swift
 //  CaZait-iOS
 //
-//  Created by J on 2023/06/02.
+//  Created by J on 2023/08/11.
 //
 
 import Foundation
 
-struct DetailCafeByCafeIdResponse: Codable {
+struct DetailCafeByCafeNameResponse: Codable {
     let code: Int
     let result: String
     let message: String
-    let data: DetailCafeDataByCafeId
+    let data: [[DetailCafeByCafeNameData]]
 }
 
-struct DetailCafeDataByCafeId: Codable {
+struct DetailCafeByCafeNameData: Codable {
     let cafeId: Int
     let congestionStatus: String
     let name: String
@@ -22,4 +22,6 @@ struct DetailCafeDataByCafeId: Codable {
     let longitude: String
     let latitude: String
     let cafeImages: [String]
+    let distance: Int
+    let favorite: Bool
 }

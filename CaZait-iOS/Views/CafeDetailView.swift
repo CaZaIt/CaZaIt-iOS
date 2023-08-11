@@ -41,7 +41,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     private let cafeView = UIView()
     
-    private let cafeName = UILabel()
+    private let cafeNameLabel = UILabel()
     private let cafeLocation = UILabel()
     private let cafeLocationCheck =  UIButton()
     private let dottedLine = CAShapeLayer()
@@ -85,6 +85,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     }()
     
     var cafeId : Int?
+    var cafeName : String?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -100,7 +101,8 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         self.navigationItem.leftBarButtonItem = backButton
         
         if let userId = UserDefaults.standard.string(forKey: "userId") {
-            getDetailCafeToken()
+            //getDetailCafeToken()
+            getDetailCafeByCafeName()
             print("Token")
         } else {
             getDetailCafe()
@@ -144,15 +146,15 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         cafeView.layer.cornerRadius = 30
         cafeView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
       
-        cafeName.font = UIFont.systemFont(ofSize: 26, weight: .bold)
-        cafeName.text = "카페네임"
-        cafeName.textColor = .black
-        cafeName.textAlignment = .left
-        cafeName.translatesAutoresizingMaskIntoConstraints = false
+        cafeNameLabel.font = UIFont.systemFont(ofSize: 26, weight: .bold)
+        cafeNameLabel.text = "카페네임"
+        cafeNameLabel.textColor = .black
+        cafeNameLabel.textAlignment = .left
+        cafeNameLabel.translatesAutoresizingMaskIntoConstraints = false
         
         cafeLocation.font = UIFont.systemFont(ofSize: 15)
         cafeLocation.text = "카페위치"
-        cafeName.textColor = .black
+        cafeNameLabel.textColor = .black
         cafeLocation.textAlignment = .left
         cafeLocation.translatesAutoresizingMaskIntoConstraints = false
         
@@ -189,7 +191,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         nestedStackView.addArrangedSubview(cafeImage)
         nestedStackView.addArrangedSubview(cafeView)
         stackView.addArrangedSubview(nestedStackView)
-        cafeView.addSubview(cafeName)
+        cafeView.addSubview(cafeNameLabel)
         cafeView.addSubview(cafeLocation)
         cafeView.addSubview(cafeLocationCheck)
         cafeView.addSubview(heartButton)
@@ -230,18 +232,18 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             $0.height.equalTo(50)
         }
         
-        cafeName.snp.makeConstraints { make in
+        cafeNameLabel.snp.makeConstraints { make in
             make.leading.equalTo(cafeView.snp.leading).offset(30)
             make.top.equalTo(cafeView.snp.top).offset(30)
         }
         
         cafeLocation.snp.makeConstraints { make in
             make.leading.equalTo(cafeView.snp.leading).offset(30)
-            make.top.equalTo(cafeName.snp.bottom).offset(8)
+            make.top.equalTo(cafeNameLabel.snp.bottom).offset(8)
         }
         
         cafeLocationCheck.snp.makeConstraints { make in
-            make.leading.equalTo(cafeName.snp.trailing).offset(15)
+            make.leading.equalTo(cafeNameLabel.snp.trailing).offset(15)
             make.top.equalTo(cafeView.snp.top).offset(33)
         }
         
@@ -433,7 +435,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             return
         }
 
-        let detailcafeservice = DetailCafeService() // DetailCafeService 인스턴스 생성
+        let detailcafeservice = DetailCafeByCafeIdService() // DetailCafeService 인스턴스 생성
         detailcafeservice.getDetailCafeBycafeID(cafeID: cafeId) { result in
             switch result {
             case .success(let cafe):
@@ -455,8 +457,54 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 }
 
                 DispatchQueue.main.async {
-                    self.cafeName.text = cafe.name
+                    self.cafeNameLabel.text = cafe.name
                     self.cafeLocation.text = cafe.address
+                }
+            case .failure(let error):
+                // 데이터를 받아오지 못했을 때의 처리 로직
+                print(error.localizedDescription)
+                // 에러 메시지 출력 예시
+                // 에러 메시지를 보여줄 수 있는 방식으로 처리
+                print(error)
+            }
+        }
+    }
+    
+    func getDetailCafeByCafeName() {
+        guard let cafeName = cafeName else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("cafeName이 nil입니다.")
+            return
+        }
+        
+        guard let userId = UserDefaults.standard.string(forKey: "userId") else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("userID가 nil")
+            return
+        }
+
+        let detailcafeservice = DetailCafeByCafeNameService() // DetailCafeService 인스턴스 생성
+        detailcafeservice.getDetailCafeBycafeName(cafeName: cafeName, userId: userId, longitude: "127.543215", latitude: "36.987561", sort: "distance", limit: "0") { result in
+            switch result {
+            case .success(let cafe):
+                // 성공적으로 데이터를 받아왔을 때의 처리 로직
+                //print(cafe)
+                if let imageURL = cafe.first?.first?.cafeImages.first, let url = URL(string: imageURL) {
+                    URLSession.shared.dataTask(with: url) { data, _, error in
+                        if let error = error {
+                            print("Failed to download image:", error)
+                            return
+                        }
+                        if let data = data, let downloadedImage = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                self.cafeImage.image = downloadedImage
+                            }
+                        }
+                    }.resume()
+                }
+                DispatchQueue.main.async {
+                    self.cafeNameLabel.text = cafe.first?.first?.name
+                    self.cafeLocation.text = cafe.first?.first?.address
                 }
             case .failure(let error):
                 // 데이터를 받아오지 못했을 때의 처리 로직
@@ -481,7 +529,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             return
         }
         
-        let detailcafeservice = DetailCafeService() // DetailCafeService 인스턴스 생성
+        let detailcafeservice = DetailCafeByCafeIdService() // DetailCafeService 인스턴스 생성
         detailcafeservice.getDetailCafeBycafeIDToken(cafeID: cafeId, userID: userId) { result in
             switch result {
             case .success(let cafe):
@@ -502,7 +550,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                     }.resume()
                 }
                 DispatchQueue.main.async {
-                    self.cafeName.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
+                    self.cafeNameLabel.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
                     self.cafeLocation.text = cafe.address
                 }
             case .failure(let error):
