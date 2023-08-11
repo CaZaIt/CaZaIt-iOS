@@ -453,11 +453,11 @@ class MyPageView: UIViewController{
         // RecentCafeView 인스턴스 생성
         let recentCafeView = RecentCafeView()
         // 내비게이션 스택으로 RecentCafeView를 푸시
-        if UserDefaults.standard.string(forKey: "userId") != nil {
+        if UserDefaults.standard.data(forKey: "recentCafes") != nil {
             self.navigationController?.pushViewController(recentCafeView, animated: true)
         }
         else {
-            let alertController = UIAlertController(title: "로그인 후 이용가능합니다.", message: "", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "최근 본 매장이 없습니다.", message: "", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
                 // OK 버튼을 클릭하면 실행될 코드
             }
