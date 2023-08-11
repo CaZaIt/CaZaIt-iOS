@@ -484,7 +484,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         }
 
         let detailcafeservice = DetailCafeByCafeNameService() // DetailCafeService 인스턴스 생성
-        detailcafeservice.getDetailCafeBycafeName(cafeName: cafeName, userId: userId, longitude: "127.543215", latitude: "36.987561", sort: "distance", limit: "0") { result in
+        detailcafeservice.getDetailCafeBycafeName(cafeName: cafeName, userId: userId, longitude: "127.543215", latitude: "36.987561", sort: "distance", limit: "0") { [self] result in
             switch result {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
@@ -505,6 +505,14 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 DispatchQueue.main.async {
                     self.cafeNameLabel.text = cafe.first?.first?.name
                     self.cafeLocation.text = cafe.first?.first?.address
+                }
+                
+                if cafe.first?.first?.favorite == true {
+                    self.heartButton.setImage(heartFillImage, for: .normal)
+                    isHeartSelected = true
+                } else {
+                    self.heartButton.setImage(heartEmptyImage, for: .normal)
+                    isHeartSelected = false
                 }
             case .failure(let error):
                 // 데이터를 받아오지 못했을 때의 처리 로직
