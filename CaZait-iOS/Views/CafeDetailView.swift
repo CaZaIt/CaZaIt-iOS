@@ -31,7 +31,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     private let cafeImage: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "big_cafe")
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         return view
@@ -100,7 +99,13 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))
         self.navigationItem.leftBarButtonItem = backButton
         
-        getDetailCafe()
+        if let userId = UserDefaults.standard.string(forKey: "userId") {
+            getDetailCafeToken()
+            print("Token")
+        } else {
+            getDetailCafe()
+            print("notToken")
+        }
         getDetailCafeMenu()
         getDetailCafeReview()
     }
@@ -284,13 +289,8 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             print("cafeId nil")
             return
         }
-        
-        guard let userId = UserDefaults.standard.string(forKey: "userId") else {
-            print("userId nil")
-            return
-        }
 
-        if UserDefaults.standard.string(forKey: "accessToken") != nil  {
+        if let userId = UserDefaults.standard.string(forKey: "userId")  {
             registerFavoriteDetailCafeService.postFavoriteDetailCafe(userId: userId, cafeId: cafeId) { result in
                 switch result {
                 case .success(let registerFavoriteDetailCafeResponse):
@@ -326,7 +326,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             return
         }
 
-        if UserDefaults.standard.string(forKey: "accessToken") != nil {
+        if let userId = UserDefaults.standard.string(forKey: "userId") {
             deleteFavoriteDetailCafeService.deleteFavoriteDetailCafe(userId: userId, cafeId: cafeId) { result in
                 switch result {
                 case .success(let deleteFavoriteDetailCafeResponse):
@@ -432,14 +432,75 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             print("cafeId가 nil입니다.")
             return
         }
-        print("cafeID: ",cafeId)
+
         let detailcafeservice = DetailCafeService() // DetailCafeService 인스턴스 생성
         detailcafeservice.getDetailCafeBycafeID(cafeID: cafeId) { result in
             switch result {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
-                //print(cafe) // 받아온 데이터 사용 예시
-                // UI 업데이트 또는 필요한 작업 수행
+                print(cafe) // 받아온 데이터 사용 예시
+                print(cafe.cafeImages.count)
+                if let imageURL = cafe.cafeImages.first, let url = URL(string: imageURL) {
+                    URLSession.shared.dataTask(with: url) { data, _, error in
+                        if let error = error {
+                            print("Failed to download image:", error)
+                            return
+                        }
+                        if let data = data, let downloadedImage = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                self.cafeImage.image = downloadedImage
+                            }
+                        }
+                    }.resume()
+                }
+
+                DispatchQueue.main.async {
+                    self.cafeName.text = cafe.name
+                    self.cafeLocation.text = cafe.address
+                }
+            case .failure(let error):
+                // 데이터를 받아오지 못했을 때의 처리 로직
+                print(error.localizedDescription)
+                // 에러 메시지 출력 예시
+                // 에러 메시지를 보여줄 수 있는 방식으로 처리
+                print(error)
+            }
+        }
+    }
+    
+    func getDetailCafeToken() {
+        guard let cafeId = cafeId else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("cafeId가 nil")
+            return
+        }
+        
+        guard let userId = UserDefaults.standard.string(forKey: "userId") else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("userID가 nil")
+            return
+        }
+        
+        let detailcafeservice = DetailCafeService() // DetailCafeService 인스턴스 생성
+        detailcafeservice.getDetailCafeBycafeIDToken(cafeID: cafeId, userID: userId) { result in
+            switch result {
+            case .success(let cafe):
+                // 성공적으로 데이터를 받아왔을 때의 처리 로직
+                print(cafe) // 받아온 데이터 사용 예시
+                print(cafe.cafeImages.count)
+                if let imageURL = cafe.cafeImages.first, let url = URL(string: imageURL) {
+                    URLSession.shared.dataTask(with: url) { data, _, error in
+                        if let error = error {
+                            print("Failed to download image:", error)
+                            return
+                        }
+                        if let data = data, let downloadedImage = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                self.cafeImage.image = downloadedImage
+                            }
+                        }
+                    }.resume()
+                }
                 DispatchQueue.main.async {
                     self.cafeName.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
                     self.cafeLocation.text = cafe.address
@@ -533,7 +594,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     @objc func reviewWriteButtonClicked() {
         let nextVC = WriteReviewView()
         nextVC.cafeId = self.cafeId
-        if UserDefaults.standard.string(forKey: "accessToken") != nil {
+        if let userId = UserDefaults.standard.string(forKey: "userId") {
             navigationController?.pushViewController(nextVC, animated: true)
         }
         else {

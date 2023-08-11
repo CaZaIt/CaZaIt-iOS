@@ -10,6 +10,7 @@ import Foundation
 
 // MARK: - SignupResponse
 struct SignupResponse: Codable {
+    let code: Int
     let data: SignupData?
     let message: String
     let result: String
@@ -17,8 +18,8 @@ struct SignupResponse: Codable {
 
 // MARK: - SignupData
 struct SignupData: Codable {
-    let email: String
     let id: Int
+    let accountName: String
+    let phoneNumber: String
     let nickname: String
-    let password: String
 }
