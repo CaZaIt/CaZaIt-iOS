@@ -140,6 +140,9 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         // UIScrollView 설정
         scrollView.delegate = self
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.bounces = false // 스크롤 여백 없애기, 대신 스크롤의 튕김이 없어져 스크롤이 부드럽지 못함
+        scrollView.decelerationRate = UIScrollView.DecelerationRate.fast
+
         
         //손가락 옆으로 미는 제스쳐 작동
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
