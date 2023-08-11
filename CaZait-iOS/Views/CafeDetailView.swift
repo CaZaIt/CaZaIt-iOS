@@ -439,6 +439,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 print(cafe) // 받아온 데이터 사용 예시
+                print(cafe.cafeImages.count)
                 if let imageURL = cafe.cafeImages.first, let url = URL(string: imageURL) {
                     URLSession.shared.dataTask(with: url) { data, _, error in
                         if let error = error {
@@ -486,7 +487,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 print(cafe) // 받아온 데이터 사용 예시
-                
+                print(cafe.cafeImages.count)
                 if let imageURL = cafe.cafeImages.first, let url = URL(string: imageURL) {
                     URLSession.shared.dataTask(with: url) { data, _, error in
                         if let error = error {
