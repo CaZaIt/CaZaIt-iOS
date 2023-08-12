@@ -1,20 +1,34 @@
 //
-//  File.swift
+//  NoticeView.swift
 //  CaZait-iOS
 //
-//  Created by 강석호 on 2023/08/01.
+//  Created by 강민수 on 2023/08/01.
 //
 
-import Foundation
 import UIKit
+import SnapKit
 
 class NoticeView: UIViewController, UIGestureRecognizerDelegate {
     
-    private let whiteView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
+    private let navigationBarAppearance : UINavigationBarAppearance = {
+        let navigationBar = UINavigationBarAppearance()
+        
+        navigationBar.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1) // 기존 배경 색상 유지
+        navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationBar.shadowColor = UIColor.clear // 기존 그림자 색상 유지
+        navigationBar.configureWithTransparentBackground()
+        
+        return navigationBar
+    }()
+    
+    private let noticeTextView: UITextView = {
+        let textView = UITextView()
+        
+        textView.isEditable = false
+        textView.font = UIFont.systemFont(ofSize: 14)
+        textView.backgroundColor = .white
+        
+        return textView
     }()
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,33 +43,15 @@ class NoticeView: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         self.view.backgroundColor = .black
         
-        view.addSubview(whiteView)
+        setupNavigation()
+        showTerms()
+        view.addSubview(noticeTextView)
         
-        self.whiteView.snp.makeConstraints { make in
+        self.noticeTextView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
-        
-        //손가락 옆으로 미는 제스쳐 작동
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-        
-        // 네비게이션 바 타이틀 설정
-        self.title = "공지사항"
-        
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-        
-        // 뒤로가기 버튼 추가
-        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))
-        self.navigationItem.leftBarButtonItem = backButton
-        // 내비게이션 바 스타일 변경
-        self.navigationController?.navigationBar.backgroundColor = .black
-        self.navigationController?.navigationBar.tintColor = .white
-    }
-    
-    @objc func backButtonTapped() {
-        self.navigationController?.popViewController(animated: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,5 +59,80 @@ class NoticeView: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.isNavigationBarHidden = true
     }
     
+    func setupNavigation() {
+        self.title = "공지사항"
+        
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backButtonTapped))
+        navigationItem.leftBarButtonItem = backButton
+        // 내비게이션 바 스타일 변경
+        self.navigationController?.navigationBar.backgroundColor = .black
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.barStyle = .black
+        self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+    }
     
+    @objc func backButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func showTerms() {
+        let termsText =
+            """
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            공지사항 내용입니다.
+            """
+        noticeTextView.text = termsText
+    }
 }
