@@ -60,7 +60,7 @@ class PersonalInfoDetailTermsView: UIViewController, UIGestureRecognizerDelegate
 
     
     func setupNavigation() {
-        self.title = "위치정보 기반 서비스 이용약관"
+        self.title = "개인정보 수집 및 이용 동의"
         
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
