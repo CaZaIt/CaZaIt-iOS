@@ -85,6 +85,7 @@
 		F154DA772A6904FE00B6C7F0 /* RefreshTokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F154DA762A6904FE00B6C7F0 /* RefreshTokenModel.swift */; };
 		F1E547252A7CE79D00671182 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547242A7CE79D00671182 /* KeyChain.swift */; };
 		F1E5472A2A7F8FF100671182 /* RecentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547292A7F8FF100671182 /* RecentModel.swift */; };
+		F1E5473D2A8CADDC00671182 /* PolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E5473C2A8CADDC00671182 /* PolicyViewController.swift */; };
 		F1F98D5D2A481FA50055BF21 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5C2A481FA50055BF21 /* NotificationView.swift */; };
 		F1F98D5F2A482DAF0055BF21 /* NotificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */; };
 		F1F98D652A54068F0055BF21 /* FavoritesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D642A54068F0055BF21 /* FavoritesModel.swift */; };
@@ -175,6 +176,7 @@
 		F154DA762A6904FE00B6C7F0 /* RefreshTokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenModel.swift; sourceTree = "<group>"; };
 		F1E547242A7CE79D00671182 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		F1E547292A7F8FF100671182 /* RecentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentModel.swift; sourceTree = "<group>"; };
+		F1E5473C2A8CADDC00671182 /* PolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyViewController.swift; sourceTree = "<group>"; };
 		F1F98D5C2A481FA50055BF21 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCollectionViewCell.swift; sourceTree = "<group>"; };
 		F1F98D642A54068F0055BF21 /* FavoritesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModel.swift; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 				019D16AA2A78D65500766E9D /* PersonalInfoDetailView.swift */,
 				019D16AC2A792EF700766E9D /* NoticeView.swift */,
 				019D16AE2A79323800766E9D /* CustomerCenterView.swift */,
+				F1E5473C2A8CADDC00671182 /* PolicyViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -610,6 +613,7 @@
 				F122CEF629DF05C300818D7B /* MainTopSearchView.swift in Sources */,
 				01B87B582A120F480082FC05 /* LoginView.swift in Sources */,
 				01B87B762A1CCD930082FC05 /* SignupView.swift in Sources */,
+				F1E5473D2A8CADDC00671182 /* PolicyViewController.swift in Sources */,
 				01F7A20929D936280058736E /* UITextField+Extenstion.swift in Sources */,
 				019D16B32A7CE47900766E9D /* MessageSendService.swift in Sources */,
 				01B87B782A1CDB2F0082FC05 /* EmailCheckService.swift in Sources */,
