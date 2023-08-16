@@ -10,7 +10,7 @@ import UIKit
 class MoreView: UIViewController{
     
     let table = UITableView()
-    let testArr = ["공지사항", "계정 관리","고객센터","약관 및 정책"]
+    let testArr = ["공지사항", "계정관리","고객센터","약관 및 정책"]
     
     private let whiteView: UIView = {
         let view = UIView()
@@ -137,8 +137,13 @@ extension MoreView: UITableViewDelegate, UITableViewDataSource {
         
         if selectedRow == "고객센터" {
             // Create an instance of the "NoticeViewController" and push it
-            let CustomerCenterView = CustomerCenterView()
-            navigationController?.pushViewController(CustomerCenterView, animated: true)
+            let customerCenterView = CustomerCenterView()
+            navigationController?.pushViewController(customerCenterView, animated: true)
+        }
+        
+        if selectedRow == "약관 및 정책" {
+            let policyViewController = PolicyViewController()
+            navigationController?.pushViewController(policyViewController, animated: true)
         }
         
         // Deselect the row to remove the selection highlight after pushing the new view.
