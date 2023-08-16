@@ -261,6 +261,9 @@ class SignupView: UIViewController{
         super.viewDidLoad()
         self.view.backgroundColor = .black
         
+        idField.delegate = self
+        pwField.delegate = self
+        
         // 네비게이션 바 타이틀 설정
         self.title = "회원가입"
         
@@ -626,4 +629,68 @@ extension SignupView {
         }
     }
     
+}
+
+extension SignupView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == idField {
+            // Concatenate the current text with the replacing string
+            let newText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
+            validateID(realtimeText: newText)
+        }
+        if textField == pwField {
+            // Concatenate the current text with the replacing string
+            let newText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
+            validatePassword(realtimeText: newText)
+        }
+        return true
+    }
+}
+
+extension SignupView {
+    func validateID(realtimeText: String) {
+        let idPattern = "^[a-z]+[0-9]*$" // Pattern for IDs starting with lowercase letters and ending with numbers
+        let minIDLength = 8 // Minimum length for the ID
+        let maxIDLength = 20 // Maximum length for the ID
+        
+        let idRegex = try? NSRegularExpression(pattern: idPattern, options: [])
+        let matches = idRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count))
+        
+        if realtimeText.count >= minIDLength, realtimeText.count <= maxIDLength, matches?.count == 0 {
+            print("Invalid ID: 영문 소문자로 시작하고 숫자로 끝나야 합니다.")
+        } else if realtimeText.count < minIDLength {
+            print("Invalid ID: 최소 6자 이상이어야 합니다.")
+        } else if realtimeText.count > maxIDLength {
+            print("Invalid ID: 최대 20자까지만 입력 가능합니다.")
+        } else {
+            print("가능한 아이디입니다.")
+        }
+    }
+    func validatePassword(realtimeText: String) {
+            let minLength = 8
+            let maxLength = 16
+            
+            let lowercaseLetterPattern = ".*[a-z]+.*"
+            let uppercaseLetterPattern = ".*[A-Z]+.*"
+            let numberPattern = ".*\\d+.*"
+            let specialCharacterPattern = ".*[$@!%*#?&.]+.*"
+            
+            let lowercaseLetterRegex = try? NSRegularExpression(pattern: lowercaseLetterPattern, options: [])
+            let uppercaseLetterRegex = try? NSRegularExpression(pattern: uppercaseLetterPattern, options: [])
+            let numberRegex = try? NSRegularExpression(pattern: numberPattern, options: [])
+            let specialCharacterRegex = try? NSRegularExpression(pattern: specialCharacterPattern, options: [])
+            
+            let containsLowercaseLetter = lowercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+            let containsUppercaseLetter = uppercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+            let containsNumber = numberRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+            let containsSpecialCharacter = specialCharacterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+            
+            if realtimeText.count < minLength || realtimeText.count > maxLength {
+                print("Invalid password: 최소 8자 이상, 최대 16자 이하로 입력해주세요.")
+            } else if !containsLowercaseLetter || !containsUppercaseLetter || !containsNumber || !containsSpecialCharacter {
+                print("Invalid password: 적어도 하나의 대문자, 소문자, 숫자, 특수문자가 포함되어야 합니다.")
+            } else {
+                print("Valid password")
+            }
+        }
 }
