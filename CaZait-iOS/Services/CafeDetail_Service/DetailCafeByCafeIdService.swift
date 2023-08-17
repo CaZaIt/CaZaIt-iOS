@@ -32,7 +32,7 @@ class DetailCafeByCafeIdService{
     }
     
     func getDetailCafeBycafeIDToken(cafeID: String, userID: String, completion: @escaping (Result<DetailCafeByCafeIdData, Error>) -> Void) {
-        let url = APIConstants.detailCafeURL + "/\(cafeID)" + "/user/\(userID)"
+        let url = APIConstants.detailCafeURL + "/\(cafeID)" + "/users/\(userID)"
         
         print(url)
         

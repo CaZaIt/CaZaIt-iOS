@@ -15,7 +15,7 @@ struct DetailCafeMenuResponse: Codable {
 }
 
 struct DetailCafeMenu: Codable {
-    let cafeMenuId: Int
+    let menuId: Int
     let name: String
     let description: String
     let price: Int

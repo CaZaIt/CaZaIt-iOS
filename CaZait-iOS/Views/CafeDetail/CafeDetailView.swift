@@ -19,6 +19,8 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     private let stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
+        view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+
         return view
     }()
     
@@ -90,6 +92,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.changeNavigationBar(isClear: true) // navigationBar 투명으로
+
 //        let navigationBarAppearance = UINavigationBarAppearance()
 //        navigationBarAppearance.backgroundColor = .clear
         self.navigationController?.isNavigationBarHidden = false
@@ -106,8 +109,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         self.navigationItem.leftBarButtonItem = backButton
         
         if let userId = UserDefaults.standard.string(forKey: "userId") {
-            //getDetailCafeToken()
-            getDetailCafeByCafeName()
+            getDetailCafeToken()
             print("Token")
         } else {
             getDetailCafe()
@@ -142,7 +144,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         
         // UIScrollView 설정
         scrollView.delegate = self
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = .blue
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         //scrollView.bounces = false // 스크롤 여백 없애기, 대신 스크롤의 튕김이 없어져 스크롤이 부드럽지 못함
         scrollView.decelerationRate = UIScrollView.DecelerationRate.fast
@@ -209,13 +211,15 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         
         scrollView.snp.makeConstraints {
             //$0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.top.equalToSuperview()
+            $0.top.equalTo(view.snp.top)
             $0.left.bottom.right.equalToSuperview()
         }
         
         stackView.snp.makeConstraints {
-            $0.top.equalTo(scrollView.snp.top).offset(500)
-            $0.edges.width.equalToSuperview()
+            $0.top.equalTo(scrollView.contentLayoutGuide)
+            $0.left.equalTo(scrollView.frameLayoutGuide)
+            $0.right.equalTo(scrollView.frameLayoutGuide)
+            $0.bottom.equalTo(scrollView.contentLayoutGuide)
         }
         
         stackView.backgroundColor = .red
@@ -310,7 +314,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 switch result {
                 case .success(let registerFavoriteDetailCafeResponse):
                     print((registerFavoriteDetailCafeResponse.data))
-                    print(cafeId, "번 카페 관심 등록")
                 case .failure(let error):
 
                     print("에러 메시지: \(error.localizedDescription)")
@@ -346,7 +349,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 switch result {
                 case .success(let deleteFavoriteDetailCafeResponse):
                     print((deleteFavoriteDetailCafeResponse.data))
-                    print(cafeId, "번 카페 관심 해제")
                 case .failure(let error):
                     print("에러 메시지: \(error.localizedDescription)")
                 }
@@ -482,60 +484,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             }
         }
     }
-    
-    func getDetailCafeByCafeName() {
-        guard let cafeName = cafeName else {
-            // cafeId가 nil일 경우에 대한 처리 로직
-            print("cafeName이 nil입니다.")
-            return
-        }
-        
-        guard let userId = UserDefaults.standard.string(forKey: "userId") else {
-            // cafeId가 nil일 경우에 대한 처리 로직
-            print("userID가 nil")
-            return
-        }
 
-        let detailcafeservice = DetailCafeByCafeNameService() // DetailCafeService 인스턴스 생성
-        detailcafeservice.getDetailCafeBycafeName(cafeName: cafeName, userId: userId, longitude: "127.543215", latitude: "36.987561", sort: "distance", limit: "0") { [self] result in
-            switch result {
-            case .success(let cafe):
-                // 성공적으로 데이터를 받아왔을 때의 처리 로직
-                //print(cafe)
-                if let imageURL = cafe.first?.first?.cafeImages.first, let url = URL(string: imageURL) {
-                    URLSession.shared.dataTask(with: url) { data, _, error in
-                        if let error = error {
-                            print("Failed to download image:", error)
-                            return
-                        }
-                        if let data = data, let downloadedImage = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                self.cafeImage.image = downloadedImage
-                            }
-                        }
-                    }.resume()
-                }
-                DispatchQueue.main.async {
-                    self.cafeNameLabel.text = cafe.first?.first?.name
-                    self.cafeLocation.text = cafe.first?.first?.address
-                }
-                
-                if cafe.first?.first?.favorite == true {
-                    self.heartButton.setImage(heartFillImage, for: .normal)
-                    isHeartSelected = true
-                } else {
-                    self.heartButton.setImage(heartEmptyImage, for: .normal)
-                    isHeartSelected = false
-                }
-            case .failure(let error):
-                // 데이터를 받아오지 못했을 때의 처리 로직
-                print(error.localizedDescription)
-                // 에러 메시지 출력 예시
-                // 에러 메시지를 보여줄 수 있는 방식으로 처리
-                print(error)
-            }
-        }
-    }
     
     func getDetailCafeToken() {
         guard let cafeId = cafeId else {
@@ -574,6 +523,14 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                     self.cafeNameLabel.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
                     self.cafeLocation.text = cafe.address
                 }
+                
+                if cafe.favoritesStatus == "ACTIVE" {
+                    self.heartButton.setImage(self.heartFillImage, for: .normal)
+                    self.isHeartSelected = true
+                } else {
+                    self.heartButton.setImage(self.heartEmptyImage, for: .normal)
+                    self.isHeartSelected = false
+                }
             case .failure(let error):
                 // 데이터를 받아오지 못했을 때의 처리 로직
                 print(error.localizedDescription)
@@ -586,8 +543,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     func getDetailCafeMenu() { //result = getAllCafeInfo 실행해서 얻은 결과
         guard let cafeId = cafeId else {
-            // cafeId가 nil일 경우에 대한 처리 로직
-            print("cafeId가 nil입니다.")
+            print("cafeId nil")
             return
         }
         let detailcafemenuservice = DetailCafeMenuService()
@@ -597,20 +553,9 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 self.cafeMenu = response
                 //print(response)
-//                print(self.cafeMenu)
-//
-//                for menu in response {
-//                    let name = menu.name
-//                    let description = menu.description
-//                    let price = menu.price
-//
-//                    print("name: \(name)")
-//                    print("description: \(description)")
-//                    print("price: \(price)")
-//                }
+
                 collectionView1.reloadData() // 컬렉션 뷰 리로드
 
-                // print("cafe menu: ", response.count)
                 let numberOfRowsInCollectionView1 = response.count
                 collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13) // 115 셀 높이, 13 셀 간격
                 collectionView1.snp.makeConstraints {
@@ -635,12 +580,12 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             return
         }
         let detailcafereviewservice = DetailCafeReviewService()
-        detailcafereviewservice.getDetailCafeReviewBycafeID(cafeID: cafeId) { [self] result in
+        detailcafereviewservice.getDetailCafeReviewBycafeID(cafeID: cafeId, nums: 20) { [self] result in
             switch result {
             case .success(let response):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 self.cafeReview = response.reviewResponses
-                //print(response)
+                print(response)
                 //print(self.cafeReview)
 
                 collectionView2.reloadData() // 컬렉션 뷰 리로드
@@ -652,7 +597,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 }
                 
             case .failure(let error):
-                print(error.localizedDescription)
+                print("review error : \n" + error.localizedDescription)
                 // 에러 메시지 출력
                 print(error)
             }
@@ -702,27 +647,24 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == collectionView1{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeDetailViewMenuCell", for: indexPath) as! CafeDetailViewMenuCell
-            //print("cell")
-            //print("row : ", cafeMenu?[indexPath.row])
-            //print("cafe menu : " ,cafeMenu)
             if let menu = cafeMenu?[indexPath.row] {
-                //print("menu :", menu)
-//                print("name: \(menu.name)")
-//                print("description: \(menu.description)")
-//                print("price: \(menu.price)")
                 cell.configure(imageURL: menu.imageUrl, menu: menu.name, price: "\(menu.price)", menuDescription: menu.description)
             }else {
                 cell.configure(imageURL: nil, menu: "아메리카노", price: "3500", menuDescription: "맛있다!")
             }
-
+            
             return cell
+            
         }else if collectionView == collectionView2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeDetailViewReviewCell", for: indexPath) as! CafeDetailViewReviewCell
             if let review = cafeReview?[indexPath.row]{
                 cell.configure(nickname: review.nickname, review: review.content, score: review.score)
-            }
+            }else {
+                cell.configure(nickname: "카자잇", review: "리뷰입니다", score: 5)
 
+            }
             return cell
+            
         }else {
             return UICollectionViewCell()
         }
@@ -741,7 +683,7 @@ extension CafeDetailView: UIScrollViewDelegate {
         let shouldShowSticky = scrollView.contentOffset.y >= headerViewSegmentControl.frame.minY
         stickyHeaderViewSegmentControl.isHidden = !shouldShowSticky
         print(!shouldShowSticky)
-        //navigationController?.changeNavigationBar(isClear: !shouldShowSticky)
+        navigationController?.changeNavigationBar(isClear: !shouldShowSticky)
         
         if headerViewSegmentControl.frame.minY == 0.0 {
             stickyHeaderViewSegmentControl.isHidden = true
@@ -750,12 +692,6 @@ extension CafeDetailView: UIScrollViewDelegate {
 }
 
 extension UINavigationController {
-    
-    // 완전 안보임
-    func hideNavigationBar() {
-        navigationBar.isHidden = true
-    }
-    
     // 투명하게 만들기 (버튼 등은 보임)
     func changeNavigationBar(isClear: Bool) {
         navigationBar.isHidden = false
