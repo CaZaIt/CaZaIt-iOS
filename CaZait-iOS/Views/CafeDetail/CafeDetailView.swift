@@ -91,18 +91,18 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.changeNavigationBar(isClear: true) // navigationBar 투명으로
-
-//        let navigationBarAppearance = UINavigationBarAppearance()
-//        navigationBarAppearance.backgroundColor = .clear
+        
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.backgroundColor = .black
         self.navigationController?.isNavigationBarHidden = false
-//        self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
-//        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-//        self.navigationController?.changeNavigationBar(isClear: true)
-
+        self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
         self.navigationController?.navigationBar.barStyle = .default
         self.navigationController?.navigationBar.tintColor = .white
-//        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.isTranslucent = false
+
+        //navigationController?.changeNavigationBar(isClear: true) // navigationBar 투명으로
+
 
         // 뒤로가기 버튼 추가
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))
@@ -144,7 +144,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         
         // UIScrollView 설정
         scrollView.delegate = self
-        scrollView.backgroundColor = .blue
+        scrollView.backgroundColor = .white
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         //scrollView.bounces = false // 스크롤 여백 없애기, 대신 스크롤의 튕김이 없어져 스크롤이 부드럽지 못함
         scrollView.decelerationRate = UIScrollView.DecelerationRate.fast
@@ -210,8 +210,8 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         view.addSubview(reviewWriteButton)
         
         scrollView.snp.makeConstraints {
-            //$0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.top.equalTo(view.snp.top)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            //$0.top.equalTo(view.snp.top)
             $0.left.bottom.right.equalToSuperview()
         }
         
@@ -222,7 +222,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             $0.bottom.equalTo(scrollView.contentLayoutGuide)
         }
         
-        stackView.backgroundColor = .red
+        stackView.backgroundColor = .white
         
         nestedStackView.snp.makeConstraints{
             $0.top.equalTo(scrollView.snp.top)
@@ -682,8 +682,6 @@ extension CafeDetailView: UIScrollViewDelegate {
         // frame.minY를 통해 sticky 타이밍 계산
         let shouldShowSticky = scrollView.contentOffset.y >= headerViewSegmentControl.frame.minY
         stickyHeaderViewSegmentControl.isHidden = !shouldShowSticky
-        print(!shouldShowSticky)
-        navigationController?.changeNavigationBar(isClear: !shouldShowSticky)
         
         if headerViewSegmentControl.frame.minY == 0.0 {
             stickyHeaderViewSegmentControl.isHidden = true
@@ -691,20 +689,20 @@ extension CafeDetailView: UIScrollViewDelegate {
     }
 }
 
-extension UINavigationController {
-    // 투명하게 만들기 (버튼 등은 보임)
-    func changeNavigationBar(isClear: Bool) {
-        navigationBar.isHidden = false
-        if isClear {
-            navigationBar.shadowImage = UIImage()
-            navigationBar.setBackgroundImage(UIImage(), for: .default)
-        } else {
-            navigationBar.shadowImage = nil
-            navigationBar.setBackgroundImage(nil, for: .default)
-//            navigationBar.backgroundColor = .black
-
-        }
-    }
-}
+//extension UINavigationController {
+//    // 투명하게 만들기 (버튼 등은 보임)
+//    func changeNavigationBar(isClear: Bool) {
+//        navigationBar.isHidden = false
+//        if isClear {
+//            navigationBar.shadowImage = UIImage()
+//            navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        } else {
+//            navigationBar.shadowImage = nil
+//            navigationBar.setBackgroundImage(nil, for: .default)
+////            navigationBar.backgroundColor = .black
+//
+//        }
+//    }
+//}
 
 
