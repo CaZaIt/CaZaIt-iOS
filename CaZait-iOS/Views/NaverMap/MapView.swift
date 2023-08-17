@@ -5,10 +5,19 @@
 //  Created by 강석호 on 2023/04/09.
 //
 
-import CoreLocation
 import NMapsMap
+import SnapKit
 
 class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시작좌표인 클래스
+    
+    private let congestionMapping: [String: String] = [
+        "NONE": "미등록",
+        "CLOSE": "종료",
+        "FREE": "여유",
+        "NORMAL": "보통",
+        "CROWDED": "혼잡",
+        "VERYCROWDED": "매우혼잡"
+    ]
     
     private var allCafeData: AllCafeResponse? //통신한 데이터를 저장하기 위한 변수입니다.
     var locationManager = CLLocationManager()
@@ -18,22 +27,20 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
     var currentLatitude: CLLocationDegrees = 0.0
     var currentLongitude: CLLocationDegrees = 0.0
     
-    var marker1: NMFMarker!
-    var marker2: NMFMarker!
-    var marker3: NMFMarker!
+    private var markers: [NMFMarker] = []
     
     let markerImage = UIImage(named: "marker")
     
     private let topview: UIView = {
         let top = UIView()
-        top.translatesAutoresizingMaskIntoConstraints = false
+        
         top.backgroundColor = .black
         return top
     }()
     
     private let mapLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
         label.textAlignment = .center
@@ -44,95 +51,83 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
     
     private let customView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        
         view.backgroundColor = .white
         view.layer.cornerRadius = 10
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1).cgColor
         view.isHidden = true
+        
         return view
     }()
     
-    private let CafeNameLabel: UILabel = {
+    private let cafeNameLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        
         label.text = "롬곡"
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
         label.textColor = .black
         return label
     }()
     
-    private let AddressLabel: UILabel = {
+    private let addressLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        
         label.text = "서울특별시 광진구 광나루로 375-1 2층(군자동)"
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = .black
-        label.numberOfLines = 1 // 여러 줄로 표시 가능하도록 설정
-//        label.lineBreakMode = .byWordWrapping // 단어 단위로 줄바꿈 설정
+        label.numberOfLines = 1
+        
         return label
     }()
     
-    private let CongestionView: UIImageView = {
-        let view = UIImageView()
+    private let congestionView: UIView = {
+        let view = UIView()
+        
         view.backgroundColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1)
         view.layer.cornerRadius = 15
+        
         return view
     }()
     
-    private let CongestionLabel: UILabel = {
+    private let congestionLabel: UILabel = {
         let label = UILabel()
+        
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .white
         label.textAlignment = .center
         label.text = "보통"
         label.numberOfLines = 1
+        
         return label
     }()
     
     private lazy var naverMapView: NMFMapView = {
         let mapView = NMFMapView()
-        mapView.translatesAutoresizingMaskIntoConstraints = false
+        
         mapView.allowsZooming = true
         mapView.logoInteractionEnabled = false
         mapView.positionMode = .direction
         mapView.allowsScrolling = true
+        
         return mapView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .black
-        
-        self.view.addSubview(self.topview)
-        self.topview.addSubview(self.mapLabel)
+        view.backgroundColor = .black
         
         // Location Manager 설정
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
+        
         getAllCafeInfoData()
+        setupLayout()
         
-        setUI()
-        
-        // 마커 생성 및 설정
-        marker1 = NMFMarker(position: NMGLatLng(lat: 37.54847570421354, lng: 127.07263694429658))
-        marker1.width = 40
-        marker1.height = 50
-        marker1.iconImage = NMFOverlayImage(image: markerImage!)
-        marker1.mapView = self.naverMapView
-        
-        marker2 = NMFMarker(position: NMGLatLng(lat: 37.549548141704, lng: 127.07511854895762))
-        marker2.width = 40
-        marker2.height = 50
-        marker2.iconImage = NMFOverlayImage(image: markerImage!)
-        marker2.mapView = self.naverMapView
-        
-        marker3 = NMFMarker(position: NMGLatLng(lat: 37.55150266147334, lng: 127.07612770012503))
-        marker3.width = 40
-        marker3.height = 50
-        marker3.iconImage = NMFOverlayImage(image: markerImage!)
-        marker3.mapView = self.naverMapView
+        // 뷰에 터치 제스처 추가
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        naverMapView.addGestureRecognizer(tapGesture)
         
         // 위치 업데이트 시작
         DispatchQueue.global().async {
@@ -144,113 +139,148 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
             }
         }
         
-        self.topview.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.height.equalTo(50)
+    
+    }
+    
+    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: naverMapView)
+
+        // 마커를 찾아서 가져옴
+        let tappedMarkers = naverMapView.pickAll(location, withTolerance: 10)
+
+        if tappedMarkers.isEmpty {
+            // 마커가 아닌 다른 곳을 클릭한 경우
+            customView.isHidden = true
+        } else {
+            if let marker = tappedMarkers.first as? NMFMarker,
+               let index = markers.firstIndex(of: marker),
+               let cafe = allCafeData?.data[0][index] {
+                cafeNameLabel.text = cafe.name
+                addressLabel.text = cafe.address
+                congestionLabel.text = congestionMapping[cafe.congestionStatus]
+                // 여기에 추가적인 커스텀뷰의 내용을 업데이트하는 코드를 작성하세요
+            }
+            customView.isHidden = false
         }
+    }
+    
+    func getAllCafeInfoData() {
         
-        self.mapLabel.snp.makeConstraints { make in
-            make.center.equalTo(topview)
-        }
-        
-        self.customView.snp.makeConstraints { make in
-            make.leading.equalTo(self.naverMapView.safeAreaLayoutGuide.snp.leading).inset(50)
+        AllCafeService.shared.getAllCafeInfo(longitude : String(currentLongitude), latitude : String(currentLatitude), sort : "distance", limit : "0") { response in
             
-            make.top.equalTo(self.naverMapView.safeAreaLayoutGuide.snp.top).inset(50)
-            make.height.equalTo(100)
-            make.width.equalTo(200)
+            switch response {
+                
+            case .success(let data):
+                guard let listData = data as? AllCafeResponse else {return}
+                self.allCafeData = listData //통신한 데이터를 변수에 저장하고
+                self.makeMarkers()
+                
+                
+                // 실패할 경우에 분기처리는 아래와 같이 합니다.
+            case .requestErr :
+                print("requestErr")
+            case .pathErr :
+                print("pathErr")
+            case .serverErr :
+                print("serveErr")
+            case .networkFail:
+                print("networkFail")
+            }
         }
-        
-        // 마커 클릭 시 정보 창 열기/닫기
-        let handler = { [weak self] (overlay: NMFOverlay) -> Bool in
-            if let marker = overlay as? NMFMarker {
-                if marker == self?.marker1 {
-                    if self?.customView.isHidden == true {
-                        print("마커1 클릭")
-                        self?.CafeNameLabel.text = "롬곡"
-                        self?.customView.isHidden = false
-                    } else {
-                        self?.customView.isHidden = true
-                    }
-                } else if marker == self?.marker2 {
-                    if self?.customView.isHidden == true {
-                        print("마커2 클릭")
-                        self?.CafeNameLabel.text = "제주몰빵"
-                        self?.customView.isHidden = false
-                    } else {
-                        self?.customView.isHidden = true
-                    }
-                } else if marker == self?.marker3 {
-                    if self?.customView.isHidden == true {
-                        print("마커3 클릭")
-                        self?.CafeNameLabel.text = "보난자"
-                        self?.customView.isHidden = false
-                    } else {
-                        self?.customView.isHidden = true
-                    }
+    }
+    
+    func makeMarkers() {
+        // 마커 생성 및 설정
+        if let cafeData = allCafeData?.data[0] {
+            for cafe in cafeData {
+                if let latitude = Double(cafe.latitude), let longitude = Double(cafe.longitude) {
+                    let marker = NMFMarker(position: NMGLatLng(lat: latitude, lng: longitude))
+                    marker.width = 40
+                    marker.height = 50
+                    marker.iconImage = NMFOverlayImage(image: markerImage!)
+                    marker.mapView = naverMapView
+                    markers.append(marker)
                 }
             }
-            
-            
+        }
+        
+        let handler = { [weak self] (overlay: NMFOverlay) -> Bool in
+            if let marker = overlay as? NMFMarker {
+                if let index = self?.markers.firstIndex(of: marker) {
+                    let cafe = self?.allCafeData?.data[0][index]
+                    self?.cafeNameLabel.text = cafe?.name ?? ""
+                    self?.addressLabel.text = cafe?.address ?? ""
+                    self?.congestionLabel.text = cafe?.congestionStatus ?? ""
+                    
+                    self?.customView.isHidden = false
+                } else {
+                    self?.customView.isHidden = true
+                }
+            }
             return true
         }
         
-        marker1.touchHandler = handler
-        marker2.touchHandler = handler
-        marker3.touchHandler = handler
+        for marker in markers {
+            marker.touchHandler = handler
+        }
         
     }
 
     
-    func setUI() {
-        self.view.addSubview(naverMapView)
-        naverMapView.translatesAutoresizingMaskIntoConstraints = false
-        naverMapView.topAnchor.constraint(equalTo: self.topview.bottomAnchor, constant: 0).isActive = true
-        naverMapView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
-        naverMapView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
-        naverMapView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+    func setupLayout() {
+        view.addSubview(topview)
+        topview.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.height.equalTo(50)
+        }
         
-        self.naverMapView.addSubview(self.customView)
-        customView.translatesAutoresizingMaskIntoConstraints = false
-        customView.topAnchor.constraint(equalTo: self.naverMapView.topAnchor, constant: 500).isActive = true
-        customView.leadingAnchor.constraint(equalTo: self.naverMapView.safeAreaLayoutGuide.leadingAnchor, constant: 30).isActive = true
-        customView.trailingAnchor.constraint(equalTo: self.naverMapView.safeAreaLayoutGuide.trailingAnchor, constant: -30).isActive = true
-        customView.bottomAnchor.constraint(equalTo: self.naverMapView.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        topview.addSubview(mapLabel)
+        mapLabel.snp.makeConstraints { make in
+            make.center.equalTo(topview)
+        }
         
-        self.customView.addSubview(self.CafeNameLabel)
-        CafeNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        CafeNameLabel.topAnchor.constraint(equalTo: self.customView.topAnchor, constant: 12).isActive = true
-        CafeNameLabel.leadingAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        CafeNameLabel.trailingAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.trailingAnchor, constant: -225).isActive = true
-        CafeNameLabel.bottomAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.bottomAnchor, constant: -72).isActive = true
+        view.addSubview(naverMapView)
         
-        self.customView.addSubview(self.AddressLabel)
-        AddressLabel.translatesAutoresizingMaskIntoConstraints = false
-        AddressLabel.topAnchor.constraint(equalTo: self.customView.topAnchor, constant: 44).isActive = true
-        AddressLabel.leadingAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        AddressLabel.trailingAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
-        AddressLabel.bottomAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true
+        naverMapView.snp.makeConstraints { make in
+            make.top.equalTo(topview.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
         
-        self.customView.addSubview(self.CongestionView)
-        CongestionView.translatesAutoresizingMaskIntoConstraints = false
-        CongestionView.topAnchor.constraint(equalTo: self.AddressLabel.bottomAnchor, constant: 1).isActive = true
-        CongestionView.leadingAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        CongestionView.trailingAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
-        CongestionView.bottomAnchor.constraint(equalTo: self.customView.safeAreaLayoutGuide.bottomAnchor, constant: -14).isActive = true
+        naverMapView.addSubview(customView)
+        customView.snp.makeConstraints { make in
+            make.bottom.equalTo(naverMapView.snp.bottom).inset(30)
+            make.width.equalTo(284)
+            make.height.equalTo(116)
+            make.centerX.equalTo(naverMapView.snp.centerX)
+        }
         
-        self.customView.addSubview(self.CongestionLabel)
-        CongestionLabel.translatesAutoresizingMaskIntoConstraints = false
-        CongestionLabel.topAnchor.constraint(equalTo: self.CongestionView.topAnchor, constant: 7).isActive = true
-        CongestionLabel.leadingAnchor.constraint(equalTo: self.CongestionView.safeAreaLayoutGuide.leadingAnchor, constant: 50).isActive = true
-        CongestionLabel.trailingAnchor.constraint(equalTo: self.CongestionView.safeAreaLayoutGuide.trailingAnchor, constant: -50).isActive = true
-        CongestionLabel.bottomAnchor.constraint(equalTo: self.CongestionView.safeAreaLayoutGuide.bottomAnchor, constant: -7).isActive = true
-
+        customView.addSubview(cafeNameLabel)
+        cafeNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(customView.snp.top).offset(12)
+            make.leading.equalTo(customView.snp.leading).offset(20)
+        }
         
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        customView.addSubview(addressLabel)
+        addressLabel.snp.makeConstraints { make in
+            make.top.equalTo(cafeNameLabel.snp.bottom).offset(8)
+            make.leading.equalTo(customView.snp.leading).offset(20)
+        }
+        
+        customView.addSubview(congestionView)
+        congestionView.snp.makeConstraints { make in
+            make.bottom.equalTo(customView.snp.bottom).inset(14)
+            make.centerX.equalTo(customView.snp.centerX)
+            make.width.equalTo(245)
+            make.height.equalTo(31)
+        }
+        
+        congestionView.addSubview(congestionLabel)
+        congestionLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(congestionView.snp.centerX)
+            make.centerY.equalTo(congestionView.snp.centerY)
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -273,34 +303,14 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
         }
     }
     
-    func getAllCafeInfoData() {
-        
-        AllCafeService.shared.getAllCafeInfo(longitude : String(currentLongitude), latitude : String(currentLatitude), sort : "distance", limit : "0") { response in
-            
-            switch response {
-                
-            case .success(let data):
-                guard let listData = data as? AllCafeResponse else {return}
-                self.allCafeData = listData //통신한 데이터를 변수에 저장하고
-                
-                
-                // 실패할 경우에 분기처리는 아래와 같이 합니다.
-            case .requestErr :
-                print("requestErr")
-            case .pathErr :
-                print("pathErr")
-            case .serverErr :
-                print("serveErr")
-            case .networkFail:
-                print("networkFail")
-            }
-        }
-    }
-    
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse || status == .authorizedAlways {
             locationManager.startUpdatingLocation()
         }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
