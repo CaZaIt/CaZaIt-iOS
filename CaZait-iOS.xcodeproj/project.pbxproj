@@ -55,9 +55,7 @@
 		6C4286F92A29880200560F15 /* DetailCafeByCafeIdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4286F82A29880200560F15 /* DetailCafeByCafeIdService.swift */; };
 		6C4286FB2A29DB4900560F15 /* DetailCafeMenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4286FA2A29DB4900560F15 /* DetailCafeMenuService.swift */; };
 		6C4286FD2A29DB6300560F15 /* DetailCafeMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4286FC2A29DB6300560F15 /* DetailCafeMenuModel.swift */; };
-		6CAFA8D42A861D77003BDD65 /* DetailCafeByCafeNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAFA8D32A861D77003BDD65 /* DetailCafeByCafeNameModel.swift */; };
 		6CAFA8D62A861D95003BDD65 /* DetailCafeByCafeIdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAFA8D52A861D95003BDD65 /* DetailCafeByCafeIdModel.swift */; };
-		6CAFA8D82A861EDF003BDD65 /* DetailCafeByCafeNameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAFA8D72A861EDF003BDD65 /* DetailCafeByCafeNameService.swift */; };
 		6CB6A7E62A5EF26A003FAB86 /* DetailCafeReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB6A7E52A5EF26A003FAB86 /* DetailCafeReviewModel.swift */; };
 		6CB6A7E82A5EF442003FAB86 /* DetailCafeReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB6A7E72A5EF442003FAB86 /* DetailCafeReviewService.swift */; };
 		6CC990722A703A91008ABE53 /* ReviewWriteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC990712A703A91008ABE53 /* ReviewWriteService.swift */; };
@@ -140,9 +138,7 @@
 		6C4286F82A29880200560F15 /* DetailCafeByCafeIdService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCafeByCafeIdService.swift; sourceTree = "<group>"; };
 		6C4286FA2A29DB4900560F15 /* DetailCafeMenuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCafeMenuService.swift; sourceTree = "<group>"; };
 		6C4286FC2A29DB6300560F15 /* DetailCafeMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCafeMenuModel.swift; sourceTree = "<group>"; };
-		6CAFA8D32A861D77003BDD65 /* DetailCafeByCafeNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCafeByCafeNameModel.swift; sourceTree = "<group>"; };
 		6CAFA8D52A861D95003BDD65 /* DetailCafeByCafeIdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCafeByCafeIdModel.swift; sourceTree = "<group>"; };
-		6CAFA8D72A861EDF003BDD65 /* DetailCafeByCafeNameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCafeByCafeNameService.swift; sourceTree = "<group>"; };
 		6CB6A7E52A5EF26A003FAB86 /* DetailCafeReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCafeReviewModel.swift; sourceTree = "<group>"; };
 		6CB6A7E72A5EF442003FAB86 /* DetailCafeReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCafeReviewService.swift; sourceTree = "<group>"; };
 		6CC990712A703A91008ABE53 /* ReviewWriteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWriteService.swift; sourceTree = "<group>"; };
@@ -266,7 +262,6 @@
 			isa = PBXGroup;
 			children = (
 				6CAFA8D52A861D95003BDD65 /* DetailCafeByCafeIdModel.swift */,
-				6CAFA8D32A861D77003BDD65 /* DetailCafeByCafeNameModel.swift */,
 				6C4286FC2A29DB6300560F15 /* DetailCafeMenuModel.swift */,
 				6CB6A7E52A5EF26A003FAB86 /* DetailCafeReviewModel.swift */,
 				6CC9907D2A7047DE008ABE53 /* DeleteFavoriteDetailCafeModel.swift */,
@@ -324,7 +319,6 @@
 			isa = PBXGroup;
 			children = (
 				6C4286F82A29880200560F15 /* DetailCafeByCafeIdService.swift */,
-				6CAFA8D72A861EDF003BDD65 /* DetailCafeByCafeNameService.swift */,
 				6C4286FA2A29DB4900560F15 /* DetailCafeMenuService.swift */,
 				6CB6A7E72A5EF442003FAB86 /* DetailCafeReviewService.swift */,
 				6CC990792A7045BA008ABE53 /* DeleteFavoriteDetailCafeService.swift */,
@@ -674,7 +668,6 @@
 				F1F98D652A54068F0055BF21 /* FavoritesModel.swift in Sources */,
 				6CB6A7E82A5EF442003FAB86 /* DetailCafeReviewService.swift in Sources */,
 				019D16AB2A78D65500766E9D /* PersonalInfoDetailView.swift in Sources */,
-				6CAFA8D82A861EDF003BDD65 /* DetailCafeByCafeNameService.swift in Sources */,
 				01F7A21529D95A2B0058736E /* MainView.swift in Sources */,
 				01B87B862A1E36B20082FC05 /* LoginService.swift in Sources */,
 				01B87B822A1CF7420082FC05 /* signupModel.swift in Sources */,
@@ -693,7 +686,6 @@
 				6CC9907A2A7045BA008ABE53 /* DeleteFavoriteDetailCafeService.swift in Sources */,
 				F13FA0602A151D4F0001958D /* SearchTableViewCell.swift in Sources */,
 				F122CEF629DF05C300818D7B /* MainTopSearchView.swift in Sources */,
-				6CAFA8D42A861D77003BDD65 /* DetailCafeByCafeNameModel.swift in Sources */,
 				01B87B582A120F480082FC05 /* LoginView.swift in Sources */,
 				01B87B762A1CCD930082FC05 /* SignupView.swift in Sources */,
 				F1E5473D2A8CADDC00671182 /* PolicyViewController.swift in Sources */,

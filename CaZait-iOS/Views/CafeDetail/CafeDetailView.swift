@@ -106,8 +106,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         self.navigationItem.leftBarButtonItem = backButton
         
         if let userId = UserDefaults.standard.string(forKey: "userId") {
-            //getDetailCafeToken()
-            getDetailCafeByCafeName()
+            getDetailCafeToken()
             print("Token")
         } else {
             getDetailCafe()
@@ -218,7 +217,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             $0.edges.width.equalToSuperview()
         }
         
-        stackView.backgroundColor = .red
+        stackView.backgroundColor = .white
         
         nestedStackView.snp.makeConstraints{
             $0.top.equalTo(scrollView.snp.top)
@@ -482,60 +481,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             }
         }
     }
-    
-    func getDetailCafeByCafeName() {
-        guard let cafeName = cafeName else {
-            // cafeId가 nil일 경우에 대한 처리 로직
-            print("cafeName이 nil입니다.")
-            return
-        }
-        
-        guard let userId = UserDefaults.standard.string(forKey: "userId") else {
-            // cafeId가 nil일 경우에 대한 처리 로직
-            print("userID가 nil")
-            return
-        }
 
-        let detailcafeservice = DetailCafeByCafeNameService() // DetailCafeService 인스턴스 생성
-        detailcafeservice.getDetailCafeBycafeName(cafeName: cafeName, userId: userId, longitude: "127.543215", latitude: "36.987561", sort: "distance", limit: "0") { [self] result in
-            switch result {
-            case .success(let cafe):
-                // 성공적으로 데이터를 받아왔을 때의 처리 로직
-                //print(cafe)
-                if let imageURL = cafe.first?.first?.cafeImages.first, let url = URL(string: imageURL) {
-                    URLSession.shared.dataTask(with: url) { data, _, error in
-                        if let error = error {
-                            print("Failed to download image:", error)
-                            return
-                        }
-                        if let data = data, let downloadedImage = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                self.cafeImage.image = downloadedImage
-                            }
-                        }
-                    }.resume()
-                }
-                DispatchQueue.main.async {
-                    self.cafeNameLabel.text = cafe.first?.first?.name
-                    self.cafeLocation.text = cafe.first?.first?.address
-                }
-                
-                if cafe.first?.first?.favorite == true {
-                    self.heartButton.setImage(heartFillImage, for: .normal)
-                    isHeartSelected = true
-                } else {
-                    self.heartButton.setImage(heartEmptyImage, for: .normal)
-                    isHeartSelected = false
-                }
-            case .failure(let error):
-                // 데이터를 받아오지 못했을 때의 처리 로직
-                print(error.localizedDescription)
-                // 에러 메시지 출력 예시
-                // 에러 메시지를 보여줄 수 있는 방식으로 처리
-                print(error)
-            }
-        }
-    }
     
     func getDetailCafeToken() {
         guard let cafeId = cafeId else {
@@ -586,8 +532,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     func getDetailCafeMenu() { //result = getAllCafeInfo 실행해서 얻은 결과
         guard let cafeId = cafeId else {
-            // cafeId가 nil일 경우에 대한 처리 로직
-            print("cafeId가 nil입니다.")
+            print("cafeId nil")
             return
         }
         let detailcafemenuservice = DetailCafeMenuService()
@@ -596,7 +541,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             case .success(let response):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 self.cafeMenu = response
-                //print(response)
+                print(response)
 //                print(self.cafeMenu)
 //
 //                for menu in response {
@@ -640,7 +585,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             case .success(let response):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 self.cafeReview = response.reviewResponses
-                //print(response)
+                print(response)
                 //print(self.cafeReview)
 
                 collectionView2.reloadData() // 컬렉션 뷰 리로드
