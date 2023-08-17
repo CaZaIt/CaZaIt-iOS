@@ -130,13 +130,25 @@ extension MoreView: UITableViewDelegate, UITableViewDataSource {
         
         // Check if the selected row is "공지사항"
         if selectedRow == "공지사항" {
-            // Create an instance of the "NoticeViewController" and push it
             let noticeViewController = NoticeView()
             navigationController?.pushViewController(noticeViewController, animated: true)
         }
         
+        if selectedRow == "계정관리" {
+            if UserDefaults.standard.string(forKey: "userId") != nil {
+                let changePasswordViewController = ChangePasswordViewController()
+                navigationController?.pushViewController(changePasswordViewController, animated: true)
+            } else {
+                let alertController = UIAlertController(title: "로그인 후 이용해주세요.", message: "", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                    // OK 버튼을 클릭하면 실행될 코드
+                }
+                alertController.addAction(okAction)
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }
+        
         if selectedRow == "고객센터" {
-            // Create an instance of the "NoticeViewController" and push it
             let customerCenterView = CustomerCenterView()
             navigationController?.pushViewController(customerCenterView, animated: true)
         }
