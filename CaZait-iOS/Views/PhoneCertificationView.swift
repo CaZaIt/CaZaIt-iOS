@@ -6,9 +6,6 @@
 //
 
 import Foundation
-
-
-import Foundation
 import UIKit
 
 class PhoneCertificationView: UIViewController, UIGestureRecognizerDelegate{
@@ -201,8 +198,9 @@ class PhoneCertificationView: UIViewController, UIGestureRecognizerDelegate{
 
     
     @objc func nextView(_ sender: UIButton) {
-        let SignupView = SignupView()
-        self.navigationController?.pushViewController(SignupView, animated: true)
+        let signupView = SignupView()
+        signupView.phoneNumber = phonenumberField.text
+        self.navigationController?.pushViewController(signupView, animated: true)
         
     }
     @objc func messageSend() {

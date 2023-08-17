@@ -10,6 +10,7 @@ import UIKit
 
 class SignupView: UIViewController{
     
+    var phoneNumber : String?
     
     private let pinkView: UIView = {
         let view = UIView()
