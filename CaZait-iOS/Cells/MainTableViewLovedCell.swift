@@ -195,6 +195,7 @@ extension MainTableViewLovedCell: UICollectionViewDataSource, UICollectionViewDe
         
         //cafeDetailView에서 받은 cafeId를 통해 통신할 수 있도록 값을 전달한다.
         cafeDetailView.cafeId = self.favoritesCafeData?.data[indexPath.row].cafeId
+        cafeDetailView.cafeName = self.favoritesCafeData?.data[indexPath.row].name
         
         //cafeDetailView에서 받은 recentCafeModel를 통해 통신할 수 있도록 값을 전달한다.
         let recentCafe = RecentModel(

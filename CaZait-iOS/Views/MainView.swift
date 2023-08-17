@@ -152,7 +152,7 @@ class MainView: UIViewController {
     func getlocationData() {
         if let currentLocation = locationManager.currentLocation {
             // 위치 정보 사용
-            print("Current location: \(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
+            //print("Current location: \(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
             self.latitude = String(currentLocation.coordinate.latitude)
             self.longitude = String(currentLocation.coordinate.longitude)
             
