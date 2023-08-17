@@ -195,8 +195,8 @@
 			children = (
 				01F7A21429D95A2B0058736E /* MainView.swift */,
 				F122CEF529DF05C300818D7B /* MainTopSearchView.swift */,
-				F13FA05D2A13899E0001958D /* SearchView.swift */,
 				F1F98D5C2A481FA50055BF21 /* NotificationView.swift */,
+				F13FA05D2A13899E0001958D /* SearchView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -213,13 +213,13 @@
 			isa = PBXGroup;
 			children = (
 				01B87B572A120F480082FC05 /* LoginView.swift */,
-				01B87B752A1CCD920082FC05 /* SignupView.swift */,
 				01F7A21829D95C150058736E /* MyPageView.swift */,
-				01B9328A29FF7F22006342F9 /* RecentCafeView.swift */,
-				019D16A62A712F9700766E9D /* TermsView.swift */,
 				019D16A82A77E3CF00766E9D /* PlaceDetailTermsView.swift */,
 				019D16AA2A78D65500766E9D /* PersonalInfoDetailView.swift */,
 				01AA99B52A8CF9F200FB8355 /* PhoneCertificationView.swift */,
+				01B9328A29FF7F22006342F9 /* RecentCafeView.swift */,
+				01B87B752A1CCD920082FC05 /* SignupView.swift */,
+				019D16A62A712F9700766E9D /* TermsView.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -227,11 +227,11 @@
 		01AA99BA2A8DFAB700FB8355 /* More */ = {
 			isa = PBXGroup;
 			children = (
+				F1E547422A8CCD7B00671182 /* ChangePasswordViewController.swift */,
+				019D16AE2A79323800766E9D /* CustomerCenterView.swift */,
 				01F7A21A29D95C480058736E /* MoreView.swift */,
 				019D16AC2A792EF700766E9D /* NoticeView.swift */,
-				019D16AE2A79323800766E9D /* CustomerCenterView.swift */,
 				F1E5473C2A8CADDC00671182 /* PolicyViewController.swift */,
-				F1E547422A8CCD7B00671182 /* ChangePasswordViewController.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -247,8 +247,8 @@
 		01AA99BC2A8DFACD00FB8355 /* Review */ = {
 			isa = PBXGroup;
 			children = (
-				6C4286F22A1B7A1C00560F15 /* WriteReviewView.swift */,
 				6C4286F42A1B7A7A00560F15 /* RateView.swift */,
+				6C4286F22A1B7A1C00560F15 /* WriteReviewView.swift */,
 			);
 			path = Review;
 			sourceTree = "<group>";
@@ -265,11 +265,12 @@
 		01AA99BE2A8DFD0200FB8355 /* CafeDetail */ = {
 			isa = PBXGroup;
 			children = (
-				6CC9907B2A7046FF008ABE53 /* RegisterFavoriteDetailCafeModel.swift */,
 				6CAFA8D52A861D95003BDD65 /* DetailCafeByCafeIdModel.swift */,
 				6CAFA8D32A861D77003BDD65 /* DetailCafeByCafeNameModel.swift */,
 				6C4286FC2A29DB6300560F15 /* DetailCafeMenuModel.swift */,
+				6CB6A7E52A5EF26A003FAB86 /* DetailCafeReviewModel.swift */,
 				6CC9907D2A7047DE008ABE53 /* DeleteFavoriteDetailCafeModel.swift */,
+				6CC9907B2A7046FF008ABE53 /* RegisterFavoriteDetailCafeModel.swift */,
 			);
 			path = CafeDetail;
 			sourceTree = "<group>";
@@ -278,7 +279,6 @@
 			isa = PBXGroup;
 			children = (
 				6CC990732A703B73008ABE53 /* ReviewWriteModel.swift */,
-				6CB6A7E52A5EF26A003FAB86 /* DetailCafeReviewModel.swift */,
 			);
 			path = Reviews;
 			sourceTree = "<group>";
@@ -286,8 +286,8 @@
 		01AA99C02A8DFD5600FB8355 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				F154DA762A6904FE00B6C7F0 /* RefreshTokenModel.swift */,
 				01B87B832A1E30C60082FC05 /* loginModel.swift */,
+				F154DA762A6904FE00B6C7F0 /* RefreshTokenModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -296,10 +296,10 @@
 			isa = PBXGroup;
 			children = (
 				01B87B792A1CDC2D0082FC05 /* IdcheckModel.swift */,
-				01B87B7D2A1CF2390082FC05 /* nicknamecheckModel.swift */,
-				01B87B812A1CF7420082FC05 /* signupModel.swift */,
 				019D16B02A7CE37700766E9D /* MessageSendModel.swift */,
 				019D16B62A7F84EE00766E9D /* MessageVerifyModel.swift */,
+				01B87B7D2A1CF2390082FC05 /* nicknamecheckModel.swift */,
+				01B87B812A1CF7420082FC05 /* signupModel.swift */,
 			);
 			path = Signup;
 			sourceTree = "<group>";
@@ -327,8 +327,8 @@
 				6CAFA8D72A861EDF003BDD65 /* DetailCafeByCafeNameService.swift */,
 				6C4286FA2A29DB4900560F15 /* DetailCafeMenuService.swift */,
 				6CB6A7E72A5EF442003FAB86 /* DetailCafeReviewService.swift */,
-				6CC990752A70410C008ABE53 /* RegisterFavoriteDetailCafeService.swift */,
 				6CC990792A7045BA008ABE53 /* DeleteFavoriteDetailCafeService.swift */,
+				6CC990752A70410C008ABE53 /* RegisterFavoriteDetailCafeService.swift */,
 			);
 			path = CafeDetail_Service;
 			sourceTree = "<group>";
@@ -346,9 +346,9 @@
 			children = (
 				01B87B772A1CDB2F0082FC05 /* IdCheckService.swift */,
 				01B87B7B2A1CF20E0082FC05 /* NicknameCheckService.swift */,
-				01B87B7F2A1CF4D00082FC05 /* SignupService.swift */,
 				019D16B22A7CE47900766E9D /* MessageSendService.swift */,
 				019D16B42A7F841300766E9D /* MessageVerifyService.swift */,
+				01B87B7F2A1CF4D00082FC05 /* SignupService.swift */,
 			);
 			path = SignUp_Service;
 			sourceTree = "<group>";
@@ -372,16 +372,16 @@
 		01B9327E29E2E1A4006342F9 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */,
-				F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */,
-				F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */,
 				6C4286B82A15D61400560F15 /* CafeDetailViewMenuCell.swift */,
 				6C4286BA2A176F3300560F15 /* CafeDetailViewReviewCell.swift */,
 				F122CEF129DE8FAD00818D7B /* CafeListCollectionViewCell.swift */,
+				F13FDA7629DD616E0044C6C3 /* LovedCollectionViewCell.swift */,
+				F13FDA7429DD5DD00044C6C3 /* MainTableViewLovedCell.swift */,
+				F13FDA9D29DD91A50044C6C3 /* MainTableViewCafeCell.swift */,
+				F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */,
 				01B87B592A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift */,
 				F13FA05F2A151D4F0001958D /* SearchTableViewCell.swift */,
 				F13FA08E2A24F6320001958D /* SearchCollectionViewCell.swift */,
-				F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
