@@ -10,6 +10,7 @@ import UIKit
 
 class PhoneCertificationView: UIViewController, UIGestureRecognizerDelegate{
     
+    var flag: Int = 0 //문자인증 완료 변수(초기값은 0)
     
     private let pinkView: UIView = {
         let view = UIView()
@@ -198,9 +199,15 @@ class PhoneCertificationView: UIViewController, UIGestureRecognizerDelegate{
 
     
     @objc func nextView(_ sender: UIButton) {
-        let signupView = SignupView()
-        signupView.phoneNumber = phonenumberField.text
-        self.navigationController?.pushViewController(signupView, animated: true)
+        if flag == 1 {
+            let signupView = SignupView()
+            signupView.phoneNumber = phonenumberField.text
+            self.navigationController?.pushViewController(signupView, animated: true)
+        } else {
+            let alert = UIAlertController(title: "핸드폰 인증 후 가능합니다.", message: "", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
         
     }
     @objc func messageSend() {
@@ -234,6 +241,8 @@ extension PhoneCertificationView {
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
                 self.present(alert, animated: true, completion: nil)
+                // 발송 성공 시에 버튼의 타이틀을 "재전송"으로 변경
+                self.phonenumberButton.setTitle("재전송", for: .normal)
                 print(data)
             case .requestErr(let err):
                 print(err)
@@ -271,6 +280,9 @@ extension PhoneCertificationView {
                 
                 self.present(alert, animated: true, completion: nil)
                 print(data)
+                
+                self.flag = 1  // "success" 시에 flag 값을 1로 변경합니다.
+                
             case .requestErr(let err):
                 print(err)
             case .pathErr:
