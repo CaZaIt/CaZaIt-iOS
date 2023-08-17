@@ -219,7 +219,6 @@ class WriteReviewView: UIViewController{
         print(selectedStarCount)
 
         let review = Review(score: selectedStarCount, content: inputText)
-
         // ReviewService의 인스턴스를 생성
         let reviewWriteService = ReviewWriteService()
 
@@ -234,10 +233,10 @@ class WriteReviewView: UIViewController{
             reviewWriteService.postReview(userId: userId, cafeId: cafeId, review: review) { result in
                 switch result {
                 case .success(let reviewResponse):
-
                     print("리뷰 ID: \(reviewResponse.data.nickname)")
                 case .failure(let error):
                     print("에러 메시지: \(error.localizedDescription)")
+                    //print(ReviewResponse.)
                 }
             }
         } else {

@@ -11,15 +11,6 @@ import UIKit
 protocol RateViewDelegate: AnyObject {
     func didRate(_ rateView: RateView, withNumberOfStars stars: Int)
 }
-//
-//  RateView.swift
-//  CaZait-iOS
-//
-//  Created by J on 2023/05/22.
-//
-
-import UIKit
-
 
 class RateView: BaseView {
 
