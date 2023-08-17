@@ -469,15 +469,15 @@ extension SignupView: UITextFieldDelegate {
 
 extension SignupView {
     func validateID(realtimeText: String) {
-        let idPattern = "^[a-z]+[0-9]*$" // Pattern for IDs starting with lowercase letters and ending with numbers
-        let minIDLength = 8 // Minimum length for the ID
+        let idPattern = "^[a-z]{6,}$" // Pattern for IDs starting with lowercase letters and ending with numbers
+        let minIDLength = 6 // Minimum length for the ID
         let maxIDLength = 20 // Maximum length for the ID
         
         let idRegex = try? NSRegularExpression(pattern: idPattern, options: [])
         let matches = idRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count))
         
         if realtimeText.count >= minIDLength, realtimeText.count <= maxIDLength, matches?.count == 0 {
-            print("Invalid ID: 영문 소문자로 시작하고 숫자로 끝나야 합니다.")
+            print("Invalid ID: 6자 이상의 소문자 혹은 소문자와 숫자를 조합하여 입력해주세요.")
         } else if realtimeText.count < minIDLength {
             print("Invalid ID: 최소 6자 이상이어야 합니다.")
         } else if realtimeText.count > maxIDLength {
