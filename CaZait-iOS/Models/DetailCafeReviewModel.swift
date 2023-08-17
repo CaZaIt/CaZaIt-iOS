@@ -17,12 +17,12 @@ struct DetailCafeReviewResponse: Codable {
 struct DetailCafeReviewData: Codable {
     let reviewResponses: [DetailCafeReview]
     let totalElements: Int
-    let nextCursor: Int
+    let isLast: Bool
 }
 
 struct DetailCafeReview: Codable {
-    let userId: String
-    let cafeId: Int
+    let cafeName: String
+    let nickname: String
     let score: Int
     let content: String
 }

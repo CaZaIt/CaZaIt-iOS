@@ -1,5 +1,5 @@
 //
-//  DetailCafeModel.swift
+//  DetailCafeByCafeIdModel.swift
 //  CaZait-iOS
 //
 //  Created by J on 2023/06/02.
@@ -11,10 +11,10 @@ struct DetailCafeByCafeIdResponse: Codable {
     let code: Int
     let result: String
     let message: String
-    let data: DetailCafeDataByCafeId
+    let data: DetailCafeByCafeIdData
 }
 
-struct DetailCafeDataByCafeId: Codable {
+struct DetailCafeByCafeIdData: Codable {
     let cafeId: Int
     let congestionStatus: String
     let name: String
