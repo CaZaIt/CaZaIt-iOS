@@ -1,15 +1,15 @@
 //
-//  CustomerCenterView.swift
+//  PolicyViewController.swift
 //  CaZait-iOS
 //
-//  Created by 강민수 on 2023/08/01.
+//  Created by 강민수 on 2023/08/16.
 //
 
 import UIKit
 import SnapKit
 
-class CustomerCenterView: UIViewController, UIGestureRecognizerDelegate {
-    
+class PolicyViewController: UIViewController, UIGestureRecognizerDelegate {
+
     private let navigationBarAppearance : UINavigationBarAppearance = {
         let navigationBar = UINavigationBarAppearance()
         
@@ -20,52 +20,35 @@ class CustomerCenterView: UIViewController, UIGestureRecognizerDelegate {
         return navigationBar
     }()
     
-    private let emailTitleLabel: UILabel = {
+    private let pinkView: UIView = {
+        let view = UIView()
+        
+        view.backgroundColor = UIColor(r: 255, g: 223, b: 217)
+        
+        return view
+    }()
+    
+    private let locationInfoLabel: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold) //위에 글씨체가 어색해서 임시로 추가
-        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.textColor = .black
         label.textAlignment = .left
-        label.text = "이메일"
+        label.text = "위치정보 기반 서비스 이용약관"
         label.numberOfLines = 1
         
         return label
     }()
     
-    private let emailLabel: UILabel = {
-        let label = UILabel()
+    private let locationButton: UIButton = {
+        let button = UIButton()
         
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular) //위에 글씨체가 어색해서 임시로 추가
-        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        label.textAlignment = .left
-        label.text = "kazait123@kazait.com"
-        label.numberOfLines = 1
+        let chevronImage = UIImage(systemName: "chevron.right")
+        button.setImage(chevronImage, for: .normal)
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
         
-        return label
-    }()
-    
-    private let numberTitleLabel: UILabel = {
-        let label = UILabel()
-        
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold) //위에 글씨체가 어색해서 임시로 추가
-        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        label.textAlignment = .left
-        label.text = "고객센터 번호"
-        label.numberOfLines = 1
-        
-        return label
-    }()
-    
-    private let numberLabel: UILabel = {
-        let label = UILabel()
-        
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular) //위에 글씨체가 어색해서 임시로 추가
-        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        label.textAlignment = .left
-        label.text = "010-1234-5678"
-        label.numberOfLines = 1
-        
-        return label
+        return button
     }()
     
     private let dottedLineView: UIView = {
@@ -88,11 +71,27 @@ class CustomerCenterView: UIViewController, UIGestureRecognizerDelegate {
         return view
     }()
     
-    private let pinkView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(r: 255, g: 223, b: 217)
-        return view
+    private let personalInfoLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.textColor = .black
+        label.textAlignment = .left
+        label.text = "개인정보 수집 및 이용 동의"
+        label.numberOfLines = 1
+        
+        return label
+    }()
+    
+    private let personalButton: UIButton = {
+        let button = UIButton()
+        
+        let chevronImage = UIImage(systemName: "chevron.right")
+        button.setImage(chevronImage, for: .normal)
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(personalButtonTapped), for: .touchUpInside)
+        
+        return button
     }()
     
     override func viewWillAppear(_ animated: Bool) {
@@ -110,8 +109,13 @@ class CustomerCenterView: UIViewController, UIGestureRecognizerDelegate {
         setupLayout()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
     func setupNavigation() {
-        self.title = "고객센터"
+        self.title = "약관 및 정책"
         //손가락 옆으로 미는 제스쳐 작동
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -127,7 +131,7 @@ class CustomerCenterView: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func setupLayout() {
-        [pinkView, emailTitleLabel, emailLabel, numberTitleLabel, numberLabel, dottedLineView].forEach { view.addSubview ($0) }
+        [pinkView, locationInfoLabel, locationButton, dottedLineView, personalInfoLabel, personalButton].forEach { view.addSubview ($0) }
         
         pinkView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
@@ -135,24 +139,35 @@ class CustomerCenterView: UIViewController, UIGestureRecognizerDelegate {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         
-        emailTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(47)
-            make.leading.equalTo(view.snp.leading).offset(39)
+        locationInfoLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
+            make.leading.equalTo(view.snp.leading).offset(34)
         }
         
-        emailLabel.snp.makeConstraints { make in
-            make.top.equalTo(emailTitleLabel.snp.bottom).offset(6)
-            make.leading.equalTo(view.snp.leading).offset(39)
+        locationButton.snp.makeConstraints { make in
+            make.centerY.equalTo(locationInfoLabel.snp.centerY)
+            make.trailing.equalTo(view.snp.trailing).inset(32)
+            make.width.height.equalTo(20)
         }
         
         dottedLineView.snp.makeConstraints { make in
-            make.top.equalTo(emailLabel.snp.bottom).offset(21)
-            make.leading.trailing.equalToSuperview().inset(21)
+            make.top.equalTo(locationInfoLabel.snp.bottom).offset(21)
+            make.leading.trailing.equalToSuperview().inset(24)
             make.height.equalTo(1.5)
         }
         
-        // contentView에 dottedLineView 추가 후, layout이 완료되었을 때 shapeLayer의 path 설정
+        personalInfoLabel.snp.makeConstraints { make in
+            make.top.equalTo(dottedLineView.snp.bottom).offset(21)
+            make.leading.equalTo(view.snp.leading).offset(34)
+        }
         
+        personalButton.snp.makeConstraints { make in
+            make.centerY.equalTo(personalInfoLabel.snp.centerY)
+            make.trailing.equalTo(view.snp.trailing).inset(32)
+            make.width.height.equalTo(20)
+        }
+        
+        // contentView에 dottedLineView 추가 후, layout이 완료되었을 때 shapeLayer의 path 설정
         // dottedLineView의 layer의 첫 번째 sublayer를 CAShapeLayer로 가져옵니다.
         let shapeLayer = dottedLineView.layer.sublayers?.first as? CAShapeLayer
         let path = UIBezierPath()
@@ -163,26 +178,19 @@ class CustomerCenterView: UIViewController, UIGestureRecognizerDelegate {
         
         // shapeLayer의 path를 UIBezierPath의 CGPath 표현으로 설정합니다.
         shapeLayer?.path = path.cgPath
-        
-        numberTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(dottedLineView.snp.bottom).offset(21)
-            make.leading.equalTo(view.snp.leading).offset(39)
-        }
-        
-        numberLabel.snp.makeConstraints { make in
-            make.top.equalTo(numberTitleLabel.snp.bottom).offset(6)
-            make.leading.equalTo(view.snp.leading).offset(39)
-        }
     }
     
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.isNavigationBarHidden = true
+    @objc func locationButtonTapped() {
+        let locationRuleViewController = PlaceDetailTermsView()
+        navigationController?.pushViewController(locationRuleViewController, animated: true)
     }
     
-    
+    @objc func personalButtonTapped() {
+        let personalInfoDetailTermsView = PersonalInfoDetailTermsView()
+        navigationController?.pushViewController(personalInfoDetailTermsView, animated: true)
+    }
 }
