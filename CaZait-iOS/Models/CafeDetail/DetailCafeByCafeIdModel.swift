@@ -15,11 +15,12 @@ struct DetailCafeByCafeIdResponse: Codable {
 }
 
 struct DetailCafeByCafeIdData: Codable {
-    let cafeId: Int
+    let cafeId: String
     let congestionStatus: String
     let name: String
     let address: String
     let longitude: String
     let latitude: String
+    let favoritesStatus: String
     let cafeImages: [String]
 }

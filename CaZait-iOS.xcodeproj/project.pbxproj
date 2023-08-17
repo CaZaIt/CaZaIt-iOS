@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0043A14B1CC72233FECBBDA9 /* Pods_CaZait_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9402B01BCAFEFECC5E1D357 /* Pods_CaZait_iOS.framework */; };
 		019D16A52A56CBB500766E9D /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16A42A56CBB500766E9D /* SplashView.swift */; };
 		019D16A72A712F9700766E9D /* TermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16A62A712F9700766E9D /* TermsView.swift */; };
 		019D16A92A77E3CF00766E9D /* PlaceDetailTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16A82A77E3CF00766E9D /* PlaceDetailTermsView.swift */; };
@@ -47,7 +48,6 @@
 		01F7A21729D95BF70058736E /* CafeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21629D95BF70058736E /* CafeDetailView.swift */; };
 		01F7A21929D95C150058736E /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21829D95C150058736E /* MyPageView.swift */; };
 		01F7A21B29D95C480058736E /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7A21A29D95C480058736E /* MoreView.swift */; };
-		1CF9F13F96FAD7183E4075F1 /* Pods_CaZait_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F834C20100EC4929DA14DE /* Pods_CaZait_iOS.framework */; };
 		6C4286B92A15D61400560F15 /* CafeDetailViewMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4286B82A15D61400560F15 /* CafeDetailViewMenuCell.swift */; };
 		6C4286BB2A176F3300560F15 /* CafeDetailViewReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4286BA2A176F3300560F15 /* CafeDetailViewReviewCell.swift */; };
 		6C4286F32A1B7A1C00560F15 /* WriteReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4286F22A1B7A1C00560F15 /* WriteReviewView.swift */; };
@@ -133,7 +133,6 @@
 		01F7A21629D95BF70058736E /* CafeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeDetailView.swift; sourceTree = "<group>"; };
 		01F7A21829D95C150058736E /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		01F7A21A29D95C480058736E /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
-		51AA1E9A38F4E7C1CE510F37 /* Pods-CaZait-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaZait-iOS.release.xcconfig"; path = "Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		6C4286B82A15D61400560F15 /* CafeDetailViewMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeDetailViewMenuCell.swift; sourceTree = "<group>"; };
 		6C4286BA2A176F3300560F15 /* CafeDetailViewReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeDetailViewReviewCell.swift; sourceTree = "<group>"; };
 		6C4286F22A1B7A1C00560F15 /* WriteReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteReviewView.swift; sourceTree = "<group>"; };
@@ -152,8 +151,9 @@
 		6CC990792A7045BA008ABE53 /* DeleteFavoriteDetailCafeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFavoriteDetailCafeService.swift; sourceTree = "<group>"; };
 		6CC9907B2A7046FF008ABE53 /* RegisterFavoriteDetailCafeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterFavoriteDetailCafeModel.swift; sourceTree = "<group>"; };
 		6CC9907D2A7047DE008ABE53 /* DeleteFavoriteDetailCafeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFavoriteDetailCafeModel.swift; sourceTree = "<group>"; };
-		BCE6B1AC50B83826F95A513D /* Pods-CaZait-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaZait-iOS.debug.xcconfig"; path = "Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		C7F834C20100EC4929DA14DE /* Pods_CaZait_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CaZait_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9402B01BCAFEFECC5E1D357 /* Pods_CaZait_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CaZait_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1E64B5950D0B4FDD0222D9B /* Pods-CaZait-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaZait-iOS.debug.xcconfig"; path = "Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		C5DDE2ECFB1BDA187440A2AA /* Pods-CaZait-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaZait-iOS.release.xcconfig"; path = "Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		F122CEF129DE8FAD00818D7B /* CafeListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CafeListCollectionViewCell.swift; path = "CaZait-iOS/Cells/CafeListCollectionViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		F122CEF529DF05C300818D7B /* MainTopSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTopSearchView.swift; sourceTree = "<group>"; };
 		F13FA05D2A13899E0001958D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
@@ -183,7 +183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CF9F13F96FAD7183E4075F1 /* Pods_CaZait_iOS.framework in Frameworks */,
+				0043A14B1CC72233FECBBDA9 /* Pods_CaZait_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,7 +433,7 @@
 				01F7A1EF29D935540058736E /* CaZait-iOS */,
 				01F7A1EE29D935540058736E /* Products */,
 				5EB7A1CE8E2943BA41BA8668 /* Pods */,
-				4457164C37EC7CE6533D9E26 /* Frameworks */,
+				48D8CC974D43E19970E68812 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -488,10 +488,10 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		4457164C37EC7CE6533D9E26 /* Frameworks */ = {
+		48D8CC974D43E19970E68812 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C7F834C20100EC4929DA14DE /* Pods_CaZait_iOS.framework */,
+				A9402B01BCAFEFECC5E1D357 /* Pods_CaZait_iOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -499,8 +499,8 @@
 		5EB7A1CE8E2943BA41BA8668 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BCE6B1AC50B83826F95A513D /* Pods-CaZait-iOS.debug.xcconfig */,
-				51AA1E9A38F4E7C1CE510F37 /* Pods-CaZait-iOS.release.xcconfig */,
+				B1E64B5950D0B4FDD0222D9B /* Pods-CaZait-iOS.debug.xcconfig */,
+				C5DDE2ECFB1BDA187440A2AA /* Pods-CaZait-iOS.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -528,11 +528,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 01F7A20129D935550058736E /* Build configuration list for PBXNativeTarget "CaZait-iOS" */;
 			buildPhases = (
-				226D5D92C9FF87EEEC39657D /* [CP] Check Pods Manifest.lock */,
+				FF305FE42580643BD64938A2 /* [CP] Check Pods Manifest.lock */,
 				01F7A1E929D935540058736E /* Sources */,
 				01F7A1EA29D935540058736E /* Frameworks */,
 				01F7A1EB29D935540058736E /* Resources */,
-				48A4DABD9A4DA645AE85870C /* [CP] Embed Pods Frameworks */,
+				81573086A29C5431067A2DDF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -589,7 +589,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		226D5D92C9FF87EEEC39657D /* [CP] Check Pods Manifest.lock */ = {
+		81573086A29C5431067A2DDF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FF305FE42580643BD64938A2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -609,23 +626,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		48A4DABD9A4DA645AE85870C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CaZait-iOS/Pods-CaZait-iOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -846,7 +846,7 @@
 		};
 		01F7A20229D935550058736E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BCE6B1AC50B83826F95A513D /* Pods-CaZait-iOS.debug.xcconfig */;
+			baseConfigurationReference = B1E64B5950D0B4FDD0222D9B /* Pods-CaZait-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -878,7 +878,7 @@
 		};
 		01F7A20329D935550058736E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 51AA1E9A38F4E7C1CE510F37 /* Pods-CaZait-iOS.release.xcconfig */;
+			baseConfigurationReference = C5DDE2ECFB1BDA187440A2AA /* Pods-CaZait-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
