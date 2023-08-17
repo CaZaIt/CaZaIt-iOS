@@ -642,27 +642,24 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == collectionView1{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeDetailViewMenuCell", for: indexPath) as! CafeDetailViewMenuCell
-            //print("cell")
-            //print("row : ", cafeMenu?[indexPath.row])
-            //print("cafe menu : " ,cafeMenu)
             if let menu = cafeMenu?[indexPath.row] {
-                //print("menu :", menu)
-//                print("name: \(menu.name)")
-//                print("description: \(menu.description)")
-//                print("price: \(menu.price)")
                 cell.configure(imageURL: menu.imageUrl, menu: menu.name, price: "\(menu.price)", menuDescription: menu.description)
             }else {
                 cell.configure(imageURL: nil, menu: "아메리카노", price: "3500", menuDescription: "맛있다!")
             }
-
+            
             return cell
+            
         }else if collectionView == collectionView2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeDetailViewReviewCell", for: indexPath) as! CafeDetailViewReviewCell
             if let review = cafeReview?[indexPath.row]{
                 cell.configure(nickname: review.nickname, review: review.content, score: review.score)
-            }
+            }else {
+                cell.configure(nickname: "카자잇", review: "리뷰입니다", score: 5)
 
+            }
             return cell
+            
         }else {
             return UICollectionViewCell()
         }
