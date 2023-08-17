@@ -37,7 +37,7 @@ struct APIConstants {
     
     static let refreshURL = baseURL + "/api/auths/refresh" //토큰 재발급
     
-    static let messageSendURL = baseURL + "/api/auths/messages/codes/send/sign-up" //인증번호 발송
+    static let messageSendURL = baseURL + "/api/auths/messages/codes/send/test/sign-up" //인증번호 발송
     
     static let messageSendCheckURL = baseURL + "/api/auths/messages/codes/verify" //인증번호 확인
 }

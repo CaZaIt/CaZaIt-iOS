@@ -17,6 +17,7 @@
 		019D16B32A7CE47900766E9D /* MessageSendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16B22A7CE47900766E9D /* MessageSendService.swift */; };
 		019D16B52A7F841300766E9D /* MessageVerifyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16B42A7F841300766E9D /* MessageVerifyService.swift */; };
 		019D16B72A7F84EE00766E9D /* MessageVerifyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D16B62A7F84EE00766E9D /* MessageVerifyModel.swift */; };
+		01AA99B62A8CF9F200FB8355 /* PhoneCertificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AA99B52A8CF9F200FB8355 /* PhoneCertificationView.swift */; };
 		01B87B582A120F480082FC05 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87B572A120F480082FC05 /* LoginView.swift */; };
 		01B87B5A2A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87B592A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift */; };
 		01B87B602A1B90700082FC05 /* APIContants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87B5F2A1B90700082FC05 /* APIContants.swift */; };
@@ -107,6 +108,7 @@
 		019D16B22A7CE47900766E9D /* MessageSendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSendService.swift; sourceTree = "<group>"; };
 		019D16B42A7F841300766E9D /* MessageVerifyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageVerifyService.swift; sourceTree = "<group>"; };
 		019D16B62A7F84EE00766E9D /* MessageVerifyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageVerifyModel.swift; sourceTree = "<group>"; };
+		01AA99B52A8CF9F200FB8355 /* PhoneCertificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCertificationView.swift; sourceTree = "<group>"; };
 		01B87B572A120F480082FC05 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		01B87B592A1235EF0082FC05 /* RecentCafeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCafeCollectionViewCell.swift; sourceTree = "<group>"; };
 		01B87B5F2A1B90700082FC05 /* APIContants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIContants.swift; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 				019D16AA2A78D65500766E9D /* PersonalInfoDetailView.swift */,
 				019D16AC2A792EF700766E9D /* NoticeView.swift */,
 				019D16AE2A79323800766E9D /* CustomerCenterView.swift */,
+				01AA99B52A8CF9F200FB8355 /* PhoneCertificationView.swift */,
 				F1E5473C2A8CADDC00671182 /* PolicyViewController.swift */,
 				F1E547422A8CCD7B00671182 /* ChangePasswordViewController.swift */,
 			);
@@ -639,6 +642,7 @@
 				01B87B842A1E30C60082FC05 /* loginModel.swift in Sources */,
 				F1E5472A2A7F8FF100671182 /* RecentModel.swift in Sources */,
 				01B87B6E2A1B993D0082FC05 /* File4.swift in Sources */,
+				01AA99B62A8CF9F200FB8355 /* PhoneCertificationView.swift in Sources */,
 				019D16A72A712F9700766E9D /* TermsView.swift in Sources */,
 				01F7A21B29D95C480058736E /* MoreView.swift in Sources */,
 			);

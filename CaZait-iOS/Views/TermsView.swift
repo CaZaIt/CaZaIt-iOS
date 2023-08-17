@@ -328,8 +328,8 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         // Check if both checkboxes are selected
         if checkBoxButton_1.isSelected && checkBoxButton_2.isSelected {
             // All checkboxes are selected, navigate to the next view
-            let signupView = SignupView()
-            self.navigationController?.pushViewController(signupView, animated: true)
+            let PhoneCertificationView = PhoneCertificationView()
+            self.navigationController?.pushViewController(PhoneCertificationView, animated: true)
         } else {
             // Show an alert if any of the checkboxes is not selected
             let alert = UIAlertController(title: "약관동의 필요", message: "약관에 동의해야 다음으로 진행할 수 있습니다.", preferredStyle: .alert)
