@@ -89,15 +89,17 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        let navigationBarAppearance = UINavigationBarAppearance()
-        navigationBarAppearance.backgroundColor = .black
+        navigationController?.changeNavigationBar(isClear: true) // navigationBar 투명으로
+//        let navigationBarAppearance = UINavigationBarAppearance()
+//        navigationBarAppearance.backgroundColor = .clear
         self.navigationController?.isNavigationBarHidden = false
-        self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
-        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+//        self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+//        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+//        self.navigationController?.changeNavigationBar(isClear: true)
+
         self.navigationController?.navigationBar.barStyle = .default
         self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.isTranslucent = false
+//        self.navigationController?.navigationBar.isTranslucent = false
 
         // 뒤로가기 버튼 추가
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))
@@ -137,17 +139,14 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         collectionView2.dataSource = self
         collectionView2.delegate = self
         collectionView2.register(CafeDetailViewReviewCell.self, forCellWithReuseIdentifier: "CafeDetailViewReviewCell")
+        
         // UIScrollView 설정
         scrollView.delegate = self
+        scrollView.backgroundColor = .white
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.bounces = false // 스크롤 여백 없애기, 대신 스크롤의 튕김이 없어져 스크롤이 부드럽지 못함
+        //scrollView.bounces = false // 스크롤 여백 없애기, 대신 스크롤의 튕김이 없어져 스크롤이 부드럽지 못함
         scrollView.decelerationRate = UIScrollView.DecelerationRate.fast
 
-        
-        //손가락 옆으로 미는 제스쳐 작동
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-        
         cafeView.backgroundColor = .white
         cafeView.layer.cornerRadius = 30
         cafeView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -164,7 +163,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         cafeLocation.textAlignment = .left
         cafeLocation.translatesAutoresizingMaskIntoConstraints = false
         
-        // 버튼 설정
         cafeLocationCheck.setTitle("매장위치 확인>", for: .normal)
         cafeLocationCheck.setTitleColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), for: .normal)
         cafeLocationCheck.backgroundColor = .clear
@@ -172,10 +170,9 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         
         dottedLine.strokeColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1).cgColor
         dottedLine.lineWidth = 2
-        dottedLine.lineDashPattern = [6, 4] // [실선길이, 공백길이]를 반복하면서 그려 점선을 만듭니다.
-        path.addLines(between: [CGPoint(x: 20, y: 100), CGPoint(x: 370, y: 100)]) // 점선을 그리고 싶은 좌표를 지정합니다.
-        
-        dottedLine.path = path // CAShapeLayer에 점선을 추가합니다.
+        dottedLine.lineDashPattern = [6, 4] // [실선길이, 공백길이]
+        path.addLines(between: [CGPoint(x: 20, y: 100), CGPoint(x: 370, y: 100)]) // 점선 좌표 지정
+        dottedLine.path = path
         
         
         //edit button
@@ -194,9 +191,9 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         stickyHeaderViewSegmentControl.isHidden = true
 
         scrollView.addSubview(stackView)
+        stackView.addArrangedSubview(nestedStackView)
         nestedStackView.addArrangedSubview(cafeImage)
         nestedStackView.addArrangedSubview(cafeView)
-        stackView.addArrangedSubview(nestedStackView)
         cafeView.addSubview(cafeNameLabel)
         cafeView.addSubview(cafeLocation)
         cafeView.addSubview(cafeLocationCheck)
@@ -211,25 +208,35 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         view.addSubview(reviewWriteButton)
         
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            //$0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.top.equalToSuperview()
             $0.left.bottom.right.equalToSuperview()
         }
         
         stackView.snp.makeConstraints {
+            $0.top.equalTo(scrollView.snp.top).offset(500)
             $0.edges.width.equalToSuperview()
         }
         
+        stackView.backgroundColor = .red
+        
+        nestedStackView.snp.makeConstraints{
+            $0.top.equalTo(scrollView.snp.top)
+        }
         cafeImage.snp.makeConstraints {
+            $0.top.equalTo(stackView.snp.top)
             $0.height.equalTo(250)
         }
         
         
         cafeView.snp.makeConstraints {
+            $0.top.equalTo(cafeImage.snp.bottom)
             $0.height.equalTo(110)
         }
         
         stickyHeaderViewSegmentControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            //$0.top.equalTo(view.snp.top)
             $0.left.right.equalToSuperview()
             $0.height.equalTo(50)
         }
@@ -712,7 +719,7 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
         }else if collectionView == collectionView2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeDetailViewReviewCell", for: indexPath) as! CafeDetailViewReviewCell
             if let review = cafeReview?[indexPath.row]{
-                cell.configure(nickname: review.userId, review: review.content, score: review.score)
+                cell.configure(nickname: review.nickname, review: review.content, score: review.score)
             }
 
             return cell
@@ -733,9 +740,33 @@ extension CafeDetailView: UIScrollViewDelegate {
         // frame.minY를 통해 sticky 타이밍 계산
         let shouldShowSticky = scrollView.contentOffset.y >= headerViewSegmentControl.frame.minY
         stickyHeaderViewSegmentControl.isHidden = !shouldShowSticky
+        print(!shouldShowSticky)
+        //navigationController?.changeNavigationBar(isClear: !shouldShowSticky)
         
         if headerViewSegmentControl.frame.minY == 0.0 {
             stickyHeaderViewSegmentControl.isHidden = true
+        }
+    }
+}
+
+extension UINavigationController {
+    
+    // 완전 안보임
+    func hideNavigationBar() {
+        navigationBar.isHidden = true
+    }
+    
+    // 투명하게 만들기 (버튼 등은 보임)
+    func changeNavigationBar(isClear: Bool) {
+        navigationBar.isHidden = false
+        if isClear {
+            navigationBar.shadowImage = UIImage()
+            navigationBar.setBackgroundImage(UIImage(), for: .default)
+        } else {
+            navigationBar.shadowImage = nil
+            navigationBar.setBackgroundImage(nil, for: .default)
+//            navigationBar.backgroundColor = .black
+
         }
     }
 }
