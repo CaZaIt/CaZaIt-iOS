@@ -136,7 +136,7 @@ class CafeListCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(congestionView)
         
         congestionView.snp.makeConstraints { make in
-            make.top.equalTo(cafeLocationLabel.snp.bottom).offset(13)
+            make.bottom.equalTo(contentView.snp.bottom).inset(13)
             make.width.equalTo(140)
             make.height.equalTo(33)
             make.centerX.equalTo(contentView.snp.centerX)
