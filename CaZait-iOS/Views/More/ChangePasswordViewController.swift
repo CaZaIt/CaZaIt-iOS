@@ -64,7 +64,7 @@ class ChangePasswordViewController: UIViewController, UIGestureRecognizerDelegat
     }
 
     func setupLayout() {
-        pinkView.addSubview(view)
+        view.addSubview(pinkView)
         
         pinkView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
