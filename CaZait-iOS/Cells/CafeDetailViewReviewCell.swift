@@ -12,13 +12,20 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
     // 꽉찬 별
     lazy var starFillImage: UIImage? = {
         return UIImage(systemName: "star.fill",
-                       withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .medium))?.withTintColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), renderingMode: .alwaysOriginal)
+                       withConfiguration: UIImage.SymbolConfiguration(pointSize: 26, weight: .medium, scale: .medium))?.withTintColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), renderingMode: .alwaysOriginal)
     }()
 
     // 빈별
     lazy var starEmptyImage: UIImage? = {
         return UIImage(systemName: "star",
-                       withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .medium))?.withTintColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), renderingMode: .alwaysOriginal)
+                       withConfiguration: UIImage.SymbolConfiguration(pointSize: 26, weight: .medium, scale: .medium))?.withTintColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), renderingMode: .alwaysOriginal)
+    }()
+    
+    let emergencyImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(systemName: "light.beacon.max",
+                                                   withConfiguration: UIImage.SymbolConfiguration(pointSize: 24, weight: .medium, scale: .medium))?.withTintColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), renderingMode: .alwaysOriginal))
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
     
     
@@ -90,6 +97,7 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         contentView.addSubview(nickname)
         contentView.addSubview(hour)
         contentView.addSubview(review)
+        contentView.addSubview(emergencyImageView)
     }
     
     private func setupLayout() {
@@ -104,10 +112,15 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
             make.top.equalTo(contentView.snp.top).offset(50)
         }
         
-        //        hour.snp.makeConstraints { make in
-        //            make.leading.equalTo(nickname.snp.trailing).offset(20)
-        //            make.top.equalTo(contentView.snp.top).offset(50)
-        //        }
+        
+        emergencyImageView.snp.makeConstraints { make in
+            make.leading.equalTo(contentView.snp.trailing).offset(-50)
+            make.top.equalTo(contentView.snp.top).offset(10)
+        }
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(emergencyImageViewTapped))
+        emergencyImageView.isUserInteractionEnabled = true
+        emergencyImageView.addGestureRecognizer(tapGestureRecognizer)
         
         review.snp.makeConstraints { make in
             make.leading.equalTo(contentView.snp.leading).offset(20)
@@ -145,6 +158,11 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
 
     }
 
+    @objc func emergencyImageViewTapped() {
+        let alertController = UIAlertController(title: "신고 서비스 준비 중.", message: "", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+    }
     
     func configure(nickname: String, review: String, score: Int) {
         // 셀의 내용을 설정합니다.
