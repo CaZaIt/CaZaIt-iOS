@@ -547,7 +547,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             case .success(let response):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 self.cafeMenu = response
-                print(response)
+                //print(response)
 
                 collectionView1.reloadData() // 컬렉션 뷰 리로드
 
@@ -575,7 +575,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             return
         }
         let detailcafereviewservice = DetailCafeReviewService()
-        detailcafereviewservice.getDetailCafeReviewBycafeID(cafeID: cafeId) { [self] result in
+        detailcafereviewservice.getDetailCafeReviewBycafeID(cafeID: cafeId, nums: 20) { [self] result in
             switch result {
             case .success(let response):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
@@ -592,7 +592,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 }
                 
             case .failure(let error):
-                print(error.localizedDescription)
+                print("review error : \n" + error.localizedDescription)
                 // 에러 메시지 출력
                 print(error)
             }

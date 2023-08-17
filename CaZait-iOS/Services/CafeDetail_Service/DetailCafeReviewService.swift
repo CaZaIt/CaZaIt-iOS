@@ -9,12 +9,16 @@ import Foundation
 import Alamofire
 
 class DetailCafeReviewService{
-    func getDetailCafeReviewBycafeID(cafeID: String, completion: @escaping (Result<DetailCafeReviewData, Error>) -> Void) {
+    func getDetailCafeReviewBycafeID(cafeID: String, nums: Int, completion: @escaping (Result<DetailCafeReviewData, Error>) -> Void) {
         let url = APIConstants.cafeReviewURL + "/\(cafeID)" + "/all"
         
         print(url)
-
-        AF.request(url)
+        
+        let parameters : Parameters = [
+            "nums" : nums
+        ]
+        
+        AF.request(url, parameters: parameters)
             .validate()
             .responseDecodable(of: DetailCafeReviewResponse.self) { response in
                 switch response.result {
