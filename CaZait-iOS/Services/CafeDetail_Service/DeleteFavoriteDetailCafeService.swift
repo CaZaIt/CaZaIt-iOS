@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class DeleteFavoriteDetailCafeService {
-    func deleteFavoriteDetailCafe(userId: String, cafeId: Int, completion: @escaping (Result<DeleteFavoriteDetailResponse, Error>) -> Void) {
+    func deleteFavoriteDetailCafe(userId: String, cafeId: String, completion: @escaping (Result<DeleteFavoriteDetailResponse, Error>) -> Void) {
         let url = APIConstants.baseURL + "/api/favorites/delete/\(userId)/\(cafeId)"
         
         var header : HTTPHeaders = ["Content-Type" : "application/json"]

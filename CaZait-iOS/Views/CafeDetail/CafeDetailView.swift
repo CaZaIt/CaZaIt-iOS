@@ -84,7 +84,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         return collectionView
     }()
     
-    var cafeId : Int?
+    var cafeId : String?
     var cafeName : String?
     
     override func viewWillAppear(_ animated: Bool) {

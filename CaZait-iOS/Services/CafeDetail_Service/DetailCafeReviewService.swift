@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class DetailCafeReviewService{
-    func getDetailCafeReviewBycafeID(cafeID: Int, completion: @escaping (Result<DetailCafeReviewData, Error>) -> Void) {
+    func getDetailCafeReviewBycafeID(cafeID: String, completion: @escaping (Result<DetailCafeReviewData, Error>) -> Void) {
         let url = APIConstants.cafeReviewURL + "/\(cafeID)" + "/all"
         
         print(url)

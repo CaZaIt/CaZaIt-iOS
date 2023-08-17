@@ -10,7 +10,7 @@ import SnapKit
 
 
 class WriteReviewView: UIViewController{
-    var cafeId : Int?
+    var cafeId : String?
     
     var selectedStarCount: Int = 0
     

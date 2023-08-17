@@ -17,7 +17,11 @@ struct APIConstants {
     
     static let searchCafeURL = baseURL + "/api/cafes/name" // 카페 이름 조회
     
-    static let detailCafeURL = baseURL + "/api/cafes/id" // 카페 ID 조회
+    static let detailCafeURL = baseURL + "/api/cafes" // 카페 ID 조회
+    
+    static let registerFavorites = baseURL + "/api/favorites/user" // 관심 카페 등록
+
+    static let deleteFavorites = baseURL + "/api/favorites/delete" // 관심 카페 해제
     
     static let detailCafeMenuURL = baseURL + "/api/menus/cafe" // 카페 메뉴 조회
     
@@ -27,9 +31,9 @@ struct APIConstants {
     
     static let signupURL = baseURL + "/api/users/sign-up" // 회원가입
     
-    static let nicknamecheckURL = baseURL + "/api/users/duplicate-check/nickname" // 닉네임 중복확인
+    static let nicknamecheckURL = baseURL + "/api/users/exist/nickname" // 닉네임 중복확인
     
-    static let emailcheckURL = baseURL + "/api/users/duplicate-check/accountname" // 아이디 중복확인
+    static let idCheckURL = baseURL + "api/users/exist/accountname" // 아이디 중복확인
     
     static let loginURL = baseURL + "/api/auths/log-in?role=user" // 로그인(유저)
     
@@ -37,7 +41,9 @@ struct APIConstants {
     
     static let refreshURL = baseURL + "/api/auths/refresh" //토큰 재발급
     
-    static let messageSendURL = baseURL + "/api/auths/messages/codes/send/test/sign-up" //인증번호 발송
+    static let phonenumberCheckURL = baseURL + "api/users/exist/phonenumber" //전화번호 중복확인
     
-    static let messageSendCheckURL = baseURL + "/api/auths/messages/codes/verify" //인증번호 확인
+    static let messageSendURL = baseURL + "/api/auths/send-authnumber/test" //인증번호 발송
+    
+    static let messageSendCheckURL = baseURL + "api/users/verify-authnumber" //인증번호 인증
 }

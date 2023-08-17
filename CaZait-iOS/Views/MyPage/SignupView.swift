@@ -160,7 +160,7 @@ class SignupView: UIViewController{
     }()
     
     //이메일 중복확인 버튼
-    private let emailButton: UIButton = {
+    private let idButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("중복확인", for: .normal)
@@ -289,7 +289,7 @@ class SignupView: UIViewController{
         self.view.addSubview(pinkView)
         self.pinkView.addSubview(idLabel)
         self.pinkView.addSubview(idField)
-        self.pinkView.addSubview(emailButton)
+        self.pinkView.addSubview(idButton)
 //        self.pinkView.addSubview(descriptionLabel)
         self.pinkView.addSubview(pwLabel)
         self.pinkView.addSubview(pwField)
@@ -321,7 +321,7 @@ class SignupView: UIViewController{
             make.top.equalTo(self.idLabel.snp.bottom).offset(7)
             make.height.equalTo(43)
         }
-        self.emailButton.snp.makeConstraints { make in
+        self.idButton.snp.makeConstraints { make in
             make.leading.equalTo(self.idField.snp.trailing).offset(10)
             make.trailing.equalTo(self.pinkView.snp.trailing).inset(23)
             make.top.equalTo(self.idLabel.snp.bottom).offset(7)
@@ -402,7 +402,7 @@ class SignupView: UIViewController{
         
         
         //중복 확인 버튼 클릭시 이벤트 추가
-        emailButton.addTarget(self, action:#selector(emailCheck), for: .touchUpInside)
+        idButton.addTarget(self, action:#selector(idCheck), for: .touchUpInside)
         nicknameButton.addTarget(self, action:#selector(nicknameCheck), for: .touchUpInside)
         joinButton.addTarget(self, action:#selector(SignUp), for: .touchUpInside)
         phonenumberButton.addTarget(self, action:#selector(messageSend), for: .touchUpInside)
@@ -419,8 +419,8 @@ class SignupView: UIViewController{
         self.navigationController?.isNavigationBarHidden = true
     }
     
-    @objc func emailCheck() {
-        emailcheck()
+    @objc func idCheck() {
+        idcheck()
     }
     
     @objc func nicknameCheck() {
@@ -453,16 +453,16 @@ extension SignupView: UIGestureRecognizerDelegate { }
 // 중복확인 및 회원가입 통신을 위한 클래스 확장
 extension SignupView {
     
-    //이메일 중복확인
-    func emailcheck() {
+    //아이디 중복확인
+    func idcheck() {
         
         guard let accountName = idField.text else { return }
         
         
-        emailCheckService.shared.emailcheck(accountName: accountName) { response in
+        idCheckService.shared.idcheck(accountName: accountName) { response in
             switch response {
             case .success(let data):
-                guard let data = data as? EmailCheckResponse else { return }
+                guard let data = data as? IdCheckResponse else { return }
                 let alert = UIAlertController(title: data.message, message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 

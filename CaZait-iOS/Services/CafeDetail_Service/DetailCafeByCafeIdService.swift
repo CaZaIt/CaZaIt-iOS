@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class DetailCafeByCafeIdService{
-    func getDetailCafeBycafeID(cafeID: Int, completion: @escaping (Result<DetailCafeByCafeIdData, Error>) -> Void) {
+    func getDetailCafeBycafeID(cafeID: String, completion: @escaping (Result<DetailCafeByCafeIdData, Error>) -> Void) {
         let url = APIConstants.detailCafeURL + "/\(cafeID)"
         
         print(url)
@@ -31,7 +31,7 @@ class DetailCafeByCafeIdService{
             }
     }
     
-    func getDetailCafeBycafeIDToken(cafeID: Int, userID: String, completion: @escaping (Result<DetailCafeByCafeIdData, Error>) -> Void) {
+    func getDetailCafeBycafeIDToken(cafeID: String, userID: String, completion: @escaping (Result<DetailCafeByCafeIdData, Error>) -> Void) {
         let url = APIConstants.detailCafeURL + "/\(cafeID)" + "/user/\(userID)"
         
         print(url)

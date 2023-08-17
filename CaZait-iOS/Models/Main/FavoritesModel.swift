@@ -16,7 +16,8 @@ struct FavoritesResponse: Codable {
 
 // MARK: - Datum
 struct FavoritesInfo: Codable {
-    let favoritesId, cafeId: Int
+    let favoritesId: Int
+    let cafeId: String
     let name, address, latitude, longitude: String
     let congestion: String
     let imageUrl: [String]

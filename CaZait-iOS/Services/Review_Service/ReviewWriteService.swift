@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class ReviewWriteService {
-    func postReview(userId: String, cafeId: Int, review: Review, completion: @escaping (Result<ReviewResponse, Error>) -> Void) {
+    func postReview(userId: String, cafeId: String, review: Review, completion: @escaping (Result<ReviewResponse, Error>) -> Void) {
         let url = APIConstants.baseURL + "/api/reviews/user/\(userId)/cafe/\(cafeId)"
         
         var header : HTTPHeaders = ["Content-Type" : "application/json"]

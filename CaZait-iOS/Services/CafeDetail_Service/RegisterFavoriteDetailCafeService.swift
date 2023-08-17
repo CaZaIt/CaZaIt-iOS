@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class RegisterFavoriteDetailCafeService {
-    func postFavoriteDetailCafe(userId: String, cafeId: Int, completion: @escaping (Result<RegisterFavoriteDetailCafeResponse, Error>) -> Void) {
+    func postFavoriteDetailCafe(userId: String, cafeId: String, completion: @escaping (Result<RegisterFavoriteDetailCafeResponse, Error>) -> Void) {
         let url = APIConstants.baseURL + "/api/favorites/user/\(userId)/cafe/\(cafeId)"
         
         var header : HTTPHeaders = ["Content-Type" : "application/json"]

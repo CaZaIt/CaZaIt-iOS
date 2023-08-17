@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class DetailCafeMenuService{
-    func getDetailCafeMenuBycafeID(cafeID: Int, completion: @escaping (Result<[DetailCafeMenu], Error>) -> Void) {
+    func getDetailCafeMenuBycafeID(cafeID: String, completion: @escaping (Result<[DetailCafeMenu], Error>) -> Void) {
         let url = APIConstants.detailCafeMenuURL + "/\(cafeID)"
         
         AF.request(url)

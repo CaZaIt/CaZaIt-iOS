@@ -16,10 +16,10 @@ struct AllCafeResponse: Codable {
 
 // MARK: - Datum
 struct CafeInfo: Codable {
-    let cafeId: Int
+    let cafeId: String
     let congestionStatus, name, address: String
     let longitude, latitude: String
     let cafeImages: [String]
     let distance: Int
-    let favorite: Bool
+    let favoritesStatus: String
 }
