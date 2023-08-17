@@ -103,6 +103,16 @@ class SignupView: UIViewController{
         return textField
     }()
     
+    private let pwValidationLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .red // You can choose the appropriate color
+        label.textAlignment = .left
+        label.numberOfLines = 0 // Allow multiple lines for longer error messages
+        return label
+    }()
+    
     //비밀번호 확인 Label
     private let pwLabel_1: UILabel = {
         let label = UILabel()
@@ -172,6 +182,16 @@ class SignupView: UIViewController{
         return button
     }()
     
+    private let idValidationLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .red // You can choose the appropriate color
+        label.textAlignment = .left
+        label.numberOfLines = 0 // Allow multiple lines for longer error messages
+        return label
+    }()
+    
     //가입하기 버튼
     private let joinButton: UIButton = {
         let button = UIButton()
@@ -225,8 +245,10 @@ class SignupView: UIViewController{
         self.pinkView.addSubview(idLabel)
         self.pinkView.addSubview(idField)
         self.pinkView.addSubview(idButton)
+        self.pinkView.addSubview(idValidationLabel)
         self.pinkView.addSubview(pwLabel)
         self.pinkView.addSubview(pwField)
+        self.pinkView.addSubview(pwValidationLabel)
         self.pinkView.addSubview(pwLabel_1)
         self.pinkView.addSubview(pwField_1)
         self.pinkView.addSubview(nicknameLabel)
@@ -256,9 +278,14 @@ class SignupView: UIViewController{
             make.top.equalTo(self.idLabel.snp.bottom).offset(7)
             make.height.equalTo(44)
         }
+        self.idValidationLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.pinkView.snp.leading).inset(40)
+            make.trailing.equalTo(self.pinkView.snp.trailing).inset(23)
+            make.top.equalTo(self.idField.snp.bottom).offset(2) // Adjust the offset as needed
+        }
         self.pwLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(39)
-            make.top.equalTo(self.idField.snp.bottom).offset(25)
+            make.top.equalTo(self.idValidationLabel.snp.bottom).offset(10)
         }
         self.pwField.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(30)
@@ -266,9 +293,14 @@ class SignupView: UIViewController{
             make.top.equalTo(self.pwLabel.snp.bottom).offset(7)
             make.height.equalTo(43)
         }
+        self.pwValidationLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.pinkView.snp.leading).inset(40)
+            make.trailing.equalTo(self.pinkView.snp.trailing).inset(23)
+            make.top.equalTo(self.pwField.snp.bottom).offset(2) // Adjust the offset as needed
+        }
         self.pwLabel_1.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(39)
-            make.top.equalTo(self.pwField.snp.bottom).offset(25)
+            make.top.equalTo(self.pwValidationLabel.snp.bottom).offset(10)
         }
         self.pwField_1.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(30)
@@ -278,7 +310,7 @@ class SignupView: UIViewController{
         }
         self.nicknameLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(39)
-            make.top.equalTo(self.pwField_1.snp.bottom).offset(25)
+            make.top.equalTo(self.pwField_1.snp.bottom).offset(30)
         }
         self.nicknameField.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(30)
@@ -469,48 +501,49 @@ extension SignupView: UITextFieldDelegate {
 
 extension SignupView {
     func validateID(realtimeText: String) {
-        let idPattern = "^[a-z]{6,}$" // Pattern for IDs starting with lowercase letters and ending with numbers
-        let minIDLength = 6 // Minimum length for the ID
-        let maxIDLength = 20 // Maximum length for the ID
+        let idPattern = "^[a-z]{6,}$"
+        let minIDLength = 6
+        let maxIDLength = 20
         
         let idRegex = try? NSRegularExpression(pattern: idPattern, options: [])
         let matches = idRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count))
         
         if realtimeText.count >= minIDLength, realtimeText.count <= maxIDLength, matches?.count == 0 {
-            print("Invalid ID: 6자 이상의 소문자 혹은 소문자와 숫자를 조합하여 입력해주세요.")
+            idValidationLabel.text = "6자 이상의 소문자 혹은 소문자와 숫자를 조합하여 입력해주세요."
         } else if realtimeText.count < minIDLength {
-            print("Invalid ID: 최소 6자 이상이어야 합니다.")
+            idValidationLabel.text = "최소 6자 이상이어야 합니다."
         } else if realtimeText.count > maxIDLength {
-            print("Invalid ID: 최대 20자까지만 입력 가능합니다.")
+            idValidationLabel.text = "최대 20자까지만 입력 가능합니다."
         } else {
-            print("가능한 아이디입니다.")
+            idValidationLabel.text = "가능한 아이디입니다."
         }
     }
+    
     func validatePassword(realtimeText: String) {
-            let minLength = 8
-            let maxLength = 16
-            
-            let lowercaseLetterPattern = ".*[a-z]+.*"
-            let uppercaseLetterPattern = ".*[A-Z]+.*"
-            let numberPattern = ".*\\d+.*"
-            let specialCharacterPattern = ".*[$@!%*#?&.]+.*"
-            
-            let lowercaseLetterRegex = try? NSRegularExpression(pattern: lowercaseLetterPattern, options: [])
-            let uppercaseLetterRegex = try? NSRegularExpression(pattern: uppercaseLetterPattern, options: [])
-            let numberRegex = try? NSRegularExpression(pattern: numberPattern, options: [])
-            let specialCharacterRegex = try? NSRegularExpression(pattern: specialCharacterPattern, options: [])
-            
-            let containsLowercaseLetter = lowercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-            let containsUppercaseLetter = uppercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-            let containsNumber = numberRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-            let containsSpecialCharacter = specialCharacterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-            
-            if realtimeText.count < minLength || realtimeText.count > maxLength {
-                print("Invalid password: 최소 8자 이상, 최대 16자 이하로 입력해주세요.")
-            } else if !containsLowercaseLetter || !containsUppercaseLetter || !containsNumber || !containsSpecialCharacter {
-                print("Invalid password: 적어도 하나의 대문자, 소문자, 숫자, 특수문자가 포함되어야 합니다.")
-            } else {
-                print("Valid password")
-            }
+        let minLength = 8
+        let maxLength = 16
+        
+        let lowercaseLetterPattern = ".*[a-z]+.*"
+        let uppercaseLetterPattern = ".*[A-Z]+.*"
+        let numberPattern = ".*\\d+.*"
+        let specialCharacterPattern = ".*[$@!%*#?&.]+.*"
+        
+        let lowercaseLetterRegex = try? NSRegularExpression(pattern: lowercaseLetterPattern, options: [])
+        let uppercaseLetterRegex = try? NSRegularExpression(pattern: uppercaseLetterPattern, options: [])
+        let numberRegex = try? NSRegularExpression(pattern: numberPattern, options: [])
+        let specialCharacterRegex = try? NSRegularExpression(pattern: specialCharacterPattern, options: [])
+        
+        let containsLowercaseLetter = lowercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+        let containsUppercaseLetter = uppercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+        let containsNumber = numberRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+        let containsSpecialCharacter = specialCharacterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+        
+        if realtimeText.count < minLength || realtimeText.count > maxLength {
+            pwValidationLabel.text = "최소 8자 이상, 최대 16자 이하로 입력해주세요."
+        } else if !containsLowercaseLetter || !containsUppercaseLetter || !containsNumber || !containsSpecialCharacter {
+            pwValidationLabel.text = "적어도 하나의 대문자, 소문자, 숫자, 특수문자가 포함되어야 합니다."
+        } else {
+            pwValidationLabel.text = "가능한 비밀번호입니다."
         }
+    }
 }
