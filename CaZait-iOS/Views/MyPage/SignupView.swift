@@ -103,6 +103,16 @@ class SignupView: UIViewController{
         return textField
     }()
     
+    private let pwValidationLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .red // You can choose the appropriate color
+        label.textAlignment = .left
+        label.numberOfLines = 0 // Allow multiple lines for longer error messages
+        return label
+    }()
+    
     //비밀번호 확인 Label
     private let pwLabel_1: UILabel = {
         let label = UILabel()
@@ -172,69 +182,14 @@ class SignupView: UIViewController{
         return button
     }()
     
-    private let phonenumberLabel: UILabel = {
+    private let idValidationLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.textColor = .black
-        label.textAlignment = .center
-        label.text = "핸드폰번호"
-        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .red // You can choose the appropriate color
+        label.textAlignment = .left
+        label.numberOfLines = 0 // Allow multiple lines for longer error messages
         return label
-    }()
-    
-    private let phonenumberField: InsetTextField = {
-        let textField = InsetTextField()
-        textField.insetX = 16
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "예: 01012345678"
-        textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        textField.backgroundColor = .white
-        textField.isSecureTextEntry = false
-        textField.layer.cornerRadius = 20
-        textField.clipsToBounds = true
-        textField.textColor = UIColor(r: 93, g: 36, b: 36)
-        textField.setPlaceholder(color: UIColor(r: 181, g: 181, b: 181))
-        return textField
-    }()
-    
-    private let phonenumberButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("인증번호발송", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor(r: 255, g: 115, b: 91)
-        button.layer.cornerRadius = 20
-        button.clipsToBounds = true
-        return button
-    }()
-    
-    private let certifyField: InsetTextField = {
-        let textField = InsetTextField()
-        textField.insetX = 16
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "예: 123456"
-        textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        textField.backgroundColor = .white
-        textField.isSecureTextEntry = false
-        textField.layer.cornerRadius = 20
-        textField.clipsToBounds = true
-        textField.textColor = UIColor(r: 93, g: 36, b: 36)
-        textField.setPlaceholder(color: UIColor(r: 181, g: 181, b: 181))
-        return textField
-    }()
-    
-    private let certifyButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("인증확인", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor(r: 255, g: 115, b: 91)
-        button.layer.cornerRadius = 20
-        button.clipsToBounds = true
-        return button
     }()
     
     //가입하기 버튼
@@ -290,19 +245,15 @@ class SignupView: UIViewController{
         self.pinkView.addSubview(idLabel)
         self.pinkView.addSubview(idField)
         self.pinkView.addSubview(idButton)
-//        self.pinkView.addSubview(descriptionLabel)
+        self.pinkView.addSubview(idValidationLabel)
         self.pinkView.addSubview(pwLabel)
         self.pinkView.addSubview(pwField)
+        self.pinkView.addSubview(pwValidationLabel)
         self.pinkView.addSubview(pwLabel_1)
         self.pinkView.addSubview(pwField_1)
         self.pinkView.addSubview(nicknameLabel)
         self.pinkView.addSubview(nicknameField)
         self.pinkView.addSubview(nicknameButton)
-        self.pinkView.addSubview(phonenumberLabel)
-        self.pinkView.addSubview(phonenumberField)
-        self.pinkView.addSubview(phonenumberButton)
-        self.pinkView.addSubview(certifyField)
-        self.pinkView.addSubview(certifyButton)
         self.pinkView.addSubview(joinButton)
         
         
@@ -327,9 +278,14 @@ class SignupView: UIViewController{
             make.top.equalTo(self.idLabel.snp.bottom).offset(7)
             make.height.equalTo(44)
         }
+        self.idValidationLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.pinkView.snp.leading).inset(40)
+            make.trailing.equalTo(self.pinkView.snp.trailing).inset(23)
+            make.top.equalTo(self.idField.snp.bottom).offset(2) // Adjust the offset as needed
+        }
         self.pwLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(39)
-            make.top.equalTo(self.idField.snp.bottom).offset(20)
+            make.top.equalTo(self.idValidationLabel.snp.bottom).offset(10)
         }
         self.pwField.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(30)
@@ -337,9 +293,14 @@ class SignupView: UIViewController{
             make.top.equalTo(self.pwLabel.snp.bottom).offset(7)
             make.height.equalTo(43)
         }
+        self.pwValidationLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.pinkView.snp.leading).inset(40)
+            make.trailing.equalTo(self.pinkView.snp.trailing).inset(23)
+            make.top.equalTo(self.pwField.snp.bottom).offset(2) // Adjust the offset as needed
+        }
         self.pwLabel_1.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(39)
-            make.top.equalTo(self.pwField.snp.bottom).offset(20)
+            make.top.equalTo(self.pwValidationLabel.snp.bottom).offset(10)
         }
         self.pwField_1.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(30)
@@ -349,7 +310,7 @@ class SignupView: UIViewController{
         }
         self.nicknameLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(39)
-            make.top.equalTo(self.pwField_1.snp.bottom).offset(20)
+            make.top.equalTo(self.pwField_1.snp.bottom).offset(30)
         }
         self.nicknameField.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(30)
@@ -363,40 +324,11 @@ class SignupView: UIViewController{
             make.top.equalTo(self.nicknameLabel.snp.bottom).offset(7)
             make.height.equalTo(44)
         }
-        self.phonenumberLabel.snp.makeConstraints { make in
-            make.leading.equalTo(self.pinkView.snp.leading).inset(39)
-            make.top.equalTo(self.nicknameField.snp.bottom).offset(20)
-        }
-        self.phonenumberField.snp.makeConstraints { make in
-            make.leading.equalTo(self.pinkView.snp.leading).inset(30)
-            make.trailing.equalTo(self.pinkView.snp.trailing).inset(134)
-            make.top.equalTo(self.phonenumberLabel.snp.bottom).offset(7)
-            make.height.equalTo(43)
-        }
-        self.phonenumberButton.snp.makeConstraints { make in
-            make.leading.equalTo(self.phonenumberField.snp.trailing).offset(10)
-            make.trailing.equalTo(self.pinkView.snp.trailing).inset(23)
-            make.top.equalTo(self.phonenumberLabel.snp.bottom).offset(7)
-            make.height.equalTo(44)
-        }
-        self.certifyField.snp.makeConstraints { make in
-            make.leading.equalTo(self.pinkView.snp.leading).inset(30)
-            make.trailing.equalTo(self.pinkView.snp.trailing).inset(134)
-            make.top.equalTo(self.phonenumberField.snp.bottom).offset(20)
-            make.height.equalTo(43)
-        }
-        self.certifyButton.snp.makeConstraints { make in
-            make.leading.equalTo(self.phonenumberField.snp.trailing).offset(10)
-            make.trailing.equalTo(self.pinkView.snp.trailing).inset(23)
-            make.top.equalTo(self.phonenumberField.snp.bottom).offset(20)
-            make.height.equalTo(44)
-        }
-        
         
         self.joinButton.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(122)
             make.trailing.equalTo(self.pinkView.snp.trailing).inset(122)
-            make.top.equalTo(self.certifyField.snp.bottom).offset(40)
+            make.bottom.equalTo(self.pinkView.snp.bottom).inset(50)
             make.height.equalTo(46)
         }
         
@@ -405,9 +337,6 @@ class SignupView: UIViewController{
         idButton.addTarget(self, action:#selector(idCheck), for: .touchUpInside)
         nicknameButton.addTarget(self, action:#selector(nicknameCheck), for: .touchUpInside)
         joinButton.addTarget(self, action:#selector(SignUp), for: .touchUpInside)
-        phonenumberButton.addTarget(self, action:#selector(messageSend), for: .touchUpInside)
-        certifyButton.addTarget(self, action:#selector(messageVerify), for: .touchUpInside)
-        
     }
     
     @objc func backButtonTapped() {
@@ -431,14 +360,6 @@ class SignupView: UIViewController{
         signup()
     }
     
-    @objc func messageSend() {
-        messagesend()
-    }
-    
-    @objc func messageVerify() {
-        messageverify()
-    }
-    
     // 다른 부분을 탭할 때 키보드 숨기기
     @objc func dismissKeyboard() {
         view.endEditing(true)
@@ -459,7 +380,7 @@ extension SignupView {
         guard let accountName = idField.text else { return }
         
         
-        idCheckService.shared.idcheck(accountName: accountName) { response in
+        idCheckService.shared.idcheck(accountName: accountName, isExist: "true/false") { response in
             switch response {
             case .success(let data):
                 guard let data = data as? IdCheckResponse else { return }
@@ -521,76 +442,6 @@ extension SignupView {
             }
         }
     }
-    //인증번호 발송
-    func messagesend() {
-        
-        guard let recipientPhoneNumber = phonenumberField.text else { return }
-        
-        
-        messageSendService.shared.messageSend(recipientPhoneNumber: recipientPhoneNumber) { response in
-            switch response {
-            case .success(let data):
-                guard let data = data as? MessageSendResponse else { return }
-                let alert = UIAlertController(title: data.message, message: "", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
-                
-                self.present(alert, animated: true, completion: nil)
-                print(data)
-            case .requestErr(let err):
-                print(err)
-            case .pathErr:
-                let alert = UIAlertController(title: "인증할 수 없는 번호 입니다", message: "", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
-                
-                self.present(alert, animated: true, completion: nil)
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-            case .networkFail:
-                let alert = UIAlertController(title: "인증할 수 없는 번호 입니다", message: "", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
-                
-                self.present(alert, animated: true, completion: nil)
-                print("networkFail")
-            }
-        }
-    }
-    
-    //인증번호 발송
-    func messageverify() {
-        
-        guard let recipientPhoneNumber = phonenumberField.text else { return }
-        guard let verificationCode = certifyField.text else { return }
-        
-        
-        messageVerifyService.shared.messageVerify(recipientPhoneNumber: recipientPhoneNumber, verificationCode: verificationCode) { response in
-            switch response {
-            case .success(let data):
-                guard let data = data as? MessageVerifyResponse else { return }
-                let alert = UIAlertController(title: data.message, message: "", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
-                
-                self.present(alert, animated: true, completion: nil)
-                print(data)
-            case .requestErr(let err):
-                print(err)
-            case .pathErr:
-                let alert = UIAlertController(title: "인증에 실패하였습니다.", message: "", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
-                
-                self.present(alert, animated: true, completion: nil)
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-            case .networkFail:
-                let alert = UIAlertController(title: "인증에 실패하였습니다.", message: "", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
-                
-                self.present(alert, animated: true, completion: nil)
-                print("networkFail")
-            }
-        }
-    }
     
     //가입하기
     func signup() {
@@ -598,7 +449,7 @@ extension SignupView {
         guard let nickname_sign = nicknameField.text else { return }
         guard let password_sign = pwField.text else { return }
         guard let accountName_sign = idField.text else { return }
-        guard let phoneNumber_sign = phonenumberField.text else { return }
+        guard let phoneNumber_sign = phoneNumber else { return }
         
         
         signupService.shared.signup(accountName: accountName_sign, password: password_sign, nickname: nickname_sign,phoneNumber: phoneNumber_sign) { response in
@@ -650,48 +501,49 @@ extension SignupView: UITextFieldDelegate {
 
 extension SignupView {
     func validateID(realtimeText: String) {
-        let idPattern = "^[a-z]+[0-9]*$" // Pattern for IDs starting with lowercase letters and ending with numbers
-        let minIDLength = 8 // Minimum length for the ID
-        let maxIDLength = 20 // Maximum length for the ID
+        let idPattern = "^[a-z]{6,}$"
+        let minIDLength = 6
+        let maxIDLength = 20
         
         let idRegex = try? NSRegularExpression(pattern: idPattern, options: [])
         let matches = idRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count))
         
         if realtimeText.count >= minIDLength, realtimeText.count <= maxIDLength, matches?.count == 0 {
-            print("Invalid ID: 영문 소문자로 시작하고 숫자로 끝나야 합니다.")
+            idValidationLabel.text = "6자 이상의 소문자 혹은 소문자와 숫자를 조합하여 입력해주세요."
         } else if realtimeText.count < minIDLength {
-            print("Invalid ID: 최소 6자 이상이어야 합니다.")
+            idValidationLabel.text = "최소 6자 이상이어야 합니다."
         } else if realtimeText.count > maxIDLength {
-            print("Invalid ID: 최대 20자까지만 입력 가능합니다.")
+            idValidationLabel.text = "최대 20자까지만 입력 가능합니다."
         } else {
-            print("가능한 아이디입니다.")
+            idValidationLabel.text = "가능한 아이디입니다."
         }
     }
+    
     func validatePassword(realtimeText: String) {
-            let minLength = 8
-            let maxLength = 16
-            
-            let lowercaseLetterPattern = ".*[a-z]+.*"
-            let uppercaseLetterPattern = ".*[A-Z]+.*"
-            let numberPattern = ".*\\d+.*"
-            let specialCharacterPattern = ".*[$@!%*#?&.]+.*"
-            
-            let lowercaseLetterRegex = try? NSRegularExpression(pattern: lowercaseLetterPattern, options: [])
-            let uppercaseLetterRegex = try? NSRegularExpression(pattern: uppercaseLetterPattern, options: [])
-            let numberRegex = try? NSRegularExpression(pattern: numberPattern, options: [])
-            let specialCharacterRegex = try? NSRegularExpression(pattern: specialCharacterPattern, options: [])
-            
-            let containsLowercaseLetter = lowercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-            let containsUppercaseLetter = uppercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-            let containsNumber = numberRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-            let containsSpecialCharacter = specialCharacterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-            
-            if realtimeText.count < minLength || realtimeText.count > maxLength {
-                print("Invalid password: 최소 8자 이상, 최대 16자 이하로 입력해주세요.")
-            } else if !containsLowercaseLetter || !containsUppercaseLetter || !containsNumber || !containsSpecialCharacter {
-                print("Invalid password: 적어도 하나의 대문자, 소문자, 숫자, 특수문자가 포함되어야 합니다.")
-            } else {
-                print("Valid password")
-            }
+        let minLength = 8
+        let maxLength = 16
+        
+        let lowercaseLetterPattern = ".*[a-z]+.*"
+        let uppercaseLetterPattern = ".*[A-Z]+.*"
+        let numberPattern = ".*\\d+.*"
+        let specialCharacterPattern = ".*[$@!%*#?&.]+.*"
+        
+        let lowercaseLetterRegex = try? NSRegularExpression(pattern: lowercaseLetterPattern, options: [])
+        let uppercaseLetterRegex = try? NSRegularExpression(pattern: uppercaseLetterPattern, options: [])
+        let numberRegex = try? NSRegularExpression(pattern: numberPattern, options: [])
+        let specialCharacterRegex = try? NSRegularExpression(pattern: specialCharacterPattern, options: [])
+        
+        let containsLowercaseLetter = lowercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+        let containsUppercaseLetter = uppercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+        let containsNumber = numberRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+        let containsSpecialCharacter = specialCharacterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+        
+        if realtimeText.count < minLength || realtimeText.count > maxLength {
+            pwValidationLabel.text = "최소 8자 이상, 최대 16자 이하로 입력해주세요."
+        } else if !containsLowercaseLetter || !containsUppercaseLetter || !containsNumber || !containsSpecialCharacter {
+            pwValidationLabel.text = "적어도 하나의 대문자, 소문자, 숫자, 특수문자가 포함되어야 합니다."
+        } else {
+            pwValidationLabel.text = "가능한 비밀번호입니다."
         }
+    }
 }

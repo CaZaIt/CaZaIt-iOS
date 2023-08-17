@@ -33,7 +33,7 @@ struct APIConstants {
     
     static let nicknamecheckURL = baseURL + "/api/users/exist/nickname" // 닉네임 중복확인
     
-    static let idCheckURL = baseURL + "api/users/exist/accountname" // 아이디 중복확인
+    static let idCheckURL = baseURL + "/api/users/exist/accountname" // 아이디 중복확인
     
     static let loginURL = baseURL + "/api/auths/log-in?role=user" // 로그인(유저)
     
@@ -45,5 +45,5 @@ struct APIConstants {
     
     static let messageSendURL = baseURL + "/api/auths/send-authnumber/test" //인증번호 발송
     
-    static let messageSendCheckURL = baseURL + "api/users/verify-authnumber" //인증번호 인증
+    static let messageSendCheckURL = baseURL + "/api/auths/verify-authnumber" //인증번호 인증
 }
