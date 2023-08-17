@@ -229,13 +229,13 @@ class WriteReviewView: UIViewController{
             print("cafeId가 nil입니다.")
             return
         }
-        print("cafeId : ", cafeId)
+
         if let userId = UserDefaults.standard.string(forKey: "userId") {
             reviewWriteService.postReview(userId: userId, cafeId: cafeId, review: review) { result in
                 switch result {
                 case .success(let reviewResponse):
 
-                    print("리뷰 ID: \(reviewResponse.data.reviewId)")
+                    print("리뷰 ID: \(reviewResponse.data.nickname)")
                 case .failure(let error):
                     print("에러 메시지: \(error.localizedDescription)")
                 }

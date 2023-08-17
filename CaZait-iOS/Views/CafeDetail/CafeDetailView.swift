@@ -309,7 +309,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 switch result {
                 case .success(let registerFavoriteDetailCafeResponse):
                     print((registerFavoriteDetailCafeResponse.data))
-                    print(cafeId, "번 카페 관심 등록")
                 case .failure(let error):
 
                     print("에러 메시지: \(error.localizedDescription)")
@@ -345,7 +344,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 switch result {
                 case .success(let deleteFavoriteDetailCafeResponse):
                     print((deleteFavoriteDetailCafeResponse.data))
-                    print(cafeId, "번 카페 관심 해제")
                 case .failure(let error):
                     print("에러 메시지: \(error.localizedDescription)")
                 }
@@ -520,6 +518,14 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                     self.cafeNameLabel.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
                     self.cafeLocation.text = cafe.address
                 }
+                
+                if cafe.favoritesStatus == "ACTIVE" {
+                    self.heartButton.setImage(self.heartFillImage, for: .normal)
+                    self.isHeartSelected = true
+                } else {
+                    self.heartButton.setImage(self.heartEmptyImage, for: .normal)
+                    self.isHeartSelected = false
+                }
             case .failure(let error):
                 // 데이터를 받아오지 못했을 때의 처리 로직
                 print(error.localizedDescription)
@@ -542,20 +548,9 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 self.cafeMenu = response
                 print(response)
-//                print(self.cafeMenu)
-//
-//                for menu in response {
-//                    let name = menu.name
-//                    let description = menu.description
-//                    let price = menu.price
-//
-//                    print("name: \(name)")
-//                    print("description: \(description)")
-//                    print("price: \(price)")
-//                }
+
                 collectionView1.reloadData() // 컬렉션 뷰 리로드
 
-                // print("cafe menu: ", response.count)
                 let numberOfRowsInCollectionView1 = response.count
                 collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13) // 115 셀 높이, 13 셀 간격
                 collectionView1.snp.makeConstraints {
