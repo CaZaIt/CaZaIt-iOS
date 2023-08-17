@@ -101,6 +101,9 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.isTranslucent = false
 
+
+       // self.navigationController?.changeNavigationBarTitle(isTrue: true)
+
         //navigationController?.changeNavigationBar(isClear: true) // navigationBar 투명으로
 
 
@@ -133,7 +136,11 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-
+        
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
+        
         collectionView1.dataSource = self
         collectionView1.delegate = self
         collectionView1.register(CafeDetailViewMenuCell.self, forCellWithReuseIdentifier: "CafeDetailViewMenuCell")
@@ -682,12 +689,42 @@ extension CafeDetailView: UIScrollViewDelegate {
         // frame.minY를 통해 sticky 타이밍 계산
         let shouldShowSticky = scrollView.contentOffset.y >= headerViewSegmentControl.frame.minY
         stickyHeaderViewSegmentControl.isHidden = !shouldShowSticky
+        print(!shouldShowSticky)
         
+        if shouldShowSticky {
+            self.navigationController?.navigationBar.topItem?.title = "나타남"
+            let attributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: UIColor.red, // 원하는 색상으로 변경
+                .font: UIFont.boldSystemFont(ofSize: 18) // 원하는 폰트 설정
+            ]
+            self.navigationController?.navigationBar.titleTextAttributes = attributes
+    
+        } else {
+            navigationController?.navigationBar.topItem?.title = "안나타남"
+        }
+
         if headerViewSegmentControl.frame.minY == 0.0 {
             stickyHeaderViewSegmentControl.isHidden = true
         }
     }
 }
+
+//extension UINavigationController {
+//    func changeNavigationBarTitle(isTrue: Bool) {
+//        if isTrue {
+//            navigationItem.title = "ok"
+//            self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+//
+//
+//        } else {
+//            navigationItem.title = "My App"
+//            self.navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.red]
+//
+//
+//        }
+//    }
+//}
+
 
 //extension UINavigationController {
 //    // 투명하게 만들기 (버튼 등은 보임)

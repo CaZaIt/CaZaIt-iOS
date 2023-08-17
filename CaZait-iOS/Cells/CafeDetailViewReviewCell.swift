@@ -23,7 +23,7 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
     
     let emergencyImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "light.beacon.max",
-                                                   withConfiguration: UIImage.SymbolConfiguration(pointSize: 24, weight: .medium, scale: .medium))?.withTintColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), renderingMode: .alwaysOriginal))
+                                                   withConfiguration: UIImage.SymbolConfiguration(pointSize: 24, weight: .medium, scale: .medium))?.withTintColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), renderingMode: .alwaysOriginal))
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
