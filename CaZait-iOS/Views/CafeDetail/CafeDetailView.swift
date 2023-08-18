@@ -693,7 +693,7 @@ extension CafeDetailView: UIScrollViewDelegate {
         // frame.minY를 통해 sticky 타이밍 계산
         let shouldShowSticky = scrollView.contentOffset.y >= headerViewSegmentControl.frame.minY
         stickyHeaderViewSegmentControl.isHidden = !shouldShowSticky
-        print(!shouldShowSticky)
+        //print(!shouldShowSticky)
         
         if shouldShowSticky {
             self.navigationController?.navigationBar.topItem?.title = "나타남"
