@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import Foundation
+import Kingfisher
 
 class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
@@ -477,6 +478,9 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                         }
                     }.resume()
                 }
+//                if let url = cafe.cafeImages.first {
+//                    cafeImage.kf.setImage(with: url)
+//                }
 
                 DispatchQueue.main.async {
                     self.cafeNameLabel.text = cafe.name

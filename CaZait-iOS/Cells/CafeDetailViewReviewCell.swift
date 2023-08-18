@@ -53,6 +53,20 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         return label
     }()
     
+    private let declaration: UILabel = {
+        let label = UILabel()
+        
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1)
+        label.textAlignment = .left
+        label.text = "신고"
+        label.numberOfLines = 1
+        
+        return label
+    }()
+
+    
+    
     private let review: UILabel = {
         let label = UILabel()
         
@@ -97,7 +111,8 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         contentView.addSubview(nickname)
         contentView.addSubview(hour)
         contentView.addSubview(review)
-        contentView.addSubview(emergencyImageView)
+        //contentView.addSubview(emergencyImageView)
+        contentView.addSubview(declaration)
     }
     
     private func setupLayout() {
@@ -108,23 +123,28 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         
         
         nickname.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.snp.leading).offset(20)
             make.top.equalTo(contentView.snp.top).offset(50)
+            make.leading.equalTo(contentView.snp.leading).offset(25)
         }
         
         
-        emergencyImageView.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.snp.trailing).offset(-50)
-            make.top.equalTo(contentView.snp.top).offset(10)
+//        emergencyImageView.snp.makeConstraints { make in
+//            make.leading.equalTo(contentView.snp.trailing).offset(-50)
+//            make.top.equalTo(contentView.snp.top).offset(10)
+//        }
+        
+        declaration.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top).offset(20)
+            make.leading.equalTo(contentView.snp.leading).offset(300)
         }
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(emergencyImageViewTapped))
-        emergencyImageView.isUserInteractionEnabled = true
-        emergencyImageView.addGestureRecognizer(tapGestureRecognizer)
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(emergencyImageViewTapped))
+//        emergencyImageView.isUserInteractionEnabled = true
+//        emergencyImageView.addGestureRecognizer(tapGestureRecognizer)
         
         review.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.snp.leading).offset(20)
             make.top.equalTo(nickname.snp.bottom).offset(6)
+            make.leading.equalTo(contentView.snp.leading).offset(25)
         }
     }
     
@@ -158,11 +178,11 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
 
     }
 
-    @objc func emergencyImageViewTapped() {
-        let alertController = UIAlertController(title: "신고 서비스 준비 중.", message: "", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(okAction)
-    }
+//    @objc func emergencyImageViewTapped() {
+//        let alertController = UIAlertController(title: "신고 서비스 준비 중.", message: "", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+//        alertController.addAction(okAction)
+//    }
     
     func configure(nickname: String, review: String, score: Int) {
         // 셀의 내용을 설정합니다.
