@@ -6,7 +6,7 @@ import Kingfisher
 class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     var collectionView1HeightConstant: CGFloat = 100
-    var collectionView2HeightConstant: CGFloat = 400
+    var collectionView2HeightConstant: CGFloat = 100
     
     var cafeMenu: [DetailCafeMenu]?
     var cafeReview: [DetailCafeReview]?
@@ -149,13 +149,15 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         collectionView2.dataSource = self
         collectionView2.delegate = self
         collectionView2.register(CafeDetailViewReviewCell.self, forCellWithReuseIdentifier: "CafeDetailViewReviewCell")
-        
+        collectionView2.isScrollEnabled = false
+
         // UIScrollView 설정
         scrollView.delegate = self
         scrollView.backgroundColor = .white
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         //scrollView.bounces = false // 스크롤 여백 없애기, 대신 스크롤의 튕김이 없어져 스크롤이 부드럽지 못함
         scrollView.decelerationRate = UIScrollView.DecelerationRate.fast
+//        scrollView.panGestureRecognizer.require(toFail: collectionView2.panGestureRecognizer)
 
         cafeView.backgroundColor = .white
         cafeView.layer.cornerRadius = 30
@@ -463,8 +465,8 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             switch result {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
-                print(cafe) // 받아온 데이터 사용 예시
-                print(cafe.cafeImages.count)
+                //print(cafe) // 받아온 데이터 사용 예시
+                //print(cafe.cafeImages.count)
                 if let imageURL = cafe.cafeImages.first, let url = URL(string: imageURL) {
                     URLSession.shared.dataTask(with: url) { data, _, error in
                         if let error = error {
@@ -515,8 +517,8 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             switch result {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
-                print(cafe) // 받아온 데이터 사용 예시
-                print(cafe.cafeImages.count)
+               // print(cafe) // 받아온 데이터 사용 예시
+                //print(cafe.cafeImages.count)
                 if let imageURL = cafe.cafeImages.first, let url = URL(string: imageURL) {
                     URLSession.shared.dataTask(with: url) { data, _, error in
                         if let error = error {
@@ -591,21 +593,27 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             return
         }
         let detailcafereviewservice = DetailCafeReviewService()
-        detailcafereviewservice.getDetailCafeReviewBycafeID(cafeID: cafeId, nums: 20) { [self] result in
+        detailcafereviewservice.getDetailCafeReviewBycafeID(cafeID: cafeId, nums: 50) { [self] result in
             switch result {
             case .success(let response):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 self.cafeReview = response.reviewResponses
-                print(response)
+                //print(response)
                 //print(self.cafeReview)
 
-                collectionView2.reloadData() // 컬렉션 뷰 리로드
+//                collectionView2.reloadData() // 컬렉션 뷰 리로드
                 
                 let numberOfRowsInCollectionView2 = cafeReview!.count
                 collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13) // 115 셀 높이, 13 셀 간격
                 collectionView2.snp.makeConstraints {
                     $0.height.equalTo(collectionView2HeightConstant).priority(.low)
                 }
+                
+                collectionView2.reloadData() // 컬렉션 뷰 리로드
+
+                print("리뷰 개수 : " , cafeReview!.count)
+                print("높이 : " , collectionView2HeightConstant)
+                print("스크롤뷰 높이 : ", self.scrollView.contentOffset.y)
                 
             case .failure(let error):
                 print("review error : \n" + error.localizedDescription)
