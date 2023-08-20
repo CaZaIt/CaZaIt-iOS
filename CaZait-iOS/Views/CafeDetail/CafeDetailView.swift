@@ -714,7 +714,7 @@ extension CafeDetailView: UIScrollViewDelegate {
             self.navigationController?.navigationBar.titleTextAttributes = attributes
     
         } else {
-            //navigationController?.navigationBar.topItem?.title = "안나타남"
+            navigationController?.navigationBar.topItem?.title = ""
         }
 
         if headerViewSegmentControl.frame.minY == 0.0 {
