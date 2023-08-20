@@ -248,6 +248,15 @@ class WriteReviewView: UIViewController{
         guard let inputText = textfield1.text else {
             return
         }
+        
+        if selectedStarCount == 0 {
+            // '별점을 남겨주세요' 팝업 표시
+            let alert = UIAlertController(title: "알림", message: "별점을 남겨주세요.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
         print(inputText)
         print(selectedStarCount)
 
@@ -268,7 +277,7 @@ class WriteReviewView: UIViewController{
                 case .success(let reviewResponse):
                     print("리뷰 ID: \(reviewResponse.data.nickname)")
                     // 작성 완료 팝업 표시
-                    let alert = UIAlertController(title: "작성 완료", message: "작성이 완료되었습니다.", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "알림", message: "작성이 완료되었습니다.", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
                         // 팝업을 닫은 후 이전 페이지로 돌아가기
                         self.navigationController?.popViewController(animated: true)

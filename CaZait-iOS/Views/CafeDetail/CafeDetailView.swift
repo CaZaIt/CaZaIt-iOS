@@ -712,38 +712,3 @@ extension CafeDetailView: UIScrollViewDelegate {
         }
     }
 }
-
-//extension UINavigationController {
-//    func changeNavigationBarTitle(isTrue: Bool) {
-//        if isTrue {
-//            navigationItem.title = "ok"
-//            self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-//
-//
-//        } else {
-//            navigationItem.title = "My App"
-//            self.navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.red]
-//
-//
-//        }
-//    }
-//}
-
-
-//extension UINavigationController {
-//    // 투명하게 만들기 (버튼 등은 보임)
-//    func changeNavigationBar(isClear: Bool) {
-//        navigationBar.isHidden = false
-//        if isClear {
-//            navigationBar.shadowImage = UIImage()
-//            navigationBar.setBackgroundImage(UIImage(), for: .default)
-//        } else {
-//            navigationBar.shadowImage = nil
-//            navigationBar.setBackgroundImage(nil, for: .default)
-////            navigationBar.backgroundColor = .black
-//
-//        }
-//    }
-//}
-
-
