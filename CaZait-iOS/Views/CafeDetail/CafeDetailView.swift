@@ -95,6 +95,9 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.backgroundColor = .black
+        navigationBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white] // 여기서 글자 색을 설정
+        navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white] // 여기서 글자 색을 설정
+
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
@@ -704,15 +707,15 @@ extension CafeDetailView: UIScrollViewDelegate {
         //print(!shouldShowSticky)
         
         if shouldShowSticky {
-            self.navigationController?.navigationBar.topItem?.title = "나타남"
+            self.navigationController?.navigationBar.topItem?.title = cafeNameLabel.text
             let attributes: [NSAttributedString.Key: Any] = [
-                .foregroundColor: UIColor.red, // 원하는 색상으로 변경
-                .font: UIFont.boldSystemFont(ofSize: 18) // 원하는 폰트 설정
-            ]
+                   .foregroundColor: UIColor.white, // 흰색으로 변경
+                   .font: UIFont.boldSystemFont(ofSize: 18)
+               ]
             self.navigationController?.navigationBar.titleTextAttributes = attributes
     
         } else {
-            navigationController?.navigationBar.topItem?.title = "안나타남"
+            //navigationController?.navigationBar.topItem?.title = "안나타남"
         }
 
         if headerViewSegmentControl.frame.minY == 0.0 {
