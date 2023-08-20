@@ -471,21 +471,20 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 //print(cafe) // 받아온 데이터 사용 예시
                 //print(cafe.cafeImages.count)
                 if let imageURL = cafe.cafeImages.first, let url = URL(string: imageURL) {
-                    URLSession.shared.dataTask(with: url) { data, _, error in
-                        if let error = error {
-                            print("Failed to download image:", error)
-                            return
-                        }
-                        if let data = data, let downloadedImage = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                self.cafeImage.image = downloadedImage
-                            }
-                        }
-                    }.resume()
+//                    URLSession.shared.dataTask(with: url) { data, _, error in
+//                        if let error = error {
+//                            print("Failed to download image:", error)
+//                            return
+//                        }
+//                        if let data = data, let downloadedImage = UIImage(data: data) {
+//                            DispatchQueue.main.async {
+//                                self.cafeImage.image = downloadedImage
+//                            }
+//                        }
+//                    }.resume()
+                    self.cafeImage.kf.setImage(with: url)
                 }
-//                if let url = cafe.cafeImages.first {
-//                    cafeImage.kf.setImage(with: url)
-//                }
+
 
                 DispatchQueue.main.async {
                     self.cafeNameLabel.text = cafe.name
@@ -519,21 +518,21 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         detailcafeservice.getDetailCafeBycafeIDToken(cafeID: cafeId, userID: userId) { result in
             switch result {
             case .success(let cafe):
-                // 성공적으로 데이터를 받아왔을 때의 처리 로직
-               // print(cafe) // 받아온 데이터 사용 예시
+               // print(cafe)
                 //print(cafe.cafeImages.count)
                 if let imageURL = cafe.cafeImages.first, let url = URL(string: imageURL) {
-                    URLSession.shared.dataTask(with: url) { data, _, error in
-                        if let error = error {
-                            print("Failed to download image:", error)
-                            return
-                        }
-                        if let data = data, let downloadedImage = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                self.cafeImage.image = downloadedImage
-                            }
-                        }
-                    }.resume()
+//                    URLSession.shared.dataTask(with: url) { data, _, error in
+//                        if let error = error {
+//                            print("Failed to download image:", error)
+//                            return
+//                        }
+//                        if let data = data, let downloadedImage = UIImage(data: data) {
+//                            DispatchQueue.main.async {
+//                                self.cafeImage.image = downloadedImage
+//                            }
+//                        }
+//                    }.resume()
+                    self.cafeImage.kf.setImage(with: url)
                 }
                 DispatchQueue.main.async {
                     self.cafeNameLabel.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
