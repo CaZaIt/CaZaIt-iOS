@@ -23,9 +23,21 @@ class RefreshTokenService {
         
         let url = "\(APIConstants.refreshURL)?role=user"
         
-        var header : HTTPHeaders = ["Content-Type" : "application/json"]
-        if let bearerToken = UserDefaults.standard.string(forKey: "refreshToken") {
+        
+        var header : HTTPHeaders = [
+            "Content-Type" : "application/json",
+            "Accept-Encoding" : "gzip, deflate, br"
+        ]
+        
+        if let bearerToken = KeyChain.read(key: "accessToken") {
             header["Authorization"] = "Bearer \(bearerToken)"
+            print("엑세스 토큰")
+            print(bearerToken)
+        }
+        if let bearerToken = KeyChain.read(key: "refreshToken") {
+            header["Refresh-Token"] = bearerToken
+            print("리프레쉬 토큰")
+            print(bearerToken)
         }
         
         
@@ -55,6 +67,14 @@ class RefreshTokenService {
                 
                 //judgeStatus라는 함수에 statusCode와 response(결과 데이터)를 실어서 보낸다.
                 let networkResult = self.judgeStatus(by: statusCode, value)
+                
+                //토큰 재발급에 실패했을 경우 해당하는 메시지를 출력하기 위한 코드
+                if statusCode == 401,
+                   let jsonObject = try? JSONSerialization.jsonObject(with: value, options: []),
+                   let jsonDictionary = jsonObject as? [String: Any],
+                   let message = jsonDictionary["message"] as? String {
+                    print("Received 401 Error Message: \(message)")
+                }
                 completion(networkResult)
                 
                 //통신 실패의 경우 completion에 pathErr값을 담아서 뷰컨으로 날려준다.
@@ -80,13 +100,9 @@ class RefreshTokenService {
         
         //JSON 데이터를 해독하기 위해 JSONDecoder()를 하나 선언
         let decoder = JSONDecoder()
-        
         // data를 AllMenuResponse형으로 decode 해준다.
         // 실패하면 pathErr로 빼고, 성공하면 decodeData에 값을 뺀다.
         guard let decodedData = try? decoder.decode(RefreshTokenResponse.self, from: data) else { return .pathErr }
-        UserDefaults.standard.set(decodedData.data.accessToken, forKey: "accessToken")
-        // 통신을 통해 얻은 accessToken UserDefault에 저장
-        UserDefaults.standard.set(decodedData.data.refreshToken, forKey: "refreshToken")
         // 성공적으로 decode를 마치면 success에다가 data 부분을 담아서 completion을 호출
         return .success(decodedData as Any)
     }
