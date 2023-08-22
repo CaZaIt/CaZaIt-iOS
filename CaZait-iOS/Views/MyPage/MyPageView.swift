@@ -211,7 +211,7 @@ class MyPageView: UIViewController{
     private let graphImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "graph")
+        imageView.image = UIImage(named: "commingsoon")
         return imageView
     }()
     
@@ -413,10 +413,10 @@ class MyPageView: UIViewController{
         }
         
         self.graphImage.snp.makeConstraints { make in
-            make.leading.equalTo(self.whiteView.snp.leading).inset(28)
-            make.trailing.equalTo(self.whiteView.snp.trailing).inset(28)
-            make.top.equalTo(self.myConsumptionLabel.snp.bottom).offset(15)
-            make.bottom.equalTo(self.whiteView.snp.bottom).inset(18)
+            make.leading.equalTo(self.whiteView.snp.leading).inset(48)
+            make.trailing.equalTo(self.whiteView.snp.trailing).inset(48)
+            make.top.equalTo(self.myConsumptionLabel.snp.bottom).offset(35)
+            make.bottom.equalTo(self.whiteView.snp.bottom).inset(38)
         }
         
         
