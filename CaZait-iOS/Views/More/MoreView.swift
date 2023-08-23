@@ -136,7 +136,7 @@ extension MoreView: UITableViewDelegate, UITableViewDataSource {
         
         if selectedRow == "계정관리" {
             if UserDefaults.standard.string(forKey: "userId") != nil {
-                let changePasswordViewController = ChangePasswordViewController()
+                let changePasswordViewController = CheckPasswordViewController()
                 navigationController?.pushViewController(changePasswordViewController, animated: true)
             } else {
                 let alertController = UIAlertController(title: "로그인 후 이용해주세요.", message: "", preferredStyle: .alert)
