@@ -84,6 +84,8 @@
 		F1E5474F2A9625FB00671182 /* CheckPasswordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E5474E2A9625FB00671182 /* CheckPasswordModel.swift */; };
 		F1E547512A96325000671182 /* AccountManagementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547502A96325000671182 /* AccountManagementVC.swift */; };
 		F1E547532A9633C700671182 /* CheckPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547522A9633C700671182 /* CheckPasswordViewController.swift */; };
+		F1E547552A96480500671182 /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547542A96480500671182 /* ChangePasswordVC.swift */; };
+		F1E547572A96483800671182 /* ChangeNickNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547562A96483800671182 /* ChangeNickNameVC.swift */; };
 		F1F98D5D2A481FA50055BF21 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5C2A481FA50055BF21 /* NotificationView.swift */; };
 		F1F98D5F2A482DAF0055BF21 /* NotificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */; };
 		F1F98D652A54068F0055BF21 /* FavoritesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D642A54068F0055BF21 /* FavoritesModel.swift */; };
@@ -173,6 +175,8 @@
 		F1E5474E2A9625FB00671182 /* CheckPasswordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPasswordModel.swift; sourceTree = "<group>"; };
 		F1E547502A96325000671182 /* AccountManagementVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagementVC.swift; sourceTree = "<group>"; };
 		F1E547522A9633C700671182 /* CheckPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPasswordViewController.swift; sourceTree = "<group>"; };
+		F1E547542A96480500671182 /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
+		F1E547562A96483800671182 /* ChangeNickNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNickNameVC.swift; sourceTree = "<group>"; };
 		F1F98D5C2A481FA50055BF21 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCollectionViewCell.swift; sourceTree = "<group>"; };
 		F1F98D642A54068F0055BF21 /* FavoritesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModel.swift; sourceTree = "<group>"; };
@@ -235,6 +239,8 @@
 				019D16AC2A792EF700766E9D /* NoticeView.swift */,
 				F1E5473C2A8CADDC00671182 /* PolicyViewController.swift */,
 				F1E547502A96325000671182 /* AccountManagementVC.swift */,
+				F1E547542A96480500671182 /* ChangePasswordVC.swift */,
+				F1E547562A96483800671182 /* ChangeNickNameVC.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -660,6 +666,7 @@
 				F13FA0892A1CCDFB0001958D /* AllCafeService.swift in Sources */,
 				F13FDA7529DD5DD00044C6C3 /* MainTableViewLovedCell.swift in Sources */,
 				F13FDA9E29DD91A50044C6C3 /* MainTableViewCafeCell.swift in Sources */,
+				F1E547572A96483800671182 /* ChangeNickNameVC.swift in Sources */,
 				6CC990722A703A91008ABE53 /* ReviewWriteService.swift in Sources */,
 				F1E547252A7CE79D00671182 /* KeyChain.swift in Sources */,
 				01F7A1F529D935540058736E /* TabBarView.swift in Sources */,
@@ -721,6 +728,7 @@
 				F1E547532A9633C700671182 /* CheckPasswordViewController.swift in Sources */,
 				6CAFA8D62A861D95003BDD65 /* DetailCafeByCafeIdModel.swift in Sources */,
 				01B87B782A1CDB2F0082FC05 /* IdCheckService.swift in Sources */,
+				F1E547552A96480500671182 /* ChangePasswordVC.swift in Sources */,
 				01B9328929E2E320006342F9 /* MapView.swift in Sources */,
 				F122CEF229DE8FAD00818D7B /* CafeListCollectionViewCell.swift in Sources */,
 				F1E547512A96325000671182 /* AccountManagementVC.swift in Sources */,
