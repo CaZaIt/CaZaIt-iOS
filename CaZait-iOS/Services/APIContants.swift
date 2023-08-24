@@ -46,4 +46,8 @@ struct APIConstants {
     static let messageSendURL = baseURL + "/api/auths/send-authnumber/test" //인증번호 발송
     
     static let messageSendCheckURL = baseURL + "/api/auths/verify-authnumber" //인증번호 인증
+    
+    static let passwordCheckURL = baseURL + "/api/users/verify-password" //비밀번호 확인
+    
+    static let passwordChangeURL = baseURL + "/api/users/userinfo/password" //계정정보 관리 에서 비밀번호 변경
 }
