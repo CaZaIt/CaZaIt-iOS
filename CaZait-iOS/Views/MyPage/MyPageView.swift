@@ -1,12 +1,12 @@
 //
-//  SwiftUIView.swift
+//  MyPageView_1.swift
 //  CaZait-iOS
 //
-//  Created by 강석호 on 2023/04/02.
+//  Created by 강석호 on 2023/08/24.
 //
 
 import UIKit
-import SnapKit 
+import SnapKit
 
 class MyPageView: UIViewController{
     
@@ -32,7 +32,7 @@ class MyPageView: UIViewController{
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .black
         label.textAlignment = .center
-//        label.text = "로그인"
+        label.text = "로그인"
         label.numberOfLines = 1
         return label
     }()
@@ -149,7 +149,6 @@ class MyPageView: UIViewController{
         return label
     }()
     
-    
     private let recentplaceButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -189,12 +188,15 @@ class MyPageView: UIViewController{
         return view
     }()
     
-    
     private let horizontalLine: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .black
         return view
+    }()
+    
+    private let dottedLineView: DottedLineView = {
+        return DottedLineView()
     }()
     
     private let myConsumptionLabel: UILabel = {
@@ -215,11 +217,6 @@ class MyPageView: UIViewController{
         return imageView
     }()
     
-    private let dottedLineView: DottedLineView = {
-        return DottedLineView()
-    }()
-
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if UserDefaults.standard.string(forKey: "userId") != nil {
@@ -229,7 +226,6 @@ class MyPageView: UIViewController{
             loginLabel.text = "로그인"
         }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -244,8 +240,6 @@ class MyPageView: UIViewController{
         payView.addSubview(paymoneyLabel)
         payView.addSubview(paywonLabel)
         whiteView.addSubview(mypagemenuView)
-        whiteView.addSubview(dottedLineView)
-        whiteView.addSubview(myConsumptionLabel)
         mypagemenuView.addSubview(couponButton)
         mypagemenuView.addSubview(paymentButton)
         mypagemenuView.addSubview(recentplaceButton)
@@ -257,7 +251,10 @@ class MyPageView: UIViewController{
         paymentButton.addSubview(paymentLabel)
         recentplaceButton.addSubview(recentplaceImage)
         recentplaceButton.addSubview(recentplaceLabel)
+        whiteView.addSubview(dottedLineView)
+        whiteView.addSubview(myConsumptionLabel)
         whiteView.addSubview(graphImage)
+        
         
         self.whiteView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
@@ -268,7 +265,14 @@ class MyPageView: UIViewController{
         self.pinkView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(self.whiteView.snp.top)
-            make.height.equalTo(125)
+            // SE 기준 높이: 99
+            let desiredHeightForSE: CGFloat = 510
+            // iPhone 12 높이: UIScreen.main.bounds.height
+            let screenHeightForIPhone12 = UIScreen.main.bounds.height
+            // iPhone 12에서도 동일한 비율로 높이를 설정
+            let pinkViewHeight = min(desiredHeightForSE, screenHeightForIPhone12) * 99 / desiredHeightForSE
+            make.height.equalTo(pinkViewHeight)
+            make.bottom.lessThanOrEqualTo(self.whiteView.snp.bottom)
         }
         
         self.loginLabel.snp.makeConstraints { make in
@@ -279,21 +283,38 @@ class MyPageView: UIViewController{
         self.loginButton.snp.makeConstraints { make in
             make.leading.equalTo(self.loginLabel.snp.trailing).offset(2)
             make.top.equalTo(self.whiteView.snp.top).inset(44)
-            make.height.equalTo(30)
-            make.width.equalTo(30)
+            
+            // iPhone SE 기준 크기
+            let desiredSizeForSE: CGFloat = 30
+            
+            // iPhone 12 크기: UIScreen.main.bounds.height
+            let screenHeightForIPhone12 = UIScreen.main.bounds.height
+            
+            // iPhone 12에서도 동일한 비율로 크기를 설정
+            let buttonSize = min(desiredSizeForSE, screenHeightForIPhone12) * 30 / desiredSizeForSE
+            make.height.equalTo(buttonSize)
+            make.width.equalTo(buttonSize)
         }
         
         self.payView.snp.makeConstraints { make in
             make.leading.equalTo(self.whiteView.snp.leading).inset(28)
             make.trailing.equalTo(self.whiteView.snp.trailing).inset(28)
             make.top.equalTo(self.loginLabel.snp.bottom).offset(14)
-            make.bottom.equalTo(self.whiteView.snp.bottom).inset(527)
-//            make.height.equalTo(102)
+            
+            // iPhone SE 기준 크기
+            let desiredHeightForSE: CGFloat = 102
+            
+            // iPhone 12 크기: UIScreen.main.bounds.height
+            let screenHeightForIPhone12 = UIScreen.main.bounds.height
+            
+            // iPhone 12에서도 동일한 비율로 높이를 설정
+            let payViewHeight = min(desiredHeightForSE, screenHeightForIPhone12) * 102 / desiredHeightForSE
+            make.height.equalTo(payViewHeight)
         }
         
         self.payLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.payView.snp.leading).inset(18)
-            make.trailing.equalTo(self.payView.snp.trailing).inset(240)
+            //            make.trailing.equalTo(self.payView.snp.trailing).inset(240)
             make.top.equalTo(self.payView.snp.top).inset(14)
             make.bottom.equalTo(self.payView.snp.bottom).inset(66)
         }
@@ -314,16 +335,23 @@ class MyPageView: UIViewController{
             make.leading.equalTo(self.whiteView.snp.leading).inset(28)
             make.trailing.equalTo(self.whiteView.snp.trailing).inset(28)
             make.top.equalTo(self.payView.snp.bottom).offset(15)
-            make.bottom.equalTo(self.whiteView.snp.bottom).inset(350)
+            
+            // iPhone SE 기준 높이: 350
+            let desiredHeightForSE: CGFloat = 154
+            
+            // iPhone 12 높이: UIScreen.main.bounds.height
+            let screenHeightForIPhone12 = UIScreen.main.bounds.height
+            
+            // iPhone 12에서도 동일한 비율로 높이를 설정
+            let myPageMenuViewHeight = min(desiredHeightForSE, screenHeightForIPhone12) * 154 / desiredHeightForSE
+            make.height.equalTo(myPageMenuViewHeight)
         }
-        
         
         self.couponButton.snp.makeConstraints { make in
             make.leading.equalTo(self.mypagemenuView.snp.leading).inset(5)
-            make.trailing.equalTo(self.mypagemenuView.snp.trailing).inset(230)
             make.top.equalTo(self.mypagemenuView.snp.top).inset(5)
             make.bottom.equalTo(self.mypagemenuView.snp.bottom).inset(5)
-            make.height.equalTo(100)
+            make.width.equalTo(self.mypagemenuView).dividedBy(3) // 1/3 폭
         }
         self.couponImage.snp.makeConstraints { make in
             make.leading.equalTo(self.couponButton.snp.leading).inset(27)
@@ -336,14 +364,11 @@ class MyPageView: UIViewController{
             make.trailing.equalTo(self.couponButton.snp.trailing).inset(35)
             make.top.equalTo(self.couponImage.snp.bottom).inset(-14)
         }
-        
-        
         self.paymentButton.snp.makeConstraints { make in
-            make.leading.equalTo(self.couponButton.snp.trailing).inset(-10)
-            make.trailing.equalTo(self.mypagemenuView.snp.trailing).inset(120)
+            make.leading.equalTo(self.couponButton.snp.trailing)
             make.top.equalTo(self.mypagemenuView.snp.top).inset(5)
             make.bottom.equalTo(self.mypagemenuView.snp.bottom).inset(5)
-            make.height.equalTo(100)
+            make.width.equalTo(self.mypagemenuView).dividedBy(3) // 1/3 폭
         }
         self.paymentImage.snp.makeConstraints { make in
             make.leading.equalTo(self.paymentButton.snp.leading).inset(27)
@@ -356,15 +381,11 @@ class MyPageView: UIViewController{
             make.trailing.equalTo(self.paymentButton.snp.trailing).inset(15)
             make.top.equalTo(self.paymentImage.snp.bottom).inset(-14)
         }
-        
-        
-        
         self.recentplaceButton.snp.makeConstraints { make in
-            make.leading.equalTo(self.paymentButton.snp.trailing).inset(-10)
-            make.trailing.equalTo(self.mypagemenuView.snp.trailing).inset(5)
+            make.leading.equalTo(self.paymentButton.snp.trailing)
             make.top.equalTo(self.mypagemenuView.snp.top).inset(5)
             make.bottom.equalTo(self.mypagemenuView.snp.bottom).inset(5)
-            make.height.equalTo(100)
+            make.width.equalTo(self.mypagemenuView).dividedBy(3) // 1/3 폭
         }
         self.recentplaceImage.snp.makeConstraints { make in
             make.leading.equalTo(self.recentplaceButton.snp.leading).inset(33)
@@ -379,25 +400,18 @@ class MyPageView: UIViewController{
         }
         
         self.verticalLine_1.snp.makeConstraints { make in
-            make.leading.equalTo(self.couponButton.snp.trailing).inset(-4)
-            make.top.equalTo(self.mypagemenuView.snp.top).inset(14)
-            make.bottom.equalTo(self.mypagemenuView.snp.bottom).inset(14)
+            make.centerX.equalTo(self.couponButton.snp.trailing)
+            make.top.equalTo(self.mypagemenuView.snp.top).inset(10)
+            make.bottom.equalTo(self.mypagemenuView.snp.bottom).inset(10)
             make.width.equalTo(1)
         }
         
         self.verticalLine_2.snp.makeConstraints { make in
-            make.leading.equalTo(self.paymentButton.snp.trailing).inset(-4)
-            make.top.equalTo(self.mypagemenuView.snp.top).inset(14)
-            make.bottom.equalTo(self.mypagemenuView.snp.bottom).inset(14)
+            make.centerX.equalTo(self.paymentButton.snp.trailing)
+            make.top.equalTo(self.mypagemenuView.snp.top).inset(10)
+            make.bottom.equalTo(self.mypagemenuView.snp.bottom).inset(10)
             make.width.equalTo(1)
         }
-        
-//        self.dottedLineView.snp.makeConstraints { make in
-//            make.bottom.equalTo(whiteView.snp.bottom)
-//            make.leading.equalTo(contentView.snp.leading).offset(21)
-//            make.trailing.equalTo(contentView.snp.trailing).offset(-21)
-//            make.height.equalTo(1.5)
-//        }
         
         self.dottedLineView.snp.makeConstraints { make in
             make.leading.equalTo(self.whiteView.snp.leading).inset(28)
@@ -409,23 +423,29 @@ class MyPageView: UIViewController{
         self.myConsumptionLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.whiteView.snp.leading).inset(39)
             make.top.equalTo(self.dottedLineView.snp.bottom).offset(15)
-            make.bottom.equalTo(self.whiteView.snp.bottom).inset(281)
         }
         
         self.graphImage.snp.makeConstraints { make in
-            make.leading.equalTo(self.whiteView.snp.leading).inset(48)
-            make.trailing.equalTo(self.whiteView.snp.trailing).inset(48)
-            make.top.equalTo(self.myConsumptionLabel.snp.bottom).offset(35)
-            make.bottom.equalTo(self.whiteView.snp.bottom).inset(38)
+            make.centerX.equalToSuperview() // 가운데 정렬
+            make.top.equalTo(self.myConsumptionLabel.snp.bottom).offset(22) // 기존의 top 설정 유지
+            make.width.height.equalTo(150) // 너비와 높이를 100으로 고정
+            
+            // iPhone SE 기준 크기
+            let desiredSizeForSE: CGFloat = 150
+            
+            // iPhone 12 크기: UIScreen.main.bounds.height
+            let screenHeightForIPhone12 = UIScreen.main.bounds.height
+            
+            // iPhone 12에서도 동일한 비율로 크기를 설정
+            let imageSize = min(desiredSizeForSE, screenHeightForIPhone12) * 150 / desiredSizeForSE
+            make.width.height.equalTo(imageSize)
         }
-        
         
         couponButton.addTarget(self, action:#selector(buttonClicked_1), for: .touchUpInside)
         paymentButton.addTarget(self, action:#selector(buttonClicked_2), for: .touchUpInside)
         recentplaceButton.addTarget(self, action: #selector(buttonClicked_3), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(buttonClicked_4), for: .touchUpInside)
     }
-    
     //상태표시줄 화이트색의 글씨로 변경
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent // 밝은 배경색일 경우에는 .darkContent
@@ -496,7 +516,6 @@ class MyPageView: UIViewController{
         
         
     }
-    
 }
 
 
