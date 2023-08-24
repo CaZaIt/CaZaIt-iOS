@@ -1,11 +1,12 @@
 import UIKit
 import SnapKit
 import Foundation
+import Kingfisher
 
 class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     var collectionView1HeightConstant: CGFloat = 100
-    var collectionView2HeightConstant: CGFloat = 400
+    var collectionView2HeightConstant: CGFloat = 100
     
     var cafeMenu: [DetailCafeMenu]?
     var cafeReview: [DetailCafeReview]?
@@ -91,18 +92,24 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.changeNavigationBar(isClear: true) // navigationBar 투명으로
+        
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.backgroundColor = .black
+        navigationBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white] // 여기서 글자 색을 설정
+        navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white] // 여기서 글자 색을 설정
 
-//        let navigationBarAppearance = UINavigationBarAppearance()
-//        navigationBarAppearance.backgroundColor = .clear
         self.navigationController?.isNavigationBarHidden = false
-//        self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
-//        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-//        self.navigationController?.changeNavigationBar(isClear: true)
-
+        self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
         self.navigationController?.navigationBar.barStyle = .default
         self.navigationController?.navigationBar.tintColor = .white
-//        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.isTranslucent = false
+
+
+       // self.navigationController?.changeNavigationBarTitle(isTrue: true)
+
+        //navigationController?.changeNavigationBar(isClear: true) // navigationBar 투명으로
+
 
         // 뒤로가기 버튼 추가
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))
@@ -133,7 +140,11 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-
+        
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
+        
         collectionView1.dataSource = self
         collectionView1.delegate = self
         collectionView1.register(CafeDetailViewMenuCell.self, forCellWithReuseIdentifier: "CafeDetailViewMenuCell")
@@ -141,13 +152,15 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         collectionView2.dataSource = self
         collectionView2.delegate = self
         collectionView2.register(CafeDetailViewReviewCell.self, forCellWithReuseIdentifier: "CafeDetailViewReviewCell")
-        
+        collectionView2.isScrollEnabled = false
+
         // UIScrollView 설정
         scrollView.delegate = self
-        scrollView.backgroundColor = .blue
+        scrollView.backgroundColor = .white
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         //scrollView.bounces = false // 스크롤 여백 없애기, 대신 스크롤의 튕김이 없어져 스크롤이 부드럽지 못함
         scrollView.decelerationRate = UIScrollView.DecelerationRate.fast
+//        scrollView.panGestureRecognizer.require(toFail: collectionView2.panGestureRecognizer)
 
         cafeView.backgroundColor = .white
         cafeView.layer.cornerRadius = 30
@@ -210,8 +223,8 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         view.addSubview(reviewWriteButton)
         
         scrollView.snp.makeConstraints {
-            //$0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.top.equalTo(view.snp.top)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            //$0.top.equalTo(view.snp.top)
             $0.left.bottom.right.equalToSuperview()
         }
         
@@ -222,7 +235,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             $0.bottom.equalTo(scrollView.contentLayoutGuide)
         }
         
-        stackView.backgroundColor = .red
+        stackView.backgroundColor = .white
         
         nestedStackView.snp.makeConstraints{
             $0.top.equalTo(scrollView.snp.top)
@@ -455,21 +468,23 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             switch result {
             case .success(let cafe):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
-                print(cafe) // 받아온 데이터 사용 예시
-                print(cafe.cafeImages.count)
+                //print(cafe) // 받아온 데이터 사용 예시
+                //print(cafe.cafeImages.count)
                 if let imageURL = cafe.cafeImages.first, let url = URL(string: imageURL) {
-                    URLSession.shared.dataTask(with: url) { data, _, error in
-                        if let error = error {
-                            print("Failed to download image:", error)
-                            return
-                        }
-                        if let data = data, let downloadedImage = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                self.cafeImage.image = downloadedImage
-                            }
-                        }
-                    }.resume()
+//                    URLSession.shared.dataTask(with: url) { data, _, error in
+//                        if let error = error {
+//                            print("Failed to download image:", error)
+//                            return
+//                        }
+//                        if let data = data, let downloadedImage = UIImage(data: data) {
+//                            DispatchQueue.main.async {
+//                                self.cafeImage.image = downloadedImage
+//                            }
+//                        }
+//                    }.resume()
+                    self.cafeImage.kf.setImage(with: url)
                 }
+
 
                 DispatchQueue.main.async {
                     self.cafeNameLabel.text = cafe.name
@@ -503,21 +518,21 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         detailcafeservice.getDetailCafeBycafeIDToken(cafeID: cafeId, userID: userId) { result in
             switch result {
             case .success(let cafe):
-                // 성공적으로 데이터를 받아왔을 때의 처리 로직
-                print(cafe) // 받아온 데이터 사용 예시
-                print(cafe.cafeImages.count)
+               // print(cafe)
+                //print(cafe.cafeImages.count)
                 if let imageURL = cafe.cafeImages.first, let url = URL(string: imageURL) {
-                    URLSession.shared.dataTask(with: url) { data, _, error in
-                        if let error = error {
-                            print("Failed to download image:", error)
-                            return
-                        }
-                        if let data = data, let downloadedImage = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                self.cafeImage.image = downloadedImage
-                            }
-                        }
-                    }.resume()
+//                    URLSession.shared.dataTask(with: url) { data, _, error in
+//                        if let error = error {
+//                            print("Failed to download image:", error)
+//                            return
+//                        }
+//                        if let data = data, let downloadedImage = UIImage(data: data) {
+//                            DispatchQueue.main.async {
+//                                self.cafeImage.image = downloadedImage
+//                            }
+//                        }
+//                    }.resume()
+                    self.cafeImage.kf.setImage(with: url)
                 }
                 DispatchQueue.main.async {
                     self.cafeNameLabel.text = cafe.name // 받아온 데이터의 이름을 라벨에 설정
@@ -580,21 +595,27 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             return
         }
         let detailcafereviewservice = DetailCafeReviewService()
-        detailcafereviewservice.getDetailCafeReviewBycafeID(cafeID: cafeId, nums: 20) { [self] result in
+        detailcafereviewservice.getDetailCafeReviewBycafeID(cafeID: cafeId, nums: 50) { [self] result in
             switch result {
             case .success(let response):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 self.cafeReview = response.reviewResponses
-                print(response)
+                //print(response)
                 //print(self.cafeReview)
 
-                collectionView2.reloadData() // 컬렉션 뷰 리로드
+//                collectionView2.reloadData() // 컬렉션 뷰 리로드
                 
                 let numberOfRowsInCollectionView2 = cafeReview!.count
                 collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13) // 115 셀 높이, 13 셀 간격
                 collectionView2.snp.makeConstraints {
                     $0.height.equalTo(collectionView2HeightConstant).priority(.low)
                 }
+                
+                collectionView2.reloadData() // 컬렉션 뷰 리로드
+
+                print("리뷰 개수 : " , cafeReview!.count)
+                print("높이 : " , collectionView2HeightConstant)
+                print("스크롤뷰 높이 : ", self.scrollView.contentOffset.y)
                 
             case .failure(let error):
                 print("review error : \n" + error.localizedDescription)
@@ -682,29 +703,22 @@ extension CafeDetailView: UIScrollViewDelegate {
         // frame.minY를 통해 sticky 타이밍 계산
         let shouldShowSticky = scrollView.contentOffset.y >= headerViewSegmentControl.frame.minY
         stickyHeaderViewSegmentControl.isHidden = !shouldShowSticky
-        print(!shouldShowSticky)
-        navigationController?.changeNavigationBar(isClear: !shouldShowSticky)
+        //print(!shouldShowSticky)
         
+        if shouldShowSticky {
+            self.navigationController?.navigationBar.topItem?.title = cafeNameLabel.text
+            let attributes: [NSAttributedString.Key: Any] = [
+                   .foregroundColor: UIColor.white, // 흰색으로 변경
+                   .font: UIFont.boldSystemFont(ofSize: 18)
+               ]
+            self.navigationController?.navigationBar.titleTextAttributes = attributes
+    
+        } else {
+            navigationController?.navigationBar.topItem?.title = ""
+        }
+
         if headerViewSegmentControl.frame.minY == 0.0 {
             stickyHeaderViewSegmentControl.isHidden = true
         }
     }
 }
-
-extension UINavigationController {
-    // 투명하게 만들기 (버튼 등은 보임)
-    func changeNavigationBar(isClear: Bool) {
-        navigationBar.isHidden = false
-        if isClear {
-            navigationBar.shadowImage = UIImage()
-            navigationBar.setBackgroundImage(UIImage(), for: .default)
-        } else {
-            navigationBar.shadowImage = nil
-            navigationBar.setBackgroundImage(nil, for: .default)
-//            navigationBar.backgroundColor = .black
-
-        }
-    }
-}
-
-

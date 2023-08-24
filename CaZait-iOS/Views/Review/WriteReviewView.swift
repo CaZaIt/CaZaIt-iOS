@@ -211,10 +211,52 @@ class WriteReviewView: UIViewController{
         self.view.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
     }
     
+//    @objc func postButtonTapped() {
+//        guard let inputText = textfield1.text else {
+//            return
+//        }
+//        print(inputText)
+//        print(selectedStarCount)
+//
+//        let review = Review(score: selectedStarCount, content: inputText)
+//        // ReviewService의 인스턴스를 생성
+//        let reviewWriteService = ReviewWriteService()
+//
+//        // 리뷰 작성 통신
+//        guard let cafeId = cafeId else {
+//            // cafeId가 nil일 경우에 대한 처리 로직
+//            print("cafeId가 nil입니다.")
+//            return
+//        }
+//
+//        if let userId = UserDefaults.standard.string(forKey: "userId") {
+//            reviewWriteService.postReview(userId: userId, cafeId: cafeId, review: review) { result in
+//                switch result {
+//                case .success(let reviewResponse):
+//                    print("리뷰 ID: \(reviewResponse.data.nickname)")
+//                case .failure(let error):
+//                    print("에러 메시지: \(error.localizedDescription)")
+//                    //print(ReviewResponse.)
+//                }
+//            }
+//        } else {
+//            print("userId 값이 없음")
+//        }
+//    }
+
     @objc func postButtonTapped() {
         guard let inputText = textfield1.text else {
             return
         }
+        
+        if selectedStarCount == 0 {
+            // '별점을 남겨주세요' 팝업 표시
+            let alert = UIAlertController(title: "알림", message: "별점을 남겨주세요.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
         print(inputText)
         print(selectedStarCount)
 
@@ -234,16 +276,25 @@ class WriteReviewView: UIViewController{
                 switch result {
                 case .success(let reviewResponse):
                     print("리뷰 ID: \(reviewResponse.data.nickname)")
+                    // 작성 완료 팝업 표시
+                    let alert = UIAlertController(title: "알림", message: "작성이 완료되었습니다.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                        // 팝업을 닫은 후 이전 페이지로 돌아가기
+                        self.navigationController?.popViewController(animated: true)
+                        if let previousViewController = self.navigationController?.viewControllers.last as? CafeDetailView {
+                            previousViewController.viewWillAppear(true)
+                        }
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                 case .failure(let error):
                     print("에러 메시지: \(error.localizedDescription)")
-                    //print(ReviewResponse.)
                 }
             }
         } else {
             print("userId 값이 없음")
         }
+        
     }
-
 
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)

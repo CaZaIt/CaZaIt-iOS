@@ -15,8 +15,8 @@ struct ReviewResponse: Codable {
 }
 
 struct ReviewData: Codable {
-    let cafeName: Int
-    let nickname: Int
+    let cafeName: String
+    let nickname: String
     let score: Int
     let content: String
     let createdAt: String

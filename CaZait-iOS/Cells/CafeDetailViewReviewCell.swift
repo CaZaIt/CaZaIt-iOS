@@ -12,13 +12,20 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
     // 꽉찬 별
     lazy var starFillImage: UIImage? = {
         return UIImage(systemName: "star.fill",
-                       withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .medium))?.withTintColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), renderingMode: .alwaysOriginal)
+                       withConfiguration: UIImage.SymbolConfiguration(pointSize: 26, weight: .medium, scale: .medium))?.withTintColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), renderingMode: .alwaysOriginal)
     }()
 
     // 빈별
     lazy var starEmptyImage: UIImage? = {
         return UIImage(systemName: "star",
-                       withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .medium))?.withTintColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), renderingMode: .alwaysOriginal)
+                       withConfiguration: UIImage.SymbolConfiguration(pointSize: 26, weight: .medium, scale: .medium))?.withTintColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), renderingMode: .alwaysOriginal)
+    }()
+    
+    let emergencyImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(systemName: "light.beacon.max",
+                                                   withConfiguration: UIImage.SymbolConfiguration(pointSize: 24, weight: .medium, scale: .medium))?.withTintColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), renderingMode: .alwaysOriginal))
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
     
     
@@ -45,6 +52,20 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         
         return label
     }()
+    
+    private let declaration: UILabel = {
+        let label = UILabel()
+        
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1)
+        label.textAlignment = .left
+        label.text = "신고"
+        label.numberOfLines = 1
+        
+        return label
+    }()
+
+    
     
     private let review: UILabel = {
         let label = UILabel()
@@ -90,6 +111,8 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         contentView.addSubview(nickname)
         contentView.addSubview(hour)
         contentView.addSubview(review)
+        //contentView.addSubview(emergencyImageView)
+        contentView.addSubview(declaration)
     }
     
     private func setupLayout() {
@@ -100,18 +123,28 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         
         
         nickname.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.snp.leading).offset(20)
             make.top.equalTo(contentView.snp.top).offset(50)
+            make.leading.equalTo(contentView.snp.leading).offset(25)
         }
         
-        //        hour.snp.makeConstraints { make in
-        //            make.leading.equalTo(nickname.snp.trailing).offset(20)
-        //            make.top.equalTo(contentView.snp.top).offset(50)
-        //        }
+        
+//        emergencyImageView.snp.makeConstraints { make in
+//            make.leading.equalTo(contentView.snp.trailing).offset(-50)
+//            make.top.equalTo(contentView.snp.top).offset(10)
+//        }
+        
+        declaration.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top).offset(20)
+            make.leading.equalTo(contentView.snp.leading).offset(300)
+        }
+        
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(emergencyImageViewTapped))
+//        emergencyImageView.isUserInteractionEnabled = true
+//        emergencyImageView.addGestureRecognizer(tapGestureRecognizer)
         
         review.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.snp.leading).offset(20)
             make.top.equalTo(nickname.snp.bottom).offset(6)
+            make.leading.equalTo(contentView.snp.leading).offset(25)
         }
     }
     
@@ -145,6 +178,11 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
 
     }
 
+//    @objc func emergencyImageViewTapped() {
+//        let alertController = UIAlertController(title: "신고 서비스 준비 중.", message: "", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+//        alertController.addAction(okAction)
+//    }
     
     func configure(nickname: String, review: String, score: Int) {
         // 셀의 내용을 설정합니다.
