@@ -140,6 +140,16 @@ class SignupView: UIViewController{
         textField.setPlaceholder(color: UIColor(r: 181, g: 181, b: 181))
         return textField
     }()
+    //비밀번호 확인 유효성검사 Label
+    private let pwValidationLabel_1: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .red // You can choose the appropriate color
+        label.textAlignment = .left
+        label.numberOfLines = 0 // Allow multiple lines for longer error messages
+        return label
+    }()
     
     //아이디 Label
     private let idLabel: UILabel = {
@@ -251,6 +261,7 @@ class SignupView: UIViewController{
         self.pinkView.addSubview(pwValidationLabel)
         self.pinkView.addSubview(pwLabel_1)
         self.pinkView.addSubview(pwField_1)
+        self.pinkView.addSubview(pwValidationLabel_1)
         self.pinkView.addSubview(nicknameLabel)
         self.pinkView.addSubview(nicknameField)
         self.pinkView.addSubview(nicknameButton)
@@ -308,9 +319,14 @@ class SignupView: UIViewController{
             make.top.equalTo(self.pwLabel_1.snp.bottom).offset(7)
             make.height.equalTo(43)
         }
+        self.pwValidationLabel_1.snp.makeConstraints { make in
+            make.leading.equalTo(self.pinkView.snp.leading).inset(40)
+            make.trailing.equalTo(self.pinkView.snp.trailing).inset(23)
+            make.top.equalTo(self.pwField_1.snp.bottom).offset(2)
+        }
         self.nicknameLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(39)
-            make.top.equalTo(self.pwField_1.snp.bottom).offset(30)
+            make.top.equalTo(self.pwValidationLabel_1.snp.bottom).offset(10)
         }
         self.nicknameField.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(30)
@@ -332,11 +348,34 @@ class SignupView: UIViewController{
             make.height.equalTo(46)
         }
         
+        // 편집 변경 이벤트에 대한 액션 추가
+        pwField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
+        pwField_1.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
+
+        
         
         //중복 확인 버튼 클릭시 이벤트 추가
         idButton.addTarget(self, action:#selector(idCheck), for: .touchUpInside)
         nicknameButton.addTarget(self, action:#selector(nicknameCheck), for: .touchUpInside)
         joinButton.addTarget(self, action:#selector(SignUp), for: .touchUpInside)
+    }
+    
+    // 텍스트 필드 편집이 변경될 때 호출되는 메서드
+    @objc func textFieldEditingChanged(_ textField: UITextField) {
+        checkPasswordMatch()
+    }
+    
+    // 비밀번호 확인 메서드
+    func checkPasswordMatch() {
+        if let password = pwField.text, let confirmPassword = pwField_1.text {
+            if password == confirmPassword {
+                pwValidationLabel_1.text = "비밀번호 일치"
+                pwValidationLabel_1.textColor = UIColor.blue
+            } else {
+                pwValidationLabel_1.text = "비밀번호 불일치"
+                pwValidationLabel_1.textColor = UIColor.red
+            }
+        }
     }
     
     @objc func backButtonTapped() {
@@ -399,7 +438,7 @@ extension SignupView {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
-            case .networkFail:
+            default:
                 let alert = UIAlertController(title: "사용할 수 없는 아이디 입니다", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
@@ -433,7 +472,7 @@ extension SignupView {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
-            case .networkFail:
+            default:
                 let alert = UIAlertController(title: "사용할 수 없는 닉네임 입니다", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
@@ -471,7 +510,7 @@ extension SignupView {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
-            case .networkFail:
+            default:
                 let alert = UIAlertController(title: "회원가입에 실패하였습니다.", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
@@ -510,12 +549,16 @@ extension SignupView {
         
         if realtimeText.count >= minIDLength, realtimeText.count <= maxIDLength, matches?.count == 0 {
             idValidationLabel.text = "6자 이상의 소문자 혹은 소문자와 숫자를 조합하여 입력해주세요."
+            idValidationLabel.textColor = UIColor.red
         } else if realtimeText.count < minIDLength {
             idValidationLabel.text = "최소 6자 이상이어야 합니다."
+            idValidationLabel.textColor = UIColor.red
         } else if realtimeText.count > maxIDLength {
             idValidationLabel.text = "최대 20자까지만 입력 가능합니다."
+            idValidationLabel.textColor = UIColor.red
         } else {
             idValidationLabel.text = "가능한 아이디입니다."
+            idValidationLabel.textColor = UIColor.blue
         }
     }
     
@@ -540,10 +583,13 @@ extension SignupView {
         
         if realtimeText.count < minLength || realtimeText.count > maxLength {
             pwValidationLabel.text = "최소 8자 이상, 최대 16자 이하로 입력해주세요."
+            pwValidationLabel.textColor = UIColor.red
         } else if !containsLowercaseLetter || !containsUppercaseLetter || !containsNumber || !containsSpecialCharacter {
             pwValidationLabel.text = "적어도 하나의 대문자, 소문자, 숫자, 특수문자가 포함되어야 합니다."
+            pwValidationLabel.textColor = UIColor.red
         } else {
             pwValidationLabel.text = "가능한 비밀번호입니다."
+            pwValidationLabel.textColor = UIColor.blue
         }
     }
 }

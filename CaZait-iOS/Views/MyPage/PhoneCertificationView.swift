@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class PhoneCertificationView: UIViewController, UIGestureRecognizerDelegate{
+class PhoneCertificationView: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate{
     
     var flag: Int = 0 //문자인증 완료 변수(초기값은 0)
     
@@ -18,7 +18,6 @@ class PhoneCertificationView: UIViewController, UIGestureRecognizerDelegate{
         view.backgroundColor = UIColor(r: 255, g: 223, b: 217)
         return view
     }()
-    
 
     private let phonenumberLabel: UILabel = {
         let label = UILabel()
@@ -44,6 +43,16 @@ class PhoneCertificationView: UIViewController, UIGestureRecognizerDelegate{
         textField.textColor = UIColor(r: 93, g: 36, b: 36)
         textField.setPlaceholder(color: UIColor(r: 181, g: 181, b: 181))
         return textField
+    }()
+    
+    private let numberValidationLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .red // You can choose the appropriate color
+        label.textAlignment = .left
+        label.numberOfLines = 0 // Allow multiple lines for longer error messages
+        return label
     }()
     
     private let phonenumberButton: UIButton = {
@@ -130,10 +139,12 @@ class PhoneCertificationView: UIViewController, UIGestureRecognizerDelegate{
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
         
+        phonenumberField.delegate = self
         
         self.view.addSubview(pinkView)
         self.pinkView.addSubview(phonenumberLabel)
         self.pinkView.addSubview(phonenumberField)
+        self.pinkView.addSubview(numberValidationLabel)
         self.pinkView.addSubview(phonenumberButton)
         self.pinkView.addSubview(certifyField)
         self.pinkView.addSubview(certifyButton)
@@ -161,16 +172,21 @@ class PhoneCertificationView: UIViewController, UIGestureRecognizerDelegate{
             make.top.equalTo(self.phonenumberLabel.snp.bottom).offset(7)
             make.height.equalTo(44)
         }
+        self.numberValidationLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.pinkView.snp.leading).inset(40)
+            make.trailing.equalTo(self.pinkView.snp.trailing).inset(23)
+            make.top.equalTo(self.phonenumberField.snp.bottom).offset(2)
+        }
         self.certifyField.snp.makeConstraints { make in
             make.leading.equalTo(self.pinkView.snp.leading).inset(30)
             make.trailing.equalTo(self.pinkView.snp.trailing).inset(134)
-            make.top.equalTo(self.phonenumberField.snp.bottom).offset(20)
+            make.top.equalTo(self.numberValidationLabel.snp.bottom).offset(20)
             make.height.equalTo(43)
         }
         self.certifyButton.snp.makeConstraints { make in
             make.leading.equalTo(self.phonenumberField.snp.trailing).offset(10)
             make.trailing.equalTo(self.pinkView.snp.trailing).inset(23)
-            make.top.equalTo(self.phonenumberField.snp.bottom).offset(20)
+            make.top.equalTo(self.numberValidationLabel.snp.bottom).offset(20)
             make.height.equalTo(44)
         }
         self.certifyNextButton.snp.makeConstraints { make in
@@ -186,6 +202,35 @@ class PhoneCertificationView: UIViewController, UIGestureRecognizerDelegate{
         phonenumberButton.addTarget(self, action:#selector(messageSend), for: .touchUpInside)
         certifyButton.addTarget(self, action:#selector(messageVerify), for: .touchUpInside)
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            if textField == phonenumberField {
+                // 입력된 텍스트와 새로 입력된 문자를 합쳐서 전체 텍스트를 가져옴
+                if let text = textField.text, let range = Range(range, in: text) {
+                    let updatedText = text.replacingCharacters(in: range, with: string)
+                    
+                    // 유효성 검사: 010으로 시작하고 11자리 숫자인지 확인
+                    let phoneNumberRegex = "^010[0-9]{8}$"
+                    let phoneNumberTest = NSPredicate(format: "SELF MATCHES %@", phoneNumberRegex)
+                    let isPhoneNumberValid = phoneNumberTest.evaluate(with: updatedText)
+                    
+                    if isPhoneNumberValid {
+                        numberValidationLabel.isHidden = false
+                        numberValidationLabel.text = "가능한 번호입니다."
+                        numberValidationLabel.textColor = .blue // 유효한 경우 녹색으로 표시
+                    } else {
+                        numberValidationLabel.isHidden = false
+                        numberValidationLabel.text = "유효하지 않는 번호입니다."
+                        numberValidationLabel.textColor = .red // 유효하지 않은 경우 빨간색으로 표시
+                    }
+                }
+                // 입력된 텍스트가 없으면 라벨을 다시 숨김
+                if textField.text?.isEmpty == true {
+                    numberValidationLabel.isHidden = true
+                }
+            }
+            return true
+        }
     
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
@@ -254,7 +299,7 @@ extension PhoneCertificationView {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
-            case .networkFail:
+            default:
                 let alert = UIAlertController(title: "인증할 수 없는 번호 입니다", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
@@ -293,7 +338,7 @@ extension PhoneCertificationView {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
-            case .networkFail:
+            default:
                 let alert = UIAlertController(title: "인증에 실패하였습니다.", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 

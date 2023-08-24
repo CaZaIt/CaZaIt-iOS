@@ -251,7 +251,7 @@ extension LoginView {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
-            case .networkFail:
+            default:
                 let alert = UIAlertController(title: "다시 로그인하세요", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
