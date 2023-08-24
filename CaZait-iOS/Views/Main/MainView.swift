@@ -107,7 +107,7 @@ class MainView: UIViewController {
                     print("pathErr")
                 case .serverErr :
                     print("serveErr")
-                case .networkFail:
+                default:
                     print("networkFail")
                 }
                 self.retryTimer?.invalidate() //위치를 받았으니 타이머 종료
@@ -138,7 +138,7 @@ class MainView: UIViewController {
                     print("pathErr")
                 case .serverErr :
                     print("serveErr")
-                case .networkFail:
+                default:
                     print("networkFail")
                 }
             }

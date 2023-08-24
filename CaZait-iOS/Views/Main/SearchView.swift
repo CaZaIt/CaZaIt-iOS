@@ -211,7 +211,7 @@ class SearchView: UIViewController{
                 print("pathErr")
             case .serverErr :
                 print("serveErr")
-            case .networkFail:
+            default:
                 print("networkFail")
             }
         }

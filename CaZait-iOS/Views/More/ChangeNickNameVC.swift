@@ -1,13 +1,14 @@
 //
-//  ChangePasswordViewController.swift
+//  ChangeNickNameVC.swift
 //  CaZait-iOS
 //
-//  Created by 강민수 on 2023/08/16.
+//  Created by 강민수 on 2023/08/23.
 //
 
 import UIKit
+import SnapKit
 
-class ChangePasswordViewController: UIViewController, UIGestureRecognizerDelegate {
+class ChangeNickNameVC: UIViewController, UIGestureRecognizerDelegate {
 
     private let navigationBarAppearance : UINavigationBarAppearance = {
         let navigationBar = UINavigationBarAppearance()
@@ -37,18 +38,17 @@ class ChangePasswordViewController: UIViewController, UIGestureRecognizerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .black
-        setupNavigation()
-        setupLayout()
+
+        view.backgroundColor = .darkGray
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = true
     }
-    
+
     func setupNavigation() {
-        self.title = "약관 및 정책"
+        self.title = "닉네임 변경"
         //손가락 옆으로 미는 제스쳐 작동
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -61,16 +61,6 @@ class ChangePasswordViewController: UIViewController, UIGestureRecognizerDelegat
         self.navigationController?.navigationBar.barStyle = .black
         self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-    }
-
-    func setupLayout() {
-        view.addSubview(pinkView)
-        
-        pinkView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-        }
     }
     
     @objc func backButtonTapped() {

@@ -183,7 +183,7 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
                 print("pathErr")
             case .serverErr :
                 print("serveErr")
-            case .networkFail:
+            default:
                 print("networkFail")
             }
         }

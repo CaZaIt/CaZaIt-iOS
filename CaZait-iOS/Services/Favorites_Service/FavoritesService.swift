@@ -59,18 +59,8 @@ class FavoritesService {
                 switch networkResult {
                 case .success:
                     completion(networkResult)
-//                case .tokenErr:
-//                    // 토큰 갱신 시도
-//                    RefreshTokenService.shared.getRefreshToken { refreshTokenResult in
-//                        switch refreshTokenResult {
-//                        case .success:
-//                            // 리프레시 성공 후 다시 즐겨찾기 정보 요청
-//                            self.getFavoritesCafeInfo(completion: completion)
-//                        default:
-//                            // 리프레시 실패 등, 다른 오류 처리
-//                            completion(refreshTokenResult)
-//                        }
-//                    }
+                case .tokenErr: //토큰 에러가 났을 경우 토큰 재발급 후, 다시 같은 통신을 재귀적으로 호출
+                    self.refreshTokenAndRetryRequest(completion: completion)
                 default:
                     completion(networkResult)
                 }
@@ -87,8 +77,8 @@ class FavoritesService {
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         switch statusCode {
         case ..<300 : return isVaildData(data: data) //성공 데이터를 가공해서 전달해야하기 때문에 isVaildData함수로 데이터 전송
-        //case 401 : return .tokenErr
-        case 400..<500 : return .pathErr //요청이 잘못됨
+        case 401 : return .tokenErr //토큰에러가 났을 경우 401코드가 발생
+        case 402..<500 : return .pathErr //요청이 잘못됨
         case 500..<600 : return .serverErr //서버에러
         default : return .networkFail //네트워크 에러로 분기 처리할 예정
         }
@@ -105,5 +95,30 @@ class FavoritesService {
         
         // 성공적으로 decode를 마치면 success에다가 data 부분을 담아서 completion을 호출
         return .success(decodedData as Any)
+    }
+    
+    //토큰 재발급 함수
+    private func refreshTokenAndRetryRequest(completion: @escaping (NetworkResult<Any>) -> Void) {
+        RefreshTokenService.shared.getRefreshToken() { response in
+            switch response {
+            case .success(let data):
+                guard let tokenData = data as? RefreshTokenResponse else {
+                    completion(.networkFail) // Handle token data parsing error
+                    return
+                }
+                //토큰 재발급 뒤, 휴대폰에 토큰을 저장한 후, 다시 원하던 통신을 재귀적으로 수행한다.
+                let accessToken = tokenData.data.accessToken
+                let refreshToken = tokenData.data.refreshToken
+                KeyChain.create(key: "accessToken", token: accessToken)
+                KeyChain.create(key: "refreshToken", token: refreshToken)
+                // 재발급 성공 후 다시 getFavoritesCafeInfo 함수 실행
+                print("토큰 재발급 후 다시 통신 시도했습니다.")
+                self.getFavoritesCafeInfo(completion: completion)
+                
+            default:
+                print("토큰 재발급에 실패했습니다.")
+                completion(.networkFail) // Handle token refresh failure
+            }
+        }
     }
 }

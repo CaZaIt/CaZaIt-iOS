@@ -1,51 +1,43 @@
 //
-//  RefreshTokenService.swift
+//  CheckPasswordService.swift
 //  CaZait-iOS
 //
-//  Created by 강민수 on 2023/07/20.
+//  Created by 강민수 on 2023/08/23.
 //
 
 import Foundation
 import Alamofire
 //(1) 라이브러리 추가
 
-class RefreshTokenService {
+class CheckPasswordService {
     
     //싱글턴 패턴 - static 키워드를 통해 shared라는 프로퍼티에 싱글턴 인스턴스 저장하여 생성
     //이를 통해서 여러 VC에서도 shared로 접근하면 같은 인스턴스에 접근할 수 있는 형태
-    static let shared = RefreshTokenService()
+    static let shared = CheckPasswordService()
     
     //completion클로저를 @escaping closure로 정의
     //->getAllShop 함수가 종료되든 말든 상관없이 completion은 탈출 클로저이기 때문에,
     //전달된다면 이후에 외부에서도 사용가능
     // **해당 completion클로저에는 네트워크의 결과를 담아서 호출하게 되고, VC에서 꺼내서 처리할 예정
-    func getRefreshToken(completion : @escaping (NetworkResult<Any>) -> Void) {
+    func getCheckPasswordInfo(password : String, completion : @escaping (NetworkResult<Any>) -> Void) {
         
-        let url = "\(APIConstants.refreshURL)?role=user"
+        let userId = UserDefaults.standard.string(forKey: "userId")!
+        let url = "\(APIConstants.passwordCheckURL)/\(userId)"
         
-        
-        var header : HTTPHeaders = [
-            "Content-Type" : "application/json",
-            "Accept-Encoding" : "gzip, deflate, br"
-        ]
+        var header : HTTPHeaders = ["Content-Type" : "application/json"]
         
         if let bearerToken = KeyChain.read(key: "accessToken") {
             header["Authorization"] = "Bearer \(bearerToken)"
-            print("엑세스 토큰")
-            print(bearerToken)
-        }
-        if let bearerToken = KeyChain.read(key: "refreshToken") {
-            header["Refresh-Token"] = bearerToken
-            print("리프레쉬 토큰")
-            print(bearerToken)
         }
         
+        let parameters: [String: Any] = ["password": password]
         
         //이렇게 통신 요청보낼거야! 라는 요청서라고 보면 된다.
         // URL 주소를 가지고, GET 방식을 통해, JSONEncoding 인코딩 방식으로
         // 헤더 정보와 함께 REquest를 보내기 위한 정보를 묶어서 dataRequest에 저장해둔다.
         let dataRequest = AF.request(url,
-                                     method: .get,
+                                     method: .post,
+                                     parameters: parameters,
                                      encoding: JSONEncoding.default,
                                      headers: header)
         
@@ -68,14 +60,14 @@ class RefreshTokenService {
                 //judgeStatus라는 함수에 statusCode와 response(결과 데이터)를 실어서 보낸다.
                 let networkResult = self.judgeStatus(by: statusCode, value)
                 
-                //토큰 재발급에 실패했을 경우 해당하는 메시지를 출력하기 위한 코드
-                if statusCode == 401,
-                   let jsonObject = try? JSONSerialization.jsonObject(with: value, options: []),
-                   let jsonDictionary = jsonObject as? [String: Any],
-                   let message = jsonDictionary["message"] as? String {
-                    print("Received 401 Error Message: \(message)")
+                switch networkResult {
+                case .success:
+                    completion(networkResult)
+                case .tokenErr: //토큰 에러가 났을 경우 토큰 재발급 후, 다시 같은 통신을 재귀적으로 호출
+                    self.refreshTokenAndRetryRequest(password: password, completion: completion)
+                default:
+                    completion(networkResult)
                 }
-                completion(networkResult)
                 
                 //통신 실패의 경우 completion에 pathErr값을 담아서 뷰컨으로 날려준다.
                 // 타임아웃 / 통신 불가능의 상태로 통신 자체에 실패한 경우
@@ -89,7 +81,8 @@ class RefreshTokenService {
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         switch statusCode {
         case ..<300 : return isVaildData(data: data) //성공 데이터를 가공해서 전달해야하기 때문에 isVaildData함수로 데이터 전송
-        case 400..<500 : return .pathErr //요청이 잘못됨
+        case 401 : return .tokenErr //토큰에러가 났을 경우 401코드가 발생
+        case 402..<500 : return .pathErr //요청이 잘못됨
         case 500..<600 : return .serverErr //서버에러
         default : return .networkFail //네트워크 에러로 분기 처리할 예정
         }
@@ -100,10 +93,36 @@ class RefreshTokenService {
         
         //JSON 데이터를 해독하기 위해 JSONDecoder()를 하나 선언
         let decoder = JSONDecoder()
-        // data를 AllMenuResponse형으로 decode 해준다.
+        
         // 실패하면 pathErr로 빼고, 성공하면 decodeData에 값을 뺀다.
-        guard let decodedData = try? decoder.decode(RefreshTokenResponse.self, from: data) else { return .pathErr }
+        guard let decodedData = try? decoder.decode(CheckPasswordResponse.self, from: data) else { return .pathErr }
+        
         // 성공적으로 decode를 마치면 success에다가 data 부분을 담아서 completion을 호출
         return .success(decodedData as Any)
+    }
+    
+    //토큰 재발급 함수
+    private func refreshTokenAndRetryRequest(password:String, completion: @escaping (NetworkResult<Any>) -> Void) {
+        RefreshTokenService.shared.getRefreshToken() { response in
+            switch response {
+            case .success(let data):
+                guard let tokenData = data as? RefreshTokenResponse else {
+                    completion(.networkFail) // Handle token data parsing error
+                    return
+                }
+                //토큰 재발급 뒤, 휴대폰에 토큰을 저장한 후, 다시 원하던 통신을 재귀적으로 수행한다.
+                let accessToken = tokenData.data.accessToken
+                let refreshToken = tokenData.data.refreshToken
+                KeyChain.create(key: "accessToken", token: accessToken)
+                KeyChain.create(key: "refreshToken", token: refreshToken)
+                // 재발급 성공 후 다시 getFavoritesCafeInfo 함수 실행
+                print("토큰 재발급 후 다시 통신 시도했습니다.")
+                self.getCheckPasswordInfo(password: password, completion: completion)
+                
+            default:
+                print("토큰 재발급에 실패했습니다.")
+                completion(.networkFail) // Handle token refresh failure
+            }
+        }
     }
 }
