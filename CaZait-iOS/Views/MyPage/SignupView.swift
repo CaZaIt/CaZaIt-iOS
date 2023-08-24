@@ -438,7 +438,7 @@ extension SignupView {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
-            case .networkFail:
+            default:
                 let alert = UIAlertController(title: "사용할 수 없는 아이디 입니다", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
@@ -472,7 +472,7 @@ extension SignupView {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
-            case .networkFail:
+            default:
                 let alert = UIAlertController(title: "사용할 수 없는 닉네임 입니다", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
@@ -510,7 +510,7 @@ extension SignupView {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
-            case .networkFail:
+            default:
                 let alert = UIAlertController(title: "회원가입에 실패하였습니다.", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 

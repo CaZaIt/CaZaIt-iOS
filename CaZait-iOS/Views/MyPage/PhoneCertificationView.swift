@@ -299,7 +299,7 @@ extension PhoneCertificationView {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
-            case .networkFail:
+            default:
                 let alert = UIAlertController(title: "인증할 수 없는 번호 입니다", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
@@ -338,7 +338,7 @@ extension PhoneCertificationView {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
-            case .networkFail:
+            default:
                 let alert = UIAlertController(title: "인증에 실패하였습니다.", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
