@@ -49,5 +49,6 @@ struct APIConstants {
     
     static let passwordCheckURL = baseURL + "/api/users/verify-password" //비밀번호 확인
     
-    static let passwordChangeURL = baseURL + "/api/users/userinfo/password" //계정정보 관리 에서 비밀번호 변경
+    static let passwordChangeURL = baseURL + "/api/users/userinfo/password" //계정정보 관리에서 비밀번호 변경
+    static let nickNameChangeURL = baseURL + "/api/users/userinfo/nickname" //계정정보 관리에서 닉네임 변경
 }
