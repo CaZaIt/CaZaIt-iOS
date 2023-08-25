@@ -14,7 +14,6 @@ class NotificationView: UIViewController,UIGestureRecognizerDelegate {
     private let navigationBarAppearance : UINavigationBarAppearance = {
         let navigationBar = UINavigationBarAppearance()
         
-        navigationBar.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1) // 기존 배경 색상 유지
         navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationBar.shadowColor = UIColor.clear // 기존 그림자 색상 유지
         navigationBar.configureWithTransparentBackground()
@@ -32,6 +31,23 @@ class NotificationView: UIViewController,UIGestureRecognizerDelegate {
         collectionView.backgroundColor = .white
         
         return collectionView
+    }()
+    
+    private let whiteView: UIView = {
+       let view = UIView()
+        
+        view.backgroundColor = .white
+        
+        return view
+    }()
+    
+    private let commingSoonImageView: UIImageView = {
+       let imageView = UIImageView()
+        
+        imageView.image = UIImage(named: "commingsoon")
+        imageView.contentMode = .scaleAspectFill
+        
+        return imageView
     }()
     
     override func viewDidLoad() {
@@ -67,12 +83,28 @@ class NotificationView: UIViewController,UIGestureRecognizerDelegate {
     }
     
     func setupNotificationView() {
-        view.addSubview(collectionView)
+//        view.addSubview(collectionView)
+//
+//        collectionView.snp.makeConstraints { make in
+//            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+//            make.leading.trailing.equalToSuperview()
+//            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+//        }
+        view.addSubview(whiteView)
 
-        collectionView.snp.makeConstraints { make in
+        whiteView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        view.addSubview(commingSoonImageView)
+
+        commingSoonImageView.snp.makeConstraints { make in
+            make.centerX.equalTo(view.snp.centerX)
+            make.centerY.equalTo(view.snp.centerY)
+            make.leading.trailing.equalToSuperview().inset(76)
+            make.height.equalTo(commingSoonImageView.snp.width)
         }
     }
     
