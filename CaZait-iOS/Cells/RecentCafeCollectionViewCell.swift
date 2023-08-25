@@ -2,7 +2,7 @@
 //  RecentCafeCollectionViewCell.swift
 //  CaZait-iOS
 //
-//  Created by 강석호 on 2023/05/15.
+//  Created by 강민수 on 2023/05/15.
 //
 
 import UIKit
@@ -121,8 +121,8 @@ class RecentCafeCollectionViewCell: UICollectionViewCell {
         }
         
         congestionView.snp.makeConstraints { make in
-            make.top.equalTo(addressLabel.snp.bottom).offset(26)
             make.leading.equalTo(cafeImageView.snp.trailing).offset(18)
+            make.height.equalTo(38)
             make.bottom.equalTo(contentView.snp.bottom).inset(20)
             make.trailing.equalTo(contentView.snp.trailing).inset(18)
         }
