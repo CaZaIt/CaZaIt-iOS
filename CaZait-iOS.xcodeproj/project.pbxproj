@@ -88,6 +88,8 @@
 		F1E547572A96483800671182 /* ChangeNickNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547562A96483800671182 /* ChangeNickNameVC.swift */; };
 		F1E547592A977BBA00671182 /* ChangePasswordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547582A977BBA00671182 /* ChangePasswordModel.swift */; };
 		F1E5475B2A977C7300671182 /* ChangePasswordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E5475A2A977C7300671182 /* ChangePasswordService.swift */; };
+		F1E5475D2A989A3900671182 /* CangeNickNameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E5475C2A989A3900671182 /* CangeNickNameService.swift */; };
+		F1E5475F2A989A5800671182 /* ChangeNickNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E5475E2A989A5800671182 /* ChangeNickNameModel.swift */; };
 		F1F98D5D2A481FA50055BF21 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5C2A481FA50055BF21 /* NotificationView.swift */; };
 		F1F98D5F2A482DAF0055BF21 /* NotificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */; };
 		F1F98D652A54068F0055BF21 /* FavoritesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D642A54068F0055BF21 /* FavoritesModel.swift */; };
@@ -181,6 +183,8 @@
 		F1E547562A96483800671182 /* ChangeNickNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNickNameVC.swift; sourceTree = "<group>"; };
 		F1E547582A977BBA00671182 /* ChangePasswordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordModel.swift; sourceTree = "<group>"; };
 		F1E5475A2A977C7300671182 /* ChangePasswordService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordService.swift; sourceTree = "<group>"; };
+		F1E5475C2A989A3900671182 /* CangeNickNameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CangeNickNameService.swift; sourceTree = "<group>"; };
+		F1E5475E2A989A5800671182 /* ChangeNickNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNickNameModel.swift; sourceTree = "<group>"; };
 		F1F98D5C2A481FA50055BF21 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCollectionViewCell.swift; sourceTree = "<group>"; };
 		F1F98D642A54068F0055BF21 /* FavoritesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModel.swift; sourceTree = "<group>"; };
@@ -521,6 +525,7 @@
 		F1E547482A96240F00671182 /* AccountManagement_Service */ = {
 			isa = PBXGroup;
 			children = (
+				F1E5475C2A989A3900671182 /* CangeNickNameService.swift */,
 				F1E5475A2A977C7300671182 /* ChangePasswordService.swift */,
 				F1E547492A96244B00671182 /* CheckPasswordService.swift */,
 			);
@@ -530,6 +535,7 @@
 		F1E5474B2A96256A00671182 /* AccountManagement */ = {
 			isa = PBXGroup;
 			children = (
+				F1E5475E2A989A5800671182 /* ChangeNickNameModel.swift */,
 				F1E547582A977BBA00671182 /* ChangePasswordModel.swift */,
 				F1E5474E2A9625FB00671182 /* CheckPasswordModel.swift */,
 			);
@@ -704,6 +710,7 @@
 				01F7A1F329D935540058736E /* SceneDelegate.swift in Sources */,
 				6CC9907E2A7047DE008ABE53 /* DeleteFavoriteDetailCafeModel.swift in Sources */,
 				F1F98D652A54068F0055BF21 /* FavoritesModel.swift in Sources */,
+				F1E5475D2A989A3900671182 /* CangeNickNameService.swift in Sources */,
 				6CB6A7E82A5EF442003FAB86 /* DetailCafeReviewService.swift in Sources */,
 				019D16AB2A78D65500766E9D /* PersonalInfoDetailView.swift in Sources */,
 				01F7A21529D95A2B0058736E /* MainView.swift in Sources */,
@@ -735,6 +742,7 @@
 				019D16B32A7CE47900766E9D /* MessageSendService.swift in Sources */,
 				F1E547532A9633C700671182 /* CheckPasswordViewController.swift in Sources */,
 				6CAFA8D62A861D95003BDD65 /* DetailCafeByCafeIdModel.swift in Sources */,
+				F1E5475F2A989A5800671182 /* ChangeNickNameModel.swift in Sources */,
 				01B87B782A1CDB2F0082FC05 /* IdCheckService.swift in Sources */,
 				F1E547552A96480500671182 /* ChangePasswordVC.swift in Sources */,
 				01B9328929E2E320006342F9 /* MapView.swift in Sources */,
