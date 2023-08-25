@@ -2,7 +2,7 @@
 //  RecentCafeView.swift
 //  CaZait-iOS
 //
-//  Created by 강석호 on 2023/05/01.
+//  Created by 강민수 on 2023/05/01.
 //
 
 import Foundation
@@ -97,9 +97,11 @@ class RecentCafeView: UIViewController {
     // 새로운 카페 정보를 추가
     func addRecentCafe(cafe: RecentModel) {
         loadRecentCafesFromUserDefaults()
-        if let index = recentCafes.firstIndex(of: cafe) {
+        if recentCafes.contains(where: { $0.cafeName == cafe.cafeName }) {
             // 이미 존재하는 카페면 배열에서 제거하고 다시 맨 앞에 추가하여 최근 본 것으로 갱신
-            recentCafes.remove(at: index)
+            if let index = recentCafes.firstIndex(where: { $0.cafeName == cafe.cafeName }) {
+                recentCafes.remove(at: index)
+            }
         }
         recentCafes.insert(cafe, at: 0)
         print("recentCafe 출력됩니다")
