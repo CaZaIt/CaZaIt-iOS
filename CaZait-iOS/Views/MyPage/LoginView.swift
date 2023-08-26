@@ -8,27 +8,28 @@
 import Foundation
 
 import UIKit
+import SnapKit
 
 class LoginView: UIViewController{
     
     
     private let pinkView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        
         view.backgroundColor = UIColor(r: 255, g: 223, b: 217)
         return view
     }()
     
     private let cazaitLogo: UIImageView = {
         let logo = UIImageView()
-        logo.translatesAutoresizingMaskIntoConstraints = false
+        
         logo.image = UIImage(named: "cazait_logo")
         return logo
     }()
     
     private let loginLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        
         label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         label.textColor = .black
         label.textAlignment = .center
@@ -40,7 +41,7 @@ class LoginView: UIViewController{
     private let idtextField: InsetTextField = {
         let textField = InsetTextField()
         textField.insetX = 22
-        textField.translatesAutoresizingMaskIntoConstraints = false
+        
         textField.placeholder = "Username"
         textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         textField.backgroundColor = .white
@@ -55,7 +56,7 @@ class LoginView: UIViewController{
     private let passwordtextField: InsetTextField = {
         let textField = InsetTextField()
         textField.insetX = 22
-        textField.translatesAutoresizingMaskIntoConstraints = false
+        
         textField.placeholder = "Password"
         textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         textField.backgroundColor = .white
@@ -69,7 +70,7 @@ class LoginView: UIViewController{
     
     private let loginButton: UIButton = {
         let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
+        
         button.setTitle("로그인하기", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         button.setTitleColor(UIColor.white, for: .normal)
@@ -81,18 +82,49 @@ class LoginView: UIViewController{
     
     private let signupButton: UIButton = {
         let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
+        
         button.setTitle("회원가입", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         button.setTitleColor(UIColor.black, for: .normal)
-        button.backgroundColor = UIColor(r: 255, g: 223, b: 217)
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    private let findIdButton: UIButton = {
+        let button = UIButton()
+        
+        button.setTitle("아이디 찾기", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.clipsToBounds = true
+        
+        return button
+    }()
+    
+    private let dividingLineLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.text = "/"
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private let findPasswordButton: UIButton = {
+        let button = UIButton()
+        
+        button.setTitle("비밀번호 찾기", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        button.setTitleColor(UIColor.black, for: .normal)
         button.clipsToBounds = true
         return button
     }()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
+        
         // 네비게이션컨트롤러를 통해서 Status Bar 색깔 변경
         self.navigationController?.navigationBar.barStyle = .black
         
@@ -130,6 +162,9 @@ class LoginView: UIViewController{
         self.pinkView.addSubview(passwordtextField)
         self.pinkView.addSubview(loginButton)
         self.pinkView.addSubview(signupButton)
+        self.pinkView.addSubview(findIdButton)
+        self.pinkView.addSubview(dividingLineLabel)
+        self.pinkView.addSubview(findPasswordButton)
         
         
         self.pinkView.snp.makeConstraints { make in
@@ -171,8 +206,25 @@ class LoginView: UIViewController{
             make.height.equalTo(45)
         }
         
+        self.dividingLineLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(view.snp.centerX)
+            make.top.equalTo(signupButton.snp.bottom)
+        }
+        
+        self.findIdButton.snp.makeConstraints { make in
+            make.trailing.equalTo(dividingLineLabel.snp.leading).offset(-4)
+            make.centerY.equalTo(dividingLineLabel.snp.centerY)
+        }
+        
+        self.findPasswordButton.snp.makeConstraints { make in
+            make.leading.equalTo(dividingLineLabel.snp.trailing).offset(4)
+            make.centerY.equalTo(dividingLineLabel.snp.centerY)
+        }
+        
         signupButton.addTarget(self, action:#selector(signupClicked), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(LogIn), for: .touchUpInside)
+        findIdButton.addTarget(self, action: #selector(findIdClicked), for: .touchUpInside)
+        findPasswordButton.addTarget(self, action: #selector(findPasswordClicked), for: .touchUpInside)
     }
     
     @objc func backButtonTapped() {
@@ -193,6 +245,21 @@ class LoginView: UIViewController{
     
     @objc func LogIn() {
         login()
+    }
+    
+    @objc func findIdClicked(_ sender: UIButton) {
+        // RecentCafeView 인스턴스 생성
+        let sendMessageViewController = SendMessageViewController()
+        sendMessageViewController.mode = "findId"
+        // 내비게이션 스택으로 RecentCafeView를 푸시
+        self.navigationController?.pushViewController(sendMessageViewController, animated: true)
+    }
+    
+    @objc func findPasswordClicked(_ sender: UIButton) {
+        // RecentCafeView 인스턴스 생성
+        let checkIdViewController = CheckIdViewController()
+        // 내비게이션 스택으로 RecentCafeView를 푸시
+        self.navigationController?.pushViewController(checkIdViewController, animated: true)
     }
     
     // 다른 부분을 탭할 때 키보드 숨기기
