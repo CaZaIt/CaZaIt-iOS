@@ -10,7 +10,7 @@ import Foundation
 struct ChangeNickNameResponse: Codable {
     let code: Int
     let result, message: String
-    let data: UserInfo
+    let data: UserNickNameInfo
 }
 
 struct UserNickNameInfo: Codable {
