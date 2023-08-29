@@ -10,7 +10,7 @@ import Foundation
 
 struct IdCheckResponse: Codable {
     let code: Int
-    let data: String
+    let data: String?
     let message: String
     let result: String
 }
