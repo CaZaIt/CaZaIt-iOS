@@ -124,7 +124,7 @@ class ChangeNickNameVC: UIViewController, UIGestureRecognizerDelegate {
     @objc private func duplicateCheckButtonTapped() {
         guard let nickNameText = nickNameTextField.text else { return }
         print(nickNameText)
-        nicknameCheckService.shared.nicknamecheck(nickname: nickNameText) { response in
+        nicknameCheckService.shared.nicknamecheck(nickname: nickNameText, isExist: "false") { response in
             switch response {
             case .success(let data):
                 guard let data = data as? NicknameCheckResponse else { return }
