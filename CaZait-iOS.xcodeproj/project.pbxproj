@@ -95,6 +95,13 @@
 		F1E547662A99F52C00671182 /* CheckUserInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547652A99F52C00671182 /* CheckUserInfoService.swift */; };
 		F1E547692A99F5B500671182 /* UserInfoCheckModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547682A99F5B500671182 /* UserInfoCheckModel.swift */; };
 		F1E5476B2A9A08AB00671182 /* ChangeNewPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E5476A2A9A08AB00671182 /* ChangeNewPasswordVC.swift */; };
+		F1E5476D2A9F003A00671182 /* NewPasswordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E5476C2A9F003A00671182 /* NewPasswordModel.swift */; };
+		F1E5476F2A9F00C200671182 /* NewPasswordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E5476E2A9F00C200671182 /* NewPasswordService.swift */; };
+		F1E547732A9F10C600671182 /* CheckUserPhoneService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547722A9F10C600671182 /* CheckUserPhoneService.swift */; };
+		F1E547772A9F13AB00671182 /* UserPhoneCheckModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547762A9F13AB00671182 /* UserPhoneCheckModel.swift */; };
+		F1E547792A9F1FD300671182 /* NotifyIdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547782A9F1FD300671182 /* NotifyIdModel.swift */; };
+		F1E5477B2A9F202E00671182 /* NotifyIdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E5477A2A9F202E00671182 /* NotifyIdService.swift */; };
+		F1E5477D2A9F215B00671182 /* NotifyIdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E5477C2A9F215B00671182 /* NotifyIdViewController.swift */; };
 		F1F98D5D2A481FA50055BF21 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5C2A481FA50055BF21 /* NotificationView.swift */; };
 		F1F98D5F2A482DAF0055BF21 /* NotificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */; };
 		F1F98D652A54068F0055BF21 /* FavoritesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D642A54068F0055BF21 /* FavoritesModel.swift */; };
@@ -195,6 +202,13 @@
 		F1E547652A99F52C00671182 /* CheckUserInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserInfoService.swift; sourceTree = "<group>"; };
 		F1E547682A99F5B500671182 /* UserInfoCheckModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCheckModel.swift; sourceTree = "<group>"; };
 		F1E5476A2A9A08AB00671182 /* ChangeNewPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNewPasswordVC.swift; sourceTree = "<group>"; };
+		F1E5476C2A9F003A00671182 /* NewPasswordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordModel.swift; sourceTree = "<group>"; };
+		F1E5476E2A9F00C200671182 /* NewPasswordService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordService.swift; sourceTree = "<group>"; };
+		F1E547722A9F10C600671182 /* CheckUserPhoneService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserPhoneService.swift; sourceTree = "<group>"; };
+		F1E547762A9F13AB00671182 /* UserPhoneCheckModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhoneCheckModel.swift; sourceTree = "<group>"; };
+		F1E547782A9F1FD300671182 /* NotifyIdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyIdModel.swift; sourceTree = "<group>"; };
+		F1E5477A2A9F202E00671182 /* NotifyIdService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyIdService.swift; sourceTree = "<group>"; };
+		F1E5477C2A9F215B00671182 /* NotifyIdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyIdViewController.swift; sourceTree = "<group>"; };
 		F1F98D5C2A481FA50055BF21 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCollectionViewCell.swift; sourceTree = "<group>"; };
 		F1F98D642A54068F0055BF21 /* FavoritesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModel.swift; sourceTree = "<group>"; };
@@ -247,6 +261,7 @@
 				F1E547602A99E5A800671182 /* CheckIdViewController.swift */,
 				F1E547622A99ED4E00671182 /* SendMessageViewController.swift */,
 				F1E5476A2A9A08AB00671182 /* ChangeNewPasswordVC.swift */,
+				F1E5477C2A9F215B00671182 /* NotifyIdViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -561,6 +576,9 @@
 			isa = PBXGroup;
 			children = (
 				F1E547652A99F52C00671182 /* CheckUserInfoService.swift */,
+				F1E547722A9F10C600671182 /* CheckUserPhoneService.swift */,
+				F1E5476E2A9F00C200671182 /* NewPasswordService.swift */,
+				F1E5477A2A9F202E00671182 /* NotifyIdService.swift */,
 			);
 			path = FindAccount_Service;
 			sourceTree = "<group>";
@@ -568,7 +586,10 @@
 		F1E547672A99F57A00671182 /* FindAccount */ = {
 			isa = PBXGroup;
 			children = (
+				F1E5476C2A9F003A00671182 /* NewPasswordModel.swift */,
 				F1E547682A99F5B500671182 /* UserInfoCheckModel.swift */,
+				F1E547762A9F13AB00671182 /* UserPhoneCheckModel.swift */,
+				F1E547782A9F1FD300671182 /* NotifyIdModel.swift */,
 			);
 			path = FindAccount;
 			sourceTree = "<group>";
@@ -707,6 +728,7 @@
 				01B9328729E2E1F0006342F9 /* sampleService.swift in Sources */,
 				F1F98D5F2A482DAF0055BF21 /* NotificationCollectionViewCell.swift in Sources */,
 				F13FA0892A1CCDFB0001958D /* AllCafeService.swift in Sources */,
+				F1E5477D2A9F215B00671182 /* NotifyIdViewController.swift in Sources */,
 				F13FDA7529DD5DD00044C6C3 /* MainTableViewLovedCell.swift in Sources */,
 				F13FDA9E29DD91A50044C6C3 /* MainTableViewCafeCell.swift in Sources */,
 				F1E547572A96483800671182 /* ChangeNickNameVC.swift in Sources */,
@@ -721,6 +743,7 @@
 				01B87B7A2A1CDC2D0082FC05 /* IdcheckModel.swift in Sources */,
 				F154DA752A69023E00B6C7F0 /* RefreshTokenService.swift in Sources */,
 				6CC990762A70410C008ABE53 /* RegisterFavoriteDetailCafeService.swift in Sources */,
+				F1E547772A9F13AB00671182 /* UserPhoneCheckModel.swift in Sources */,
 				6C4286B92A15D61400560F15 /* CafeDetailViewMenuCell.swift in Sources */,
 				F13FDA7729DD616E0044C6C3 /* LovedCollectionViewCell.swift in Sources */,
 				019D16A52A56CBB500766E9D /* SplashView.swift in Sources */,
@@ -741,6 +764,7 @@
 				F13FA05E2A13899E0001958D /* SearchView.swift in Sources */,
 				019D16A92A77E3CF00766E9D /* PlaceDetailTermsView.swift in Sources */,
 				01F7A1F329D935540058736E /* SceneDelegate.swift in Sources */,
+				F1E5477B2A9F202E00671182 /* NotifyIdService.swift in Sources */,
 				6CC9907E2A7047DE008ABE53 /* DeleteFavoriteDetailCafeModel.swift in Sources */,
 				F1F98D652A54068F0055BF21 /* FavoritesModel.swift in Sources */,
 				F1E5475D2A989A3900671182 /* CangeNickNameService.swift in Sources */,
@@ -752,6 +776,7 @@
 				01B87B822A1CF7420082FC05 /* signupModel.swift in Sources */,
 				01B87B7E2A1CF2390082FC05 /* nicknamecheckModel.swift in Sources */,
 				F1E5474A2A96244B00671182 /* CheckPasswordService.swift in Sources */,
+				F1E547732A9F10C600671182 /* CheckUserPhoneService.swift in Sources */,
 				F1E547592A977BBA00671182 /* ChangePasswordModel.swift in Sources */,
 				6CC990742A703B73008ABE53 /* ReviewWriteModel.swift in Sources */,
 				F1F98D682A5409710055BF21 /* FavoritesService.swift in Sources */,
@@ -762,15 +787,18 @@
 				F1F98D5D2A481FA50055BF21 /* NotificationView.swift in Sources */,
 				F1E547692A99F5B500671182 /* UserInfoCheckModel.swift in Sources */,
 				6C4286FD2A29DB6300560F15 /* DetailCafeMenuModel.swift in Sources */,
+				F1E5476D2A9F003A00671182 /* NewPasswordModel.swift in Sources */,
 				01B87B7C2A1CF20E0082FC05 /* NicknameCheckService.swift in Sources */,
 				019D16AF2A79323800766E9D /* CustomerCenterView.swift in Sources */,
 				F1E5475B2A977C7300671182 /* ChangePasswordService.swift in Sources */,
 				6CB6A7E62A5EF26A003FAB86 /* DetailCafeReviewModel.swift in Sources */,
+				F1E547792A9F1FD300671182 /* NotifyIdModel.swift in Sources */,
 				6CC9907A2A7045BA008ABE53 /* DeleteFavoriteDetailCafeService.swift in Sources */,
 				F1E5476B2A9A08AB00671182 /* ChangeNewPasswordVC.swift in Sources */,
 				F13FA0602A151D4F0001958D /* SearchTableViewCell.swift in Sources */,
 				F122CEF629DF05C300818D7B /* MainTopSearchView.swift in Sources */,
 				01B87B582A120F480082FC05 /* LoginView.swift in Sources */,
+				F1E5476F2A9F00C200671182 /* NewPasswordService.swift in Sources */,
 				01B87B762A1CCD930082FC05 /* SignupView.swift in Sources */,
 				F1E5473D2A8CADDC00671182 /* PolicyViewController.swift in Sources */,
 				01F7A20929D936280058736E /* UITextField+Extenstion.swift in Sources */,
