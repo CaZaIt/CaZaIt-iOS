@@ -11,6 +11,7 @@ import SnapKit
 class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
 
     var userId : String?
+    var userFieldId : String?
     var mode : String = ""
     private var timer: Timer?
     private var remainingTime: TimeInterval = 180 // 3분
@@ -158,11 +159,26 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
     @objc private func sendAutNumButtonTapped() {
         guard let phoneNumberText = phoneNumberTextField.text else { return }
         
-        if self.mode == "findPassword" {
+        if mode == "findId" {
+            CheckUserPhoneService.shared.getCheckUserPhone(phoneNumber: phoneNumberText, isExist: "true") { response in
+                switch response {
+                case .success(let data):
+                    guard let data = data as? UserPhoneCheckResponse else { return }
+                    self.sendMessage(phoneNumber: phoneNumberText)
+                default:
+                    self.PhoneNumExpLabel.textColor = .red
+                    self.PhoneNumExpLabel.text = "입력하신 휴대전화는 등록되지 않은 번호입니다."
+                    self.PhoneNumExpLabel.isHidden = false
+                    self.confirmButton.isEnabled = false
+                    self.confirmButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+                }
+            }
+        } else if mode == "findPassword" {
             CheckUserInfoService.shared.getCheckUserInfo(userId: userId!, phoneNumber: phoneNumberText) { response in
                 switch response {
                 case .success(let data):
                     guard let data = data as? UserInfoCheckResponse else { return }
+                    self.userFieldId = data.data.accountName //새 비밀번호 변경을 할 때 유저 필드 id저장
                     self.sendMessage(phoneNumber: phoneNumberText)
                 default:
                     self.PhoneNumExpLabel.textColor = .red
@@ -203,11 +219,12 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
                 self.confirmButton.isEnabled = true
                 self.confirmButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
                 let alert = UIAlertController(title: "인증번호를 전송했습니다.", message: "", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
-                
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: { _ in
+                    self.autNumTextField.becomeFirstResponder()
+                }))
                 self.present(alert, animated: true, completion: nil)
                 self.sendAutNumBcutton.setTitle("재전송", for: .normal)
-                self.autNumTextField.becomeFirstResponder()
+                
             default:
                 let alert = UIAlertController(title: "인증할 수 없는 번호 입니다", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
@@ -229,8 +246,15 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
                 guard let data = data as? MessageVerifyResponse else { return }
                 let alert = UIAlertController(title: "인증에 성공했습니다.", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: { _ in
-                    let vc = ChangeNewPasswordVC()
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    if self.mode == "findId" {
+                        self.findId(phoneNumber: recipientPhoneNumber)
+                    } else if self.mode == "findPassword" {
+                        let vc = ChangeNewPasswordVC()
+                        vc.userId = self.userId
+                        vc.userFieldId = self.userFieldId
+                        
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
                 }))
                 self.present(alert, animated: true, completion: nil)
             default:
@@ -247,6 +271,26 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
+    func findId(phoneNumber: String) {
+        NotifyIdService.shared.getIdInfo(phoneNumber: phoneNumber) { response in
+            switch response {
+            case .success(let data):
+                //ChangeNewPasswordVC
+                guard let data = data as? NotifyIdResponse else { return }
+                let vc = NotifyIdViewController()
+                vc.userId = data.data.accountName
+
+                self.navigationController?.pushViewController(vc, animated: true)
+            default:
+                let alert = UIAlertController(title: "통신에 실패하였습니다.", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                print("networkFail")
+            }
+        }
+    }
+    
     func validateInput(_ input: String) -> Bool {
         let regex = "^010[0-9]{8}$"
         let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
@@ -254,7 +298,11 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 
     func setupNavigation() {
-        self.title = "비밀번호 찾기"
+        if mode == "findId" {
+            self.title = "아이디 찾기"
+        } else if mode == "findPassword"{
+            self.title = "비밀번호 찾기"
+        }
         //손가락 옆으로 미는 제스쳐 작동
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
