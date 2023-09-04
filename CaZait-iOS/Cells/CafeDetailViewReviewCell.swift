@@ -65,7 +65,6 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.lineBreakStrategy = .hangulWordPriority
-        label.numberOfLines = 0 // 자동으로 줄 수 결정
         
         return label
     }()
@@ -115,14 +114,14 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         
         declaration.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(23)
-            make.leading.equalTo(contentView.snp.leading).offset(300)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-25)
         }
 
         
         review.snp.makeConstraints { make in
             make.top.equalTo(nickname.snp.bottom).offset(4)
             make.leading.equalTo(contentView.snp.leading).offset(25)
-            make.trailing.equalTo(contentView.snp.trailing).offset(10)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-25)
         }
     }
     

@@ -79,9 +79,6 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
         return textView
     }()
     
-    
-    
-    let placeholder = "공백 포함 최대 50자 이내로 작성해주세요."
 
     var activityTextView: UITextView{
         let text = UITextView()
@@ -112,10 +109,7 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
         button1.layer.cornerRadius = 20
         button1.setTitle("작성하기", for: .normal)
         button1.setTitleColor(.white, for: .normal)
-//        button1.layer.shadowColor = UIColor.gray.cgColor
-//        button1.layer.shadowOpacity = 1.0
-//        button1.layer.shadowRadius = 6
-//        button1.layer.shadowOffset = CGSize(width: 0, height: 5)
+
         button1.addTarget(self, action: #selector(postButtonTapped), for: .touchUpInside)
         return button1
     }()
@@ -209,40 +203,7 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
     }
-    
-//    @objc func postButtonTapped() {
-//        guard let inputText = textfield1.text else {
-//            return
-//        }
-//        print(inputText)
-//        print(selectedStarCount)
-//
-//        let review = Review(score: selectedStarCount, content: inputText)
-//        // ReviewService의 인스턴스를 생성
-//        let reviewWriteService = ReviewWriteService()
-//
-//        // 리뷰 작성 통신
-//        guard let cafeId = cafeId else {
-//            // cafeId가 nil일 경우에 대한 처리 로직
-//            print("cafeId가 nil입니다.")
-//            return
-//        }
-//
-//        if let userId = UserDefaults.standard.string(forKey: "userId") {
-//            reviewWriteService.postReview(userId: userId, cafeId: cafeId, review: review) { result in
-//                switch result {
-//                case .success(let reviewResponse):
-//                    print("리뷰 ID: \(reviewResponse.data.nickname)")
-//                case .failure(let error):
-//                    print("에러 메시지: \(error.localizedDescription)")
-//                    //print(ReviewResponse.)
-//                }
-//            }
-//        } else {
-//            print("userId 값이 없음")
-//        }
-//    }
-    
+
     func textViewDidChange(_ textView: UITextView) {
         if textView.text.isEmpty {
             // If the text is empty, show the placeholder text
@@ -269,7 +230,12 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
         
         print(inputText)
         print(selectedStarCount)
+        
+        let numberOfLines = inputText.components(separatedBy: .newlines).count
 
+        print(numberOfLines)
+
+        
         let review = Review(score: selectedStarCount, content: inputText)
         // ReviewService의 인스턴스를 생성
         let reviewWriteService = ReviewWriteService()
