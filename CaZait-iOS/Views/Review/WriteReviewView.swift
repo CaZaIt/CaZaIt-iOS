@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 
-class WriteReviewView: UIViewController{
+class WriteReviewView: UIViewController, UITextViewDelegate{
     var cafeId : String?
     
     var selectedStarCount: Int = 0
@@ -62,26 +62,23 @@ class WriteReviewView: UIViewController{
         return text2
     }()
     
-
-    let textfield1: InsetTextField = {
-
-        let textField = InsetTextField();
-
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "공백 포함 최대 50자 이내로 작성해주세요."
-        textField.setPlaceholder(color: UIColor(red: 0.708, green: 0.708, blue: 0.708, alpha: 1))
-        textField.backgroundColor = .white
-        textField.layer.cornerRadius = 25
-        //textField.setPlaceholder(color: UIColor(r: 93, g: 36, b: 36))
-        textField.insetX = 47.25
-        textField.textColor = .black
-        textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(red: 0.363, green: 0.142, blue: 0.142, alpha: 1).cgColor
-
-        return textField
-
+    
+    let textView: UITextView = {
+        let textView = UITextView()
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.text = "공백 포함 최대 50자 이내로 작성해주세요."
+        textView.textColor = UIColor.lightGray
+        textView.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        textView.backgroundColor = .white
+        textView.layer.cornerRadius = 25
+        textView.isScrollEnabled = true
+        textView.isEditable = true
+        textView.textContainerInset = UIEdgeInsets(top: 18, left: 15, bottom: 18, right: 15)
+        
+        return textView
     }()
+    
     
     
     let placeholder = "공백 포함 최대 50자 이내로 작성해주세요."
@@ -185,9 +182,11 @@ class WriteReviewView: UIViewController{
             maker.top.equalTo(view.snp.top).offset(235)
             maker.leading.equalTo(view.snp.leading).offset(37)
         }
+        
+        textView.delegate = self
 
-        self.view.addSubview(textfield1)
-        textfield1.snp.makeConstraints { maker in
+        self.view.addSubview(textView)
+        textView.snp.makeConstraints { maker in
             maker.top.equalTo(view.snp.top).offset(268)
             maker.centerX.equalToSuperview()
             maker.width.equalTo(335)
@@ -243,9 +242,20 @@ class WriteReviewView: UIViewController{
 //            print("userId 값이 없음")
 //        }
 //    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            // If the text is empty, show the placeholder text
+            textView.textColor = UIColor.lightGray
+        } else if textView.textColor == UIColor.lightGray && !textView.text.isEmpty {
+            // If the text is not empty and the textColor is still lightGray, change it to black
+            textView.textColor = UIColor.black
+            textView.text = ""
+        }
+    }
 
     @objc func postButtonTapped() {
-        guard let inputText = textfield1.text else {
+        guard let inputText = textView.text else {
             return
         }
         

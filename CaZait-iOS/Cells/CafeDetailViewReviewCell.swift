@@ -9,6 +9,7 @@ import UIKit
 class CafeDetailViewReviewCell: UICollectionViewCell {
     
     var score = 1
+    
     // 꽉찬 별
     lazy var starFillImage: UIImage? = {
         return UIImage(systemName: "star.fill",
@@ -73,9 +74,10 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .black
         label.textAlignment = .left
-        label.text = "카페분위기가 좋아요"
+        label.numberOfLines = 0
+        label.lineBreakStrategy = .hangulWordPriority
+//        label.text = "카페분위기가 좋아요"
         label.numberOfLines = 0 // 자동으로 줄 수 결정
-
         
         return label
     }()
@@ -86,7 +88,6 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         setupCell()
         addSubviews()
         setupLayout()
-        //displayStars(starCount: score)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -111,14 +112,11 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         contentView.addSubview(nickname)
         contentView.addSubview(hour)
         contentView.addSubview(review)
-        //contentView.addSubview(emergencyImageView)
         contentView.addSubview(declaration)
     }
     
     private func setupLayout() {
-        // 서브뷰들의 레이아웃을 설정합니다.
         nickname.translatesAutoresizingMaskIntoConstraints = false
-        //hour.translatesAutoresizingMaskIntoConstraints = false
         review.translatesAutoresizingMaskIntoConstraints = false
         
         
@@ -128,23 +126,16 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         }
         
         
-//        emergencyImageView.snp.makeConstraints { make in
-//            make.leading.equalTo(contentView.snp.trailing).offset(-50)
-//            make.top.equalTo(contentView.snp.top).offset(10)
-//        }
-        
         declaration.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(20)
             make.leading.equalTo(contentView.snp.leading).offset(300)
         }
-        
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(emergencyImageViewTapped))
-//        emergencyImageView.isUserInteractionEnabled = true
-//        emergencyImageView.addGestureRecognizer(tapGestureRecognizer)
+
         
         review.snp.makeConstraints { make in
             make.top.equalTo(nickname.snp.bottom).offset(6)
             make.leading.equalTo(contentView.snp.leading).offset(25)
+            make.trailing.equalTo(contentView.snp.trailing).offset(10)
         }
     }
     
@@ -187,7 +178,6 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
     func configure(nickname: String, review: String, score: Int) {
         // 셀의 내용을 설정합니다.
         self.nickname.text = nickname
-        //self.hour.text = hour
         self.review.text = review
         self.score = score
         displayStars(starCount: score)
