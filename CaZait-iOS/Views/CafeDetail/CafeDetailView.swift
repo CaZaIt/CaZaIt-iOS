@@ -283,11 +283,12 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         }
         
         
-        reviewWriteButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 600).isActive = true
-        reviewWriteButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 310).isActive = true
-        reviewWriteButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        reviewWriteButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
+        reviewWriteButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-18)
+            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(310)
+            make.width.equalTo(60)
+            make.height.equalTo(60)
+        }
         
         // 초기에는 첫 번째 세그먼트가 선택되도록 설정
         stickyHeaderViewSegmentControl.isHidden = true
@@ -572,7 +573,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 collectionView1.reloadData() // 컬렉션 뷰 리로드
 
                 let numberOfRowsInCollectionView1 = response.count
-                collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13) // 115 셀 높이, 13 셀 간격
+                collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1) * (115+13) // 115 셀 높이, 13 셀 간격
                 collectionView1.snp.makeConstraints {
                     $0.height.equalTo(collectionView1HeightConstant).priority(.low)
                 }
@@ -613,10 +614,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 
                 collectionView2.reloadData() // 컬렉션 뷰 리로드
 
-                print("리뷰 개수 : " , cafeReview!.count)
-                print("높이 : " , collectionView2HeightConstant)
-                print("스크롤뷰 높이 : ", self.scrollView.contentOffset.y)
-                
             case .failure(let error):
                 print("review error : \n" + error.localizedDescription)
                 // 에러 메시지 출력
