@@ -10,10 +10,10 @@ import Foundation
 
 // MARK: - SignupResponse
 struct SignupResponse: Codable {
-    let code: Int
+    let code: Int?
     let data: SignupData?
-    let message: String
-    let result: String
+    let message: String?
+    let result: String?
 }
 
 // MARK: - SignupData

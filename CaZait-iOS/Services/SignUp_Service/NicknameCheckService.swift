@@ -15,7 +15,7 @@ class nicknameCheckService {
 //(2)싱글통 객체를 선언해서 앱 어디에서든지 접근가능하도록 한다
     private init() {}
     
-    func nicknamecheck(nickname: String, completion: @escaping(NetworkResult<Any>) -> Void)
+    func nicknamecheck(nickname: String, isExist: String, completion: @escaping(NetworkResult<Any>) -> Void)
     {
         let url = APIConstants.nicknamecheckURL //통신할 API 주소
         
@@ -24,7 +24,8 @@ class nicknameCheckService {
         
         //요청 바디
         let body : Parameters = [
-            "nickname" : nickname
+            "nickname" : nickname,
+            "isExist" : isExist
         ]
         
         //요청서 //Request 생성

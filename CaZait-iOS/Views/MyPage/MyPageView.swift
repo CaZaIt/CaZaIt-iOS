@@ -354,8 +354,8 @@ class MyPageView: UIViewController{
             make.width.equalTo(self.mypagemenuView).dividedBy(3) // 1/3 폭
         }
         self.couponImage.snp.makeConstraints { make in
-            make.leading.equalTo(self.couponButton.snp.leading).inset(27)
-            make.trailing.equalTo(self.couponButton.snp.trailing).inset(27)
+            make.leading.equalTo(self.couponButton.snp.leading).inset(35)
+            make.trailing.equalTo(self.couponButton.snp.trailing).inset(35)
             make.top.equalTo(self.couponButton.snp.top).inset(38)
             make.bottom.equalTo(self.couponButton.snp.bottom).inset(72)
         }
@@ -371,8 +371,8 @@ class MyPageView: UIViewController{
             make.width.equalTo(self.mypagemenuView).dividedBy(3) // 1/3 폭
         }
         self.paymentImage.snp.makeConstraints { make in
-            make.leading.equalTo(self.paymentButton.snp.leading).inset(27)
-            make.trailing.equalTo(self.paymentButton.snp.trailing).inset(27)
+            make.leading.equalTo(self.paymentButton.snp.leading).inset(35)
+            make.trailing.equalTo(self.paymentButton.snp.trailing).inset(35)
             make.top.equalTo(self.paymentButton.snp.top).inset(38)
             make.bottom.equalTo(self.paymentButton.snp.bottom).inset(72)
         }
@@ -385,17 +385,17 @@ class MyPageView: UIViewController{
             make.leading.equalTo(self.paymentButton.snp.trailing)
             make.top.equalTo(self.mypagemenuView.snp.top).inset(5)
             make.bottom.equalTo(self.mypagemenuView.snp.bottom).inset(5)
-            make.width.equalTo(self.mypagemenuView).dividedBy(3) // 1/3 폭
+            make.width.equalTo(self.mypagemenuView).dividedBy(3).inset(5) // 1/3 폭
         }
         self.recentplaceImage.snp.makeConstraints { make in
-            make.leading.equalTo(self.recentplaceButton.snp.leading).inset(33)
-            make.trailing.equalTo(self.recentplaceButton.snp.trailing).inset(33)
+            make.leading.equalTo(self.recentplaceButton.snp.leading).inset(35)
+            make.trailing.equalTo(self.recentplaceButton.snp.trailing).inset(35)
             make.top.equalTo(self.recentplaceButton.snp.top).inset(38)
             make.bottom.equalTo(self.recentplaceButton.snp.bottom).inset(72)
         }
         self.recentplaceLabel.snp.makeConstraints { make in
-            make.leading.equalTo(self.recentplaceButton.snp.leading).inset(15)
-            make.trailing.equalTo(self.recentplaceButton.snp.trailing).inset(15)
+            make.leading.equalTo(self.recentplaceButton.snp.leading).inset(13)
+            make.trailing.equalTo(self.recentplaceButton.snp.trailing).inset(13)
             make.top.equalTo(self.recentplaceImage.snp.bottom).inset(-14)
         }
         

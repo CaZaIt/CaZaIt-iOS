@@ -112,7 +112,9 @@ class PhoneCertificationView: UIViewController, UIGestureRecognizerDelegate, UIT
         self.navigationController?.isNavigationBarHidden = false
         // 네비게이션컨트롤러를 통해서 Status Bar 색깔 변경
         self.navigationController?.navigationBar.barStyle = .black
-        
+        phonenumberButton.isEnabled = false
+        phonenumberButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+    
     }
     
     override func viewDidLoad() {
@@ -218,10 +220,14 @@ class PhoneCertificationView: UIViewController, UIGestureRecognizerDelegate, UIT
                         numberValidationLabel.isHidden = false
                         numberValidationLabel.text = "가능한 번호입니다."
                         numberValidationLabel.textColor = .blue // 유효한 경우 녹색으로 표시
+                        phonenumberButton.backgroundColor = UIColor(r: 255, g: 115, b: 91)
+                        phonenumberButton.isEnabled = true
                     } else {
                         numberValidationLabel.isHidden = false
                         numberValidationLabel.text = "유효하지 않는 번호입니다."
                         numberValidationLabel.textColor = .red // 유효하지 않은 경우 빨간색으로 표시
+                        phonenumberButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+                        phonenumberButton.isEnabled = false
                     }
                 }
                 // 입력된 텍스트가 없으면 라벨을 다시 숨김
@@ -288,6 +294,8 @@ extension PhoneCertificationView {
                 self.present(alert, animated: true, completion: nil)
                 // 발송 성공 시에 버튼의 타이틀을 "재전송"으로 변경
                 self.phonenumberButton.setTitle("재전송", for: .normal)
+                self.phonenumberField.isUserInteractionEnabled = false
+                
                 print(data)
             case .requestErr(let err):
                 print(err)
@@ -324,6 +332,7 @@ extension PhoneCertificationView {
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 
                 self.present(alert, animated: true, completion: nil)
+                self.certifyField.isHidden = false
                 print(data)
                 
                 self.flag = 1  // "success" 시에 flag 값을 1로 변경합니다.

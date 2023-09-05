@@ -453,7 +453,7 @@ extension SignupView {
         guard let nickname = nicknameField.text else { return }
         
         
-        nicknameCheckService.shared.nicknamecheck(nickname: nickname) { response in
+        nicknameCheckService.shared.nicknamecheck(nickname: nickname, isExist: "true/false") { response in
             switch response {
             case .success(let data):
                 guard let data = data as? NicknameCheckResponse else { return }
@@ -490,6 +490,7 @@ extension SignupView {
         guard let accountName_sign = idField.text else { return }
         guard let phoneNumber_sign = phoneNumber else { return }
         
+        print(phoneNumber_sign)
         
         signupService.shared.signup(accountName: accountName_sign, password: password_sign, nickname: nickname_sign,phoneNumber: phoneNumber_sign) { response in
             switch response {
