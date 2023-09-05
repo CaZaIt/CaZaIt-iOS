@@ -43,7 +43,7 @@ struct APIConstants {
     
     static let phonenumberCheckURL = baseURL + "/api/users/exist/phonenumber" //전화번호 중복확인
     
-    static let messageSendURL = baseURL + "/api/auths/send-authnumber" //인증번호 발송
+    static let messageSendURL = baseURL + "/api/auths/send-authnumber/test" //인증번호 발송
     
     static let messageSendCheckURL = baseURL + "/api/auths/verify-authnumber" //인증번호 인증
     
