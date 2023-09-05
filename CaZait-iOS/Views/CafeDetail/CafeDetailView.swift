@@ -656,7 +656,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
 }
 
-extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
+extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, CafeDetailViewReviewCellDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collectionView1 {
             if let count = cafeMenu?.count {
@@ -689,6 +689,9 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
             
         }else if collectionView == collectionView2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeDetailViewReviewCell", for: indexPath) as! CafeDetailViewReviewCell
+            
+            cell.delegate = self
+            
             if let review = cafeReview?[indexPath.row]{
                 cell.configure(userId: review.userId, nickname: review.nickname, review: review.content, score: review.score)
             }else {
@@ -701,6 +704,29 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
             return UICollectionViewCell()
         }
 
+    }
+    
+    func declarationButtonTapped(in cell: CafeDetailViewReviewCell) {
+        let alertController = UIAlertController(title: "", message: "", preferredStyle: .alert)
+
+        if cell.declarationButton.title(for: .normal) == "신고" {
+            alertController.title = "서비스를 준비 중입니다"
+            alertController.message = ""
+        } else {
+            alertController.title = "삭제하시겠습니까"
+            alertController.message = ""
+        }
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            print("OK 버튼이 탭되었습니다.")
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
+            // 취소 버튼이 탭되었을 때 수행할 동작 추가
+        }
+        alertController.addAction(okAction)
+        
+        // 알림창을 화면에 표시
+        self.present(alertController, animated: true, completion: nil)
     }
     
 }

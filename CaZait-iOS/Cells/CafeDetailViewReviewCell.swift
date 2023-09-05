@@ -6,8 +6,14 @@
 
 import UIKit
 
+protocol CafeDetailViewReviewCellDelegate: AnyObject {
+    func declarationButtonTapped(in cell: CafeDetailViewReviewCell)
+}
+
 class CafeDetailViewReviewCell: UICollectionViewCell {
     
+    weak var delegate: CafeDetailViewReviewCellDelegate?
+
     var score = 1
     var myReview: Int = 0
     // 꽉찬 별
@@ -43,17 +49,19 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
     }()
     
     
-    private let declaration: UILabel = {
-        let label = UILabel()
+    public let declarationButton: UIButton = {
+        let button = UIButton(type: .system)
         
-        label.font = UIFont.systemFont(ofSize: 13)
-        label.textColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1)
-        label.textAlignment = .left
-        label.numberOfLines = 1
+        // 버튼의 타이틀과 스타일 설정
+        button.setTitle("신고", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        button.setTitleColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), for: .normal)
         
-        return label
+        // 버튼의 동작 설정
+        button.addTarget(self, action: #selector(declarationButtonTapped), for: .touchUpInside)
+        
+        return button
     }()
-
     
     
     private let review: UILabel = {
@@ -97,7 +105,7 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
     private func addSubviews() {
         contentView.addSubview(nickname)
         contentView.addSubview(review)
-        contentView.addSubview(declaration)
+        contentView.addSubview(declarationButton)
     }
     
     private func setupLayout() {
@@ -111,7 +119,7 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         }
         
         
-        declaration.snp.makeConstraints { make in
+        declarationButton.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(23)
             make.trailing.equalTo(contentView.snp.trailing).offset(-25)
         }
@@ -154,6 +162,10 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
 
     }
 
+    @objc private func declarationButtonTapped() {
+        delegate?.declarationButtonTapped(in: self)
+    }
+    
     
     func configure(userId: String, nickname: String, review: String, score: Int) {
         // 셀의 내용을 설정합니다.
@@ -163,9 +175,9 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         displayStars(starCount: score)
         
         if userId == UserDefaults.standard.string(forKey: "userId") {
-            declaration.text = "삭제"
+            declarationButton.setTitle("삭제", for: .normal)
         } else {
-            declaration.text = "신고"
+            declarationButton.setTitle("신고", for: .normal)
         }
         
         let reviewHeight = self.review.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
