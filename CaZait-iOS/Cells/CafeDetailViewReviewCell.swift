@@ -209,7 +209,7 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         delegate?.editButtonTapped(in: self)
     }
     
-    func configure(userId: String, nickname: String, review: String, score: Int) {
+    func configure(userId: String, reviewId: String, nickname: String, review: String, score: Int) {
         // 셀의 내용을 설정합니다.
         self.nickname.text = nickname
         self.review.text = review
@@ -221,6 +221,9 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
             contentView.addSubview(barLabel)
             
             setupEditButtonLayout()
+            
+            let CafeDetailView = CafeDetailView()
+            CafeDetailView.reviewId = reviewId
             
             deleteButton.setTitle("삭제", for: .normal)
         } else {

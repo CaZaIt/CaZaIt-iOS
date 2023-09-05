@@ -10,11 +10,12 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     var cafeMenu: [DetailCafeMenu]?
     var cafeReview: [DetailCafeReview]?
-    
+    var selectedReview: DetailCafeReview?
+
     
     var cafeId: String?
     var cafeName: String?
-    var cellCount: Int = 0
+    var reviewId: String?
     
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
@@ -575,7 +576,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                     $0.height.equalTo(collectionView1HeightConstant).priority(.low)
                 }
                 
-                print(cellCount)
                 
             case .failure(let error):
                 // 데이터를 받아오지 못했을 때의 처리 로직
@@ -695,9 +695,9 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
             cell.delegate = self
             
             if let review = cafeReview?[indexPath.row]{
-                cell.configure(userId: review.userId, nickname: review.nickname, review: review.content, score: review.score)
+                cell.configure(userId: review.userId, reviewId: review.reviewId, nickname: review.nickname, review: review.content, score: review.score)
             }else {
-                cell.configure(userId:"1", nickname: "카자잇", review: "리뷰입니다", score: 5)
+                cell.configure(userId:"1", reviewId: "1", nickname: "카자잇", review: "리뷰입니다", score: 5)
 
             }
             return cell
@@ -708,6 +708,36 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
 
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let selectedreview = cafeReview?[indexPath.item] {
+            selectedReview = selectedreview
+            print(selectedReview)
+        }
+    }
+    
+    func deleteReview(){
+        let ReviewDeleteService = ReviewDeleteService()
+        print(selectedReview)
+        guard let reviewId = selectedReview?.reviewId else {
+            // cafeId가 nil일 경우에 대한 처리 로직
+            print("reviewId nil")
+            return
+        }
+
+        if let userId = UserDefaults.standard.string(forKey: "userId") {
+            ReviewDeleteService.deleteReview(reviewId: reviewId) { result in
+                switch result {
+                case .success(let ReviewDeleteResponse):
+                    print((ReviewDeleteResponse.data))
+                case .failure(let error):
+                    print("에러 메시지: \(error.localizedDescription)")
+                }
+            }
+        } else {
+            print("로그인 후 이용가능합니다.")
+        }
+    }
+    
     func deleteButtonTapped(in cell: CafeDetailViewReviewCell) {
         let alertController = UIAlertController(title: "", message: "", preferredStyle: .alert)
 
@@ -715,7 +745,9 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
             alertController.title = "서비스를 준비 중입니다"
             alertController.message = ""
             
+            
             let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                //print(cafeReview[selectedIndexPath])
             }
             
             let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
@@ -725,8 +757,8 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
         } else if cell.deleteButton.title(for: .normal) == "삭제" {
             alertController.title = "삭제하시겠습니까"
             alertController.message = ""
-            
             let okAction = UIAlertAction(title: "네", style: .default) { (action) in
+                self.deleteReview()
             }
             
             let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in

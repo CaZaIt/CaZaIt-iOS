@@ -22,6 +22,7 @@ struct DetailCafeReviewData: Codable {
 
 struct DetailCafeReview: Codable {
     let userId: String
+    let reviewId: String
     let cafeName: String
     let nickname: String
     let score: Int
