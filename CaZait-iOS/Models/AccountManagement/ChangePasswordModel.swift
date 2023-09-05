@@ -10,7 +10,7 @@ import Foundation
 struct ChangePasswordResponse: Codable {
     let code: Int
     let result, message: String
-    let data: UserInfo
+    let data: UserPasswordInfo
 }
 
 struct UserPasswordInfo: Codable {

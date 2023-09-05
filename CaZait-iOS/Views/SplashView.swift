@@ -35,10 +35,10 @@ class SplashVC: UIViewController{
         view.addSubview(logoImage)
         
         self.logoImage.snp.makeConstraints { make in
-            make.leading.equalTo(self.view.snp.leading).inset(125)
-            make.trailing.equalTo(self.view.snp.trailing).inset(125)
-            make.top.equalTo(self.view.snp.top).inset(379)
-            make.bottom.equalTo(self.view.snp.bottom).inset(380)
+            make.centerX.equalTo(view.snp.centerX)
+            make.centerY.equalTo(view.snp.centerY)
+            make.height.equalTo(94)
+            make.width.equalTo(142)
         }
         
     }

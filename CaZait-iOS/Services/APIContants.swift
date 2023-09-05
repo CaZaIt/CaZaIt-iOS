@@ -41,13 +41,17 @@ struct APIConstants {
     
     static let refreshURL = baseURL + "/api/auths/refresh" //토큰 재발급
     
-    static let phonenumberCheckURL = baseURL + "api/users/exist/phonenumber" //전화번호 중복확인
+    static let phonenumberCheckURL = baseURL + "/api/users/exist/phonenumber" //전화번호 중복확인
     
-    static let messageSendURL = baseURL + "/api/auths/send-authnumber/test" //인증번호 발송
+    static let messageSendURL = baseURL + "/api/auths/send-authnumber" //인증번호 발송
     
     static let messageSendCheckURL = baseURL + "/api/auths/verify-authnumber" //인증번호 인증
     
     static let passwordCheckURL = baseURL + "/api/users/verify-password" //비밀번호 확인
     
-    static let passwordChangeURL = baseURL + "/api/users/userinfo/password" //계정정보 관리 에서 비밀번호 변경
+    static let passwordChangeURL = baseURL + "/api/users/userinfo/password" //계정정보 관리에서 비밀번호 변경
+    static let nickNameChangeURL = baseURL + "/api/users/userinfo/nickname" //계정정보 관리에서 닉네임 변경
+    static let checkUserInfoURL = baseURL + "/api/users/reset-password/checkuserinfo" //유저정보(아이디+ 전화번호) 검증
+    static let newPasswordCangeURL = baseURL + "/api/users/reset-password/password" //로그인 전 비밀번호 찾기를 통한 새 비밀번호 발급
+    static let notifyIdURL = baseURL + "/api/users/find-accountname" //유저 계정 아이디 찾기
 }
