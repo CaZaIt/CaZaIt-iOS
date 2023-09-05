@@ -171,7 +171,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         
         cafeLocation.font = UIFont.systemFont(ofSize: 15)
         cafeLocation.text = "카페위치"
-        cafeNameLabel.textColor = .black
+        cafeLocation.textColor = .black
         cafeLocation.textAlignment = .left
         cafeLocation.translatesAutoresizingMaskIntoConstraints = false
         
@@ -706,25 +706,54 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
 
     }
     
-    func declarationButtonTapped(in cell: CafeDetailViewReviewCell) {
+    func deleteButtonTapped(in cell: CafeDetailViewReviewCell) {
         let alertController = UIAlertController(title: "", message: "", preferredStyle: .alert)
 
-        if cell.declarationButton.title(for: .normal) == "신고" {
+        if cell.deleteButton.title(for: .normal) == "신고" {
             alertController.title = "서비스를 준비 중입니다"
             alertController.message = ""
-        } else {
+            
+            let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            }
+            
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
+            }
+            alertController.addAction(okAction)
+            
+        } else if cell.deleteButton.title(for: .normal) == "삭제" {
             alertController.title = "삭제하시겠습니까"
             alertController.message = ""
+            
+            let okAction = UIAlertAction(title: "네", style: .default) { (action) in
+            }
+            
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
+            }
+            alertController.addAction(okAction)
+            alertController.addAction(cancelAction)
+
         }
-        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            print("OK 버튼이 탭되었습니다.")
+
+    
+        // 알림창을 화면에 표시
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func editButtonTapped(in cell: CafeDetailViewReviewCell) {
+        let alertController = UIAlertController(title: "", message: "", preferredStyle: .alert)
+
+        alertController.title = "수정하시겠습니까"
+        alertController.message = ""
+        
+        let okAction = UIAlertAction(title: "네", style: .default) { (action) in
         }
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
-            // 취소 버튼이 탭되었을 때 수행할 동작 추가
         }
         alertController.addAction(okAction)
-        
+        alertController.addAction(cancelAction)
+
+    
         // 알림창을 화면에 표시
         self.present(alertController, animated: true, completion: nil)
     }

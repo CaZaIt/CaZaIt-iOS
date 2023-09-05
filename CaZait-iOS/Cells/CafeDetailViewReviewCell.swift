@@ -7,7 +7,8 @@
 import UIKit
 
 protocol CafeDetailViewReviewCellDelegate: AnyObject {
-    func declarationButtonTapped(in cell: CafeDetailViewReviewCell)
+    func deleteButtonTapped(in cell: CafeDetailViewReviewCell)
+    func editButtonTapped(in cell: CafeDetailViewReviewCell)
 }
 
 class CafeDetailViewReviewCell: UICollectionViewCell {
@@ -49,7 +50,31 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
     }()
     
     
-    public let declarationButton: UIButton = {
+    public let editnButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        // 버튼의 타이틀과 스타일 설정
+        button.setTitle("수정", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        button.setTitleColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), for: .normal)
+        
+        // 버튼의 동작 설정
+        button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    public let barLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = "|"
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1)
+        
+        return label
+    }()
+    
+    public let deleteButton: UIButton = {
         let button = UIButton(type: .system)
         
         // 버튼의 타이틀과 스타일 설정
@@ -58,11 +83,10 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         button.setTitleColor(UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1), for: .normal)
         
         // 버튼의 동작 설정
-        button.addTarget(self, action: #selector(declarationButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         
         return button
     }()
-    
     
     private let review: UILabel = {
         let label = UILabel()
@@ -105,7 +129,7 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
     private func addSubviews() {
         contentView.addSubview(nickname)
         contentView.addSubview(review)
-        contentView.addSubview(declarationButton)
+        contentView.addSubview(deleteButton)
     }
     
     private func setupLayout() {
@@ -119,7 +143,7 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         }
         
         
-        declarationButton.snp.makeConstraints { make in
+        deleteButton.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(23)
             make.trailing.equalTo(contentView.snp.trailing).offset(-25)
         }
@@ -129,6 +153,21 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
             make.top.equalTo(nickname.snp.bottom).offset(4)
             make.leading.equalTo(contentView.snp.leading).offset(25)
             make.trailing.equalTo(contentView.snp.trailing).offset(-25)
+        }
+    }
+    
+    private func setupEditButtonLayout() {
+        editnButton.translatesAutoresizingMaskIntoConstraints = false
+        barLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        editnButton.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top).offset(23)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-57)
+        }
+
+        barLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top).offset(28)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-54)
         }
     }
     
@@ -162,10 +201,13 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
 
     }
 
-    @objc private func declarationButtonTapped() {
-        delegate?.declarationButtonTapped(in: self)
+    @objc private func deleteButtonTapped() {
+        delegate?.deleteButtonTapped(in: self)
     }
     
+    @objc private func editButtonTapped() {
+        delegate?.editButtonTapped(in: self)
+    }
     
     func configure(userId: String, nickname: String, review: String, score: Int) {
         // 셀의 내용을 설정합니다.
@@ -175,9 +217,14 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         displayStars(starCount: score)
         
         if userId == UserDefaults.standard.string(forKey: "userId") {
-            declarationButton.setTitle("삭제", for: .normal)
+            contentView.addSubview(editnButton)
+            contentView.addSubview(barLabel)
+            
+            setupEditButtonLayout()
+            
+            deleteButton.setTitle("삭제", for: .normal)
         } else {
-            declarationButton.setTitle("신고", for: .normal)
+            deleteButton.setTitle("신고", for: .normal)
         }
         
         let reviewHeight = self.review.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
