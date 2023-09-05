@@ -202,7 +202,7 @@ extension MainTableViewLovedCell: UICollectionViewDataSource, UICollectionViewDe
             cafeImage: self.favoritesCafeData?.data[indexPath.row].imageUrl[0] ?? "",
             cafeName: self.favoritesCafeData?.data[indexPath.row].name ?? "",
             cafeLocation: self.favoritesCafeData?.data[indexPath.row].address ?? "",
-            cafeCongestion: self.favoritesCafeData?.data[indexPath.row].congestion ?? ""
+            cafeId: self.favoritesCafeData?.data[indexPath.row].cafeId ?? ""
         )
         recentCafeView.addRecentCafe(cafe: recentCafe)
         

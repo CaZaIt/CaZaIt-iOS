@@ -12,12 +12,12 @@ struct RecentModel: Equatable, Codable {
     let cafeImage : String
     let cafeName : String
     let cafeLocation : String
-    let cafeCongestion : String
+    let cafeId : String
     
-    init(cafeImage: String, cafeName: String, cafeLocation: String, cafeCongestion: String) {
+    init(cafeImage: String, cafeName: String, cafeLocation: String, cafeId: String) {
         self.cafeImage = cafeImage
         self.cafeName = cafeName
         self.cafeLocation = cafeLocation
-        self.cafeCongestion = cafeCongestion
+        self.cafeId = cafeId
     }
 }
