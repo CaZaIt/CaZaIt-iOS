@@ -144,6 +144,8 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
     
     // 체크박스 상태를 저장할 변수 (기본은 선택되지 않은 상태로 초기화)
     private var isCheckBoxChecked = false
+    private var isCheckBoxButton_1Selected = false
+    private var isCheckBoxButton_2Selected = false
     
     private let dottedLineView: DottedLineView = {
         return DottedLineView()
@@ -156,9 +158,11 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         button.setTitle("다음", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .black
+        button.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         button.layer.cornerRadius = 20
         button.clipsToBounds = true
+        button.isEnabled = false
+        
         return button
     }()
     
@@ -307,36 +311,57 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         self.navigationController?.popViewController(animated: true)
     }
     
-    // 체크박스 버튼을 탭할 때 호출되는 액션 메서드
+    // 전체 선택 체크박스 버튼을 탭할 때 호출되는 액션 메서드
     @objc func allcheckBoxTapped(sender: UIButton) {
-        // 현재 상태를 반전시킴
-        isCheckBoxChecked = !isCheckBoxChecked
-        sender.isSelected = isCheckBoxChecked
+        // 모든 체크 박스 버튼의 선택 상태를 전체 선택 버튼과 동일하게 설정
+        isCheckBoxButton_1Selected = !sender.isSelected
+        isCheckBoxButton_2Selected = !sender.isSelected
         
-        // 모든 체크박스 버튼의 선택 상태를 allcheckBoxButton에 맞춤
-        checkBoxButton_1.isSelected = isCheckBoxChecked
-        checkBoxButton_2.isSelected = isCheckBoxChecked
+        // 체크 박스 버튼의 선택 상태 업데이트
+        checkBoxButton_1.isSelected = isCheckBoxButton_1Selected
+        checkBoxButton_2.isSelected = isCheckBoxButton_2Selected
+        
+        // 전체 선택 버튼의 선택 상태 업데이트
+        sender.isSelected = !sender.isSelected
+        
+        if (isCheckBoxButton_1Selected && isCheckBoxButton_2Selected) {
+            nextButton.isEnabled = true
+            nextButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        } else {
+            nextButton.isEnabled = false
+            nextButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        }
     }
     
+    //부분 선택 체크박스를 클릭했을 때
     @objc func checkBoxTapped(sender: UIButton) {
-        // 현재 상태를 반전시킴
-        isCheckBoxChecked = !isCheckBoxChecked
-        sender.isSelected = isCheckBoxChecked
+        if sender == checkBoxButton_1 {
+            isCheckBoxButton_1Selected.toggle()
+        } else if sender == checkBoxButton_2 {
+            isCheckBoxButton_2Selected.toggle()
+        }
+        
+        // 체크 박스 버튼의 선택 상태 업데이트
+        checkBoxButton_1.isSelected = isCheckBoxButton_1Selected
+        checkBoxButton_2.isSelected = isCheckBoxButton_2Selected
+        
+        // 모든 체크 박스가 선택되었으면 전체 선택 버튼도 선택
+        allcheckBoxButton.isSelected = isCheckBoxButton_1Selected && isCheckBoxButton_2Selected
+        
+        if (isCheckBoxButton_1Selected && isCheckBoxButton_2Selected) {
+            nextButton.isEnabled = true
+            nextButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        } else {
+            nextButton.isEnabled = false
+            nextButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        }
     }
     
     @objc func signupClicked(_ sender: UIButton) {
-        // Check if both checkboxes are selected
-        if checkBoxButton_1.isSelected && checkBoxButton_2.isSelected {
-            // All checkboxes are selected, navigate to the next view
-            let PhoneCertificationView = PhoneCertificationView()
-            self.navigationController?.pushViewController(PhoneCertificationView, animated: true)
-        } else {
-            // Show an alert if any of the checkboxes is not selected
-            let alert = UIAlertController(title: "약관동의 필요", message: "약관에 동의해야 다음으로 진행할 수 있습니다.", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-            alert.addAction(okAction)
-            self.present(alert, animated: true, completion: nil)
-        }
+        
+        let sendMessageViewController = SendMessageViewController()
+        sendMessageViewController.mode = "signUp"
+        self.navigationController?.pushViewController(sendMessageViewController, animated: true)
     }
     
     @objc func placeDetailClicked(_ sender: UIButton) {
