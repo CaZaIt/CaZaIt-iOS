@@ -375,7 +375,7 @@ extension SearchView: UICollectionViewDataSource, UICollectionViewDelegate, UICo
             cafeImage: self.searchCafeData?.data[0][indexPath.row].cafeImages[0] ?? "",
             cafeName: self.searchCafeData?.data[0][indexPath.row].name ?? "",
             cafeLocation: self.searchCafeData?.data[0][indexPath.row].address ?? "",
-            cafeCongestion: self.searchCafeData?.data[0][indexPath.row].congestionStatus ?? ""
+            cafeId: self.searchCafeData?.data[0][indexPath.row].cafeId ?? ""
         )
         recentCafeView.addRecentCafe(cafe: recentCafe)
         
