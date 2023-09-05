@@ -11,6 +11,11 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     var cafeMenu: [DetailCafeMenu]?
     var cafeReview: [DetailCafeReview]?
     
+    
+    var cafeId: String?
+    var cafeName: String?
+    var cellCount: Int = 0
+    
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
         view.backgroundColor = .white
@@ -87,9 +92,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         return collectionView
     }()
     
-    var cafeId : String?
-    var cafeName : String?
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -104,12 +107,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         self.navigationController?.navigationBar.barStyle = .default
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.isTranslucent = false
-
-
-       // self.navigationController?.changeNavigationBarTitle(isTrue: true)
-
-        //navigationController?.changeNavigationBar(isClear: true) // navigationBar 투명으로
-
 
         // 뒤로가기 버튼 추가
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))
@@ -578,6 +575,8 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                     $0.height.equalTo(collectionView1HeightConstant).priority(.low)
                 }
                 
+                print(cellCount)
+                
             case .failure(let error):
                 // 데이터를 받아오지 못했을 때의 처리 로직
                 print(error.localizedDescription)
@@ -621,6 +620,24 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             }
         }
     
+    }
+    
+    func updateCellHeightForNumberOfLines(_ numberOfLines: Int) {
+        if let layout = collectionView2.collectionViewLayout as? UICollectionViewFlowLayout {
+            if numberOfLines == 1 {
+                print("1!!!!!")
+                layout.itemSize = CGSize(width: 348, height: 115)
+            } else if numberOfLines == 2 {
+                print("2!!!!!")
+                layout.itemSize = CGSize(width: 348, height: 130)
+            } else if numberOfLines == 3 {
+                print("3!!!!!")
+                layout.itemSize = CGSize(width: 348, height: 145)
+            }
+            //collectionView2.setNeedsLayout()
+            collectionView2.collectionViewLayout.invalidateLayout()
+            //collectionView2.reloadData()
+        }
     }
     
     @objc func reviewWriteButtonClicked() {

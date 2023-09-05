@@ -162,6 +162,15 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         self.review.text = review
         self.score = score
         displayStars(starCount: score)
+        
+        // review의 높이를 계산하여 몇 줄인지 확인합니다.
+        let reviewHeight = self.review.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        let numberOfLines = Int(reviewHeight / self.review.font.lineHeight)
+        print(numberOfLines)
+        
+        let cafeDetailView = CafeDetailView()
+        cafeDetailView.updateCellHeightForNumberOfLines(numberOfLines)
 
     }
 }
+
