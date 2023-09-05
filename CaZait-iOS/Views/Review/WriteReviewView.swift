@@ -11,7 +11,8 @@ import SnapKit
 
 class WriteReviewView: UIViewController, UITextViewDelegate{
     var cafeId : String?
-    
+    var reviewButton: Int = 0
+        
     var selectedStarCount: Int = 0
     
     let backgroundView: UIView = {
@@ -130,7 +131,11 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
 
         self.navigationController?.navigationBar.titleTextAttributes = attributes
         
-        self.title = "리뷰 쓰기"
+        if reviewButton == 1 {
+            self.title = "리뷰 쓰기"
+        }else {
+            self.title = "리뷰 수정하기"
+        }
 
         
         // 뒤로가기 버튼 추가
@@ -143,6 +148,8 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
       
         view.backgroundColor = .black
 
+        print(reviewButton)
+        
         view.addSubview(backgroundView)
         backgroundView.snp.makeConstraints{ maker in
             maker.top.equalTo(view.safeAreaLayoutGuide.snp.top)

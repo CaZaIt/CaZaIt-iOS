@@ -640,6 +640,8 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     @objc func reviewWriteButtonClicked() {
         let nextVC = WriteReviewView()
         nextVC.cafeId = self.cafeId
+        nextVC.reviewButton = 1
+
         if let userId = UserDefaults.standard.string(forKey: "userId") {
             navigationController?.pushViewController(nextVC, animated: true)
         }
@@ -748,7 +750,7 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
         let okAction = UIAlertAction(title: "네", style: .default) { (action) in
             let nextVC = WriteReviewView()
             nextVC.cafeId = self.cafeId
-            
+            nextVC.reviewButton = 0
             self.navigationController?.pushViewController(nextVC, animated: true)
 
         }
