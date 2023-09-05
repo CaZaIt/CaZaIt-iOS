@@ -162,12 +162,12 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
 
         editnButton.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(23)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-57)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-67)
         }
 
         barLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(28)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-54)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-59)
         }
     }
     

@@ -746,6 +746,11 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
         alertController.message = ""
         
         let okAction = UIAlertAction(title: "네", style: .default) { (action) in
+            let nextVC = WriteReviewView()
+            nextVC.cafeId = self.cafeId
+            
+            self.navigationController?.pushViewController(nextVC, animated: true)
+
         }
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in

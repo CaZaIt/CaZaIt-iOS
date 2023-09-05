@@ -129,7 +129,8 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
         ]
 
         self.navigationController?.navigationBar.titleTextAttributes = attributes
-        self.title = "리뷰쓰기"
+        
+        self.title = "리뷰 쓰기"
 
         
         // 뒤로가기 버튼 추가
@@ -213,6 +214,15 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
             textView.textColor = UIColor.black
             textView.text = ""
         }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // 현재 텍스트 뷰의 텍스트와 변경되는 텍스트를 합쳐서 길이를 계산
+        let currentText = textView.text ?? ""
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        
+        // 길이가 50자 이하인지 확인
+        return newText.count <= 50
     }
 
     @objc func postButtonTapped() {
