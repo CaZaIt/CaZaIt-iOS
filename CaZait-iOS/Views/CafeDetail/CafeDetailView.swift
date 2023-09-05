@@ -11,6 +11,11 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     var cafeMenu: [DetailCafeMenu]?
     var cafeReview: [DetailCafeReview]?
     
+    
+    var cafeId: String?
+    var cafeName: String?
+    var cellCount: Int = 0
+    
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
         view.backgroundColor = .white
@@ -87,9 +92,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         return collectionView
     }()
     
-    var cafeId : String?
-    var cafeName : String?
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -104,12 +107,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         self.navigationController?.navigationBar.barStyle = .default
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.isTranslucent = false
-
-
-       // self.navigationController?.changeNavigationBarTitle(isTrue: true)
-
-        //navigationController?.changeNavigationBar(isClear: true) // navigationBar 투명으로
-
 
         // 뒤로가기 버튼 추가
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonTapped))
@@ -283,11 +280,12 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         }
         
         
-        reviewWriteButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 600).isActive = true
-        reviewWriteButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 310).isActive = true
-        reviewWriteButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        reviewWriteButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
+        reviewWriteButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-18)
+            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(310)
+            make.width.equalTo(60)
+            make.height.equalTo(60)
+        }
         
         // 초기에는 첫 번째 세그먼트가 선택되도록 설정
         stickyHeaderViewSegmentControl.isHidden = true
@@ -572,10 +570,12 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 collectionView1.reloadData() // 컬렉션 뷰 리로드
 
                 let numberOfRowsInCollectionView1 = response.count
-                collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1 ) * (115+13) // 115 셀 높이, 13 셀 간격
+                collectionView1HeightConstant = CGFloat(numberOfRowsInCollectionView1) * (115+13) // 115 셀 높이, 13 셀 간격
                 collectionView1.snp.makeConstraints {
                     $0.height.equalTo(collectionView1HeightConstant).priority(.low)
                 }
+                
+                print(cellCount)
                 
             case .failure(let error):
                 // 데이터를 받아오지 못했을 때의 처리 로직
@@ -613,10 +613,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 
                 collectionView2.reloadData() // 컬렉션 뷰 리로드
 
-                print("리뷰 개수 : " , cafeReview!.count)
-                print("높이 : " , collectionView2HeightConstant)
-                print("스크롤뷰 높이 : ", self.scrollView.contentOffset.y)
-                
             case .failure(let error):
                 print("review error : \n" + error.localizedDescription)
                 // 에러 메시지 출력
@@ -624,6 +620,24 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             }
         }
     
+    }
+    
+    func updateCellHeightForNumberOfLines(_ numberOfLines: Int) {
+        if let layout = collectionView2.collectionViewLayout as? UICollectionViewFlowLayout {
+            if numberOfLines == 1 {
+                print("1!!!!!")
+                layout.itemSize = CGSize(width: 348, height: 115)
+            } else if numberOfLines == 2 {
+                print("2!!!!!")
+                layout.itemSize = CGSize(width: 348, height: 130)
+            } else if numberOfLines == 3 {
+                print("3!!!!!")
+                layout.itemSize = CGSize(width: 348, height: 145)
+            }
+            //collectionView2.setNeedsLayout()
+            collectionView2.collectionViewLayout.invalidateLayout()
+            //collectionView2.reloadData()
+        }
     }
     
     @objc func reviewWriteButtonClicked() {

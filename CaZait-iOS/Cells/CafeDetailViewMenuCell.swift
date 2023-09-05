@@ -115,24 +115,12 @@ class CafeDetailViewMenuCell: UICollectionViewCell {
 
             menuDescription.leadingAnchor.constraint(equalTo: menuImage.trailingAnchor, constant: 25),
             menuDescription.topAnchor.constraint(equalTo: menu.bottomAnchor, constant: 8),
-            //menuDescription.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
     
     func configure(imageURL: String?, menu: String, price: String, menuDescription: String) {
         // 셀의 내용을 설정합니다.
         if let imageURL = imageURL, let url = URL(string: imageURL) {
-//            URLSession.shared.dataTask(with: url) { data, _, error in
-//                if let error = error {
-//                    print("Failed to download image:", error)
-//                    return
-//                }
-//                if let data = data, let downloadedImage = UIImage(data: data) {
-//                    DispatchQueue.main.async {
-//                        self.menuImage.image = downloadedImage
-//                    }
-//                }
-//            }.resume()
             self.menuImage.kf.setImage(with: url)
 
         }

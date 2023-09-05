@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 
-class WriteReviewView: UIViewController{
+class WriteReviewView: UIViewController, UITextViewDelegate{
     var cafeId : String?
     
     var selectedStarCount: Int = 0
@@ -62,29 +62,23 @@ class WriteReviewView: UIViewController{
         return text2
     }()
     
-
-    let textfield1: InsetTextField = {
-
-        let textField = InsetTextField();
-
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "공백 포함 최대 50자 이내로 작성해주세요."
-        textField.setPlaceholder(color: UIColor(red: 0.708, green: 0.708, blue: 0.708, alpha: 1))
-        textField.backgroundColor = .white
-        textField.layer.cornerRadius = 25
-        //textField.setPlaceholder(color: UIColor(r: 93, g: 36, b: 36))
-        textField.insetX = 47.25
-        textField.textColor = .black
-        textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(red: 0.363, green: 0.142, blue: 0.142, alpha: 1).cgColor
-
-        return textField
-
+    
+    let textView: UITextView = {
+        let textView = UITextView()
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.text = "공백 포함 최대 50자 이내로 작성해주세요."
+        textView.textColor = UIColor.lightGray
+        textView.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        textView.backgroundColor = .white
+        textView.layer.cornerRadius = 25
+        textView.isScrollEnabled = true
+        textView.isEditable = true
+        textView.textContainerInset = UIEdgeInsets(top: 18, left: 15, bottom: 18, right: 15)
+        
+        return textView
     }()
     
-    
-    let placeholder = "공백 포함 최대 50자 이내로 작성해주세요."
 
     var activityTextView: UITextView{
         let text = UITextView()
@@ -115,10 +109,7 @@ class WriteReviewView: UIViewController{
         button1.layer.cornerRadius = 20
         button1.setTitle("작성하기", for: .normal)
         button1.setTitleColor(.white, for: .normal)
-//        button1.layer.shadowColor = UIColor.gray.cgColor
-//        button1.layer.shadowOpacity = 1.0
-//        button1.layer.shadowRadius = 6
-//        button1.layer.shadowOffset = CGSize(width: 0, height: 5)
+
         button1.addTarget(self, action: #selector(postButtonTapped), for: .touchUpInside)
         return button1
     }()
@@ -185,9 +176,11 @@ class WriteReviewView: UIViewController{
             maker.top.equalTo(view.snp.top).offset(235)
             maker.leading.equalTo(view.snp.leading).offset(37)
         }
+        
+        textView.delegate = self
 
-        self.view.addSubview(textfield1)
-        textfield1.snp.makeConstraints { maker in
+        self.view.addSubview(textView)
+        textView.snp.makeConstraints { maker in
             maker.top.equalTo(view.snp.top).offset(268)
             maker.centerX.equalToSuperview()
             maker.width.equalTo(335)
@@ -210,42 +203,20 @@ class WriteReviewView: UIViewController{
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
     }
-    
-//    @objc func postButtonTapped() {
-//        guard let inputText = textfield1.text else {
-//            return
-//        }
-//        print(inputText)
-//        print(selectedStarCount)
-//
-//        let review = Review(score: selectedStarCount, content: inputText)
-//        // ReviewService의 인스턴스를 생성
-//        let reviewWriteService = ReviewWriteService()
-//
-//        // 리뷰 작성 통신
-//        guard let cafeId = cafeId else {
-//            // cafeId가 nil일 경우에 대한 처리 로직
-//            print("cafeId가 nil입니다.")
-//            return
-//        }
-//
-//        if let userId = UserDefaults.standard.string(forKey: "userId") {
-//            reviewWriteService.postReview(userId: userId, cafeId: cafeId, review: review) { result in
-//                switch result {
-//                case .success(let reviewResponse):
-//                    print("리뷰 ID: \(reviewResponse.data.nickname)")
-//                case .failure(let error):
-//                    print("에러 메시지: \(error.localizedDescription)")
-//                    //print(ReviewResponse.)
-//                }
-//            }
-//        } else {
-//            print("userId 값이 없음")
-//        }
-//    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            // If the text is empty, show the placeholder text
+            textView.textColor = UIColor.lightGray
+        } else if textView.textColor == UIColor.lightGray && !textView.text.isEmpty {
+            // If the text is not empty and the textColor is still lightGray, change it to black
+            textView.textColor = UIColor.black
+            textView.text = ""
+        }
+    }
 
     @objc func postButtonTapped() {
-        guard let inputText = textfield1.text else {
+        guard let inputText = textView.text else {
             return
         }
         
@@ -259,7 +230,12 @@ class WriteReviewView: UIViewController{
         
         print(inputText)
         print(selectedStarCount)
+        
+        let numberOfLines = inputText.components(separatedBy: .newlines).count
 
+        print(numberOfLines)
+
+        
         let review = Review(score: selectedStarCount, content: inputText)
         // ReviewService의 인스턴스를 생성
         let reviewWriteService = ReviewWriteService()
