@@ -9,7 +9,7 @@ import UIKit
 class CafeDetailViewReviewCell: UICollectionViewCell {
     
     var score = 1
-    
+    var myReview: Int = 0
     // 꽉찬 별
     lazy var starFillImage: UIImage? = {
         return UIImage(systemName: "star.fill",
@@ -49,7 +49,6 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor(red: 1, green: 0.45, blue: 0.356, alpha: 1)
         label.textAlignment = .left
-        label.text = "신고"
         label.numberOfLines = 1
         
         return label
@@ -156,20 +155,25 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
     }
 
     
-    func configure(nickname: String, review: String, score: Int) {
+    func configure(userId: String, nickname: String, review: String, score: Int) {
         // 셀의 내용을 설정합니다.
         self.nickname.text = nickname
         self.review.text = review
         self.score = score
         displayStars(starCount: score)
         
-        // review의 높이를 계산하여 몇 줄인지 확인합니다.
+        if userId == UserDefaults.standard.string(forKey: "userId") {
+            declaration.text = "삭제"
+        } else {
+            declaration.text = "신고"
+        }
+        
         let reviewHeight = self.review.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         let numberOfLines = Int(reviewHeight / self.review.font.lineHeight)
-        print(numberOfLines)
+        //print(myReview)
         
-        let cafeDetailView = CafeDetailView()
-        cafeDetailView.updateCellHeightForNumberOfLines(numberOfLines)
+        //let cafeDetailView = CafeDetailView()
+        //cafeDetailView.updateCellHeightForNumberOfLines(numberOfLines)
 
     }
 }

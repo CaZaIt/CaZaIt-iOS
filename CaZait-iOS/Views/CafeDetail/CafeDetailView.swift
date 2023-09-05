@@ -594,23 +594,23 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             print("cafeId가 nil입니다.")
             return
         }
+        
+        let cafeDetailViewReviewCell = CafeDetailViewReviewCell()
+        
         let detailcafereviewservice = DetailCafeReviewService()
         detailcafereviewservice.getDetailCafeReviewBycafeID(cafeID: cafeId, nums: 50) { [self] result in
             switch result {
             case .success(let response):
                 // 성공적으로 데이터를 받아왔을 때의 처리 로직
                 self.cafeReview = response.reviewResponses
-                //print(response)
                 //print(self.cafeReview)
-
-//                collectionView2.reloadData() // 컬렉션 뷰 리로드
                 
                 let numberOfRowsInCollectionView2 = cafeReview!.count
                 collectionView2HeightConstant = CGFloat(numberOfRowsInCollectionView2 ) * (115+13) // 115 셀 높이, 13 셀 간격
                 collectionView2.snp.makeConstraints {
                     $0.height.equalTo(collectionView2HeightConstant).priority(.low)
                 }
-                
+                                
                 collectionView2.reloadData() // 컬렉션 뷰 리로드
 
             case .failure(let error):
@@ -619,7 +619,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 print(error)
             }
         }
-    
     }
     
     func updateCellHeightForNumberOfLines(_ numberOfLines: Int) {
@@ -634,9 +633,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
                 print("3!!!!!")
                 layout.itemSize = CGSize(width: 348, height: 145)
             }
-            //collectionView2.setNeedsLayout()
             collectionView2.collectionViewLayout.invalidateLayout()
-            //collectionView2.reloadData()
         }
     }
     
@@ -693,9 +690,9 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate {
         }else if collectionView == collectionView2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CafeDetailViewReviewCell", for: indexPath) as! CafeDetailViewReviewCell
             if let review = cafeReview?[indexPath.row]{
-                cell.configure(nickname: review.nickname, review: review.content, score: review.score)
+                cell.configure(userId: review.userId, nickname: review.nickname, review: review.content, score: review.score)
             }else {
-                cell.configure(nickname: "카자잇", review: "리뷰입니다", score: 5)
+                cell.configure(userId:"1", nickname: "카자잇", review: "리뷰입니다", score: 5)
 
             }
             return cell
