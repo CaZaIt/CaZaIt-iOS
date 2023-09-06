@@ -58,6 +58,8 @@
 		6CAFA8D62A861D95003BDD65 /* DetailCafeByCafeIdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAFA8D52A861D95003BDD65 /* DetailCafeByCafeIdModel.swift */; };
 		6CAFA8DD2AA72666003BDD65 /* ReviewDeleteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAFA8DC2AA72666003BDD65 /* ReviewDeleteModel.swift */; };
 		6CAFA8DF2AA7273C003BDD65 /* ReviewDeleteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAFA8DE2AA7273C003BDD65 /* ReviewDeleteService.swift */; };
+		6CAFA8E12AA839DB003BDD65 /* ReviewEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAFA8E02AA839DB003BDD65 /* ReviewEditModel.swift */; };
+		6CAFA8E32AA83A80003BDD65 /* ReviewEditService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAFA8E22AA83A80003BDD65 /* ReviewEditService.swift */; };
 		6CB6A7E62A5EF26A003FAB86 /* DetailCafeReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB6A7E52A5EF26A003FAB86 /* DetailCafeReviewModel.swift */; };
 		6CB6A7E82A5EF442003FAB86 /* DetailCafeReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB6A7E72A5EF442003FAB86 /* DetailCafeReviewService.swift */; };
 		6CC990722A703A91008ABE53 /* ReviewWriteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC990712A703A91008ABE53 /* ReviewWriteService.swift */; };
@@ -164,6 +166,8 @@
 		6CAFA8D52A861D95003BDD65 /* DetailCafeByCafeIdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCafeByCafeIdModel.swift; sourceTree = "<group>"; };
 		6CAFA8DC2AA72666003BDD65 /* ReviewDeleteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDeleteModel.swift; sourceTree = "<group>"; };
 		6CAFA8DE2AA7273C003BDD65 /* ReviewDeleteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDeleteService.swift; sourceTree = "<group>"; };
+		6CAFA8E02AA839DB003BDD65 /* ReviewEditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewEditModel.swift; sourceTree = "<group>"; };
+		6CAFA8E22AA83A80003BDD65 /* ReviewEditService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewEditService.swift; sourceTree = "<group>"; };
 		6CB6A7E52A5EF26A003FAB86 /* DetailCafeReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCafeReviewModel.swift; sourceTree = "<group>"; };
 		6CB6A7E72A5EF442003FAB86 /* DetailCafeReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCafeReviewService.swift; sourceTree = "<group>"; };
 		6CC990712A703A91008ABE53 /* ReviewWriteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewWriteService.swift; sourceTree = "<group>"; };
@@ -327,6 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				6CC990732A703B73008ABE53 /* ReviewWriteModel.swift */,
+				6CAFA8E02AA839DB003BDD65 /* ReviewEditModel.swift */,
 				6CAFA8DC2AA72666003BDD65 /* ReviewDeleteModel.swift */,
 			);
 			path = Reviews;
@@ -365,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				6CC990712A703A91008ABE53 /* ReviewWriteService.swift */,
+				6CAFA8E22AA83A80003BDD65 /* ReviewEditService.swift */,
 				6CAFA8DE2AA7273C003BDD65 /* ReviewDeleteService.swift */,
 			);
 			path = Review_Service;
@@ -739,6 +745,7 @@
 				F13FDA7529DD5DD00044C6C3 /* MainTableViewLovedCell.swift in Sources */,
 				F13FDA9E29DD91A50044C6C3 /* MainTableViewCafeCell.swift in Sources */,
 				F1E547572A96483800671182 /* ChangeNickNameVC.swift in Sources */,
+				6CAFA8E12AA839DB003BDD65 /* ReviewEditModel.swift in Sources */,
 				6CC990722A703A91008ABE53 /* ReviewWriteService.swift in Sources */,
 				F1E547252A7CE79D00671182 /* KeyChain.swift in Sources */,
 				01F7A1F529D935540058736E /* TabBarView.swift in Sources */,
@@ -752,6 +759,7 @@
 				6CC990762A70410C008ABE53 /* RegisterFavoriteDetailCafeService.swift in Sources */,
 				F1E547772A9F13AB00671182 /* UserPhoneCheckModel.swift in Sources */,
 				6C4286B92A15D61400560F15 /* CafeDetailViewMenuCell.swift in Sources */,
+				6CAFA8E32AA83A80003BDD65 /* ReviewEditService.swift in Sources */,
 				F13FDA7729DD616E0044C6C3 /* LovedCollectionViewCell.swift in Sources */,
 				019D16A52A56CBB500766E9D /* SplashView.swift in Sources */,
 				01F7A21729D95BF70058736E /* CafeDetailView.swift in Sources */,

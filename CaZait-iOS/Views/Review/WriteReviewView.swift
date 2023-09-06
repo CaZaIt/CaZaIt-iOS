@@ -10,7 +10,8 @@ import SnapKit
 
 
 class WriteReviewView: UIViewController, UITextViewDelegate{
-    var cafeId : String?
+    var cafeId: String?
+    var reviewId: String?
     var reviewButton: Int = 0
         
     var selectedStarCount: Int = 0
@@ -238,8 +239,7 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
         }
         
         if selectedStarCount == 0 {
-            // '별점을 남겨주세요' 팝업 표시
-            let alert = UIAlertController(title: "알림", message: "별점을 남겨주세요.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "", message: "별점을 남겨주세요.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             return
@@ -248,19 +248,21 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
         print(inputText)
         print(selectedStarCount)
         
-        let numberOfLines = inputText.components(separatedBy: .newlines).count
-
-        print(numberOfLines)
-
-        
         let review = Review(score: selectedStarCount, content: inputText)
-        // ReviewService의 인스턴스를 생성
+        
+        if reviewButton == 1 {
+            writeReview(review: review)
+        }else {
+            editReview(review: review)
+        }
+    }
+    
+    func writeReview(review: Review) {
         let reviewWriteService = ReviewWriteService()
 
-        // 리뷰 작성 통신
         guard let cafeId = cafeId else {
             // cafeId가 nil일 경우에 대한 처리 로직
-            print("cafeId가 nil입니다.")
+            print("cafeId가 nil")
             return
         }
 
@@ -286,9 +288,38 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
         } else {
             print("userId 값이 없음")
         }
-        
     }
 
+    func editReview(review: Review) {
+        let reviewEditService = ReviewEditService()
+
+        guard let reviewId = reviewId else {
+            print("reviewId가 nil")
+            return
+        }
+
+        if let userId = UserDefaults.standard.string(forKey: "userId") {
+            reviewEditService.editReview(reviewId: reviewId, review: review) { result in
+                switch result {
+                case .success(let reviewEditResponse):
+                    print("리뷰 ID: \(reviewEditResponse.data.reviewId)")
+                    let alert = UIAlertController(title: "알림", message: "수정이 완료되었습니다.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                        self.navigationController?.popViewController(animated: true)
+                        if let previousViewController = self.navigationController?.viewControllers.last as? CafeDetailView {
+                            previousViewController.viewWillAppear(true)
+                        }
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                case .failure(let error):
+                    print("에러 메시지: \(error.localizedDescription)")
+                }
+            }
+        } else {
+            print("reviewId 값이 없음")
+        }
+    }
+    
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }

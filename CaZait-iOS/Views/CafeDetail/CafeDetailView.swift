@@ -715,9 +715,10 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
         }
     }
     
-    func deleteReview(){
+    func deleteReview() {
         let ReviewDeleteService = ReviewDeleteService()
         print(selectedReview)
+        
         guard let reviewId = selectedReview?.reviewId else {
             // cafeId가 nil일 경우에 대한 처리 로직
             print("reviewId nil")
@@ -747,7 +748,6 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
             
             
             let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-                //print(cafeReview[selectedIndexPath])
             }
             
             let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
@@ -759,6 +759,7 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
             alertController.message = ""
             let okAction = UIAlertAction(title: "네", style: .default) { (action) in
                 self.deleteReview()
+                self.getDetailCafeReview()
             }
             
             let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
@@ -781,7 +782,7 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
         
         let okAction = UIAlertAction(title: "네", style: .default) { (action) in
             let nextVC = WriteReviewView()
-            nextVC.cafeId = self.cafeId
+            nextVC.reviewId = self.selectedReview?.reviewId
             nextVC.reviewButton = 0
             self.navigationController?.pushViewController(nextVC, animated: true)
 

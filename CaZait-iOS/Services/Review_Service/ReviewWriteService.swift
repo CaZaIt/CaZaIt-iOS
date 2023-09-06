@@ -16,9 +16,7 @@ class ReviewWriteService {
         if let bearerToken = KeyChain.read(key: "accessToken") {
             header["Authorization"] = "Bearer \(bearerToken)"
         }
-//        if let bearerToken = KeyChain.read(key: "accessToken") {
-//                    header["Authorization"] = "Bearer \(bearerToken)"
-//        }
+
         let parameters: [String: Any] = [
             "score": review.score,
             "content": review.content
