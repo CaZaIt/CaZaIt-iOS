@@ -18,5 +18,5 @@ struct ReviewEditeData: Codable {
     let reviewId: String
     let score: Int
     let content: String
-    let updateAt: String
+    let updatedAt: String
 }
