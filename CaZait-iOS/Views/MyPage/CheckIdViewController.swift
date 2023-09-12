@@ -48,6 +48,7 @@ class CheckIdViewController: UIViewController, UIGestureRecognizerDelegate {
         textField.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         textField.textAlignment = .center
         textField.placeholder = "아이디를 입력해주세요"
+        textField.setPlaceholder(color: UIColor(r: 181, g: 181, b: 181))
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 20
         

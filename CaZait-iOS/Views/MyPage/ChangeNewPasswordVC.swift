@@ -74,6 +74,7 @@ class ChangeNewPasswordVC: UIViewController, UIGestureRecognizerDelegate {
         textField.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         textField.textAlignment = .center
         textField.placeholder = "비밀번호를 입력해주세요"
+        textField.setPlaceholder(color: UIColor(r: 181, g: 181, b: 181))
         textField.isSecureTextEntry = true // 비밀번호 입력 시 보이지 않도록 설정
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 20
@@ -113,6 +114,7 @@ class ChangeNewPasswordVC: UIViewController, UIGestureRecognizerDelegate {
         textField.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         textField.textAlignment = .center
         textField.placeholder = "비밀번호를 한 번 더 입력해주세요"
+        textField.setPlaceholder(color: UIColor(r: 181, g: 181, b: 181))
         textField.isSecureTextEntry = true // 비밀번호 입력 시 보이지 않도록 설정
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 20

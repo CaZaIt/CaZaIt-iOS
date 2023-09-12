@@ -53,6 +53,7 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
         textField.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         textField.textAlignment = .center
         textField.placeholder = "휴대전화 번호를 입력해주세요"
+        textField.setPlaceholder(color: UIColor(r: 181, g: 181, b: 181))
         textField.keyboardType = .numberPad
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 20
@@ -67,6 +68,7 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
         textField.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         textField.textAlignment = .center
         textField.placeholder = "인증번호 입력"
+        textField.setPlaceholder(color: UIColor(r: 181, g: 181, b: 181))
         textField.keyboardType = .numberPad
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 20
