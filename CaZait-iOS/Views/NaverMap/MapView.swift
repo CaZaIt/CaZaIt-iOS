@@ -10,6 +10,8 @@ import SnapKit
 
 class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시작좌표인 클래스
     
+    private var selectedCafeIndex: Int?
+    
     private let congestionMapping: [String: String] = [
         "NONE": "미등록",
         "CLOSE": "종료",
@@ -139,7 +141,14 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
             }
         }
         
+        let customViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCustomViewTap(_:)))
+        customView.addGestureRecognizer(customViewTapGesture)
+        customView.isUserInteractionEnabled = true
+    }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        locationManager.stopUpdatingLocation()
     }
     
     @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
@@ -158,9 +167,22 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
                 cafeNameLabel.text = cafe.name
                 addressLabel.text = cafe.address
                 congestionLabel.text = congestionMapping[cafe.congestionStatus]
-                // 여기에 추가적인 커스텀뷰의 내용을 업데이트하는 코드를 작성하세요
+                selectedCafeIndex = index // 선택한 카페의 인덱스를 저장
+//                 여기에 추가적인 커스텀뷰의 내용을 업데이트하는 코드를 작성하세요
+                print(index)
             }
             customView.isHidden = false
+        }
+    }
+    @objc private func handleCustomViewTap(_ gesture: UITapGestureRecognizer) {
+        if gesture.view == customView, let selectedCafeIndex = self.selectedCafeIndex {
+            //cafeDetailView에서 받은 cafeId를 통해 통신할 수 있도록 값을 전달한다.
+            let cafeDetailView = CafeDetailView()
+            cafeDetailView.cafeId = self.allCafeData?.data[0][selectedCafeIndex].cafeId
+            cafeDetailView.cafeName = self.allCafeData?.data[0][selectedCafeIndex].name
+            self.navigationController?.pushViewController(cafeDetailView, animated: true)
+            print(selectedCafeIndex)
+
         }
     }
     

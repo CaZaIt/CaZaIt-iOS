@@ -497,8 +497,9 @@ extension SignupView {
             case .success(let data):
                 guard let data = data as? SignupResponse else { return }
                 let alert = UIAlertController(title: data.message, message: "", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
-                
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: { _ in
+                    self.navigationController?.popToRootViewController(animated: true)
+                }))
                 self.present(alert, animated: true, completion: nil)
                 print(data)
             case .requestErr(let err):
@@ -541,7 +542,7 @@ extension SignupView: UITextFieldDelegate {
 
 extension SignupView {
     func validateID(realtimeText: String) {
-        let idPattern = "^[a-z]{6,}$"
+        let idPattern = "^[a-z0-9]{6,}$"
         let minIDLength = 6
         let maxIDLength = 20
         
@@ -567,30 +568,22 @@ extension SignupView {
         let minLength = 8
         let maxLength = 16
         
-        let lowercaseLetterPattern = ".*[a-z]+.*"
-        let uppercaseLetterPattern = ".*[A-Z]+.*"
+        let LetterPattern = ".*[a-zA-Z]+.*"
         let numberPattern = ".*\\d+.*"
-        let specialCharacterPattern = ".*[$@!%*#?&.]+.*"
-        
-        let lowercaseLetterRegex = try? NSRegularExpression(pattern: lowercaseLetterPattern, options: [])
-        let uppercaseLetterRegex = try? NSRegularExpression(pattern: uppercaseLetterPattern, options: [])
-        let numberRegex = try? NSRegularExpression(pattern: numberPattern, options: [])
-        let specialCharacterRegex = try? NSRegularExpression(pattern: specialCharacterPattern, options: [])
-        
-        let containsLowercaseLetter = lowercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-        let containsUppercaseLetter = uppercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-        let containsNumber = numberRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-        let containsSpecialCharacter = specialCharacterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+        let specialCharacterPattern = ".*[!@#$%&*]+.*"
         
         if realtimeText.count < minLength || realtimeText.count > maxLength {
             pwValidationLabel.text = "최소 8자 이상, 최대 16자 이하로 입력해주세요."
             pwValidationLabel.textColor = UIColor.red
-        } else if !containsLowercaseLetter || !containsUppercaseLetter || !containsNumber || !containsSpecialCharacter {
-            pwValidationLabel.text = "적어도 하나의 대문자, 소문자, 숫자, 특수문자가 포함되어야 합니다."
+        } else if !(realtimeText.range(of: LetterPattern, options: .regularExpression) != nil)
+                    || !(realtimeText.range(of: numberPattern, options: .regularExpression) != nil)
+                    || !(realtimeText.range(of: specialCharacterPattern, options: .regularExpression) != nil) {
+            pwValidationLabel.text = "적어도 하나의 알파벳, 숫자, 특수문자가 포함되어야 합니다."
             pwValidationLabel.textColor = UIColor.red
         } else {
             pwValidationLabel.text = "가능한 비밀번호입니다."
             pwValidationLabel.textColor = UIColor.blue
         }
     }
+
 }
