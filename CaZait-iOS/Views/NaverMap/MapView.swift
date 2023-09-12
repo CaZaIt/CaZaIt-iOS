@@ -163,7 +163,7 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
                 addressLabel.text = cafe.address
                 congestionLabel.text = congestionMapping[cafe.congestionStatus]
                 selectedCafeIndex = index // 선택한 카페의 인덱스를 저장
-                // 여기에 추가적인 커스텀뷰의 내용을 업데이트하는 코드를 작성하세요
+//                 여기에 추가적인 커스텀뷰의 내용을 업데이트하는 코드를 작성하세요
                 print(index)
             }
             customView.isHidden = false
@@ -177,6 +177,7 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
             cafeDetailView.cafeName = self.allCafeData?.data[0][selectedCafeIndex].name
             self.navigationController?.pushViewController(cafeDetailView, animated: true)
             print(selectedCafeIndex)
+
         }
     }
     

@@ -351,7 +351,7 @@ class SignupView: UIViewController{
         // 편집 변경 이벤트에 대한 액션 추가
         pwField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         pwField_1.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
-
+        
         
         
         //중복 확인 버튼 클릭시 이벤트 추가
@@ -569,20 +569,14 @@ extension SignupView {
         
         let LetterPattern = ".*[a-zA-Z]+.*"
         let numberPattern = ".*\\d+.*"
-        let specialCharacterPattern = "*[!@#$%&*]+.*"
-        
-        let LetterRegex = try? NSRegularExpression(pattern: LetterPattern, options: [])
-        let numberRegex = try? NSRegularExpression(pattern: numberPattern, options: [])
-        let specialCharacterRegex = try? NSRegularExpression(pattern: specialCharacterPattern, options: [])
-        
-        let containsLetter = LetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-        let containsNumber = numberRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-        let containsSpecialCharacter = specialCharacterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+        let specialCharacterPattern = ".*[!@#$%&*]+.*"
         
         if realtimeText.count < minLength || realtimeText.count > maxLength {
             pwValidationLabel.text = "최소 8자 이상, 최대 16자 이하로 입력해주세요."
             pwValidationLabel.textColor = UIColor.red
-        } else if !containsLetter || !containsNumber || !containsSpecialCharacter {
+        } else if !(realtimeText.range(of: LetterPattern, options: .regularExpression) != nil)
+                    || !(realtimeText.range(of: numberPattern, options: .regularExpression) != nil)
+                    || !(realtimeText.range(of: specialCharacterPattern, options: .regularExpression) != nil) {
             pwValidationLabel.text = "적어도 하나의 알파벳, 숫자, 특수문자가 포함되어야 합니다."
             pwValidationLabel.textColor = UIColor.red
         } else {
@@ -590,4 +584,5 @@ extension SignupView {
             pwValidationLabel.textColor = UIColor.blue
         }
     }
+    
 }
