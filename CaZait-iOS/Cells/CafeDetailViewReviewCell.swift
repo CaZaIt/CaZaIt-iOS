@@ -17,6 +17,8 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
 
     var score = 1
     var myReview: Int = 0
+    var reviewId: String?
+    
     // 꽉찬 별
     lazy var starFillImage: UIImage? = {
         return UIImage(systemName: "star.fill",
@@ -218,6 +220,7 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         self.nickname.text = nickname
         self.review.text = review
         self.score = score
+        self.reviewId = reviewId
         displayStars(starCount: score)
         
         if userId == UserDefaults.standard.string(forKey: "userId") {
