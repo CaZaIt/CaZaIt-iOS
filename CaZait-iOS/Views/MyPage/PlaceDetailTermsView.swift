@@ -220,12 +220,12 @@ class PlaceDetailTermsView: UIViewController, UIGestureRecognizerDelegate{
                     
                     제2조(위치정보관리책임자)
                     
-                    위치정보관리책임자는 2023.08.31를 기준으로 다음과 같이 지정합니다.
+                    위치정보관리책임자는 2023.09.01를 기준으로 다음과 같이 지정합니다.
                     
                     소속 : 카자잇
                     성명 : 강석호
                     직위 : 총괄팀장
-                    전화 : 02-1234-1234
+                    전화 : 010-8524-5830
                     """
         locationRuleTextView.text = termsText
     }

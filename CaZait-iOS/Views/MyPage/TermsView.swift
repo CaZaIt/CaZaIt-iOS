@@ -69,7 +69,7 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         label.textColor = .black
         label.textAlignment = .center
-        label.text = "개인정보 수집 및 이용 동의"
+        label.text = "사용자 서비스 이용약관"
         label.numberOfLines = 1
         return label
     }()
@@ -99,7 +99,7 @@ class TermsView: UIViewController, UIGestureRecognizerDelegate{
         label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         label.textColor = UIColor(r: 255, g: 115, b: 91)
         label.textAlignment = .center
-        label.text = "개인정보 수집 및 이용 동의 내용 보기"
+        label.text = "사용자 서비스 이용약관 동의 내용 보기"
         label.numberOfLines = 1
         return label
     }()
