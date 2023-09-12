@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ChangePasswordVC: UIViewController, UIGestureRecognizerDelegate {
+class ChangePasswordVC: UIViewController {
     
     private let navigationBarAppearance : UINavigationBarAppearance = {
         let navigationBar = UINavigationBarAppearance()
@@ -134,6 +134,10 @@ class ChangePasswordVC: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 다른 부분을 탭할 때 키보드 숨기기
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
         view.backgroundColor = .black
         passwordTextField.delegate = self
         againPasswordTextField.delegate = self
@@ -306,4 +310,12 @@ extension ChangePasswordVC: UITextFieldDelegate{
         }
     }
     
+}
+
+extension ChangePasswordVC: UIGestureRecognizerDelegate {
+    
+    // 다른 부분을 탭할 때 키보드 숨기기
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class CheckPasswordViewController: UIViewController, UIGestureRecognizerDelegate {
+class CheckPasswordViewController: UIViewController {
 
     private let navigationBarAppearance : UINavigationBarAppearance = {
         let navigationBar = UINavigationBarAppearance()
@@ -94,6 +94,10 @@ class CheckPasswordViewController: UIViewController, UIGestureRecognizerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 다른 부분을 탭할 때 키보드 숨기기
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
         self.view.backgroundColor = .black
         passwordTextField.delegate = self
         setupNavigation()
@@ -196,4 +200,13 @@ extension CheckPasswordViewController: UITextFieldDelegate{
         }
     }
     
+}
+
+
+extension CheckPasswordViewController: UIGestureRecognizerDelegate {
+    
+    // 다른 부분을 탭할 때 키보드 숨기기
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
