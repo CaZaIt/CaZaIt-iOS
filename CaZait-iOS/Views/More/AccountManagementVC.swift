@@ -10,8 +10,8 @@ import SnapKit
 
 class AccountManagementVC: UIViewController, UIGestureRecognizerDelegate {
 
-    private let textArr = ["비밀번호 변경", "닉네임 변경"]
-    private let imageArr = ["key.horizontal", "person.text.rectangle"]
+    private let textArr = ["비밀번호 변경", "닉네임 변경", "계정 탈퇴"]
+    private let imageArr = ["key.horizontal", "person.text.rectangle", "person.fill.xmark"]
     
     private let navigationBarAppearance : UINavigationBarAppearance = {
         let navigationBar = UINavigationBarAppearance()
@@ -154,10 +154,48 @@ extension AccountManagementVC: UITableViewDataSource {
         } else if selectedRow == "닉네임 변경" {
             let changeNickNameVC = ChangeNickNameVC()
             navigationController?.pushViewController(changeNickNameVC, animated: true)
+        } else if selectedRow == "계정 탈퇴" {
+            let alertController = UIAlertController(title: "정말 계정을 탈퇴하시겠습니까?", message: "계정 탈퇴 시 저장된 정보는 복구되지 않습니다.", preferredStyle: .alert)
+            
+            let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { (_) in
+                self.deleteUserInfo()
+            }
+            
+            let cancelAction = UIAlertAction(title: "취소", style: .default) { (_) in
+                self.dismiss(animated: true, completion: nil) //경고창 닫기
+            }
+            
+            alertController.addAction(deleteAction)
+            alertController.addAction(cancelAction)
+            
+            // 경고창을 표시합니다.
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
-    
+    func deleteUserInfo() {
+        DeleteAccountService.shared.getDeleteAccountInfo() { response in
+            
+            switch response {
+                
+            case .success(let data):
+                guard let listData = data as? DeleteAccountResponse else {return}
+                let alert = UIAlertController(title: "계정 탈퇴에 성공했습니다.", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: { _ in
+                    UserDefaults.standard.removeObject(forKey: "userId")
+                    KeyChain.delete(key: "accessToken")
+                    KeyChain.delete(key: "refreshToken")
+                    self.navigationController?.popToRootViewController(animated: true)
+                }))
+                self.present(alert, animated: true, completion: nil)
+            default:
+                let alert = UIAlertController(title: "계정 탈퇴 중 오류가 발생했습니다.", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
 }
 
 

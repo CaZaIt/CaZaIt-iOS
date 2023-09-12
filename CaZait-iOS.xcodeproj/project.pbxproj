@@ -106,6 +106,8 @@
 		F1E547792A9F1FD300671182 /* NotifyIdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547782A9F1FD300671182 /* NotifyIdModel.swift */; };
 		F1E5477B2A9F202E00671182 /* NotifyIdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E5477A2A9F202E00671182 /* NotifyIdService.swift */; };
 		F1E5477D2A9F215B00671182 /* NotifyIdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E5477C2A9F215B00671182 /* NotifyIdViewController.swift */; };
+		F1E547852AA852CA00671182 /* DeleteAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547842AA852CA00671182 /* DeleteAccountService.swift */; };
+		F1E547872AA853ED00671182 /* DeleteAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E547862AA853ED00671182 /* DeleteAccountModel.swift */; };
 		F1F98D5D2A481FA50055BF21 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5C2A481FA50055BF21 /* NotificationView.swift */; };
 		F1F98D5F2A482DAF0055BF21 /* NotificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */; };
 		F1F98D652A54068F0055BF21 /* FavoritesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F98D642A54068F0055BF21 /* FavoritesModel.swift */; };
@@ -217,6 +219,8 @@
 		F1E547782A9F1FD300671182 /* NotifyIdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyIdModel.swift; sourceTree = "<group>"; };
 		F1E5477A2A9F202E00671182 /* NotifyIdService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyIdService.swift; sourceTree = "<group>"; };
 		F1E5477C2A9F215B00671182 /* NotifyIdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyIdViewController.swift; sourceTree = "<group>"; };
+		F1E547842AA852CA00671182 /* DeleteAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountService.swift; sourceTree = "<group>"; };
+		F1E547862AA853ED00671182 /* DeleteAccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountModel.swift; sourceTree = "<group>"; };
 		F1F98D5C2A481FA50055BF21 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		F1F98D5E2A482DAF0055BF21 /* NotificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCollectionViewCell.swift; sourceTree = "<group>"; };
 		F1F98D642A54068F0055BF21 /* FavoritesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModel.swift; sourceTree = "<group>"; };
@@ -277,12 +281,12 @@
 		01AA99BA2A8DFAB700FB8355 /* More */ = {
 			isa = PBXGroup;
 			children = (
+				F1E547502A96325000671182 /* AccountManagementVC.swift */,
 				F1E547522A9633C700671182 /* CheckPasswordViewController.swift */,
 				019D16AE2A79323800766E9D /* CustomerCenterView.swift */,
 				01F7A21A29D95C480058736E /* MoreView.swift */,
 				019D16AC2A792EF700766E9D /* NoticeView.swift */,
 				F1E5473C2A8CADDC00671182 /* PolicyViewController.swift */,
-				F1E547502A96325000671182 /* AccountManagementVC.swift */,
 				F1E547542A96480500671182 /* ChangePasswordVC.swift */,
 				F1E547562A96483800671182 /* ChangeNickNameVC.swift */,
 			);
@@ -570,6 +574,7 @@
 				F1E5475C2A989A3900671182 /* CangeNickNameService.swift */,
 				F1E5475A2A977C7300671182 /* ChangePasswordService.swift */,
 				F1E547492A96244B00671182 /* CheckPasswordService.swift */,
+				F1E547842AA852CA00671182 /* DeleteAccountService.swift */,
 			);
 			path = AccountManagement_Service;
 			sourceTree = "<group>";
@@ -580,6 +585,7 @@
 				F1E5475E2A989A5800671182 /* ChangeNickNameModel.swift */,
 				F1E547582A977BBA00671182 /* ChangePasswordModel.swift */,
 				F1E5474E2A9625FB00671182 /* CheckPasswordModel.swift */,
+				F1E547862AA853ED00671182 /* DeleteAccountModel.swift */,
 			);
 			path = AccountManagement;
 			sourceTree = "<group>";
@@ -790,6 +796,7 @@
 				F1E5474F2A9625FB00671182 /* CheckPasswordModel.swift in Sources */,
 				01B87B822A1CF7420082FC05 /* signupModel.swift in Sources */,
 				01B87B7E2A1CF2390082FC05 /* nicknamecheckModel.swift in Sources */,
+				F1E547872AA853ED00671182 /* DeleteAccountModel.swift in Sources */,
 				F1E5474A2A96244B00671182 /* CheckPasswordService.swift in Sources */,
 				F1E547732A9F10C600671182 /* CheckUserPhoneService.swift in Sources */,
 				F1E547592A977BBA00671182 /* ChangePasswordModel.swift in Sources */,
@@ -820,6 +827,7 @@
 				01F7A20929D936280058736E /* UITextField+Extenstion.swift in Sources */,
 				019D16B32A7CE47900766E9D /* MessageSendService.swift in Sources */,
 				F1E547532A9633C700671182 /* CheckPasswordViewController.swift in Sources */,
+				F1E547852AA852CA00671182 /* DeleteAccountService.swift in Sources */,
 				6CAFA8D62A861D95003BDD65 /* DetailCafeByCafeIdModel.swift in Sources */,
 				F1E5475F2A989A5800671182 /* ChangeNickNameModel.swift in Sources */,
 				01B87B782A1CDB2F0082FC05 /* IdCheckService.swift in Sources */,

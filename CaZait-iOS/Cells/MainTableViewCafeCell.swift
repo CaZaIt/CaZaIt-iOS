@@ -177,7 +177,7 @@ extension MainTableViewCafeCell: UICollectionViewDataSource, UICollectionViewDel
             cafeImage: self.allCafeData?.data[0][indexPath.row].cafeImages[0] ?? "",
             cafeName: self.allCafeData?.data[0][indexPath.row].name ?? "",
             cafeLocation: self.allCafeData?.data[0][indexPath.row].address ?? "",
-            cafeCongestion: self.allCafeData?.data[0][indexPath.row].congestionStatus ?? ""
+            cafeId: self.allCafeData?.data[0][indexPath.row].cafeId ?? ""
         )
         recentCafeView.addRecentCafe(cafe: recentCafe)
         

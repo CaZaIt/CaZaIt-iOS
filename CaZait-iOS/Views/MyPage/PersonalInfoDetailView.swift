@@ -27,6 +27,7 @@ class PersonalInfoDetailTermsView: UIViewController, UIGestureRecognizerDelegate
         textView.isEditable = false
         textView.font = UIFont.systemFont(ofSize: 14)
         textView.backgroundColor = UIColor(red: 1, green: 0.873, blue: 0.852, alpha: 1)
+        textView.textColor = .black
         
         return textView
     }()

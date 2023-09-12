@@ -53,6 +53,7 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
         textField.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         textField.textAlignment = .center
         textField.placeholder = "휴대전화 번호를 입력해주세요"
+        textField.setPlaceholder(color: UIColor(r: 181, g: 181, b: 181))
         textField.keyboardType = .numberPad
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 20
@@ -67,6 +68,7 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
         textField.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         textField.textAlignment = .center
         textField.placeholder = "인증번호 입력"
+        textField.setPlaceholder(color: UIColor(r: 181, g: 181, b: 181))
         textField.keyboardType = .numberPad
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 20
@@ -167,7 +169,7 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
                     self.sendMessage(phoneNumber: phoneNumberText)
                 default:
                     self.PhoneNumExpLabel.textColor = .red
-                    self.PhoneNumExpLabel.text = "입력하신 휴대전화는 등록되지 않은 번호입니다."
+                    self.PhoneNumExpLabel.text = "입력하신 휴대번호는 등록되지 않은 번호입니다."
                     self.PhoneNumExpLabel.isHidden = false
                     self.confirmButton.isEnabled = false
                     self.confirmButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
@@ -183,6 +185,20 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
                 default:
                     self.PhoneNumExpLabel.textColor = .red
                     self.PhoneNumExpLabel.text = "입력하신 ID와 일치하지 않는 번호입니다."
+                    self.PhoneNumExpLabel.isHidden = false
+                    self.confirmButton.isEnabled = false
+                    self.confirmButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+                }
+            }
+        } else if mode == "signUp" {
+            CheckUserPhoneService.shared.getCheckUserPhone(phoneNumber: phoneNumberText, isExist: "false") { response in
+                switch response {
+                case .success(let data):
+                    guard let data = data as? UserPhoneCheckResponse else { return }
+                    self.sendMessage(phoneNumber: phoneNumberText)
+                default:
+                    self.PhoneNumExpLabel.textColor = .red
+                    self.PhoneNumExpLabel.text = "입력하신 휴대번호는 등록된 번호입니다."
                     self.PhoneNumExpLabel.isHidden = false
                     self.confirmButton.isEnabled = false
                     self.confirmButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
@@ -254,6 +270,10 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
                         vc.userFieldId = self.userFieldId
                         
                         self.navigationController?.pushViewController(vc, animated: true)
+                    } else if self.mode == "signUp" {
+                        let vc = SignupView()
+                        vc.phoneNumber = recipientPhoneNumber
+                        self.navigationController?.pushViewController(vc, animated: true)
                     }
                 }))
                 self.present(alert, animated: true, completion: nil)
@@ -300,8 +320,10 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
     func setupNavigation() {
         if mode == "findId" {
             self.title = "아이디 찾기"
-        } else if mode == "findPassword"{
+        } else if mode == "findPassword" {
             self.title = "비밀번호 찾기"
+        } else if mode == "signUp" {
+            self.title = "회원가입"
         }
         //손가락 옆으로 미는 제스쳐 작동
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true

@@ -155,7 +155,7 @@ extension RecentCafeView: UICollectionViewDataSource, UICollectionViewDelegate, 
     // collectionView 셀 크기 반환
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width
-        return CGSize(width: width-40, height: 172) // example item size
+        return CGSize(width: width-40, height: 120) // example item size
     }
     
     // collectionView 셀과 셀 사이 간격 반환
@@ -163,6 +163,19 @@ extension RecentCafeView: UICollectionViewDataSource, UICollectionViewDelegate, 
         return 17
     }
 
+    // collectionView 셀이 선택됐을 때 처리할 작업 구현
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Cell \(indexPath.item) selected")
+        
+        // CafeDetailView 호출
+        let cafeDetailView = CafeDetailView() // CafeDetailView 초기화
+        
+        //cafeDetailView에서 받은 cafeId를 통해 통신할 수 있도록 값을 전달한다.
+        cafeDetailView.cafeId = recentCafes[indexPath.row].cafeId
+        cafeDetailView.cafeName = recentCafes[indexPath.row].cafeName
+        
+        navigationController?.pushViewController(cafeDetailView, animated: true)
+    }
     
 }
 
