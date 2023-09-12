@@ -135,6 +135,10 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
     private func setupLayout() {
         nickname.translatesAutoresizingMaskIntoConstraints = false
         review.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(editnButton)
+        contentView.addSubview(barLabel)
+        
+        setupEditButtonLayout()
         
         
         nickname.snp.makeConstraints { make in
@@ -217,17 +221,15 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         displayStars(starCount: score)
         
         if userId == UserDefaults.standard.string(forKey: "userId") {
-            contentView.addSubview(editnButton)
-            contentView.addSubview(barLabel)
-            
-            setupEditButtonLayout()
-            
             let CafeDetailView = CafeDetailView()
             CafeDetailView.reviewId = reviewId
-            
+            editnButton.isHidden = false
+            barLabel.isHidden = false
             deleteButton.setTitle("삭제", for: .normal)
         } else {
             deleteButton.setTitle("신고", for: .normal)
+            editnButton.isHidden = true
+            barLabel.isHidden = true
         }
         
         let reviewHeight = self.review.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
