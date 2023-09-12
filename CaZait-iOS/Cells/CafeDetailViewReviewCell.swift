@@ -204,7 +204,7 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
     @objc private func deleteButtonTapped() {
         delegate?.deleteButtonTapped(in: self)
     }
-    
+
     @objc private func editButtonTapped() {
         delegate?.editButtonTapped(in: self)
     }

@@ -589,6 +589,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     }
     
     func getDetailCafeReview() { //result = getAllCafeInfo 실행해서 얻은 결과
+        print(UserDefaults.standard.string(forKey: "userId"))
         guard let cafeId = cafeId else {
             // cafeId가 nil일 경우에 대한 처리 로직
             print("cafeId가 nil입니다.")
@@ -662,15 +663,13 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collectionView1 {
             if let count = cafeMenu?.count {
-               // print("collectionview1 count: ", count)
-                //print(type(of: count))
+
                 return count
             }
             return 1
         } else if collectionView == collectionView2 {
-            //print("collection2")
             if let count = cafeReview?.count {
-                //print("collectionview2 count :", count)
+
                 return count
             }
             return 1
@@ -768,8 +767,6 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
             alertController.addAction(cancelAction)
 
         }
-
-    
         // 알림창을 화면에 표시
         self.present(alertController, animated: true, completion: nil)
     }
@@ -779,7 +776,7 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
 
         alertController.title = "수정하시겠습니까"
         alertController.message = ""
-        
+
         let okAction = UIAlertAction(title: "네", style: .default) { (action) in
             let nextVC = WriteReviewView()
             nextVC.reviewId = self.selectedReview?.reviewId
@@ -787,13 +784,13 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
             self.navigationController?.pushViewController(nextVC, animated: true)
 
         }
-        
+
         let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
         }
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
 
-    
+
         // 알림창을 화면에 표시
         self.present(alertController, animated: true, completion: nil)
     }
@@ -809,7 +806,6 @@ extension CafeDetailView: UIScrollViewDelegate {
         // frame.minY를 통해 sticky 타이밍 계산
         let shouldShowSticky = scrollView.contentOffset.y >= headerViewSegmentControl.frame.minY
         stickyHeaderViewSegmentControl.isHidden = !shouldShowSticky
-        //print(!shouldShowSticky)
         
         if shouldShowSticky {
             self.navigationController?.navigationBar.topItem?.title = cafeNameLabel.text
