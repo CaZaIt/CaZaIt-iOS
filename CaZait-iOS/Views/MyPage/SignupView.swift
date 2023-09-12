@@ -351,7 +351,7 @@ class SignupView: UIViewController{
         // 편집 변경 이벤트에 대한 액션 추가
         pwField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         pwField_1.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
-        
+
         
         
         //중복 확인 버튼 클릭시 이벤트 추가
@@ -497,8 +497,9 @@ extension SignupView {
             case .success(let data):
                 guard let data = data as? SignupResponse else { return }
                 let alert = UIAlertController(title: data.message, message: "", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
-                
+                alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: { _ in
+                    self.navigationController?.popToRootViewController(animated: true)
+                }))
                 self.present(alert, animated: true, completion: nil)
                 print(data)
             case .requestErr(let err):
@@ -584,5 +585,5 @@ extension SignupView {
             pwValidationLabel.textColor = UIColor.blue
         }
     }
-    
+
 }

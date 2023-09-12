@@ -146,6 +146,11 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
         customView.isUserInteractionEnabled = true
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        locationManager.stopUpdatingLocation()
+    }
+    
     @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: naverMapView)
 
