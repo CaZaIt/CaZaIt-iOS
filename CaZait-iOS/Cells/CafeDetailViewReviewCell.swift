@@ -237,11 +237,6 @@ class CafeDetailViewReviewCell: UICollectionViewCell {
         
         let reviewHeight = self.review.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         let numberOfLines = Int(reviewHeight / self.review.font.lineHeight)
-        //print(myReview)
-        
-        //let cafeDetailView = CafeDetailView()
-        //cafeDetailView.updateCellHeightForNumberOfLines(numberOfLines)
-
     }
 }
 

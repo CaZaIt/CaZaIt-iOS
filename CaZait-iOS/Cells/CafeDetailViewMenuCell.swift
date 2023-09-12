@@ -125,7 +125,7 @@ class CafeDetailViewMenuCell: UICollectionViewCell {
 
         }
         self.menu.text = menu
-        self.price.text = price
+        self.price.text = price + "원"
         self.menuDescription.text = menuDescription
         
     }
