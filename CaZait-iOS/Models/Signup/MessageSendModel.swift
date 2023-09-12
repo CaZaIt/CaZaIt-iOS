@@ -19,5 +19,5 @@ struct MessageSendResponse: Codable {
 struct MessageSendData: Codable {
     let recipientPhoneNumber: String
     let requestTime: String
-    let verificationCode: Int
+//    let verificationCode: Int
 }

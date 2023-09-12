@@ -708,9 +708,11 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let selectedreview = cafeReview?[indexPath.item] {
-            selectedReview = selectedreview
-            print(selectedReview)
+        if collectionView == collectionView2{
+            if let selectedreview = cafeReview?[indexPath.item] {
+                selectedReview = selectedreview
+                print(selectedReview)
+            }
         }
     }
     
@@ -729,6 +731,7 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
                 switch result {
                 case .success(let ReviewDeleteResponse):
                     print((ReviewDeleteResponse.data))
+                    self.getDetailCafeReview()
                 case .failure(let error):
                     print("에러 메시지: \(error.localizedDescription)")
                 }
@@ -742,23 +745,25 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
         let alertController = UIAlertController(title: "", message: "", preferredStyle: .alert)
 
         if cell.deleteButton.title(for: .normal) == "신고" {
-            alertController.title = "서비스를 준비 중입니다"
-            alertController.message = ""
+            alertController.title = "신고하시겠습니까?"
+            alertController.message = "해당 신고내용은 본사에 접수됩니다."
             
             
-            let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            let okAction = UIAlertAction(title: "확인", style: .default) { (action) in
             }
             
             let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
             }
             alertController.addAction(okAction)
+            alertController.addAction(cancelAction)
             
         } else if cell.deleteButton.title(for: .normal) == "삭제" {
             alertController.title = "삭제하시겠습니까"
             alertController.message = ""
             let okAction = UIAlertAction(title: "네", style: .default) { (action) in
                 self.deleteReview()
-                self.getDetailCafeReview()
+                
+                
             }
             
             let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in

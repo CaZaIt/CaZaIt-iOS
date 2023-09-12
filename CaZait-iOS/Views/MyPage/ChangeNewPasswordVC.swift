@@ -160,6 +160,11 @@ class ChangeNewPasswordVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     override func viewDidLoad() {
+        
+        // 다른 부분을 탭할 때 키보드 숨기기
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
         super.viewDidLoad()
         view.backgroundColor = .black
         passwordTextField.delegate = self
@@ -185,6 +190,11 @@ class ChangeNewPasswordVC: UIViewController, UIGestureRecognizerDelegate {
     
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    // 다른 부분을 탭할 때 키보드 숨기기
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     func checkPassword(password: String) {

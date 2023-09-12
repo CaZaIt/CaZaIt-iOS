@@ -43,7 +43,7 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
     private let mapLabel: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .white
         label.textAlignment = .center
         label.text = "카페 위치보기"
