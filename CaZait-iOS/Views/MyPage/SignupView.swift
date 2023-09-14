@@ -95,7 +95,7 @@ class SignupView: UIViewController{
         textField.placeholder = "비밀번호를 입력해주세요"
         textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         textField.backgroundColor = .white
-        textField.isSecureTextEntry = false
+        textField.isSecureTextEntry = true
         textField.layer.cornerRadius = 20
         textField.clipsToBounds = true
         textField.textColor = UIColor(r: 93, g: 36, b: 36)
@@ -133,7 +133,7 @@ class SignupView: UIViewController{
         textField.placeholder = "비밀번호를 한 번 더 입력해주세요"
         textField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         textField.backgroundColor = .white
-        textField.isSecureTextEntry = false
+        textField.isSecureTextEntry = true
         textField.layer.cornerRadius = 20
         textField.clipsToBounds = true
         textField.textColor = UIColor(r: 93, g: 36, b: 36)
