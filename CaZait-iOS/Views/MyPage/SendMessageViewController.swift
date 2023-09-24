@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
+class SendMessageViewController: UIViewController {
 
     var userId : String?
     var userFieldId : String?
@@ -145,6 +145,10 @@ class SendMessageViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // 다른 부분을 탭할 때 키보드 숨기기
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
         view.backgroundColor = .black
         phoneNumberTextField.delegate = self
         autNumTextField.delegate = self
@@ -425,4 +429,12 @@ extension SendMessageViewController: UITextFieldDelegate{
         }
     }
     
+}
+
+extension SendMessageViewController: UIGestureRecognizerDelegate {
+    
+    // 다른 부분을 탭할 때 키보드 숨기기
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

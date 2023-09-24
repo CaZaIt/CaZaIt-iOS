@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ChangeNickNameVC: UIViewController, UIGestureRecognizerDelegate {
+class ChangeNickNameVC: UIViewController {
 
     private let navigationBarAppearance : UINavigationBarAppearance = {
         let navigationBar = UINavigationBarAppearance()
@@ -110,6 +110,9 @@ class ChangeNickNameVC: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // 다른 부분을 탭할 때 키보드 숨기기
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
         view.backgroundColor = .black
         nickNameTextField.delegate = self
         setupNavigation()
@@ -260,4 +263,12 @@ extension ChangeNickNameVC: UITextFieldDelegate{
         }
     }
     
+}
+
+extension ChangeNickNameVC: UIGestureRecognizerDelegate {
+    
+    // 다른 부분을 탭할 때 키보드 숨기기
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
