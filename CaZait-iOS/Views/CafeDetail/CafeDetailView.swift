@@ -10,7 +10,6 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
     
     var cafeMenu: [DetailCafeMenu]?
     var cafeReview: [DetailCafeReview]?
-    var selectedReview: DetailCafeReview?
 
     
     var cafeId: String?
@@ -707,24 +706,10 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
 
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == collectionView2{
-            if let selectedreview = cafeReview?[indexPath.item] {
-                selectedReview = selectedreview
-                print(selectedReview)
-            }
-        }
-    }
+
     
-    func deleteReview() {
+    func deleteReview(reviewId: String) {
         let ReviewDeleteService = ReviewDeleteService()
-        print(selectedReview)
-        
-        guard let reviewId = selectedReview?.reviewId else {
-            // cafeId가 nil일 경우에 대한 처리 로직
-            print("reviewId nil")
-            return
-        }
 
         if let userId = UserDefaults.standard.string(forKey: "userId") {
             ReviewDeleteService.deleteReview(reviewId: reviewId) { result in
@@ -761,9 +746,9 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
             alertController.title = "삭제하시겠습니까"
             alertController.message = ""
             let okAction = UIAlertAction(title: "네", style: .default) { (action) in
-                self.deleteReview()
-                
-                
+                if let reviewId = cell.reviewId{
+                    self.deleteReview(reviewId: reviewId)
+                }                
             }
             
             let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
@@ -784,10 +769,9 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
 
         let okAction = UIAlertAction(title: "네", style: .default) { (action) in
             let nextVC = WriteReviewView()
-            nextVC.reviewId = self.selectedReview?.reviewId
+            nextVC.reviewId = cell.reviewId
             nextVC.reviewButton = 0
             self.navigationController?.pushViewController(nextVC, animated: true)
-
         }
 
         let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in

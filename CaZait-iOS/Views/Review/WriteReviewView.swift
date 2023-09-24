@@ -177,7 +177,9 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
         self.view.addSubview(rateView)
         rateView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.centerY.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            make.centerX.equalToSuperview()
+
+            //make.centerY.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
         }
 
         self.view.addSubview(text2)
@@ -272,12 +274,13 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
                 case .success(let reviewResponse):
                     print("리뷰 ID: \(reviewResponse.data.nickname)")
                     // 작성 완료 팝업 표시
-                    let alert = UIAlertController(title: "알림", message: "작성이 완료되었습니다.", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "작성이 완료되었습니다.", message: "", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
                         // 팝업을 닫은 후 이전 페이지로 돌아가기
                         self.navigationController?.popViewController(animated: true)
                         if let previousViewController = self.navigationController?.viewControllers.last as? CafeDetailView {
-                            previousViewController.viewWillAppear(true)
+                            //previousViewController.viewWillAppear(true)
+                            previousViewController.getDetailCafeReview()
                         }
                     }))
                     self.present(alert, animated: true, completion: nil)
