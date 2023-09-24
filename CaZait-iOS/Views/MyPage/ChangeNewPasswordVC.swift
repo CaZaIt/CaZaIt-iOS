@@ -234,18 +234,15 @@ class ChangeNewPasswordVC: UIViewController {
         let minLength = 8
         let maxLength = 16
         
-        let lowercaseLetterPattern = ".*[a-z]+.*"
-        let uppercaseLetterPattern = ".*[A-Z]+.*"
+        let alphabetcaseLetterPattern = ".*[a-zA-Z]+.*"
         let numberPattern = ".*\\d+.*"
-        let specialCharacterPattern = ".*[$@!%*#?&.]+.*"
+        let specialCharacterPattern = ".*[!@#$%&*]+.*"
         
-        let lowercaseLetterRegex = try? NSRegularExpression(pattern: lowercaseLetterPattern, options: [])
-        let uppercaseLetterRegex = try? NSRegularExpression(pattern: uppercaseLetterPattern, options: [])
+        let alphabetcaseLetterRegex = try? NSRegularExpression(pattern: alphabetcaseLetterPattern, options: [])
         let numberRegex = try? NSRegularExpression(pattern: numberPattern, options: [])
         let specialCharacterRegex = try? NSRegularExpression(pattern: specialCharacterPattern, options: [])
         
-        let containsLowercaseLetter = lowercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
-        let containsUppercaseLetter = uppercaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
+        let containsAlphabetcaseLetter = alphabetcaseLetterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
         let containsNumber = numberRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
         let containsSpecialCharacter = specialCharacterRegex?.matches(in: realtimeText, options: [], range: NSRange(location: 0, length: realtimeText.utf16.count)).count ?? 0 > 0
         
@@ -253,8 +250,8 @@ class ChangeNewPasswordVC: UIViewController {
             passwordCheckLabel.text = "최소 8자 이상, 최대 16자 이하로 입력해주세요."
             passwordCheckLabel.textColor = UIColor.red
             return false
-        } else if !containsLowercaseLetter || !containsUppercaseLetter || !containsNumber || !containsSpecialCharacter {
-            passwordCheckLabel.text = "적어도 하나의 대문자, 소문자, 숫자, 특수문자가 포함되어야 합니다."
+        } else if !containsAlphabetcaseLetter || !containsNumber || !containsSpecialCharacter {
+            passwordCheckLabel.text = "적어도 하나의 알파벳, 숫자, 특수문자가 포함되어야 합니다."
             passwordCheckLabel.textColor = UIColor.red
             return false
         } else {

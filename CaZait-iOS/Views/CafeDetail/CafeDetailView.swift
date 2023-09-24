@@ -735,6 +735,11 @@ extension CafeDetailView: UICollectionViewDataSource, UICollectionViewDelegate, 
             
             
             let okAction = UIAlertAction(title: "확인", style: .default) { (action) in
+                // 접수가 완료되었습니다 메시지를 보여줄 UIAlertController
+                let successAlertController = UIAlertController(title: "접수가 완료되었습니다", message: "", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+                successAlertController.addAction(okAction)
+                self.present(successAlertController, animated: true, completion: nil)
             }
             
             let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in

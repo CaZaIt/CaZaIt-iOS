@@ -20,6 +20,24 @@ class NoticeView: UIViewController, UIGestureRecognizerDelegate {
         return navigationBar
     }()
     
+    private let whiteView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private let titleLabel_1: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.text = "카자잇 서비스 런칭"
+        label.numberOfLines = 1
+        return label
+    }()
+    
     private let noticeTextView: UITextView = {
         let textView = UITextView()
         
@@ -43,13 +61,28 @@ class NoticeView: UIViewController, UIGestureRecognizerDelegate {
         self.view.backgroundColor = .black
         
         setupNavigation()
-        showTerms()
+        view.addSubview(whiteView)
+        view.addSubview(titleLabel_1)
         view.addSubview(noticeTextView)
+        showTerms()
         
-        self.noticeTextView.snp.makeConstraints { make in
+        
+        self.whiteView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        self.titleLabel_1.snp.makeConstraints { make in
+            make.leading.equalTo(self.whiteView.safeAreaLayoutGuide.snp.leading).inset(39)
+            make.top.equalTo(self.whiteView.safeAreaLayoutGuide.snp.top).inset(41)
+        }
+        
+        
+        self.noticeTextView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(39)
+            make.top.equalTo(self.titleLabel_1.snp.bottom).offset(25)
+            make.bottom.equalTo(self.whiteView.safeAreaLayoutGuide.snp.bottom)
         }
     }
     
@@ -80,58 +113,12 @@ class NoticeView: UIViewController, UIGestureRecognizerDelegate {
     
     func showTerms() {
         let termsText =
-            """
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            공지사항 내용입니다.
-            """
+                """
+                카자잇 어플에 가입해 주셔서 감사합니다
+                
+                더 나은 서비스를 제공할 수 있는 카자잇이 되겠습니다.
+                """
         noticeTextView.text = termsText
+        noticeTextView.textColor = .black
     }
 }

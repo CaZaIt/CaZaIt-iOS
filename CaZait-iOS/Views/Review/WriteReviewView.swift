@@ -279,8 +279,8 @@ class WriteReviewView: UIViewController, UITextViewDelegate{
                         // 팝업을 닫은 후 이전 페이지로 돌아가기
                         self.navigationController?.popViewController(animated: true)
                         if let previousViewController = self.navigationController?.viewControllers.last as? CafeDetailView {
-                            //previousViewController.viewWillAppear(true)
-                            previousViewController.getDetailCafeReview()
+                            previousViewController.viewWillAppear(true)
+                            //previousViewController.getDetailCafeReview()
                         }
                     }))
                     self.present(alert, animated: true, completion: nil)
