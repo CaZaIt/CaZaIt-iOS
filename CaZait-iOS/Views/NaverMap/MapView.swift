@@ -18,7 +18,7 @@ class MapView: UIViewController, CLLocationManagerDelegate { // 내위치가 시
         "FREE": "여유",
         "NORMAL": "보통",
         "CROWDED": "혼잡",
-        "VERYCROWDED": "매우혼잡"
+        "VERY_CROWDED": "매우혼잡"
     ]
     
     private var allCafeData: AllCafeResponse? //통신한 데이터를 저장하기 위한 변수입니다.

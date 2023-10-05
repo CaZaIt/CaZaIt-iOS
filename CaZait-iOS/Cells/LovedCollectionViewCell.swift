@@ -16,7 +16,7 @@ class LovedCollectionViewCell: UICollectionViewCell {
         "FREE": "여유",
         "NORMAL": "보통",
         "CROWDED": "혼잡",
-        "VERYCROWDED": "매우혼잡"
+        "VERY_CROWDED": "매우혼잡"
     ]
     
     private let cafeNameLabel: UILabel = {
