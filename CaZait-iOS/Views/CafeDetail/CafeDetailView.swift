@@ -208,7 +208,7 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
         nestedStackView.addArrangedSubview(cafeView)
         cafeView.addSubview(cafeNameLabel)
         cafeView.addSubview(cafeLocation)
-        cafeView.addSubview(cafeLocationCheck)
+//        cafeView.addSubview(cafeLocationCheck)
         cafeView.addSubview(heartButton)
         cafeView.layer.addSublayer(dottedLine) // 점선을 추가한 CAShapeLayer를 yourView의 서브레이어로 추가합니다.
         
@@ -269,10 +269,10 @@ class CafeDetailView: UIViewController,UIGestureRecognizerDelegate {
             make.top.equalTo(cafeNameLabel.snp.bottom).offset(8)
         }
         
-        cafeLocationCheck.snp.makeConstraints { make in
-            make.leading.equalTo(cafeNameLabel.snp.trailing).offset(15)
-            make.top.equalTo(cafeView.snp.top).offset(33)
-        }
+//        cafeLocationCheck.snp.makeConstraints { make in
+//            make.leading.equalTo(cafeNameLabel.snp.trailing).offset(15)
+//            make.top.equalTo(cafeView.snp.top).offset(33)
+//        }
         
         heartButton.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leading).offset(325)
