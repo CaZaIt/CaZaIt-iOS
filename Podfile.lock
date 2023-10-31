@@ -1,8 +1,8 @@
 PODS:
-  - Alamofire (5.6.4)
+  - Alamofire (5.8.1)
   - Kingfisher (6.3.1)
   - NMapsGeometry (1.0.1)
-  - NMapsMap (3.16.2):
+  - NMapsMap (3.17.0):
     - NMapsGeometry
   - SnapKit (5.6.0)
 
@@ -21,10 +21,10 @@ SPEC REPOS:
     - SnapKit
 
 SPEC CHECKSUMS:
-  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
+  Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
-  NMapsMap: aaa64717249b06ae82c3a3addb3a01f0e33100ab
+  NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
 PODFILE CHECKSUM: d03fe0ef5c99587b4da990764b18e3ef145e5e73
