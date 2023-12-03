@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "01F7A1EC29D935540058736E"
-               BuildableName = "CaZait-iOS.app"
-               BlueprintName = "CaZait-iOS"
-               ReferencedContainer = "container:CaZait-iOS.xcodeproj">
+               BuildableName = "CaZait.app"
+               BlueprintName = "CaZait"
+               ReferencedContainer = "container:CaZait.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -30,7 +30,7 @@
       shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "01F7A1EC29D935540058736E"
-            BuildableName = "CaZait-iOS.app"
-            BlueprintName = "CaZait-iOS"
-            ReferencedContainer = "container:CaZait-iOS.xcodeproj">
+            BuildableName = "CaZait.app"
+            BlueprintName = "CaZait"
+            ReferencedContainer = "container:CaZait.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "01F7A1EC29D935540058736E"
-            BuildableName = "CaZait-iOS.app"
-            BlueprintName = "CaZait-iOS"
-            ReferencedContainer = "container:CaZait-iOS.xcodeproj">
+            BuildableName = "CaZait.app"
+            BlueprintName = "CaZait"
+            ReferencedContainer = "container:CaZait.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
